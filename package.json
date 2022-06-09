@@ -1,0 +1,19 @@
+{
+  "name": "project2-hppy",
+  "version": "1.0.0",
+  "description": "Employee engagement app",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/christianariola/project2-hppy.git"
+  },
+  "author": "Team Pluto",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/christianariola/project2-hppy/issues"
+  },
+  "homepage": "https://github.com/christianariola/project2-hppy#readme"
+}
