@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler')
 // password encryption
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 const Employee = require('../models/employeeModel')
 const { restart } = require('nodemon')
@@ -42,7 +43,8 @@ const registerEmployee = asyncHandler(async (req, res) => {
             _id: employee._id,
             firstName: employee.firstName,
             lastName: employee.lastName,
-            email: employee.email
+            email: employee.email,
+            token: generateToken(employee._id)
         })
     } else {
         restart.stauts(400)
@@ -54,8 +56,34 @@ const registerEmployee = asyncHandler(async (req, res) => {
 // @route  /api/users/login
 // @access Public
 const loginEmployee = asyncHandler(async (req, res) => {
+
+    const { email, password } = req.body
+
+    const employee = await Employee.findOne({ email })
+
+    // Check employee and password match
+    if(employee && (await bcrypt.compare(password, employee.password))){
+        res.status(201).json({
+            _id: employee._id,
+            firstName: employee.firstName,
+            lastName: employee.lastName,
+            email: employee.email,
+            token: generateToken(employee._id)
+        })
+    } else {
+        res.status(401)
+        throw new Error('Invalid credentials')
+    }
+
     res.send('Login Route')
 })
+
+// Generate Token
+const generateToken = (id) => {
+    return jwt.sign({ id }, process.env.JWT_SECRET, {
+        expiresIn: '30d'
+    })
+}
 
 module.exports = {
     registerEmployee,
