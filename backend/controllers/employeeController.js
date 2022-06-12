@@ -7,7 +7,7 @@ const Employee = require('../models/employeeModel')
 const { restart } = require('nodemon')
 
 // @desc   Register a new user
-// @route  /api/users
+// @route  /api/employees
 // @access Public
 const registerEmployee = asyncHandler(async (req, res) => {
     const {firstName, lastName, email, password} = req.body
@@ -53,7 +53,7 @@ const registerEmployee = asyncHandler(async (req, res) => {
 })
 
 // @desc   Login a new user
-// @route  /api/users/login
+// @route  /api/employees/login
 // @access Public
 const loginEmployee = asyncHandler(async (req, res) => {
 
@@ -78,6 +78,19 @@ const loginEmployee = asyncHandler(async (req, res) => {
     res.send('Login Route')
 })
 
+// @desc   get current emploee
+// @route  /api/employees/me
+// @access Private
+const getMe = asyncHandler(async (req, res) => {
+    const employee = {
+        id: req.employee._id,
+        email: req.employee.email,
+        firstName: req.employee.firstName,
+        lastName: req.employee.lastName
+    }
+    res.status(200).json(employee)
+})
+
 // Generate Token
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -87,5 +100,6 @@ const generateToken = (id) => {
 
 module.exports = {
     registerEmployee,
-    loginEmployee
+    loginEmployee,
+    getMe
 }
