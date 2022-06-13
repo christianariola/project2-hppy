@@ -3,6 +3,7 @@ const colors = require('colors')
 const dotenv = require('dotenv').config()
 const { errorHandler } = require('./middleware/errorMiddleware')
 const connectDB = require('./config/db')
+const cors = require('cors');
 
 const PORT = process.env.PORT || 3001
 
@@ -10,6 +11,10 @@ const PORT = process.env.PORT || 3001
 connectDB()
 
 const app = express()
+
+//Cors Configuration - Start
+app.use(cors());
+//Cors Configuration - End  
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
