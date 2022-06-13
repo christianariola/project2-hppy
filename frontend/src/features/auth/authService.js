@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const API_URL = '/api/employees'
+const API_URL_LOCAL = '/api/employees'
+const API_URL = 'https://pluto-hppy.herokuapp.com/api/employees'
 
 const addEmployee = async (userData) => {
     const response = await axios.post(API_URL, userData)
