@@ -4,7 +4,6 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 const Employee = require('../models/employeeModel')
-const { restart } = require('nodemon')
 
 // @desc   Register a new user
 // @route  /api/employees
@@ -47,7 +46,7 @@ const registerEmployee = asyncHandler(async (req, res) => {
             token: generateToken(employee._id)
         })
     } else {
-        restart.stauts(400)
+        res.status(400)
         throw new Error('Invalid user data')
     }
 })
