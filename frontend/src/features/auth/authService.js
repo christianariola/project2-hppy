@@ -12,11 +12,23 @@ const addEmployee = async (userData) => {
     return response.data
 }
 
+const login = async (userData) => {
+    const response = await axios.post(API_URL + '/login', userData)
+
+    if(response.data) {
+        localStorage.setItem('employee', JSON.stringify(response.data))
+    }
+
+    return response.data
+}
+
+
 // Logout employee
 const logout = () => localStorage.removeItem('employee')
 
 const authService = {
     addEmployee,
+    login,
     logout
 }
 

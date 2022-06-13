@@ -56,6 +56,10 @@ const Register = () => {
         dispatch(addEmployee(employeeData))
     }
 
+    // if(isLoading) {
+    //     return "Loading... please wait."
+    // }
+
     return <>
         <section>
             <h1>Add Employee</h1>

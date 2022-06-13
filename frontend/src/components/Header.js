@@ -21,7 +21,10 @@ const Header = () => {
             </div>
             <ul>
                 {employee ? (
+                    <>
                     <li><button onClick={onLogout}>Logout</button></li>
+                    <li><Link to="/employee/dashboard">My Dashboard</Link></li>
+                    </>
                 ) : (
                     <>
                     <li><Link to="/login">Login</Link></li>

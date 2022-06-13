@@ -1,8 +1,9 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 // useSelector to select from global states like employee, etc
 // useDispatch to dispatch actions like addEmployee, etc
 import { useSelector, useDispatch } from 'react-redux'
-import { login } from "../features/auth/authSlice"
+import { login, reset } from "../features/auth/authSlice"
 
 const Login = () => {
 
@@ -15,9 +16,23 @@ const Login = () => {
 
     // dispatch.addEmployee
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     // bring in pieces of state
-    const { employee, isLoading, isSuccess, message } = useSelector(state => state.auth)
+    const { employee, isLoading, isError, isSuccess, message } = useSelector(state => state.auth)
+
+    useEffect(() => {
+        if(isError){
+            console.log(message)
+        }
+
+        // Redirect if logged in
+        if(isSuccess || employee){
+            navigate('/employee/dashboard')
+        }
+
+        dispatch(reset())
+    }, [isError, isSuccess, isLoading, employee, message, navigate, dispatch])
 
     const onChange = (e) => {
         setFormData((prevState) => ({
