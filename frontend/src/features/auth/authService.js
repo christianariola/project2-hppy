@@ -12,8 +12,12 @@ const addEmployee = async (userData) => {
     return response.data
 }
 
+// Logout employee
+const logout = () => localStorage.removeItem('employee')
+
 const authService = {
-    addEmployee
+    addEmployee,
+    logout
 }
 
 export default authService
