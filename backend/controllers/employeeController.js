@@ -75,7 +75,7 @@ const loginEmployee = asyncHandler(async (req, res) => {
         throw new Error('Invalid credentials')
     }
 
-    res.send('Login Route')
+
 })
 
 // @desc   get current emploee

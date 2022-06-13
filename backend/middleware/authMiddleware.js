@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 const asyncHandler = require('express-async-handler')
 const Employee = require('../models/employeeModel')
 
-const protect = asyncHandler(async (req, res, next) => {
+const protect = asyncHandler(async (req, res) => {
     let token
 
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
@@ -15,7 +15,7 @@ const protect = asyncHandler(async (req, res, next) => {
             // Get employee from token
             req.employee = await Employee.findById(decoded.id).select('-password')
 
-            next()
+
         } catch (error) {
             console.log(error)
             res.status(401)
