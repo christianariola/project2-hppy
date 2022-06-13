@@ -1,4 +1,8 @@
 import { useState } from "react"
+// useSelector to select from global states like employee, etc
+// useDispatch to dispatch actions like addEmployee, etc
+import { useSelector, useDispatch } from 'react-redux'
+import { login } from "../features/auth/authSlice"
 
 const Login = () => {
 
@@ -9,6 +13,12 @@ const Login = () => {
 
     const {email, password} = formData
 
+    // dispatch.addEmployee
+    const dispatch = useDispatch()
+
+    // bring in pieces of state
+    const { employee, isLoading, isSuccess, message } = useSelector(state => state.auth)
+
     const onChange = (e) => {
         setFormData((prevState) => ({
             ...prevState,
@@ -18,6 +28,13 @@ const Login = () => {
 
     const onSubmit = (e) => {
         e.preventDefault()
+
+        const employeeData = {
+            email,
+            password
+        }
+
+        dispatch(login(employeeData))
     }
 
     return <>

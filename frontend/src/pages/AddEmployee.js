@@ -1,4 +1,8 @@
 import { useState } from "react"
+// useSelector to select from global states like employee, etc
+// useDispatch to dispatch actions like addEmployee, etc
+import { useSelector, useDispatch } from 'react-redux'
+import { addEmployee } from "../features/auth/authSlice"
 
 const Register = () => {
 
@@ -12,6 +16,12 @@ const Register = () => {
 
     const {firstName, lastName, email, password, confirmPassword} = formData
 
+    // dispatch.addEmployee
+    const dispatch = useDispatch()
+
+    // bring in pieces of state
+    const { employee, isLoading, isSuccess, message } = useSelector(state => state.auth)
+
     const onChange = (e) => {
         setFormData((prevState) => ({
             ...prevState,
@@ -21,11 +31,20 @@ const Register = () => {
 
     const onSubmit = (e) => {
         e.preventDefault()
+
+        const employeeData = {
+            firstName,
+            lastName,
+            email,
+            password
+        }
+
+        dispatch(addEmployee(employeeData))
     }
 
     return <>
         <section>
-            <h1>Add Employee</h1>
+            <h1>Add Employee { employee }</h1>
         </section>
 
         <section>
@@ -52,7 +71,7 @@ const Register = () => {
 
                 <div className="form-group">
                     <label htmlFor="confirmPassword">Confirm Password:</label>
-                    <input type="password" className="form-control" id="confirmPassword" name="confirmPassword" value={password} onChange={onChange} placeholder="Confirm your password" />
+                    <input type="password" className="form-control" id="confirmPassword" name="confirmPassword" value={confirmPassword} onChange={onChange} placeholder="Confirm your password" />
                 </div>
 
                 <div className="form-group">
