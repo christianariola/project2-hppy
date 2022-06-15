@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-// const API_URL_LOCAL = '/api/employees'
+// Local API_URL for dev
+//const API_URL = '/api/employees'
 const API_URL = 'https://pluto-hppy.herokuapp.com/api/employees'
 
 const addEmployee = async (userData) => {
@@ -22,7 +23,6 @@ const login = async (userData) => {
 
     return response.data
 }
-
 
 // Logout employee
 const logout = () => localStorage.removeItem('employee')
