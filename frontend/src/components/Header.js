@@ -23,12 +23,12 @@ const Header = () => {
                 {employee ? (
                     <>
                     <li><button onClick={onLogout}>Logout</button></li>
-                    <li><Link to="/employee/dashboard">My Dashboard</Link></li>
+                    <li><Link to="/dashboard">My Dashboard</Link></li>
+                    <li><Link to="/employee/add">Add Employee</Link></li>
                     </>
                 ) : (
                     <>
                     <li><Link to="/login">Login</Link></li>
-                    <li><Link to="/employee/add">Add Employee</Link></li>
                     </>
                 )}
             </ul>
