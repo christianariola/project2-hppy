@@ -6,8 +6,9 @@ const RequireAuth = ({ allowedRoles }) => {
     const { employee } = useSelector(state => state.auth)
 
     return (
-        // check if employee role exisit in allowedRules
+        // check if employee is logged in
         employee != null
+            // check if employee role exisit in allowedRules
             ? allowedRoles.indexOf(employee.role) > -1
             ? <Outlet />
             : employee
