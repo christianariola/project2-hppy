@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { useNavigate, Link, useLocation } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 // useSelector to select from global states like employee, etc
 // useDispatch to dispatch actions like addEmployee, etc
 import { useSelector, useDispatch } from 'react-redux'
@@ -35,6 +35,7 @@ const Login = () => {
         }
 
         dispatch(reset())
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isError, isSuccess, isLoading, employee, message, navigate, dispatch])
 
     const onChange = (e) => {
