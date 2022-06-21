@@ -31,7 +31,8 @@ const Register = () => {
         // Redirect if logged in
         // if(isSuccess || employee){
         if(isSuccess){
-            navigate('/')
+            console.log("Employee added!")
+            navigate('/dashboard')
         }
 
         dispatch(reset())
