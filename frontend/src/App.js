@@ -1,11 +1,9 @@
 import RequireAuth from './components/RequireAuth'
 import { Routes, Route } from 'react-router-dom'
 
-import Main from './components/Main'
 import Login from './pages/Login'
 import AddEmployee from './pages/AddEmployee'
 import Dashboard from './components/Dashboard'
-import ReportMain from './pages/report/ReportMain'
 import Layout from './components/Layout'
 import Error404 from './pages/Error404'
 import Unauthorized from './pages/Unauthorized'
