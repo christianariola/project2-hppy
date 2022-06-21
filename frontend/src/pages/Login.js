@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link, useLocation } from "react-router-dom"
 // useSelector to select from global states like employee, etc
 // useDispatch to dispatch actions like addEmployee, etc
 import { useSelector, useDispatch } from 'react-redux'
@@ -18,6 +18,9 @@ const Login = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    const location = useLocation()
+    const from = location.state?.from?.pathname || "/dashboard"
+
     // bring in pieces of state
     const { employee, isLoading, isError, isSuccess, message } = useSelector(state => state.auth)
 
@@ -28,7 +31,7 @@ const Login = () => {
 
         // Redirect if logged in
         if(isSuccess || employee){
-            navigate('/employee/dashboard')
+            navigate(from, { replace: true })
         }
 
         dispatch(reset())

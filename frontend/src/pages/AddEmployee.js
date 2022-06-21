@@ -29,7 +29,8 @@ const Register = () => {
         }
 
         // Redirect if logged in
-        if(isSuccess || employee){
+        // if(isSuccess || employee){
+        if(isSuccess){
             navigate('/')
         }
 

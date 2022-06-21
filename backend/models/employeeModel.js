@@ -22,10 +22,10 @@ const employeeScheme = mongoose.Schema({
         type: String,
         required: [true, 'Please add a password'],
     },
-    isAdmin: {
-        type: Boolean,
-        required: true,
-        default: false,
+    role: {
+        type: String,
+        required: [true, 'Please select a role'],
+        default: 'employee',
     }
 }, 
 {

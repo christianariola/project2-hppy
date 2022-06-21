@@ -67,6 +67,7 @@ const loginEmployee = asyncHandler(async (req, res) => {
             firstName: employee.firstName,
             lastName: employee.lastName,
             email: employee.email,
+            role: employee.role,
             token: generateToken(employee._id)
         })
     } else {
