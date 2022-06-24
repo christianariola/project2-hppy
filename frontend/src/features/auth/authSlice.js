@@ -58,7 +58,8 @@ export const authSlice = createSlice({
         .addCase(addEmployee.fulfilled, (state, action) => {
             state.isLoading = false
             state.isSuccess = true
-            state.employee = action.payload
+            //disabled causing error on route protection
+            //state.employee = action.payload
         })
         .addCase(addEmployee.rejected, (state, action) => {
             state.isLoading = false
