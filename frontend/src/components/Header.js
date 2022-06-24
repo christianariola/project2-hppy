@@ -24,11 +24,12 @@ const Header = () => {
                     <>
                     <li>Profile
                     <ul>
-                        <p>Welcome 'user name'!</p>
+                        <p>Welcome {employee.firstName}!</p>
                         <li><Link to="/myaccount">My Account</Link></li>
                         <li><button onClick={onLogout}>Logout</button></li>
                     </ul>
                     </li>
+                    <li>Notification</li>
                     <li><Link to="/dashboard">My Dashboard</Link></li>
                     <li><Link to="/employee/add">Add Employee</Link></li>
                     </>
