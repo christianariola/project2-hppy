@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import DailyCompleted from "./DailyCompleted";
 import DailySurvey from "./DailySurvey";
 
 const Dashboard = () => {
@@ -11,7 +12,7 @@ const Dashboard = () => {
       <p>Welcome, {employee.firstName}</p>
       <p>Role: {employee.role}</p>
       <div className="survey-Container">
-        <DailySurvey />
+        {dailySurveyState === "pending" ? <DailySurvey /> : <DailyCompleted />}
       </div>
     </>
   );
