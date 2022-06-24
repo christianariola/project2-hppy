@@ -25,7 +25,7 @@ const App = () => {
           <Route path="employee/add" element={<AddEmployee />} />
         </Route>
 
-        {/** catch all */}
+        {/** catch everything */}
         <Route path="*" element={<Error404 />} />
       </Route>
     </Routes>
