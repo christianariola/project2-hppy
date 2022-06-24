@@ -10,7 +10,6 @@ const { submitSurvey } = require("../controllers/surveyController");
 
 const { protect } = require("../middleware/authMiddleware");
 
-router.post("/", registerEmployee);
 router.post("/dailysurvey", submitSurvey);
 
 module.exports = router;

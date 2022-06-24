@@ -30,19 +30,19 @@ const DailySurvey = () => {
     console.log("dailyDate", dailyDate);
     setDailySurveyState("submitted");
 
-    axios
-      .post("/api/dailySurvey", {
-        dailyFeeling,
-        dailyComment,
-        dailySentiment,
-        employeeId: employee._id,
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // axios
+    //   .post("/api/dailySurvey", {
+    //     dailyFeeling,
+    //     dailyComment,
+    //     dailySentiment,
+    //     employeeId: employee._id,
+    //   })
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
 
   return (
