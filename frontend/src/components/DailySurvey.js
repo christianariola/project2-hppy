@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { useState } from "react";
+import axios from "axios";
 
 const DailySurvey = () => {
   // bring in employee state from redux store
@@ -9,11 +10,39 @@ const DailySurvey = () => {
   const [dailySentiment, setDailySentiment] = useState();
   const [dailySurveyState, setDailySurveyState] = useState("pending");
 
+  const [dailyDate, setDailyDate] = useState();
+
+  const dateHandler = (e) => {
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth() + 1;
+    const currentDay = new Date().getDate();
+    const together = [currentYear, currentMonth, currentDay].join("");
+    setDailyDate(together);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    dateHandler();
     console.log("dailyFeeling", dailyFeeling);
     console.log("dailyComment", dailyComment);
+    console.log("dailySentiment", dailySentiment);
+    console.log("dailySurveyState", dailySurveyState);
+    console.log("dailyDate", dailyDate);
     setDailySurveyState("submitted");
+
+    axios
+      .post("/api/dailySurvey", {
+        dailyFeeling,
+        dailyComment,
+        dailySentiment,
+        employeeId: employee._id,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (

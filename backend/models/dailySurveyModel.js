@@ -1,19 +1,29 @@
 const mongoose = require("mongoose");
 
-const dailySurveySchema = mongoose.Schema({
+const Schema = mongoose.Schema;
+
+const dailySurveySchema = new Schema({
   questionOne: {
     type: Number,
+    min: 1,
+    max: 5,
     required: [true, "Please select a rating"],
   },
   questionTwo: {
     type: String,
     required: false,
   },
+  sentimentRating: {
+    type: Number,
+  },
   surveyState: {
     type: String,
     required: true,
     default: "pending",
   },
-  timestamps: true,
+  date: {
+    type: Date,
+    required: true,
+  },
 });
-module.exports = mongoose.model("DailySurvey", dailySurveySchema);
+exports.dailySurveySchema = mongoose.model("DailySurvey", dailySurveySchema);
