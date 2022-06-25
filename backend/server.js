@@ -26,9 +26,9 @@ app.get("/", (req, res) => {
   res.send("Welcome to Hppy");
 });
 
-app.get("/dailysurvey", (req, res) => {
-  res.send("Test");
-});
+// app.get("/dailysurvey", (req, res) => {
+//   res.send("Test");
+// });
 
 // Routes
 app.use("/api/employees", require("./routes/employeeRoutes"));

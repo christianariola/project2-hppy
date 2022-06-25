@@ -16,7 +16,10 @@ const DailySurvey = () => {
     const currentYear = new Date().getFullYear();
     const currentMonth = new Date().getMonth() + 1;
     const currentDay = new Date().getDate();
-    const together = [currentYear, currentMonth, currentDay].join("");
+    const together =
+      "DailySurvey" + [currentYear, currentMonth, currentDay].join("");
+    // const surveyId = together+('DailySurvey');
+    // console.log(surveyId);
     setDailyDate(together);
   };
 
@@ -26,23 +29,26 @@ const DailySurvey = () => {
     console.log("dailyFeeling", dailyFeeling);
     console.log("dailyComment", dailyComment);
     console.log("dailySentiment", dailySentiment);
-    console.log("dailySurveyState", dailySurveyState);
+    console.log("employee", employee.email);
+
     console.log("dailyDate", dailyDate);
     setDailySurveyState("submitted");
 
-    // axios
-    //   .post("/api/dailySurvey", {
-    //     dailyFeeling,
-    //     dailyComment,
-    //     dailySentiment,
-    //     employeeId: employee._id,
-    //   })
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    axios
+      .post("/api/surveys", {
+        dailyFeeling,
+        dailyComment,
+        dailySentiment,
+        employeeId: employee._id,
+      })
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log("dailySurveyState", dailySurveyState);
   };
 
   return (
@@ -88,6 +94,7 @@ const DailySurvey = () => {
               value="1"
               onClick={() => setDailyFeeling(1)}
               style={{ display: "none" }}
+              onMouseDown={() => dateHandler()}
             />
           </label>
           <label>
