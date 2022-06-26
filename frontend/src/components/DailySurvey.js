@@ -42,18 +42,19 @@ const DailySurvey = () => {
       dailySurveyState,
       dailySurveyDate,
     };
-    const _id = employee.email + dailySurveyDate;
-    console.log(typeof _id);
+    const surveyid = employee.email + dailySurveyDate;
 
     //axios post to /dailySurvey endpoint
     axios
-      .post("/dailySurvey", { dailySurvey, _id: _id })
+      .post("/dailySurvey", { dailySurvey, surveyid: surveyid })
 
       .then((res) => {
         console.log(res);
       })
       .catch((err) => {
-        console.log(err);
+        if (err.response.data.code === 11000) {
+          alert(`Daily Survey already submitted by User: ${employee.email}`);
+        }
       });
   };
 

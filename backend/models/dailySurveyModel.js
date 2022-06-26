@@ -3,10 +3,11 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const dailySurveySchema = new Schema({
-  _id: {
+  surveyid: {
     type: String,
     required: [true, "Please add an id"],
     unique: true,
+    Error: [true, "Survey Already Exists"],
   },
   dailySurvey: {
     employeeEmail: {

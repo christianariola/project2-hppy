@@ -32,6 +32,7 @@ const { DailySurvey } = require("./models/dailySurveyModel");
 app.post("/dailySurvey", (req, res) => {
   let dailySurvey = new DailySurvey(req.body);
   console.log(dailySurvey);
+
   // res.send("Daily Survey Submitted");
 
 
