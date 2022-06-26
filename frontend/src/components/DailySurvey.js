@@ -52,8 +52,10 @@ const DailySurvey = () => {
         console.log(res);
       })
       .catch((err) => {
-        if (err.response.data.code === 11000) {
+        if (err.response.data.message === "Survey Already Exists") {
           alert(`Daily Survey already submitted by User: ${employee.email}`);
+        } else {
+          console.log(err);
         }
       });
   };
