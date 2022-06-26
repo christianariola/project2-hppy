@@ -3,32 +3,66 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const dailySurveySchema = new Schema({
-  surveyName: {
-    type: String,
-    required: [true, "Please add a survey name"],
-    unique: true,
+  dailySurvey: {
+    employeeEmail: {
+      type: String,
+      required: [true, "Please add an employee email"],
+    },
+    surveyName: {
+      type: String,
+      required: [true, "Please add a survey name"],
+      unique: true,
+    },
+    dailyFeeling: {
+      type: String,
+      required: [true, "Please add a daily feeling"],
+    },
+    dailyComment: {
+      type: String,
+    },
+    dailySentiment: {
+      type: String,
+    },
+    dailySurveyState: {
+      type: String,
+      default: "pending",
+      required: [true, "Please add a daily survey state"],
+    },
+    dailySurveyDate: {
+      type: String,
+      required: [true, "Please add a daily survey date"],
+    },
   },
-  questionOne: {
-    type: Number,
-    min: 1,
-    max: 5,
-    required: [true, "Please select a rating"],
-  },
-  questionTwo: {
-    type: String,
-    required: false,
-  },
-  sentimentRating: {
-    type: Number,
-  },
-  surveyState: {
-    type: String,
-    required: true,
-    default: "pending",
-  },
-  surveyDate: {
-    type: Date,
-    required: true,
-  },
+  // employeeEmail: {
+  //   type: String,
+  //   required: [true, "Please add an employee email"],
+  // },
+  // surveyName: {
+  //   type: String,
+  //   required: [true, "Please add a survey name"],
+  //   unique: true,
+  // },
+  // dailyFeeling: {
+  //   type: String,
+  //   min: 1,
+  //   max: 5,
+  //   required: [true, "Please select a rating"],
+  // },
+  // dailyComment: {
+  //   type: String,
+  //   required: false,
+  // },
+  // dailySentiment: {
+  //   type: String,
+  // },
+  // dailySurveyState: {
+  //   type: String,
+  //   required: true,
+  //   default: "pending",
+  // },
+  // dailySurveyDate: {
+  //   type: Date,
+  //   required: true,
+  // },
 });
-exports.dailySurveySchema = mongoose.model("DailySurvey", dailySurveySchema);
+exports.DailySurvey = mongoose.model("DailySurvey", dailySurveySchema);

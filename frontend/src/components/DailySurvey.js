@@ -1,45 +1,58 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import axios from "axios";
-import { addDailySurvey } from "../features/dailysurvey/surveySlice";
+// import { addDailySurvey } from "../features/dailysurvey/surveySlice";
 
 const DailySurvey = () => {
   // bring in employee state from redux store
   const { employee } = useSelector((state) => state.auth);
+
   const [dailyFeeling, setDailyFeeling] = useState(3);
   const [dailyComment, setDailyComment] = useState("");
   const [dailySentiment, setDailySentiment] = useState();
   const [dailySurveyState, setDailySurveyState] = useState("pending");
+  const [dailySurveyDate, setDailySurveyDate] = useState();
+  const [surveyName, setSurveyName] = useState("");
 
-  const [dailyDate, setDailyDate] = useState();
-
+  ///Survey Date
   const dateHandler = () => {
     const currentYear = new Date().getFullYear();
     const currentMonth = new Date().getMonth() + 1;
     const currentDay = new Date().getDate();
-    const together =
-      "DailySurvey" + [currentYear, currentMonth, currentDay].join("");
-    // const surveyId = together+('DailySurvey');
-    // console.log(surveyId);
-    setDailyDate(together);
+    const together = [currentYear, currentMonth, currentDay].join("");
+    setDailySurveyDate(together);
+    setSurveyName("DailySurvey" + together);
   };
 
-  const dispatch = useDispatch();
+  //Sentiment Analysis Block
+  const sentimentAnalysis = (dailyComment) => {
+    setDailySentiment("positive");
+  };
+  // const dispatch = useDispatch();
 
+  //Form Submit function
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const dailySurvey = {
+      employeeEmail: employee.email,
+      surveyName,
       dailyFeeling,
       dailyComment,
       dailySentiment,
       dailySurveyState,
-      dailyDate,
+      dailySurveyDate,
     };
-    console.log(dailySurvey);
-    // dispatch(addDailySurvey(dailySurvey));
-    // console.log(dispatch(addDailySurvey(dailySurvey.value)));
-
-  }
+    // const jsonDailySurvey = JSON.stringify(dailySurvey);
+    //axios post to /dailySurvey endpoint
+    axios
+      .post("/dailySurvey", { dailySurvey })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -47,10 +60,8 @@ const DailySurvey = () => {
       <p>Welcome, {employee.firstName}</p>
       <form
         className="survey-form"
-        // onSubmit={handleFormSubmit}
+        onSubmit={handleFormSubmit}
         onChange={dateHandler}
-        action="/dailysurvey"
-        method="POST"
       >
         <div className="survey-rating-row">
           <label>
@@ -249,7 +260,10 @@ const DailySurvey = () => {
         <input
           type="submit"
           value="Submit"
-          onClick={() => setDailySurveyState("submitted")}
+          onClick={() => {
+            setDailySurveyState("submitted");
+            sentimentAnalysis(dailyComment);
+          }}
         />
       </form>
       <p>Rating:{dailyFeeling}</p>

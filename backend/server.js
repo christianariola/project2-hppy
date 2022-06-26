@@ -26,11 +26,30 @@ app.get("/", (req, res) => {
   res.send("Welcome to Hppy");
 });
 
-app.post("/dailysurvey", (req, res) => {
-  res.json(req.body);
+const { DailySurvey } = require("./models/dailySurveyModel");
+
+//POST /Daily
+app.post("/dailySurvey", (req, res) => {
+  let dailySurvey = new DailySurvey(req.body);
+  console.log(dailySurvey);
+  // res.send("Daily Survey Submitted");
+
+
+  dailySurvey.save((err) => {
+    if (err) {
+      console.log(err);
+      res.status(400).json(err);
+    } else {
+      res.status(201).json({
+        message: "New Survey Saved",
+        Survey: dailySurvey,
+      });
+    }
+  });
 });
+
 // Routes
 app.use("/api/employees", require("./routes/employeeRoutes"));
-// app.use("/api/dailySurvey", require("./routes/surveyRoutes"));
+app.use("/api/dailySurvey", require("./routes/surveyRoutes"));
 
 app.use(errorHandler);
