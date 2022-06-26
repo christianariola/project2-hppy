@@ -6,22 +6,32 @@ const dailySurvey = require("../models/dailySurveyModel");
 // @route  /api/dailySurvey
 // @access Public
 const submitSurvey = asyncHandler(async (req, res) => {
-  const { questionOne, questionTwo, sentimentRating, surveyState } = req.body;
-
-  const survey = await dailySurvey.create({
+  const {
+    surveyName,
     questionOne,
     questionTwo,
     sentimentRating,
     surveyState,
+    surveyDate,
+  } = req.body;
+
+  const survey = await dailySurvey.create({
+    surveyName,
+    questionOne,
+    questionTwo,
+    sentimentRating,
+    surveyState,
+    surveyDate,
   });
 
   if (survey) {
     res.status(201).json({
-      _id: survey._id,
+      surveyName: survey.surveyName,
       questionOne: survey.questionOne,
       questionTwo: survey.questionTwo,
       sentimentRating: survey.sentimentRating,
       surveyState: survey.surveyState,
+      surveyDate: survey.surveyDate,
     });
   } else {
     res.status(400);

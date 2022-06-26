@@ -3,6 +3,11 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const dailySurveySchema = new Schema({
+  surveyName: {
+    type: String,
+    required: [true, "Please add a survey name"],
+    unique: true,
+  },
   questionOne: {
     type: Number,
     min: 1,
@@ -21,7 +26,7 @@ const dailySurveySchema = new Schema({
     required: true,
     default: "pending",
   },
-  date: {
+  surveyDate: {
     type: Date,
     required: true,
   },

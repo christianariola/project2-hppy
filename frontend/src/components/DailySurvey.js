@@ -1,6 +1,7 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import axios from "axios";
+import { addDailySurvey } from "../features/dailysurvey/surveySlice";
 
 const DailySurvey = () => {
   // bring in employee state from redux store
@@ -12,7 +13,7 @@ const DailySurvey = () => {
 
   const [dailyDate, setDailyDate] = useState();
 
-  const dateHandler = (e) => {
+  const dateHandler = () => {
     const currentYear = new Date().getFullYear();
     const currentMonth = new Date().getMonth() + 1;
     const currentDay = new Date().getDate();
@@ -20,42 +21,39 @@ const DailySurvey = () => {
     setDailyDate(together);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dateHandler();
-    console.log("dailyFeeling", dailyFeeling);
-    console.log("dailyComment", dailyComment);
-    console.log("dailySentiment", dailySentiment);
-    console.log("dailySurveyState", dailySurveyState);
-    console.log("dailyDate", dailyDate);
-    setDailySurveyState("submitted");
+  const dispatch = useDispatch();
 
-    axios
-      .post("/api/dailySurvey", {
-        dailyFeeling,
-        dailyComment,
-        dailySentiment,
-        employeeId: employee._id,
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const dailySurvey = {
+      employeeEmail: employee.email,
+      dailyFeeling,
+      dailyComment,
+      dailySentiment,
+      dailySurveyState,
+      dailyDate,
+    };
+
+    dispatch(addDailySurvey(dailySurvey));
+    console.log(dailySurvey);
   };
 
   return (
     <>
       <h2>How was your Shift?</h2>
       <p>Welcome, {employee.firstName}</p>
-      <form className="survey-form" onSubmit={handleSubmit}>
+      <form
+        className="survey-form"
+        onSubmit={handleFormSubmit}
+        onChange={dateHandler}
+      >
         <div className="survey-rating-row">
           <label>
             {/* <p>Very Unsatisfactory</p> */}
             <svg
-              width="64"
-              height="64"
+              className="survey-rating-icon-veryunsat"
+              width="96"
+              height="96"
               viewBox="0 0 64 64"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -81,20 +79,20 @@ const DailySurvey = () => {
                 fill="white"
               />
             </svg>
-
             <input
               type="radio"
               name="questionOne"
               value="1"
-              onClick={() => setDailyFeeling(1)}
+              onClick={(e) => setDailyFeeling(e.target.value)}
               style={{ display: "none" }}
             />
           </label>
           <label>
             {/* <p>Unsatisfactory</p> */}
             <svg
-              width="64"
-              height="64"
+              className="survey-rating-icon-unsat"
+              width="96"
+              height="96"
               viewBox="0 0 64 64"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -120,15 +118,16 @@ const DailySurvey = () => {
               type="radio"
               name="questionOne"
               value="2"
-              onClick={() => setDailyFeeling(2)}
+              onClick={(e) => setDailyFeeling(e.target.value)}
               style={{ display: "none" }}
             />
           </label>
           <label>
             {/* <p>Nuetral</p> */}
             <svg
-              width="64"
-              height="64"
+              className="survey-rating-icon-nuetral"
+              width="96"
+              height="96"
               viewBox="0 0 64 64"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -150,15 +149,16 @@ const DailySurvey = () => {
               type="radio"
               name="questionOne"
               value="3"
-              onClick={() => setDailyFeeling(3)}
+              onClick={(e) => setDailyFeeling(e.target.value)}
               style={{ display: "none" }}
             />
           </label>
           <label>
             {/* <p>Satisfactory</p> */}
             <svg
-              width="64"
-              height="64"
+              className="survey-rating-icon-sat"
+              width="96"
+              height="96"
               viewBox="0 0 64 64"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -184,15 +184,16 @@ const DailySurvey = () => {
               type="radio"
               name="questionOne"
               value="4"
-              onClick={() => setDailyFeeling(4)}
+              onClick={(e) => setDailyFeeling(e.target.value)}
               style={{ display: "none" }}
             />
           </label>
           <label>
             {/* <p>Very Satisfactory</p> */}
             <svg
-              width="64"
-              height="64"
+              className="survey-rating-icon-verysat"
+              width="96"
+              height="96"
               viewBox="0 0 64 64"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -220,26 +221,34 @@ const DailySurvey = () => {
               type="radio"
               name="questionOne"
               value="5"
-              onClick={() => setDailyFeeling(5)}
+              onClick={(e) => setDailyFeeling(e.target.value)}
               style={{ display: "none" }}
             />
           </label>
         </div>
-
-        <label htmlFor="questionTwo">
-          What did you like most about your shift?
-          <input
-            id="questionTwo"
+        <div className="survey-comment">
+          <label htmlFor="questionTwo">
+            What did you like most about your shift?
+          </label>
+          <textarea
             name="questionTwo"
-            type="text"
+            id="questionTwo"
+            cols="30"
+            rows="20"
             value={dailyComment}
             onChange={(e) => setDailyComment(e.target.value)}
-          />
-        </label>
-        <input type="submit" value="Submit" />
+          ></textarea>
+        </div>
+
+        <input
+          type="submit"
+          value="Submit"
+          onClick={() => setDailySurveyState("submitted")}
+        />
       </form>
-      {dailyFeeling}
-      {dailyComment}
+      <p>Rating:{dailyFeeling}</p>
+      <br></br>
+      <p>Comment:{dailyComment}</p>
     </>
   );
 };

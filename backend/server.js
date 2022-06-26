@@ -25,9 +25,12 @@ app.get('/', (req, res) => {
     res.send('Welcome to Hppy')
 })
 
+app.post('/testSurvey',(req,res)=>{
+    res.json(req.body);
+    })
 // Routes
 app.use('/api/employees', require('./routes/employeeRoutes'))
-app.use('/api/surveys', require('./routes/surveyRoutes'))
+app.use("/api/dailySurvey", require("./routes/surveyRoutes"));
 
 
 app.use(errorHandler)

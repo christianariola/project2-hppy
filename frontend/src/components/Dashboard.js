@@ -6,7 +6,7 @@ const Dashboard = () => {
   // bring in employee state from redux store
   const { employee } = useSelector((state) => state.auth);
   // bring in dailySurvey state from redux store
-  const { dailySurvey } = useSelector((state) => state.dailySurvey);
+  // const { dailySurvey } = useSelector((state) => state.dailySurvey);
 
   return (
     <>
@@ -14,7 +14,8 @@ const Dashboard = () => {
       <p>Welcome, {employee.firstName}</p>
       <p>Role: {employee.role}</p>
       <div className="survey-Container">
-        {dailySurvey === "pending" ? <DailySurvey /> : <DailyCompleted />}
+        <DailySurvey />
+        {/* {dailySurvey === "pending" ? <DailySurvey /> : <DailyCompleted />} */}
       </div>
     </>
   );
