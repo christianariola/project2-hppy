@@ -1,12 +1,13 @@
 import axios from 'axios'
 
 // Local API_URL for dev
-//const API_URL = '/api/dailySurvey'
+//const API_URL = '/dailySurvey'
 const API_URL = "https://pluto-hppy.herokuapp.com/api/dailySurvey";
 
 const addSurvey = async (surveyData) => {
+  console.log(surveyData);
   const response = await axios.post(API_URL, surveyData);
-
+  
   if (response.data) {
     localStorage.setItem("survey", JSON.stringify(response.data));
   }
@@ -15,7 +16,7 @@ const addSurvey = async (surveyData) => {
 };
 
 const surveyService = {
-  addSurvey,
+  addSurvey
 };
 
 export default surveyService;

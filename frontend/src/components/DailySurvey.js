@@ -29,17 +29,17 @@ const DailySurvey = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     const dailySurvey = {
-      employeeEmail: employee.email,
       dailyFeeling,
       dailyComment,
       dailySentiment,
       dailySurveyState,
       dailyDate,
     };
-
-    dispatch(addDailySurvey(dailySurvey));
     console.log(dailySurvey);
-  };
+    // dispatch(addDailySurvey(dailySurvey));
+    // console.log(dispatch(addDailySurvey(dailySurvey.value)));
+
+  }
 
   return (
     <>
@@ -47,8 +47,10 @@ const DailySurvey = () => {
       <p>Welcome, {employee.firstName}</p>
       <form
         className="survey-form"
-        onSubmit={handleFormSubmit}
+        // onSubmit={handleFormSubmit}
         onChange={dateHandler}
+        action="/dailysurvey"
+        method="POST"
       >
         <div className="survey-rating-row">
           <label>
