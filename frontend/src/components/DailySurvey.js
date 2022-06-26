@@ -42,10 +42,13 @@ const DailySurvey = () => {
       dailySurveyState,
       dailySurveyDate,
     };
-    // const jsonDailySurvey = JSON.stringify(dailySurvey);
+    const _id = employee.email + dailySurveyDate;
+    console.log(typeof _id);
+
     //axios post to /dailySurvey endpoint
     axios
-      .post("/dailySurvey", { dailySurvey })
+      .post("/dailySurvey", { dailySurvey, _id: _id })
+
       .then((res) => {
         console.log(res);
       })
@@ -266,9 +269,9 @@ const DailySurvey = () => {
           }}
         />
       </form>
-      <p>Rating:{dailyFeeling}</p>
+      {/* <p>Rating:{dailyFeeling}</p>
       <br></br>
-      <p>Comment:{dailyComment}</p>
+      <p>Comment:{dailyComment}</p> */}
     </>
   );
 };

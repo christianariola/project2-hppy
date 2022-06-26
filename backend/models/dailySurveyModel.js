@@ -3,6 +3,11 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const dailySurveySchema = new Schema({
+  _id: {
+    type: String,
+    required: [true, "Please add an id"],
+    unique: true,
+  },
   dailySurvey: {
     employeeEmail: {
       type: String,
@@ -11,7 +16,6 @@ const dailySurveySchema = new Schema({
     surveyName: {
       type: String,
       required: [true, "Please add a survey name"],
-      unique: true,
     },
     dailyFeeling: {
       type: String,
@@ -34,7 +38,7 @@ const dailySurveySchema = new Schema({
     },
   },
   // employeeEmail: {
-  //   type: String,
+  //   type: String ,
   //   required: [true, "Please add an employee email"],
   // },
   // surveyName: {
@@ -61,7 +65,7 @@ const dailySurveySchema = new Schema({
   //   default: "pending",
   // },
   // dailySurveyDate: {
-  //   type: Date,
+  //   type: String,
   //   required: true,
   // },
 });
