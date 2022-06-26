@@ -17,7 +17,10 @@ const DailySurvey = () => {
     const currentYear = new Date().getFullYear();
     const currentMonth = new Date().getMonth() + 1;
     const currentDay = new Date().getDate();
-    const together = [currentYear, currentMonth, currentDay].join("");
+    const together =
+      "DailySurvey" + [currentYear, currentMonth, currentDay].join("");
+    // const surveyId = together+('DailySurvey');
+    // console.log(surveyId);
     setDailyDate(together);
   };
 
@@ -85,6 +88,7 @@ const DailySurvey = () => {
               value="1"
               onClick={(e) => setDailyFeeling(e.target.value)}
               style={{ display: "none" }}
+              onMouseDown={() => dateHandler()}
             />
           </label>
           <label>
