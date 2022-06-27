@@ -1,0 +1,17 @@
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&display=swap');
+
+body {
+    margin: 0;
+}
+
+h1 {
+    font-family: 'Titillium Web', sans-serif;
+}
+
+footer {
+    background: linear-gradient(180deg, #0098FF, #003D66);
+    color: #fff;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}

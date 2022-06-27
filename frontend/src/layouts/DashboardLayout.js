@@ -1,11 +1,11 @@
 import { Outlet } from 'react-router-dom'
-import DashboardHeader from './DashboardHeader'
-import DashboardFooter from './DashboardFooter'
+import DashboardNavbar from '../components/DashboardNavbar'
+import DashboardFooter from '../components/DashboardFooter'
 
 const Dashboard = () => {
 
     return <>
-        <DashboardHeader />
+        <DashboardNavbar />
         <Outlet />
         <DashboardFooter />
     </>
