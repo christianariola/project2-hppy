@@ -1,14 +1,13 @@
-import { useSelector } from 'react-redux'
+import { Outlet } from 'react-router-dom'
+import DashboardHeader from './DashboardHeader'
+import DashboardFooter from './DashboardFooter'
 
 const Dashboard = () => {
 
-    // bring in employee state from redux store
-    const { employee } = useSelector(state => state.auth)
-
     return <>
-        <h1>Dashboard</h1>
-        <p>Welcome, {employee.firstName}</p>
-        <p>Role: {employee.role}</p>
+        <DashboardHeader />
+        <Outlet />
+        <DashboardFooter />
     </>
 }
 

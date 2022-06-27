@@ -1,9 +1,11 @@
-const Main = () => {
-    return (
-        <div>
-            <h1>Main Page</h1>
-        </div>
-    )
+
+
+const Layout = () => {
+
+    return <>
+        <h1>Main page</h1>
+    </>
+    
 }
 
-export default Main
+export default Layout
