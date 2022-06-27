@@ -7,10 +7,13 @@ import Dashboard from './components/Dashboard'
 import Layout from './components/Layout'
 import Error404 from './pages/Error404'
 import Unauthorized from './pages/Unauthorized'
+import Surveys from './components/Surveys/Surveys'
 
 const App = () => {
   return <>
+    
     <Routes>
+      <Route path='/surveys' element={<Surveys />} />
       <Route path='/' element={<Layout />}>
         {/** public routes */}
         <Route path="login" element={<Login />} />
