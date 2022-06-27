@@ -5,8 +5,8 @@ const Schema = mongoose.Schema;
 const dailySurveySchema = new Schema({
   surveyid: {
     type: String,
-    required: [true, "Please add an id"],
     unique: true,
+    required: [true, "Please add an id"],
     Error: [true, "Survey Already Exists"],
   },
   dailySurvey: {

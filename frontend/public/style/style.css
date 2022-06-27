@@ -1,10 +1,9 @@
-/* 
-.survey-rating-row svg:hover{
-    transform: scale(1.2);
-    background-color: grey;
-    transition: ease-in-out 0.5s;
-
-} */
+/*TEMPORARY DAILY STYLING TOP BE REPLACED //////////////////////////////////////////////////////////////////////////////////// */
+body {
+  background-color: #f2f2f2;
+  max-width: 1400px;
+  margin: 0 auto;
+}
 
 /* animate emoji on hover */
 .survey-rating-row svg:hover path {
@@ -21,10 +20,28 @@ emoji-animation {
     transform: scale(0.95);
   }
   50% {
-    transform: scale(1.03);
+    transform: scale(1);
   }
   100% {
     transform: scale(0.95);
+  }
+}
+
+radio-animation {
+  animation-name: emoji-animation;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+@keyframes radio-animation {
+  0% {
+    transform: scale(2);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(2);
   }
 }
 
@@ -35,12 +52,12 @@ emoji-animation {
   justify-content: center;
   width: 100%;
   height: 100%;
-  padding: 20px;
-  /* border-radius: 10px;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75); */
+  padding: 5rem;
+  border-radius: 1rem;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
   gap: 2rem;
   margin: 0 auto;
-  max-width: 1200px;
+  max-width: 1400px;
 }
 
 .survey-comment {
@@ -66,8 +83,32 @@ svg {
   border-radius: 10px;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
 }
-label.Selected {
-  transform: scale(1.1);
-  transition: ease-in-out 0.5s;
-  margin: 1%;
+
+label {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  gap: 1rem;
 }
+
+label > input[type="radio"]:checked {
+  animation: radio-animation 1s ease-in-out infinite;
+}
+
+textarea {
+  width: 75%;
+  height: 75%;
+  border: none;
+  /* border-radius: 10px;
+    padding: 1rem; */
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+}
+
+.survey-comment label {
+  padding: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+/* //////////////////////////////////////////////////////////////////////////////////// */
