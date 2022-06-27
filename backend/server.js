@@ -26,6 +26,7 @@ app.get("/", (req, res) => {
   res.send("Welcome to Hppy");
 });
 
+//Daily Survey Schema
 const { DailySurvey } = require("./models/dailySurveyModel");
 
 //POST /Daily

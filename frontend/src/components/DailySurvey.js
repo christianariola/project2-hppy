@@ -7,6 +7,8 @@ const DailySurvey = () => {
   // bring in employee state from redux store
   const { employee } = useSelector((state) => state.auth);
 
+  const [isActive, setIsActive] = useState(false);
+
   const [dailyFeeling, setDailyFeeling] = useState(3);
   const [dailyComment, setDailyComment] = useState("");
   const [dailySentiment, setDailySentiment] = useState();
@@ -29,6 +31,11 @@ const DailySurvey = () => {
     setDailySentiment("positive");
   };
   // const dispatch = useDispatch();
+  //Handle changing of classname on se
+  const handleClassname = (e) => {
+    console.log(e);
+    setIsActive(!isActive);
+  };
 
   //Form Submit function
   const handleFormSubmit = (e) => {
@@ -70,13 +77,16 @@ const DailySurvey = () => {
         onChange={dateHandler}
       >
         <div className="survey-rating-row">
-          <label>
+          <label
+            className={isActive ? "Selected" : ""}
+            onMouseDown={() => handleClassname(1)}
+          >
             {/* <p>Very Unsatisfactory</p> */}
             <svg
               className="survey-rating-icon-veryunsat"
-              width="96"
-              height="96"
-              viewBox="0 0 64 64"
+              width="140"
+              height="140"
+              viewBox="0 0 62 65"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -114,9 +124,9 @@ const DailySurvey = () => {
             {/* <p>Unsatisfactory</p> */}
             <svg
               className="survey-rating-icon-unsat"
-              width="96"
-              height="96"
-              viewBox="0 0 64 64"
+              width="140"
+              height="140"
+              viewBox="0 0 62 65"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -149,9 +159,9 @@ const DailySurvey = () => {
             {/* <p>Nuetral</p> */}
             <svg
               className="survey-rating-icon-nuetral"
-              width="96"
-              height="96"
-              viewBox="0 0 64 64"
+              width="140"
+              height="140"
+              viewBox="0 0 62 65"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -180,9 +190,9 @@ const DailySurvey = () => {
             {/* <p>Satisfactory</p> */}
             <svg
               className="survey-rating-icon-sat"
-              width="96"
-              height="96"
-              viewBox="0 0 64 64"
+              width="140"
+              height="140"
+              viewBox="0 0 62 65"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -215,9 +225,9 @@ const DailySurvey = () => {
             {/* <p>Very Satisfactory</p> */}
             <svg
               className="survey-rating-icon-verysat"
-              width="96"
-              height="96"
-              viewBox="0 0 64 64"
+              width="140"
+              height="140"
+              viewBox="0 0 62 65"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -272,9 +282,9 @@ const DailySurvey = () => {
           }}
         />
       </form>
-      {/* <p>Rating:{dailyFeeling}</p>
+      <p>Rating:{dailyFeeling}</p>
       <br></br>
-      <p>Comment:{dailyComment}</p> */}
+      <p>Comment:{dailyComment}</p>
     </>
   );
 };

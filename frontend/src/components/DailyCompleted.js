@@ -6,6 +6,7 @@ const DailyCompleted = (props) => {
           <h2>Daily Completed</h2>
         </div>
         <div className="daily-completed__body"></div>
+        
       </div>
     </>
   );
