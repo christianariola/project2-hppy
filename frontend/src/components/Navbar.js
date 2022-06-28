@@ -7,6 +7,7 @@ import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import { Link as RouterLink } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -75,9 +76,9 @@ const Header = () => {
                     Contact
                 </Link>
                 </nav>
-                <Button href="/login" variant="contained" sx={{ my: 1, mx: 1.5 }}>
+                <Link component={RouterLink} to='/login' variant="button" sx={{ my: 1, mx: 1.5 }}>
                 Login
-                </Button>
+                </Link>
             </Toolbar>
         </AppBar>
     </>
