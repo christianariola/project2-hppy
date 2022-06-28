@@ -1,7 +1,7 @@
 
 const Error404 = () => {
     return <>
-        <h1>Page not found.</h1>
+        <h1>Error 404: Page not found.</h1>
     </>
 }
 
