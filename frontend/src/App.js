@@ -17,6 +17,8 @@ import AdminDashboard from './pages/admin/AdminDashboard'
 import HodDashboard from './pages/hod/HodDashboard'
 import EmployeeDashboard from './pages/employee/EmployeeDashboard'
 
+import DailySurvey from './components/DailySurvey'
+
 const App = () => {
 
   const { employee } = useSelector(state => state.auth)
@@ -64,6 +66,8 @@ const App = () => {
       <Route element={<RequireAuth allowedRoles={["employee", "superadmin", "admin"]} />}>
         <Route path="/app" element={<DashboardLayout />}>
           <Route path="dashboard" element={dashboardIndex}></Route>
+          <Route path="dailysurvey" element={<DailySurvey />}></Route>
+
           <Route element={<RequireAuth allowedRoles={["superadmin", "admin"]} />}>
             <Route path="employee/add" element={<AddEmployee />} />
           </Route>

@@ -7,15 +7,15 @@ import ListSubheader from '@mui/material/ListSubheader';
 
 export const employeeListItems = (
 <>
-    <ListItemButton>
+    <ListItemButton component={RouterLink} to='/app/dashboard'>
         <img src="/images/dashboard/icons/icon-home.svg" alt="Home" />
         <ListItemText primary="Home" sx={{ ml: '10px' }} />
     </ListItemButton>
 
 
-    <ListItemButton>
+    <ListItemButton component={RouterLink} to='/app/dailysurvey'>
         <img src="/images/dashboard/icons/icon-survey.svg" alt="My Survey" />
-        <ListItemText primary="My Survey" sx={{ ml: '10px' }} />
+        <ListItemText primary="My Surveys" sx={{ ml: '10px' }} />
     </ListItemButton>
 
     <ListItemButton>
@@ -41,7 +41,6 @@ export const superadminListItems = (
         <img src="/images/dashboard/icons/icon-home.svg" alt="Home" />
         <ListItemText primary="Home" sx={{ ml: '10px' }} />
     </ListItemButton>
-
 
     <ListItemButton>
         <img src="/images/dashboard/icons/icon-account.svg" alt="My Account" />
