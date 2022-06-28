@@ -1,42 +1,58 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import authService from './authService'
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import authService from "./authService";
 
 // Get user from local storage
-const employee = JSON.parse(localStorage.getItem('employee'))
+const employee = JSON.parse(localStorage.getItem("employee"));
 
 const initialState = {
-    employee: employee ? employee : null,
-    isError: false,
-    isSuccess: false,
-    isLoading: false,
-    message: ''
-}
+  employee: employee ? employee : null,
+  isError: false,
+  isSuccess: false,
+  isLoading: false,
+  message: "",
+};
 
 // Add new employee
-export const addEmployee = createAsyncThunk('auth/addEmployee', async (employee, thunkAPI) => {
+export const addEmployee = createAsyncThunk(
+  "auth/addEmployee",
+  async (employee, thunkAPI) => {
     try {
-        return await authService.addEmployee(employee)
+      return await authService.addEmployee(employee);
     } catch (error) {
-        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
 
-        return thunkAPI.rejectWithValue(message)
+      return thunkAPI.rejectWithValue(message);
     }
-})
+  }
+);
 
 // Login employee
-export const login = createAsyncThunk('auth/login', async (employee, thunkAPI) => {
+export const login = createAsyncThunk(
+  "auth/login",
+  async (employee, thunkAPI) => {
     try {
-        return await authService.login(employee)
+      return await authService.login(employee);
     } catch (error) {
-        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
 
-        return thunkAPI.rejectWithValue(message)
+      return thunkAPI.rejectWithValue(message);
     }
-})
+  }
+);
 
-export const logout = createAsyncThunk('auth/logout', async () => {
-    await authService.logout()
-})
+export const logout = createAsyncThunk("auth/logout", async () => {
+  await authService.logout();
+});
 
 export const authSlice = createSlice({
     name: 'auth',
@@ -47,7 +63,7 @@ export const authSlice = createSlice({
             state.isSuccess = false
             state.isError = false
             state.message = ''
-        }
+        },
         
     },
     extraReducers: (builder) => {
@@ -58,7 +74,8 @@ export const authSlice = createSlice({
         .addCase(addEmployee.fulfilled, (state, action) => {
             state.isLoading = false
             state.isSuccess = true
-            state.employee = action.payload
+            //disabled causing error on route protection
+            //state.employee = action.payload
         })
         .addCase(addEmployee.rejected, (state, action) => {
             state.isLoading = false
@@ -86,5 +103,5 @@ export const authSlice = createSlice({
     },
 })
 
-export const { reset } = authSlice.actions
-export default authSlice.reducer
+export const { reset } = authSlice.actions;
+export default authSlice.reducer;

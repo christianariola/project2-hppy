@@ -1,13 +1,8 @@
-const express = require('express')
-const router = express.Router()
-const { 
-    registerEmployee, 
-    loginEmployee, 
-    getMe,
-} = require('../controllers/employeeController')
+const express = require("express");
+const router = express.Router();
 
-const { protect } = require('../middleware/authMiddleware')
+const { submitSurvey } = require("../controllers/surveyController");
 
-router.post('/', registerEmployee)
+router.post("/dailysurvey", submitSurvey);
 
-module.exports = router
+module.exports = router;

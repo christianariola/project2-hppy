@@ -56,6 +56,7 @@ const Register = () => {
         }
 
         dispatch(addEmployee(employeeData))
+
     }
 
     // if(isLoading) {
