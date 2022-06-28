@@ -1,53 +1,76 @@
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import MoodIcon from '@mui/icons-material/Mood';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import BarChartIcon from '@mui/icons-material/BarChart';
-import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
-import { Link } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom';
+import { Link as MaterialLink }from "@mui/material/Link";
+import Divider from '@mui/material/Divider';
+import ListSubheader from '@mui/material/ListSubheader';
 
-export const mainListItems = (
-  <>
-  <Link to="/app/dashboard">
+export const employeeListItems = (
+<>
     <ListItemButton>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <ListItemText primary="Dashboard" />
+        <img src="/images/dashboard/icons/icon-home.svg" alt="Home" />
+        <ListItemText primary="Home" sx={{ ml: '10px' }} />
     </ListItemButton>
-  </Link>
 
 
     <ListItemButton>
-      <ListItemIcon>
-        <MoodIcon />
-      </ListItemIcon>
-      <ListItemText primary="My Survey" />
+        <img src="/images/dashboard/icons/icon-survey.svg" alt="My Survey" />
+        <ListItemText primary="My Survey" sx={{ ml: '10px' }} />
     </ListItemButton>
+
     <ListItemButton>
-      <ListItemIcon>
-        <AccountCircleIcon />
-      </ListItemIcon>
-      <ListItemText primary="My Account" />
+        <img src="/images/dashboard/icons/icon-account.svg" alt="My Account" />
+        <ListItemText primary="My Account" sx={{ ml: '10px' }} />
     </ListItemButton>
+
     <ListItemButton>
-      <ListItemIcon>
-        <QuestionAnswerIcon />
-      </ListItemIcon>
-      <ListItemText primary="Requests" />
+        <img src="/images/dashboard/icons/icon-request.svg" alt="Requests" />
+        <ListItemText primary="Requests" sx={{ ml: '10px' }} />
     </ListItemButton>
+
     <ListItemButton>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Reports" />
+        <img src="/images/dashboard/icons/icon-reports.svg" alt="Reports" />
+        <ListItemText primary="Reports" sx={{ ml: '10px' }} />
     </ListItemButton>
-  </>
+</>
 )
 
-export const secondaryListItems = (
-  <>
-  </>
+export const superadminListItems = (
+    <>
+    <ListItemButton component={RouterLink} to='/app/dashboard'>
+        <img src="/images/dashboard/icons/icon-home.svg" alt="Home" />
+        <ListItemText primary="Home" sx={{ ml: '10px' }} />
+    </ListItemButton>
+
+
+    <ListItemButton>
+        <img src="/images/dashboard/icons/icon-account.svg" alt="My Account" />
+        <ListItemText primary="My Account" sx={{ ml: '10px' }} />
+    </ListItemButton>
+
+    <ListItemButton>
+        <img src="/images/dashboard/icons/icon-request.svg" alt="Requests" />
+        <ListItemText primary="Requests" sx={{ ml: '10px' }} />
+    </ListItemButton>
+
+    <ListItemButton>
+        <img src="/images/dashboard/icons/icon-reports.svg" alt="Reports" />
+        <ListItemText primary="Reports" sx={{ ml: '10px' }} />
+    </ListItemButton>
+    
+    <Divider sx={{ my: 1 }} />
+    <ListSubheader component="div" inset  sx={{ backgroundColor: '#336485', textColor: 'white' }} color="inherit">
+        Admin Section
+    </ListSubheader>
+
+    <ListItemButton>
+        <img src="/images/dashboard/icons/icon-account.svg" alt="My Account" />
+        <ListItemText primary="Companies" sx={{ ml: '10px' }} />
+    </ListItemButton>
+
+    <ListItemButton component={RouterLink} to='/app/employee/add'>
+        <img src="/images/dashboard/icons/icon-account.svg" alt="My Account" />
+        <ListItemText primary="Add Employee" sx={{ ml: '10px' }} />
+    </ListItemButton>
+    </>
 )

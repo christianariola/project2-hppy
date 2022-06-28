@@ -1,9 +1,10 @@
+import Features from "./Features"
 
 
 const Layout = () => {
 
     return <>
-        <h1>Main page</h1>
+        <Features />
     </>
     
 }

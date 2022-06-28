@@ -38,6 +38,7 @@ const Login = () => {
 
     // bring in pieces of state
     const { employee, isLoading, isError, isSuccess, message } = useSelector(state => state.auth)
+    
 
     useEffect(() => {
         if(isError){
@@ -99,7 +100,10 @@ const Login = () => {
               alignItems: 'center',
             }}
           >
-            <img src="./images/hppy-logo.svg" alt="Hppy" />
+            <Link href="/">
+              <img src="./images/hppy-logo.svg" alt="Hppy" />
+            </Link>
+
             <Typography mt={2} component="h1" variant="h5">
               Sign in
             </Typography>
@@ -144,11 +148,6 @@ const Login = () => {
                 <Grid item xs>
                   <Link href="#" variant="body2">
                     Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>
               </Grid>
