@@ -107,6 +107,7 @@ const DashboardHeader = () => {
 
     let employeeList
     const { employee } = useSelector(state => state.auth)
+
     switch(employee.role) {
         case "superadmin":
             employeeList = superadminListItems;
@@ -118,7 +119,10 @@ const DashboardHeader = () => {
             employeeList = employeeListItems;
             break;
     }
-        
+
+    const empName = `${employee.firstName} ${employee.lastName}`
+    const empInitials = employee.firstName.charAt(0)+employee.lastName.charAt(0)
+
     return <>
 
         <AppBar position="absolute" open={open} color="default">
@@ -158,7 +162,7 @@ const DashboardHeader = () => {
             <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Christian Ariola" sx={{ bgcolor: "#0098FF" }} />
+                <Avatar alt="{empName}" sx={{ bgcolor: "#0098FF" }}>{empInitials}</Avatar>
                 </IconButton>
             </Tooltip>
             <Menu
