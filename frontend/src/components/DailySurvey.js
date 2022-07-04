@@ -31,7 +31,7 @@ const DailySurvey = () => {
   ///States for Sentiment Analysis
   const [metadata, setMetadata] = useState();
   const [model, setModel] = useState();
-  const [testText, setText] = useState("");
+  const [sentimentText, setSentimentText] = useState("");
   const [sentimentScore, setSentimentScore] = useState();
   const [trimedText, setTrim] = useState("");
   const [seqText, setSeq] = useState("");
@@ -50,6 +50,11 @@ const DailySurvey = () => {
   const OOV_INDEX = 2;
 
   //Async function to load model and metadata
+  /**
+   * The loadModel function loads the model from the URL and the loadMetadata function loads the
+   * metadata from the URL.
+   * @param url - {
+   */
   async function loadModel(url) {
     try {
       const model = await tf.loadLayersModel(url.model);
@@ -70,6 +75,15 @@ const DailySurvey = () => {
   }
 
   //Sentiment Analysis Block
+  /**
+   * If the sentiment score is less than 0.6, the daily sentiment is negative, and the daily total
+   * rating is the daily feeling minus 1.
+   * If the sentiment score is greater than 0.6 and the daily feeling is less than 5, the daily
+   * sentiment is positive, and the daily total rating is the daily feeling plus 1.
+   * If the sentiment score is greater than 0.6 and the daily feeling is greater than 5, the daily
+   * sentiment is neutral, and the daily total rating is the daily feeling.
+   * @param sentimentScore - number
+   */
   const sentimentAnalysis = (sentimentScore) => {
     if (sentimentScore < 0.6) {
       setDailySentiment("negative");
@@ -83,6 +97,11 @@ const DailySurvey = () => {
     }
   };
 
+  /**
+   * The function takes a string, trims it, converts it to lowercase, removes punctuation, splits it
+   * into an array of words, and then maps each word to a number.
+   * @param {string} text
+   */
   const getSentimentScore = (text) => {
     console.log(text);
     const inputText = text
@@ -362,10 +381,10 @@ const DailySurvey = () => {
             id="questionTwo"
             cols="70"
             rows="10"
-            value={testText}
+            value={sentimentText}
             onChange={(e) => {
-              setText(e.target.value);
-              getSentimentScore(testText);
+              setSentimentText(e.target.value);
+              getSentimentScore(sentimentText);
               sentimentAnalysis(sentimentScore);
             }}
           ></textarea>
@@ -376,15 +395,15 @@ const DailySurvey = () => {
           value="Submit"
           onClick={() => {
             setDailySurveyState("submitted");
-            setDailyComment(testText);
-            getSentimentScore(testText);
+            setDailyComment(sentimentText);
+            getSentimentScore(sentimentText);
             sentimentAnalysis(sentimentScore);
           }}
         />
       </form>
       <p>TotalRating:{dailyTotalRating}</p>
       <p>DailyFeeling:{dailyFeeling}</p>
-      <p>Comment:{testText}</p>
+      <p>Comment:{sentimentText}</p>
       <p>Sentiment:{sentimentScore}</p>
     </>
   );
