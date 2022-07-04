@@ -54,8 +54,36 @@ app.post("/dailySurvey", (req, res) => {
   });
 });
 
+//Weekly Survey Schema
+const { WeeklySurvey } = require("./models/weeklySurveyModel");
+
+//POST Weekly Survey
+
+app.post("/surveys/all", (req, res) => {
+  let weeklySurvey = new WeeklySurvey(req.body);
+
+  dailySurvey.save((err) => {
+    if (err) {
+      console.log(err.code);
+      err.code === 11000
+        ? res.status(400).json({
+            message: "Weekly Survey Already Exists",
+          })
+        : res.status(400).send(err);
+    } else {
+      res.status(201).json({
+        message: "New Weekly Survey Saved",
+        Survey: weeklySurvey,
+      });
+    }
+  });
+});
+
+
 // Routes
 app.use("/api/employees", require("./routes/employeeRoutes"));
 app.use("/api/dailySurvey", require("./routes/surveyRoutes"));
+app.use("/api/Surveys", require("./routes/surveyRoutes"));
+app.use("/api/surveys/all", require("./routes/surveyRoutes"));
 
 app.use(errorHandler);
