@@ -70,7 +70,7 @@ const App = () => {
           <Route path="dashboard" element={dashboardIndex}></Route>
           <Route path="dailysurvey" element={<DailySurvey />}></Route>
           <Route path="surveys" element={<DailySurvey />}></Route>
-          <Route path="surveys/all" element={<Surveys />}></Route>
+          <Route path="weeklysurveys" element={<Surveys />}></Route>
           <Route element={<RequireAuth allowedRoles={["superadmin", "admin"]} />}>
             <Route path="employee/add" element={<AddEmployee />} />
           </Route>

@@ -59,7 +59,7 @@ const { WeeklySurvey } = require("./models/weeklySurveyModel");
 
 //POST Weekly Survey
 
-app.post("/surveys/all", (req, res) => {
+app.post("/weeklySurveys", (req, res) => {
   let weeklySurvey = new WeeklySurvey(req.body);
 
   dailySurvey.save((err) => {
@@ -84,6 +84,6 @@ app.post("/surveys/all", (req, res) => {
 app.use("/api/employees", require("./routes/employeeRoutes"));
 app.use("/api/dailySurvey", require("./routes/surveyRoutes"));
 app.use("/api/Surveys", require("./routes/surveyRoutes"));
-app.use("/api/surveys/all", require("./routes/surveyRoutes"));
+app.use("/api/weeklysurveys", require("./routes/surveyRoutes"));
 
 app.use(errorHandler);
