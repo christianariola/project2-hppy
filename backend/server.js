@@ -30,6 +30,7 @@ app.get("/", (req, res) => {
 const { DailySurvey } = require("./models/dailySurveyModel");
 
 //POST /Daily
+/* This is a post request to the server. */
 app.post("/dailySurvey", (req, res) => {
   let dailySurvey = new DailySurvey(req.body);
 

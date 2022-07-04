@@ -1,6 +1,9 @@
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import * as tf from "@tensorflow/tfjs";
+import { useState, useEffect } from "react";
+import padSequences from "./helper/paddedSeq";
 import axios from "axios";
+
 // import { addDailySurvey } from "../features/dailysurvey/surveySlice";
 
 const DailySurvey = () => {
@@ -13,6 +16,7 @@ const DailySurvey = () => {
   const [dailySurveyState, setDailySurveyState] = useState("pending");
   const [dailySurveyDate, setDailySurveyDate] = useState();
   const [surveyName, setSurveyName] = useState("");
+  const [dailyTotalRating, setDailyTotalRating] = useState(3);
 
   ///Survey Date
   const dateHandler = () => {
@@ -24,10 +28,102 @@ const DailySurvey = () => {
     setSurveyName("DailySurvey" + together);
   };
 
-  //Sentiment Analysis Block
-  const sentimentAnalysis = (dailyComment) => {
-    setDailySentiment("positive");
+  ///States for Sentiment Analysis
+  const [metadata, setMetadata] = useState();
+  const [model, setModel] = useState();
+  const [testText, setText] = useState("");
+  const [sentimentScore, setSentimentScore] = useState();
+  const [trimedText, setTrim] = useState("");
+  const [seqText, setSeq] = useState("");
+  const [padText, setPad] = useState("");
+  const [inputText, setInput] = useState("");
+
+  //Sentiment Analysis model and metadata URL
+
+  const url = {
+    model:
+      "https://storage.googleapis.com/tfjs-models/tfjs/sentiment_cnn_v1/model.json",
+    metadata:
+      "https://storage.googleapis.com/tfjs-models/tfjs/sentiment_cnn_v1/metadata.json",
   };
+
+  const OOV_INDEX = 2;
+
+  //Async function to load model and metadata
+  async function loadModel(url) {
+    try {
+      const model = await tf.loadLayersModel(url.model);
+      setModel(model);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function loadMetadata(url) {
+    try {
+      const metadataJson = await fetch(url.metadata);
+      const metadata = await metadataJson.json();
+      setMetadata(metadata);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  //Sentiment Analysis Block
+  const sentimentAnalysis = (sentimentScore) => {
+    if (sentimentScore < 0.6) {
+      setDailySentiment("negative");
+      setDailyTotalRating(Number(dailyFeeling) - 1);
+    } else if (sentimentScore > 0.6 && dailyFeeling < 5) {
+      setDailySentiment("positive");
+      setDailyTotalRating(Number(dailyFeeling) + 1);
+    } else {
+      setDailySentiment("neutral");
+      setDailyTotalRating(Number(dailyFeeling));
+    }
+  };
+
+  const getSentimentScore = (text) => {
+    console.log(text);
+    const inputText = text
+      .trim()
+      .toLowerCase()
+      .replace(/(\.|\,|\!)/g, "")
+      .split(" ");
+    setTrim(inputText);
+    console.log(inputText);
+    const sequence = inputText.map((word) => {
+      let wordIndex = metadata.word_index[word] + metadata.index_from;
+      if (wordIndex > metadata.vocabulary_size) {
+        wordIndex = OOV_INDEX;
+      }
+      return wordIndex;
+    });
+    setSeq(sequence);
+    console.log(sequence);
+
+    // Perform truncation and padding.
+    const paddedSequence = padSequences([sequence], metadata.max_len);
+    console.log(metadata.max_len);
+    setPad(paddedSequence);
+
+    const input = tf.tensor2d(paddedSequence, [1, metadata.max_len]);
+    console.log(input);
+    setInput(input);
+    const predictOut = model.predict(input);
+    const score = predictOut.dataSync()[0];
+    predictOut.dispose();
+    setSentimentScore(score);
+    return score;
+  };
+
+  useEffect(() => {
+    tf.ready().then(() => {
+      loadModel(url);
+      loadMetadata(url);
+    });
+  }, []);
+
   // const dispatch = useDispatch();
   //Handle changing of classname on se
 
@@ -42,6 +138,7 @@ const DailySurvey = () => {
       dailySentiment,
       dailySurveyState,
       dailySurveyDate,
+      dailyTotalRating,
     };
     const surveyid = employee.email + dailySurveyDate;
     console.log(surveyid);
@@ -265,8 +362,12 @@ const DailySurvey = () => {
             id="questionTwo"
             cols="70"
             rows="10"
-            value={dailyComment}
-            onChange={(e) => setDailyComment(e.target.value)}
+            value={testText}
+            onChange={(e) => {
+              setText(e.target.value);
+              getSentimentScore(testText);
+              sentimentAnalysis(sentimentScore);
+            }}
           ></textarea>
         </div>
 
@@ -275,13 +376,16 @@ const DailySurvey = () => {
           value="Submit"
           onClick={() => {
             setDailySurveyState("submitted");
-            sentimentAnalysis(dailyComment);
+            setDailyComment(testText);
+            getSentimentScore(testText);
+            sentimentAnalysis(sentimentScore);
           }}
         />
       </form>
-      <p>Rating:{dailyFeeling}</p>
-      <br></br>
-      <p>Comment:{dailyComment}</p>
+      <p>TotalRating:{dailyTotalRating}</p>
+      <p>DailyFeeling:{dailyFeeling}</p>
+      <p>Comment:{testText}</p>
+      <p>Sentiment:{sentimentScore}</p>
     </>
   );
 };
