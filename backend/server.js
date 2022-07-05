@@ -55,6 +55,17 @@ app.post("/dailySurvey", (req, res) => {
   });
 });
 
+//get daily survey data and displaying in front by hyewon
+app.get('/dailySurvey', (req, res)=>{
+  DailySurvey.find({})
+  .exec((error, result)=>{
+      if(error){
+          res.send(500).json(error)
+      } else {
+          res.json(result)
+      }
+  })
+})
 // Routes
 app.use("/api/employees", require("./routes/employeeRoutes"));
 app.use("/api/dailySurvey", require("./routes/surveyRoutes"));
