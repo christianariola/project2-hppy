@@ -1,9 +1,11 @@
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
+import {Link} from 'react-router-dom'
 import { Link as RouterLink } from 'react-router-dom';
 import { Link as MaterialLink }from "@mui/material/Link";
 import Divider from '@mui/material/Divider';
 import ListSubheader from '@mui/material/ListSubheader';
+import ReportMain from '../pages/report/ReportMain';
 
 export const employeeListItems = (
 <>
@@ -28,10 +30,13 @@ export const employeeListItems = (
         <ListItemText primary="Requests" sx={{ ml: '10px' }} />
     </ListItemButton>
 
-    <ListItemButton>
+    <ListItemButton component={RouterLink} to='/app/report'>
         <img src="/images/dashboard/icons/icon-reports.svg" alt="Reports" />
         <ListItemText primary="Reports" sx={{ ml: '10px' }} />
     </ListItemButton>
+    <Link to="/app/reports"> {/**by hyewon */}
+        <h1>Reports</h1>
+    </Link>
 </>
 )
 

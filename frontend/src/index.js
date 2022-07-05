@@ -6,6 +6,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import ReportMain from './pages/report/ReportMain';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -16,6 +17,7 @@ root.render(
       <Provider store={store}>
         <Routes>
             <Route path="/*" element={<App />} />
+            <Route path="/app/reports" element={<ReportMain />} />
         </Routes>
       </Provider>
     </BrowserRouter>

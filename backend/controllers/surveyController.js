@@ -1,4 +1,5 @@
 const asyncHandler = require("express-async-handler");
+const { reset } = require("../../frontend/src/features/auth/authSlice");
 
 const dailySurvey = require("../models/dailySurveyModel");
 
@@ -38,5 +39,7 @@ const submitSurvey = asyncHandler(async (req, res) => {
     throw new Error("Invalid survey data");
   }
 });
+
+
 
 module.exports = { submitSurvey };

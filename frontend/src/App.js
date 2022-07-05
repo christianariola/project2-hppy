@@ -18,6 +18,7 @@ import HodDashboard from './pages/hod/HodDashboard'
 import EmployeeDashboard from './pages/employee/EmployeeDashboard'
 
 import DailySurvey from './components/DailySurvey'
+import ReportMain from './pages/report/ReportMain'
 
 const App = () => {
 
@@ -70,6 +71,7 @@ const App = () => {
 
           <Route element={<RequireAuth allowedRoles={["superadmin", "admin"]} />}>
             <Route path="employee/add" element={<AddEmployee />} />
+            <Route path="report" element={<ReportMain/>} />
           </Route>
         </Route>
       </Route>
