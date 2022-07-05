@@ -1,7 +1,7 @@
 import Survey1 from './Survey1';
 import SurveyList from './SurveyList'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 
 

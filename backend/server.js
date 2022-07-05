@@ -55,14 +55,14 @@ app.post("/dailySurvey", (req, res) => {
 });
 
 //Weekly Survey Schema
-const { WeeklySurveys } = require("./models/weeklySurveyModel");
+const { WeeklySurvey } = require("./models/weeklySurveyModel");
 
 //POST Weekly Survey
 
 app.post("/weeklysurveys", (req, res) => {
-  let weeklySurveys = new WeeklySurveys(req.body);
+  let weeklySurvey = new WeeklySurvey(req.body);
 
-  dailySurvey.save((err) => {
+  weeklySurvey.save((err) => {
     if (err) {
       console.log(err.code);
       err.code === 11000
@@ -73,7 +73,7 @@ app.post("/weeklysurveys", (req, res) => {
     } else {
       res.status(201).json({
         message: "New Weekly Survey Saved",
-        Survey: weeklySurveys,
+        Survey: weeklySurvey,
       });
     }
   });
