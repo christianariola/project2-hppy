@@ -125,3 +125,48 @@ gap: 1rem;
     font-size: 1.5rem;
     font-weight: bold;
 }
+
+/* =======Surveys */
+.surveys-container{
+    padding: 2rem 3rem;
+    min-height: 85vh;
+}
+.survey {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.survey-question{
+  margin: 1rem auto 3rem auto;
+
+
+}
+.survey-question label,
+.survey-question div {
+  margin: 1rem 0 1rem 0;
+}
+.survey-question textarea{
+    width: 600px;   
+    height: 100px; 
+  }
+
+  /* Table of survey  */
+
+  .all-surveys table {
+    min-width: 100%;
+
+
+  }
+  .all-surveys table th,
+  .all-surveys table td,
+.all-surveys table tr
+{
+       text-align: center;
+    border-bottom: 1px black solid;
+       padding: 0px;
+  }
+
+ 

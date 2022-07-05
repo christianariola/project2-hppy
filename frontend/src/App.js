@@ -11,6 +11,7 @@ import Unauthorized from './pages/Unauthorized'
 import MainLayout from './layouts/MainLayout'
 import About from './pages/main/About'
 import Main from './pages/main/Main'
+import Surveys from './components/surveys/Surveys'
 
 import SuperAdminDashboard from './pages/superadmin/SuperAdminDashboard'
 import AdminDashboard from './pages/admin/AdminDashboard'
@@ -51,6 +52,7 @@ const App = () => {
 
 
   return <>
+    
     <Routes>
       {/** public routes */}
       <Route path='/' element={<MainLayout />} exact>
@@ -70,8 +72,8 @@ const App = () => {
         <Route path="/app" element={<DashboardLayout />}>
           <Route path="dashboard" element={dashboardIndex}></Route>
           <Route path="dailysurvey" element={<DailySurvey />}></Route>
-          <Route path="myaccount" element={<Myaccount />}></Route>
-
+          <Route path="surveys" element={<DailySurvey />}></Route>
+          <Route path="weeklysurveys" element={<Surveys />}></Route>
           <Route element={<RequireAuth allowedRoles={["superadmin", "admin"]} />}>
             <Route path="employee/add" element={<AddEmployee />} />
             <Route path="report" element={<ReportMain />} />
