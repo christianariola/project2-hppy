@@ -1,8 +1,8 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const WeeklySurveyScheme = mongoose.Schema({
+const WeeklySurveySchema = new Schema({
     surveyid: {
         type: String,
         unique: true,
@@ -41,4 +41,4 @@ const WeeklySurveyScheme = mongoose.Schema({
 
 });
 
-module.exports = mongoose.model('WeeklySurvey', WeeklySurveyScheme)
+module.weeklySurveys = mongoose.model('WeeklySurveys', WeeklySurveySchema);
