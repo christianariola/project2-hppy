@@ -65,10 +65,11 @@ const App = () => {
 
         {/** catch everything */}
         <Route path="*" element={<Error404 />} />
+        <Route path="unauthorized" element={<Unauthorized />} />
       </Route>
       
       <Route path="login" element={<Login />} />
-      <Route path="unauthorized" element={<Unauthorized />} />
+
       
       {/** restricted routes */}
 
