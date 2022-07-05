@@ -8,10 +8,10 @@ const Company = require('../models/companyModel')
 // @access Public
 const addCompany = asyncHandler(async (req, res) => {
 
-    const {name, description, logo} = req.body
+    const {name, description, logo, departments} = req.body
 
-    const departments = { deptName: req.body.deptName }
-
+    // const departments = { deptName: req.body.deptName }
+    // console.log(req.body)
     const company = await Company.create({
         name,
         description,
@@ -19,18 +19,16 @@ const addCompany = asyncHandler(async (req, res) => {
         departments
     })
 
-    console.log(company)
-
     if(company) {
         res.status(201).json({
-            // _id: company._id,
-            // name: company.name,
-            // description: company.description,
-            // logo: company.logo,
-            // departments: [{
-            //     deptName: company.departments.deptName,
-            //     deptCode: company.departments.deptCode,
-            // }]
+            _id: company._id,
+            name: company.name,
+            description: company.description,
+            logo: company.logo,
+            departments: [{
+                deptName: company.departments.deptName,
+                deptCode: company.departments.employees,
+            }]
         })
     } else {
         res.status(400)

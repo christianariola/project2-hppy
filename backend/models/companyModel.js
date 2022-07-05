@@ -19,10 +19,6 @@ const companySchema = mongoose.Schema({
             type: String,
             required: [false, "Please add a department name"],
         },
-        // deptCode: {
-        //     type: String,
-        //     required: [false, "Please add a department code"],
-        // },
         // employees: [
         //     {
         //         type: ObjectId,

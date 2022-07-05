@@ -13,12 +13,13 @@ const AddCompany = () => {
 
     // show/hide department form
     const [deptForm, setDeptForm] = useState(false)
+    const [department, setDepartment] = useState([])
     
     const [formData, setFormData] = useState({
         name: '',
         description: '',
         logo: '',
-        deptName: '',
+        departments: '',
     })
 
     const { name, description, logo, deptName } = formData
@@ -57,6 +58,13 @@ const AddCompany = () => {
         setDeptForm(false)
     }
 
+    const addDept = () => {
+
+        const deptDetails = { deptName: deptName }
+
+        setDepartment([...department, deptDetails])
+    }
+
     const onSubmit = (e) => {
         e.preventDefault()
 
@@ -64,10 +72,8 @@ const AddCompany = () => {
             name,
             description,
             logo,
-            deptName,
+            departments: department,
         }
-
-
         dispatch(addCompany(companyData))
     }
 
@@ -93,8 +99,19 @@ const AddCompany = () => {
                     <input type="text" className="form-control" id="logo" name="logo" value={logo} onChange={onChange} placeholder="Enter company logo" />
                 </div>
 
+                <hr />
+
                 {deptForm === false ? <div onClick={showDept}>Add Department</div> : <div onClick={hideDept}>Cancel</div>}
-                {deptForm === false ? "" : <DepartmentForm deptName={deptName} onChange={onChange} />}
+                {deptForm === false ? "" : <DepartmentForm deptName={deptName} onChange={onChange} addDept={addDept}  />}
+
+                {department.map((department, index)=>
+                <li key={index}>
+                {department.deptName}&nbsp;
+                <button>Delete</button>
+                </li>
+                )}
+
+                <hr />
 
                 <div className="form-group">
                     <button>Submit</button>
