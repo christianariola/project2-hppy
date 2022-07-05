@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import Login from './pages/Login'
-import AddEmployee from './pages/AddEmployee'
+import AddEmployee from './components/employee/AddEmployee'
 import DashboardLayout from './layouts/DashboardLayout'
 import Error404 from './pages/Error404'
 import Unauthorized from './pages/Unauthorized'
@@ -22,6 +22,10 @@ import DailySurvey from './components/DailySurvey'
 import ReportMain from './pages/report/ReportMain'
 import Myaccount from  './pages/Myaccout'
 import DoughnutChart from './pages/report/DoughnutChart'
+
+import Company from './components/company/Company'
+import AddCompany from './components/company/AddCompany'
+import ViewCompany from './components/company/ViewCompany'
 
 const App = () => {
 
@@ -79,6 +83,15 @@ const App = () => {
             <Route path="report" element={<ReportMain />} />
             <Route path="reportchart" element={<DoughnutChart />} />
           </Route>
+
+          {/* Super Admin Only */}
+          <Route element={<RequireAuth allowedRoles={["superadmin"]} />}>
+            <Route path="companies" element={<Company />}>
+            </Route>
+            <Route path="companies/add" element={<AddCompany />} />
+            <Route path="company/:companyId" element={<ViewCompany />} />
+          </Route>
+
         </Route>
       </Route>
     </Routes>

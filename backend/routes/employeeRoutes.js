@@ -13,7 +13,4 @@ router.post('/', registerEmployee)
 router.post('/login', loginEmployee)
 router.get('/me', protect, getMe)
 
-
-router.post("/dailysurvey", submitSurvey);
-
 module.exports = router
