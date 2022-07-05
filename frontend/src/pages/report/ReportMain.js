@@ -1,7 +1,7 @@
-import DoughnutChart from "./DoughnutChart"
+// import DoughnutChart from "./DoughnutChart"
 import { useState, useEffect } from "react";
 import axios from 'axios'
-// import {Route, Link, Routes} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 const ReportMain = () => {
 
@@ -23,13 +23,13 @@ const ReportMain = () => {
       <ul>
             {surveyItem?.map((surveyItem)=>
                 <li key={surveyItem.surveyid}>
-                      <h3>{surveyItem.dailySurvey.surveyName}</h3>
+                      <Link to="/app/reportchart"><p>{surveyItem.dailySurvey.surveyName}</p></Link>
                 </li>
                 
             )}
             
+            
         </ul>
-      <DoughnutChart />
     </div>
   )
 }

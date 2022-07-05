@@ -5,7 +5,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Link as MaterialLink }from "@mui/material/Link";
 import Divider from '@mui/material/Divider';
 import ListSubheader from '@mui/material/ListSubheader';
-import ReportMain from '../pages/report/ReportMain';
+// import ReportMain from '../pages/report/ReportMain';
 
 export const employeeListItems = (
 <>
@@ -20,7 +20,7 @@ export const employeeListItems = (
         <ListItemText primary="My Surveys" sx={{ ml: '10px' }} />
     </ListItemButton>
 
-    <ListItemButton>
+    <ListItemButton component={RouterLink} to="/app/myaccount">
         <img src="/images/dashboard/icons/icon-account.svg" alt="My Account" />
         <ListItemText primary="My Account" sx={{ ml: '10px' }} />
     </ListItemButton>
@@ -57,7 +57,7 @@ export const superadminListItems = (
         <ListItemText primary="Requests" sx={{ ml: '10px' }} />
     </ListItemButton>
 
-    <ListItemButton>
+    <ListItemButton component={RouterLink} to='/app/report'>
         <img src="/images/dashboard/icons/icon-reports.svg" alt="Reports" />
         <ListItemText primary="Reports" sx={{ ml: '10px' }} />
     </ListItemButton>
@@ -67,9 +67,9 @@ export const superadminListItems = (
         Admin Section
     </ListSubheader>
 
-    <ListItemButton>
+    <ListItemButton component={RouterLink} to="/app/myaccount">
         <img src="/images/dashboard/icons/icon-account.svg" alt="My Account" />
-        <ListItemText primary="Companies" sx={{ ml: '10px' }} />
+        <ListItemText primary="My Account" sx={{ ml: '10px' }} />
     </ListItemButton>
 
     <ListItemButton component={RouterLink} to='/app/employee/add'>

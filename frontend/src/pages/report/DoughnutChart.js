@@ -6,16 +6,16 @@ import axios from 'axios'
 const DoughnutChart = props => {
 
      //use this state variable to store data fetched from the database
-     const [ surveyItem, setSurveyItems ] = useState([])
+    const [ surveyItem, setSurveyItems ] = useState([])
 
 
     useEffect(function loadData(){
-         axios.get('/dailySurvey') 
+        axios.get('/dailySurvey') 
          .then((res)=>{
             setSurveyItems(res.data)
          })
          
-         .catch(error=>console.log(error))
+        .catch(error=>console.log(error))
      },[surveyItem]) 
      console.log(surveyItem)
     //  console.log(surveyItem[1].dailySurvey.surveyName)
@@ -41,7 +41,7 @@ const DoughnutChart = props => {
 
     console.log(result);
     const data = {
-        labels: ["Very unsatisfactory", "Unsatisfactory", "Neutra", "Satisfactory", "Very Satisfactory"],
+        labels: ["Very unsatisfactory", "Unsatisfactory", "Neutral", "Satisfactory", "Very Satisfactory"],
         datasets : [{
             label: "User Gain",
             data:[result[1], result[2], result[3], result[4], result[5]],
