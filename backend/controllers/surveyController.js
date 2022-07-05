@@ -1,42 +1,26 @@
 const asyncHandler = require("express-async-handler");
+// const DailySurvey = require("../models/dailySurveyModel");
 
-const dailySurvey = require("../models/dailySurveyModel");
 
-// @desc   submit a new survey
-// @route  /api/dailySurvey
-// @access Public
-const submitSurvey = asyncHandler(async (req, res) => {
-  const {
-    surveyName,
-    questionOne,
-    questionTwo,
-    sentimentRating,
-    surveyState,
-    surveyDate,
-  } = req.body;
+const dailySurveyChecker = asyncHandler(async (req, res) => {
 
-  const survey = await dailySurvey.create({
-    surveyName,
-    questionOne,
-    questionTwo,
-    sentimentRating,
-    surveyState,
-    surveyDate,
-  });
+  const { DailySurvey } = require("../models/dailySurveyModel");
+  
+  let dailySurvey = new DailySurvey(req.body);
 
-  if (survey) {
-    res.status(201).json({
-      surveyName: survey.surveyName,
-      questionOne: survey.questionOne,
-      questionTwo: survey.questionTwo,
-      sentimentRating: survey.sentimentRating,
-      surveyState: survey.surveyState,
-      surveyDate: survey.surveyDate,
-    });
+  const dailychecker = await DailySurvey.findOne({ surveyid:dailySurvey.surveyid })
+
+  let employeeDone;
+
+  if(dailychecker){
+    employeeDone = true
   } else {
-    res.status(400);
-    throw new Error("Invalid survey data");
+    employeeDone = false
   }
-});
 
-module.exports = { submitSurvey };
+  res.status(200).json({ checker: employeeDone })
+})
+
+module.exports = {
+  dailySurveyChecker,
+}

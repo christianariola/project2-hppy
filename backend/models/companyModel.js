@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { ObjectId } = mongoose.SchemaTypes;
 
 const companySchema = mongoose.Schema({
     name: {
@@ -13,23 +14,23 @@ const companySchema = mongoose.Schema({
         type: String,
         required: [true, 'Please add a logo'],
     },
-    departments: {
+    departments: [{
         deptName: {
             type: String,
-            required: [true, "Please add a department name"],
+            required: [false, "Please add a department name"],
         },
-        deptCode: {
-            type: String,
-            required: [true, "Please add a department name"],
-        },
-        employees: [
-            {
-                type: ObjectId,
-                ref: "Employee",
-                required: [true, "employee_id is required"],
-            }
-        ],
-    },
+        // deptCode: {
+        //     type: String,
+        //     required: [false, "Please add a department code"],
+        // },
+        // employees: [
+        //     {
+        //         type: ObjectId,
+        //         ref: "Employee",
+        //         required: [false, "employee_id is required"],
+        //     }
+        // ],
+    }], required: false,
 }, 
 {
     timestamps: true,

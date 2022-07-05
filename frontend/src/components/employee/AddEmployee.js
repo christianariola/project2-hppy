@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 // useSelector to select from global states like employee, etc
 // useDispatch to dispatch actions like addEmployee, etc
 import { useSelector, useDispatch } from 'react-redux'
-import { addEmployee, reset } from "../features/auth/authSlice"
+import { addEmployee, reset } from "../../features/auth/authSlice"
 
 const Register = () => {
 

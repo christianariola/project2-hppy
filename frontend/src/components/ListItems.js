@@ -1,7 +1,7 @@
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import { Link as RouterLink } from 'react-router-dom';
-import { Link as MaterialLink }from "@mui/material/Link";
+// import { Link as MaterialLink }from "@mui/material/Link";
 import Divider from '@mui/material/Divider';
 import ListSubheader from '@mui/material/ListSubheader';
 
@@ -62,8 +62,8 @@ export const superadminListItems = (
         Admin Section
     </ListSubheader>
 
-    <ListItemButton>
-        <img src="/images/dashboard/icons/icon-account.svg" alt="My Account" />
+    <ListItemButton component={RouterLink} to='/app/companies'>
+        <img src="/images/dashboard/icons/icon-survey.svg" alt="Companies" />
         <ListItemText primary="Companies" sx={{ ml: '10px' }} />
     </ListItemButton>
 

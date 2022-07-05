@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const { submitSurvey } = require("../controllers/surveyController");
+const { dailySurveyChecker } = require("../controllers/surveyController");
 
-router.post("/dailysurvey", submitSurvey);
+router.post("/dailychecker", dailySurveyChecker);
 
 module.exports = router;
