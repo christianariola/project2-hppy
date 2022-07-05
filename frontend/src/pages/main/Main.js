@@ -1,10 +1,14 @@
 import Features from "./Features"
+import Header from "./Hero"
 
 
 const Layout = () => {
 
     return <>
-        <Features />
+        <Header />
+        <main>
+            <Features />
+        </main>
     </>
     
 }
