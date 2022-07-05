@@ -4,6 +4,7 @@ import companyService from "./companyService";
 
 const initialState = {
     company: null,
+    companyList: [],
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -16,6 +17,25 @@ export const addCompany = createAsyncThunk(
     async (company, thunkAPI) => {
         try {
         return await companyService.addCompany(company);
+        } catch (error) {
+        const message =
+            (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
+
+// Fetch company list
+export const getCompanyList = createAsyncThunk(
+    "company/getCompanyList",
+    async (company, thunkAPI) => {
+        try {
+        return await companyService.getCompanyList();
         } catch (error) {
         const message =
             (error.response &&
@@ -51,6 +71,15 @@ export const companySlice = createSlice({
             state.isSuccess = true
         })
         .addCase(addCompany.rejected, (state, action) => {
+            state.isLoading = false
+            state.company = null
+            state.isError = true
+            state.message = action.payload
+        })
+        .addCase(getCompanyList.fulfilled, (state, action) => {
+            state.companyList = action.payload
+        })
+        .addCase(getCompanyList.rejected, (state, action) => {
             state.isLoading = false
             state.company = null
             state.isError = true

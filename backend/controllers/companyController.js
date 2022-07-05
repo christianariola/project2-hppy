@@ -24,11 +24,7 @@ const addCompany = asyncHandler(async (req, res) => {
             _id: company._id,
             name: company.name,
             description: company.description,
-            logo: company.logo,
-            departments: [{
-                deptName: company.departments.deptName,
-                deptCode: company.departments.employees,
-            }]
+            logo: company.logo
         })
     } else {
         res.status(400)
@@ -36,6 +32,20 @@ const addCompany = asyncHandler(async (req, res) => {
     }
 })
 
+const getCompanyList = asyncHandler(async (req, res) => {
+    const companies = await Company.find({})
+
+    if(companies) {
+        res.status(201).json({
+            data: companies,
+        })
+    } else {
+        res.status(400)
+        throw new Error('Something went wrong...')
+    }
+}) 
+
 module.exports = {
     addCompany,
+    getCompanyList,
 }
