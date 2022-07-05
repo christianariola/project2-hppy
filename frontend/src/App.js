@@ -21,6 +21,7 @@ import DailySurvey from './components/DailySurvey'
 
 import Company from './components/company/Company'
 import AddCompany from './components/company/AddCompany'
+import ViewCompany from './components/company/ViewCompany'
 
 const App = () => {
 
@@ -80,6 +81,7 @@ const App = () => {
             <Route path="companies" element={<Company />}>
             </Route>
             <Route path="companies/add" element={<AddCompany />} />
+            <Route path="company/:companyId" element={<ViewCompany />} />
           </Route>
 
         </Route>

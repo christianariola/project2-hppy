@@ -43,9 +43,28 @@ const getCompanyList = asyncHandler(async (req, res) => {
         res.status(400)
         throw new Error('Something went wrong...')
     }
+})
+
+const getCompany = asyncHandler(async (req, res) => {
+
+    // console.log(req.params.companyId);
+    const company = await Company.findOne({ _id: req.params.companyId })    
+
+    if(company){
+        res.status(201).json({
+            _id: company._id,
+            name: company.name,
+            description: company.description,
+            departments: company.departments,
+        })
+    } else {
+        res.status(401)
+        throw new Error('Invalid credentials')
+    }
 }) 
 
 module.exports = {
     addCompany,
     getCompanyList,
+    getCompany,
 }

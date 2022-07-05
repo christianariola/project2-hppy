@@ -25,9 +25,9 @@ const Company = () => {
                     <td>{company.name}</td>
                     <td>{company.description}</td>
                     <td>
-                        <button>View</button>
-                        <button>Edit</button>
-                        <button>Delete</button>
+                        <Link component={RouterLink} to={`/app/company/${company._id}`} variant="button" sx={{ my: 1, mx: 1.5 }}>View</Link>
+                        <Link component={RouterLink} to='/app/companies' variant="button" sx={{ my: 1, mx: 1.5 }}>Edit</Link>
+                        <Link component={RouterLink} to='/app/companies' variant="button" sx={{ my: 1, mx: 1.5 }}>Delete</Link>
                     </td>
                     </tr>
                 )}

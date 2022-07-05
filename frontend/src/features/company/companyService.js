@@ -16,9 +16,16 @@ const getCompanyList = async () => {
     return response.data
 }
 
+const getCompany = async (companyId) => {
+    const response = await axios.get(API_URL + `/view/${companyId}`)
+
+    return response.data
+}
+
 const companyService = {
     addCompany,
     getCompanyList,
+    getCompany,
 }
 
 export default companyService
