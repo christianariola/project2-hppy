@@ -36,7 +36,12 @@ const Header = () => {
             >
             <Toolbar sx={{ flexWrap: 'wrap' }}>
                 <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-                    <img src="/images/hppy-logo.svg" alt="Hppy" />
+                    <Link
+                        underline="none"
+                        component={RouterLink} to='/'
+                    >
+                        <img src="/images/hppy-logo.svg" alt="Hppy" />
+                    </Link>
                 </Typography>
                 <nav>
                 <Link
@@ -60,9 +65,9 @@ const Header = () => {
                 <Link
                     variant="button"
                     color="text.primary"
-                    href="#"
                     underline="none"
                     sx={{ my: 1, mx: 1.5 }}
+                    component={RouterLink} to='/about'
                 >
                     About
                 </Link>
