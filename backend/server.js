@@ -55,6 +55,18 @@ app.post("/dailySurvey", (req, res) => {
   });
 });
 
+//get daily survey data and displaying in front by hyewon
+app.get('/dailySurvey', (req, res)=>{
+  DailySurvey.find({})
+  .exec((error, result)=>{
+      if(error){
+          res.send(500).json(error)
+      } else {
+          res.json(result)
+      }
+  })
+})
+
 //Weekly Survey Schema
 const { WeeklySurvey } = require("./models/weeklySurveyModel");
 

@@ -15,7 +15,7 @@ const ReportMain = () => {
          })
          
          .catch(error=>console.log(error))
-     },[surveyItem]) 
+     },[]) 
      console.log(surveyItem)
   return (
     <div>

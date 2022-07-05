@@ -16,7 +16,7 @@ const DoughnutChart = props => {
          })
          
         .catch(error=>console.log(error))
-     },[surveyItem]) 
+     },[]) 
      console.log(surveyItem)
     //  console.log(surveyItem[1].dailySurvey.surveyName)
 
