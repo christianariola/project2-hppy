@@ -26,7 +26,7 @@ const EmployeeDashboard = () => {
   }
 
     dispatch(dailySurveyChecker(employeeData))
-  }, [surveyId, dispatch])
+  }, [surveyChecker, surveyId, dispatch])
 
 
   return <>
