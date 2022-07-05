@@ -1,6 +1,8 @@
 import { useSelector } from "react-redux";
 import { useState } from 'react';
 import axios from "axios";
+// import { get } from "http";
+// import { getTimeMeasureUtils } from "@reduxjs/toolkit/dist/utils";
 
 
 const Survey1 = () => {
@@ -15,11 +17,8 @@ const Survey1 = () => {
 
 
       const dateHandler = () => {
-          const fullDate = [
-              new Date().getFullYear(),
-              new Date().getMonth(),
-              new Date().getDate()
-              ].join("");
+          const fullDate = new Date().getTime()
+
     setWeeklySurveyDate(fullDate);
   };
 
