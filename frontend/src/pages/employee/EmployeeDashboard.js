@@ -20,13 +20,12 @@ const EmployeeDashboard = () => {
   const { doneDaily, message } = useSelector(state => state.survey)
 
   useEffect(() => {
-
-  const employeeData = {
-    surveyid: surveyId
-  }
+    const employeeData = {
+      surveyid: surveyId
+    }
 
     dispatch(dailySurveyChecker(employeeData))
-  }, [surveyChecker, surveyId, dispatch])
+  }, [surveyChecker, surveyId, doneDaily, dispatch])
 
 
   return <>

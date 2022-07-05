@@ -3,6 +3,7 @@ import * as tf from "@tensorflow/tfjs";
 import { useState, useEffect } from "react";
 import padSequences from "./helper/paddedSeq";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"
 
 // import { addDailySurvey } from "../features/dailysurvey/surveySlice";
 
@@ -145,6 +146,8 @@ const DailySurvey = () => {
 
   // const dispatch = useDispatch();
   //Handle changing of classname on se
+
+  const navigate = useNavigate()
 
   //Form Submit function
   const handleFormSubmit = (e) => {
