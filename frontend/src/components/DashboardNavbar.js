@@ -15,7 +15,7 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+// import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { employeeListItems, superadminListItems } from '../components/ListItems'
 
@@ -73,20 +73,20 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const DashboardHeader = () => {
 
     // Avatar Popup
-    const [anchorElNav, setAnchorElNav] = useState(null);
+    // const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
     const [open, setOpen] = useState(true);
 
-    const handleOpenNavMenu = (event) => {
-        setAnchorElNav(event.currentTarget);
-    };
+    // const handleOpenNavMenu = (event) => {
+    //     setAnchorElNav(event.currentTarget);
+    // };
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
     };
     
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
+    // const handleCloseNavMenu = () => {
+    //     setAnchorElNav(null);
+    // };
     
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
@@ -120,7 +120,7 @@ const DashboardHeader = () => {
             break;
     }
 
-    const empName = `${employee.firstName} ${employee.lastName}`
+    // const empName = `${employee.firstName} ${employee.lastName}`
     const empInitials = employee.firstName.charAt(0)+employee.lastName.charAt(0)
 
     return <>

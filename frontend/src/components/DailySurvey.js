@@ -34,10 +34,10 @@ const DailySurvey = () => {
   const [model, setModel] = useState();
   const [sentimentText, setSentimentText] = useState("");
   const [sentimentScore, setSentimentScore] = useState();
-  const [trimedText, setTrim] = useState("");
-  const [seqText, setSeq] = useState("");
-  const [padText, setPad] = useState("");
-  const [inputText, setInput] = useState("");
+  // const [trimedText, setTrim] = useState("");
+  // const [seqText, setSeq] = useState("");
+  // const [padText, setPad] = useState("");
+  // const [inputText, setInput] = useState("");
 
   //Sentiment Analysis model and metadata URL
 
