@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
-import DailyCompleted from "./DailyCompleted";
+// import DailyCompleted from "./DailyCompleted";
 import DailySurvey from "./DailySurvey";
-import { useState } from "react";
+// import { useState } from "react";
 
 const Dashboard = () => {
   // bring in employee state from redux store
