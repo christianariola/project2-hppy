@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import { useSelector, useDispatch } from 'react-redux'
@@ -8,7 +8,7 @@ const Company = () => {
 
     const dispatch = useDispatch()
 
-    const { companyList, message } = useSelector(state => state.company)
+const { companyList } = useSelector(state => state.company)
 
     useEffect(() => {
         dispatch(getCompanyList())
