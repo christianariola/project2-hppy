@@ -14,25 +14,25 @@ const { companyList } = useSelector(state => state.company)
         dispatch(getCompanyList())
     }, [dispatch])
     
-    const results = [];
+    // const results = [];
 
     if(typeof companyList.data === 'undefined'){
     } else {
-        {companyList.data.map((company)=>
-            <table>
-                {results.push(
-                    <tr key={company._id}>
-                    <td>{company.name}</td>
-                    <td>{company.description}</td>
-                    <td>
-                        <Link component={RouterLink} to={`/app/company/${company._id}`} variant="button" sx={{ my: 1, mx: 1.5 }}>View</Link>
-                        <Link component={RouterLink} to='/app/companies' variant="button" sx={{ my: 1, mx: 1.5 }}>Edit</Link>
-                        <Link component={RouterLink} to='/app/companies' variant="button" sx={{ my: 1, mx: 1.5 }}>Delete</Link>
-                    </td>
-                    </tr>
-                )}
-            </table>
-        )}
+        // {companyList.data.map((company)=>
+        //     <table>
+        //         {results.push(
+        //             <tr key={company._id}>
+        //             <td>{company.name}</td>
+        //             <td>{company.description}</td>
+        //             <td>
+        //                 <Link component={RouterLink} to={`/app/company/${company._id}`} variant="button" sx={{ my: 1, mx: 1.5 }}>View</Link>
+        //                 <Link component={RouterLink} to='/app/companies' variant="button" sx={{ my: 1, mx: 1.5 }}>Edit</Link>
+        //                 <Link component={RouterLink} to='/app/companies' variant="button" sx={{ my: 1, mx: 1.5 }}>Delete</Link>
+        //             </td>
+        //             </tr>
+        //         )}
+        //     </table>
+        // )}
     }
 
     console.log('List', companyList.data)
@@ -41,7 +41,7 @@ const { companyList } = useSelector(state => state.company)
         <Link component={RouterLink} to='/app/companies/add' variant="button" sx={{ my: 1, mx: 1.5 }}>New Company</Link>
 
 
-        {results}
+        {/* {results} */}
     </>
 }
 
