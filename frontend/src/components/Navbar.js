@@ -1,6 +1,6 @@
-import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { logout, reset } from '../features/auth/authSlice'
+// import { useNavigate } from 'react-router-dom'
+// import { useDispatch } from 'react-redux'
+// import { logout, reset } from '../features/auth/authSlice'
 
 // MUI imports
 import AppBar from '@mui/material/AppBar';
@@ -15,8 +15,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 
 const Header = () => {
 
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
+    // const navigate = useNavigate()
+    // const dispatch = useDispatch()
     // const { employee } = useSelector((state) => state.auth)
 
     // const onLogout = () => {
