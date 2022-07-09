@@ -1,7 +1,5 @@
-import { useState } from "react"
 import { Outlet } from 'react-router-dom'
 import DashboardNavbar from '../components/DashboardNavbar'
-import DashboardFooter from '../components/DashboardFooter'
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,18 +10,14 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 
-
-import { useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+// import { useSelector } from 'react-redux'
 
 const mdTheme = createTheme();
 
 const Dashboard = () => {
 
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
-    const { employee } = useSelector((state) => state.auth)
-
+    // const { employee } = useSelector((state) => state.auth)
+    
     return <>
 
     <ThemeProvider theme={mdTheme}>

@@ -1,6 +1,6 @@
 import { Doughnut } from "react-chartjs-2";
-import { ArcElement } from "chart.js";
-import Chart from'chart.js/auto';
+// import { ArcElement } from "chart.js";
+// import Chart from'chart.js/auto';
 import { useState, useEffect } from "react";
 import axios from 'axios'
 const DoughnutChart = props => {
@@ -20,7 +20,8 @@ const DoughnutChart = props => {
      console.log(surveyItem)
     //  console.log(surveyItem[1].dailySurvey.surveyName)
 
-    var satisfaction = new Array();
+    // var satisfaction = new Array();
+    var satisfaction = [];
 
      satisfaction.push("france")
      console.log(satisfaction)

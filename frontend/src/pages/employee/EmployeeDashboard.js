@@ -12,12 +12,12 @@ const EmployeeDashboard = () => {
   const currentDay = new Date().getDate();
   const together = [currentYear, currentMonth, currentDay].join("");
 
-  const [surveyId, setSurveyId] = useState(employee.email + together);
-  const [surveyChecker, setSurveyChecker] = useState(false);
+  const surveyId = employee.email + together;
+  const surveyChecker = false;
 
   const dispatch = useDispatch()
 
-  const { doneDaily, message } = useSelector(state => state.survey)
+  const { doneDaily } = useSelector(state => state.survey)
 
   useEffect(() => {
     const employeeData = {
