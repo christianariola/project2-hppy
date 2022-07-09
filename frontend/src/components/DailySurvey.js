@@ -35,10 +35,15 @@ const DailySurvey = () => {
   const [model, setModel] = useState();
   const [sentimentText, setSentimentText] = useState("");
   const [sentimentScore, setSentimentScore] = useState();
-  const [trimedText, setTrim] = useState("");
-  const [seqText, setSeq] = useState("");
-  const [padText, setPad] = useState("");
-  const [inputText, setInput] = useState("");
+  // const [trimedText, setTrim] = useState("");
+  // const [seqText, setSeq] = useState("");
+  // const [padText, setPad] = useState("");
+  // const [inputText, setInput] = useState("");
+
+  const [, setTrim] = useState("");
+  const [, setSeq] = useState("");
+  const [, setPad] = useState("");
+  const [, setInput] = useState("");
 
   //Sentiment Analysis model and metadata URL
 
@@ -143,7 +148,7 @@ const DailySurvey = () => {
       loadModel(url);
       loadMetadata(url);
     });
-  }, []);
+  });
 
   // const dispatch = useDispatch();
   //Handle changing of classname on se
