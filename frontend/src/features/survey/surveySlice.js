@@ -46,5 +46,5 @@ export const surveySlice = createSlice({
 },
 });
 
-export const {} = surveySlice.actions;
+// export const {} = surveySlice.actions;
 export default surveySlice.reducer;
