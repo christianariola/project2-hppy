@@ -1,4 +1,4 @@
-// import { useEffect } from "react"
+import { useEffect } from "react"
 import { Link as RouterLink, useParams } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import { useSelector, useDispatch } from 'react-redux'
@@ -12,7 +12,10 @@ const ViewCompany = () => {
 
     const { company } = useSelector(state => state.company)
 
-    dispatch(getCompany(companyId))
+    useEffect(() => {
+        dispatch(getCompany(companyId))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
 
     return <>

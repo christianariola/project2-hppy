@@ -148,7 +148,8 @@ const DailySurvey = () => {
       loadModel(url);
       loadMetadata(url);
     });
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[]);
 
   // const dispatch = useDispatch();
   //Handle changing of classname on se
