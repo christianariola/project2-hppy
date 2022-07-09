@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+// import { useEffect } from "react"
 import { Link as RouterLink, useParams } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import { useSelector, useDispatch } from 'react-redux'
@@ -12,9 +12,7 @@ const ViewCompany = () => {
 
     const { company } = useSelector(state => state.company)
 
-    useEffect(() => {
-        dispatch(getCompany(companyId))
-    }, [])
+    dispatch(getCompany(companyId))
 
 
     return <>

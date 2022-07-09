@@ -1,5 +1,5 @@
 import DailySurvey from '../../components/DailySurvey'
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { dailySurveyChecker } from "../../features/survey/surveySlice"
 
