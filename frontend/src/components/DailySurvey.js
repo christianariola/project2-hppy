@@ -174,7 +174,7 @@ const DailySurvey = () => {
 
     //axios post to /dailySurvey endpoint
     axios
-      .post("/dailySurvey", { dailySurvey, surveyid: surveyid })
+      .post("https://pluto-hppy.herokuapp.com/dailySurvey", { dailySurvey, surveyid: surveyid })
 
       .then((res) => {
         console.log(res);

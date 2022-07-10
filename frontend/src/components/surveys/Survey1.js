@@ -37,7 +37,7 @@ const Survey1 = () => {
 
     //axios post to /weeklysurvey endpoint
     axios
-      .post("/weeklysurveys", { weeklySurvey, surveyid: surveyid })
+      .post("https://pluto-hppy.herokuapp.com/weeklysurveys", { weeklySurvey, surveyid: surveyid })
 
       .then((res) => {
         console.log(res);
@@ -53,7 +53,7 @@ const Survey1 = () => {
 
     return (
         <div className="survey" >
-            <form action="/weeklysurveys"
+            <form action="https://pluto-hppy.herokuapp.com/weeklysurveys"
                 method="POST"
                 onSubmit={handleFormSubmit}
                 onChange={dateHandler}
