@@ -226,4 +226,8 @@ gap: 1rem;
        padding: 0px;
   }
 
- 
+/*Report main styling*/
+.report-list th {
+    border-bottom: 2px solid black;
+}
+
