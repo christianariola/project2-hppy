@@ -72,25 +72,25 @@ app.get('/dailySurvey', (req, res)=>{
 })
 
 //Weekly Survey Schema
-const { WeeklySurvey } = require("./models/weeklySurveyModel");
+const { MonthlySurvey } = require("./models/MonthlySurveyModel");
 
 //POST Weekly Survey
 
-app.post("/weeklysurveys", (req, res) => {
-  let weeklySurvey = new WeeklySurvey(req.body);
+app.post("/monthlySurveys", (req, res) => {
+  let monthlySurvey = new MonthlySurvey(req.body);
 
-  weeklySurvey.save((err) => {
+  monthlySurvey.save((err) => {
     if (err) {
       console.log(err.code);
       err.code === 11000
         ? res.status(400).json({
-            message: "Weekly Survey Already Exists",
+            message: "Monthly Survey Already Exists",
           })
         : res.status(400).send(err);
     } else {
       res.status(201).json({
-        message: "New Weekly Survey Saved",
-        Survey: weeklySurvey,
+        message: "New Monthly Survey Saved",
+        Survey: monthlySurvey,
       });
     }
   });
@@ -104,6 +104,6 @@ app.use("/api/companies", require("./routes/companyRoutes"))
 
 app.use("/api/dailySurvey", require("./routes/surveyRoutes"));
 app.use("/api/Surveys", require("./routes/surveyRoutes"));
-app.use("/api/weeklysurveys", require("./routes/surveyRoutes"));
+app.use("/api/weeklySurveys", require("./routes/surveyRoutes"));
 
 app.use(errorHandler);
