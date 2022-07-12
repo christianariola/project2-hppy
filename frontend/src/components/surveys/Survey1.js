@@ -15,8 +15,8 @@ const Survey1 = () => {
     let q4 = "Q4: Feugiat sed sit integer id ullamcorper?";
 
 
-    const [weeklySurveyDate, setWeeklySurveyDate] = useState();
-    const [surveyType, setSurveyType] = useState('weeklySurvey');
+    const [monthlySurveyDate, setMonthlySurveyDate] = useState();
+    const [surveyType, setSurveyType] = useState('monthlySurvey');
     const [answer1, setAnswer1] = useState('');
     const [answer2, setAnswer2] = useState('');
     const [answer3, setAnswer3] = useState('');
@@ -41,14 +41,14 @@ const Survey1 = () => {
         let month = newDate.getMonth() + 1;
         let year = newDate.getFullYear();
         // console.log(`${year}${month<10?`0${month}`:`${month}`}${date}`) 
-        setWeeklySurveyDate(`${year}${month<10?`0${month}`:`${month}`}${date}`);
+        setMonthlySurveyDate(`${year}${month<10?`0${month}`:`${month}`}${date}`);
 
 
   };
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-    const weeklySurvey = {
+    const monthlySurvey = {
  
         answers: {
             answer1,
@@ -66,22 +66,22 @@ const Survey1 = () => {
     };
     const surveyid = employee.email + new Date().getTime();
         // console.log(surveyid);
-        // console.log(weeklySurvey);
-        // console.log("createdDate:", weeklySurveyDate);
+        // console.log(monthlySurvey);
+        // console.log("createdDate:", monthlySurveyDate);
         // console.log("surveyType:", surveyType);
         console.log(new Date().getTime())
-        console.log({ weeklySurvey: weeklySurvey, surveyid: surveyid, surveyType: surveyType, createdDate: weeklySurveyDate,        employeeEmail: employee.email })
+        console.log({ monthlySurvey: monthlySurvey, surveyid: surveyid, surveyType: surveyType, createdDate: monthlySurveyDate,        employeeEmail: employee.email })
 
-    //axios post to /weeklysurvey endpoint
+    //axios post to /monthlySurvey endpoint
     axios
-      .post("/weeklysurveys", { weeklySurvey: weeklySurvey, surveyid: surveyid, surveyType: surveyType, createdDate: weeklySurveyDate,        employeeEmail: employee.email })
+      .post("/monthlySurveys", { monthlySurvey: monthlySurvey, surveyid: surveyid, surveyType: surveyType, createdDate: monthlySurveyDate,        employeeEmail: employee.email })
 
       .then((res) => {
         console.log(res);
       })
       .catch((err) => {
-        if (err.response.data.message === "Weekly survey already Exists") {
-          alert(`Weekly survey already submitted by User: ${employee.email}`);
+        if (err.response.data.message === "Monthly survey already Exists") {
+          alert(`Monthly survey already submitted by User: ${employee.email}`);
         } else {
           console.log(err);
         }
@@ -90,7 +90,7 @@ const Survey1 = () => {
 
     return (
         <div className="survey" >
-            <form action="https://pluto-hppy.herokuapp.com/weeklysurveys"
+            <form action="https://pluto-hppy.herokuapp.com/monthlySurveys"
                 method="POST"
                 onSubmit={handleFormSubmit}
                 onChange={dateHandler}
