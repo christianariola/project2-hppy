@@ -97,6 +97,7 @@ app.post("/weeklysurveys", (req, res) => {
 app.use("/api/employees", require("./routes/employeeRoutes"));
 app.use("/api/survey", require("./routes/surveyRoutes"))
 app.use("/api/companies", require("./routes/companyRoutes"))
+app.use("/api/reports", require("./routes/reportRoutes"))
 
 app.use("/api/dailySurvey", require("./routes/surveyRoutes"));
 app.use("/api/Surveys", require("./routes/surveyRoutes"));
