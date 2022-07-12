@@ -1,20 +1,32 @@
 import { useEffect } from "react"
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@mui/material/Link';
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { getCompanyList } from "../../features/company/companySlice"
+import axios from 'axios'
 
 const Company = () => {
 
-    const dispatch = useDispatch()
+    // Local API_URL for dev
+    const API_URL = '/api/companies' 
+    // const API_URL = 'https://pluto-hppy.herokuapp.com/api/companies'
 
-const { companyList } = useSelector(state => state.company)
+    const { companyList } = useSelector(state => state.company)
+
+    if(typeof companyList.data === 'undefined'){
+        console.log('true')
+    } else {
+        console.log('false')
+    }
 
     useEffect(() => {
-        dispatch(getCompanyList())
-    }, [dispatch])
+        axios.post(API_URL + '/list').then((response)=>{
+            console.log(response)
+        })
+    }, [])
     
-    // const results = [];
+
+    // console.log(companyList)
 
     if(typeof companyList.data === 'undefined'){
     } else {
@@ -35,7 +47,6 @@ const { companyList } = useSelector(state => state.company)
         // )}
     }
 
-    console.log('List', companyList.data)
     return <>
         <h2>Company Page</h2>
         <Link component={RouterLink} to='/app/companies/add' variant="button" sx={{ my: 1, mx: 1.5 }}>New Company</Link>

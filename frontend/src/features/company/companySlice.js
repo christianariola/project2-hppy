@@ -4,7 +4,7 @@ import companyService from "./companyService";
 
 const initialState = {
     company: {},
-    companyList: [],
+    companyList: {},
     isError: false,
     isSuccess: false,
     isLoading: false,

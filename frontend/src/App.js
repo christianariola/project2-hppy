@@ -24,7 +24,7 @@ import Myaccount from  './pages/Myaccout'
 import DoughnutChart from './pages/report/DoughnutChart'
 
 import Company from './components/company/Company'
-import AddCompany from './components/company/AddCompany'
+import AddEditCompany from './components/company/AddEditCompany'
 import ViewCompany from './components/company/ViewCompany'
 
 const App = () => {
@@ -90,7 +90,8 @@ const App = () => {
           <Route element={<RequireAuth allowedRoles={["superadmin"]} />}>
             <Route path="companies" element={<Company />}>
             </Route>
-            <Route path="companies/add" element={<AddCompany />} />
+            <Route path="companies/add" element={<AddEditCompany />} />
+            <Route path="companies/edit/:companyId" element={<AddEditCompany />} />
             <Route path="company/:companyId" element={<ViewCompany />} />
           </Route>
 
