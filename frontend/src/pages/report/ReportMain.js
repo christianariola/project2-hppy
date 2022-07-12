@@ -5,7 +5,6 @@ import {Link} from 'react-router-dom'
 
 const ReportMain = props => {
 
-  
   const [ surveyItem, setSurveyItems ] = useState([])
   const [ weeklyItem, setWeeklyItems ] = useState([])
 
