@@ -14,6 +14,12 @@ a {
     text-decoration: none;
 }
 
+/*reset*/
+h1, h2, h3, h4, h5, h6, p, ul, li, div {
+    padding:none;
+    margin:0;
+}
+
 .hero {
     background: linear-gradient(180deg, #0098FF, #003D66);
     color: #fff;
@@ -231,3 +237,47 @@ gap: 1rem;
     border-bottom: 2px solid black;
 }
 
+/*My account*/
+.account-page {
+    padding-top:10%;
+}
+.account-des {
+   margin-left:10%;
+}
+.account-form li{
+    list-style: none;
+}
+.form-wrap {
+    flex-wrap:wrap;
+    display:flex;
+    margin:5% 10% 5% 0;
+    
+}
+.input-area {
+    width:50%;
+}
+
+.input-area ul {
+    margin:2% 0 2% 0;
+}
+
+.input-area li input {
+    width:100%;
+    padding:5px 0 5px 0;
+}
+
+.input-area label {
+    font-weight: bold;
+}
+.logout-btn {
+    float:right;
+    margin-right:10%;
+    background-color:white;
+    border:0;
+    text-decoration: underline;
+    font-weight: bold;
+    color:#003D66;
+    cursor:pointer
+
+
+}

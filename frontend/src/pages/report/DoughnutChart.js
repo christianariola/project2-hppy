@@ -3,6 +3,7 @@ import { ArcElement } from "chart.js";
 import Chart from'chart.js/auto';
 import { useState, useEffect } from "react";
 import axios from 'axios'
+import Barchart from './Barchart'
 const DoughnutChart = props => {
 
      //use this state variable to store data fetched from the database
@@ -84,7 +85,7 @@ const DoughnutChart = props => {
              )} */}
             </div>
             <Bar data={data} />
-        
+             <Barchart />
         </div>
     )
 }
