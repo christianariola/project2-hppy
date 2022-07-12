@@ -2,6 +2,7 @@ import './style.css'
 import RequireAuth from './components/RequireAuth'
 import { Routes, Route } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import {useState} from 'react'
 
 import Login from './pages/Login'
 import AddEmployee from './components/employee/AddEmployee'
@@ -28,6 +29,10 @@ import AddEditCompany from './components/company/AddEditCompany'
 import ViewCompany from './components/company/ViewCompany'
 
 const App = () => {
+
+  //chosen date for report
+  const [chosenDate, setChosenDate] = useState()
+
 
   const { employee } = useSelector(state => state.auth)
   let dashboardIndex
@@ -82,8 +87,8 @@ const App = () => {
           <Route path="weeklysurveys" element={<Surveys />}></Route>
           <Route element={<RequireAuth allowedRoles={["superadmin", "admin"]} />}>
             <Route path="company/:companyId/employee/add" element={<AddEmployee />} />
-            <Route path="report" element={<ReportMain />} />
-            <Route path="reportchart" element={<DoughnutChart />} />
+            <Route path="report" element={<ReportMain chosenDate={chosenDate} setChosenDate={setChosenDate} />}></Route>
+            <Route path="reportchart/:surveyDate" element={<DoughnutChart chosenDate={chosenDate} setChosenDate={setChosenDate} />} />
           </Route>
 
           {/* Super Admin Only */}

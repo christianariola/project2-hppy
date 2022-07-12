@@ -112,3 +112,12 @@ textarea {
   font-weight: bold;
 }
 /* //////////////////////////////////////////////////////////////////////////////////// */
+/*Report styling*/
+
+.report-list {
+  display:flex;
+}
+
+li {
+  list-style: none;
+}
