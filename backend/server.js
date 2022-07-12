@@ -96,17 +96,6 @@ app.post("/monthlySurveys", (req, res) => {
   });
 });
 
-//get weekly survey data and displaying in front by hyewon
-app.get('/weeklysurveys', (req, res)=>{
-  WeeklySurvey.find({})
-  .exec((error, result)=>{
-      if(error){
-          res.send(500).json(error)
-      } else {
-          res.json(result)
-      }
-  })
-})
 
 // Routes
 app.use("/api/employees", require("./routes/employeeRoutes"));

@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout, reset } from '../features/auth/authSlice'
 import { useState } from "react"
-import {Link } from 'react-router-dom'
+
 // MUI imports
 import { styled } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
@@ -91,10 +91,6 @@ const DashboardHeader = () => {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
-    //navigate to my account page
-    const myAccount = () => {
-        navigate('/app/account')
-    }
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -189,7 +185,7 @@ const DashboardHeader = () => {
                     <Typography textAlign="center">Profile</Typography>
                 </MenuItem>
                 <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center" onClick={myAccount}>Account</Typography>
+                    <Typography textAlign="center">Account</Typography>
                 </MenuItem>
                 <MenuItem onClick={handleCloseUserMenu}>
                     <Typography textAlign="center" onClick={onLogout}>Logout</Typography>

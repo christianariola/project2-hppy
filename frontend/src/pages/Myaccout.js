@@ -14,61 +14,29 @@ const MyAccount = () => {
 
     
     return <>
-        <h1>My Account</h1>
-        <div className="account-page">
-        <p className="account-des">My Account informtaion is view-only. You cannot edit this informtaion.</p>
-        <form className="account-form">
-            <ul className="form-wrap">
-                <li className="input-area">
-                    <ul>
-                        <li><label>First Name</label></li>
-                        <li><input type="text" placeholder={employee.firstName} disabled></input></li>
-                    </ul>
-                </li>
-                <li className="input-area">
-                    <ul>
-                        <li> <label>Last Name</label></li>
-                        <li><input type="text" placeholder={employee.lastName} disabled></input></li>
-                    </ul>
-                </li>
-            
-                <li className="input-area">
-                    <ul>
-                        <li><label>Email</label></li>
-                        <li><input type="text" placeholder={employee.email} disabled></input></li>
-                    </ul>
-                </li>
-            
-            
-                <li className="input-area">
-                    <ul>
-                        <li><label>Department</label></li>
-                        <li><input type="text" disabled></input></li>
-                    </ul>
-                </li>
-           
-          
-                <li className="input-area">
-                    <ul>
-                        <li><label>Employee Number</label></li>
-                        <li><input type="text" disabled></input></li>
-                    </ul>
-                </li>
-           
-         
-                <li className="input-area">
-                    <ul>
-                        <li><label>Job Title</label></li>
-                        <li><input type="text" disabled></input></li>
-                    </ul>
-                </li>
-            </ul>
-            
-            
-            
-            <button className="logout-btn" onClick={onLogout}>Logout</button>
+        <h1>My Account page</h1>
+        <p>My Account informtaion is view-only. You cannot edit this informtaion.</p>
+        <form>
+            <div>
+            <label>First Name</label>
+            <input type="text" placeholder={employee.firstName}></input>
+            <label>Last Name</label>
+            <input type="text" placeholder={employee.lastName}></input>
+            </div>
+            <div>
+            <label>Email</label>
+            <input type="text" placeholder={employee.email}></input>
+            <label>Department</label>
+            <input type="text"></input>
+            </div>
+            <div>
+            <label>Employee Number</label>
+            <input type="text"></input>
+            <label>Job Title</label>
+            <input type="text"></input>
+            </div>
+            <button onClick={onLogout}>Logout</button>
         </form>
-        </div>
     </>
 }
 
