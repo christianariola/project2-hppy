@@ -14,9 +14,7 @@ const initialState = {
 }
 
 const AddEditCompany = () => {
-
-    // show/hide department form
-    const [deptForm, setDeptForm] = useState(false)
+    
     const [departments, setDepartments] = useState([])
     
     const [formData, setFormData] = useState(initialState)
@@ -53,20 +51,6 @@ const AddEditCompany = () => {
     const handleSelectedDepartments = (items) => {
         setDepartments(items)
     }
-
-    // const showDept = () => {
-    //     setDeptForm(true)
-    // }
-    // const hideDept = () => {
-    //     setDeptForm(false)
-    // }
-
-    // const addDept = () => {
-
-    //     const deptDetails = { deptName: deptName }
-
-    //     setDepartment([...department, deptDetails])
-    // }
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -113,16 +97,6 @@ const AddEditCompany = () => {
 
                 <div className="form-group">
                 </div>
-
-                {/* {deptForm === false ? <div onClick={showDept}>Add Department</div> : <div onClick={hideDept}>Cancel</div>}
-                {deptForm === false ? "" : <DepartmentForm deptName={deptName} onChange={onChange} addDept={addDept}  />}
-
-                {department.map((department, index)=>
-                <li key={index}>
-                {department.deptName}&nbsp;
-                <button>Delete</button>
-                </li>
-                )} */}
 
                 <hr />
 

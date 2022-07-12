@@ -1,58 +1,35 @@
 import { useEffect } from "react"
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@mui/material/Link';
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { getCompanyList } from "../../features/company/companySlice"
-import axios from 'axios'
 
 const Company = () => {
 
-    // Local API_URL for dev
-    const API_URL = '/api/companies' 
-    // const API_URL = 'https://pluto-hppy.herokuapp.com/api/companies'
+    const dispatch = useDispatch()
 
-    const { companyList } = useSelector(state => state.company)
-
-    if(typeof companyList.data === 'undefined'){
-        console.log('true')
-    } else {
-        console.log('false')
-    }
+    const { companyList, isLoading } = useSelector((state) => ({...state.company}))
 
     useEffect(() => {
-        axios.post(API_URL + '/list').then((response)=>{
-            console.log(response)
-        })
+        dispatch(getCompanyList())
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     
-
-    // console.log(companyList)
-
-    if(typeof companyList.data === 'undefined'){
-    } else {
-        // {companyList.data.map((company)=>
-        //     <table>
-        //         {results.push(
-        //             <tr key={company._id}>
-        //             <td>{company.name}</td>
-        //             <td>{company.description}</td>
-        //             <td>
-        //                 <Link component={RouterLink} to={`/app/company/${company._id}`} variant="button" sx={{ my: 1, mx: 1.5 }}>View</Link>
-        //                 <Link component={RouterLink} to='/app/companies' variant="button" sx={{ my: 1, mx: 1.5 }}>Edit</Link>
-        //                 <Link component={RouterLink} to='/app/companies' variant="button" sx={{ my: 1, mx: 1.5 }}>Delete</Link>
-        //             </td>
-        //             </tr>
-        //         )}
-        //     </table>
-        // )}
+    if(isLoading){
+        return <h2>Loading...</h2>
     }
 
     return <>
         <h2>Company Page</h2>
-        <Link component={RouterLink} to='/app/companies/add' variant="button" sx={{ my: 1, mx: 1.5 }}>New Company</Link>
+        <Link component={RouterLink} to='/app/companies/add' variant="button" sx={{ my: 1, mx: 1.5 }}>Add Company</Link>
 
+        {companyList.length === 0 && (
+            <h2>No Companies Found</h2>
+        )}
 
-        {/* {results} */}
+        {companyList && companyList.map((item, index) => <div key={index}>
+            <h3>{item.name}</h3><Link component={RouterLink} to={`/app/company/${item._id}`} variant="button" sx={{ my: 1, mx: 1.5 }}>View</Link>
+        </div>)}
     </>
 }
 
