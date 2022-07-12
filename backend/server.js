@@ -5,6 +5,7 @@ const { errorHandler } = require("./middleware/errorMiddleware");
 const connectDB = require("./config/db");
 const cors = require("cors");
 const { json } = require("express");
+const morgan = require("morgan")
 
 const PORT = process.env.PORT || 3001;
 
@@ -21,6 +22,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+
+// HTTP request logger
+app.use(morgan("dev"))
 
 app.get("/", (req, res) => {
   res.send("Welcome to Hppy");
