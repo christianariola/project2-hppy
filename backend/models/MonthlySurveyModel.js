@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const WeeklySurveySchema = new Schema({
+const MonthlySurveySchema = new Schema({
     surveyid: {
         type: String,
         unique: true,
@@ -14,13 +14,13 @@ const WeeklySurveySchema = new Schema({
     },
     surveyType: {
         type: String,
-        enum: ['weeklySurvey',
+        enum: ['monthlySurvey',
                 'dailySurvey']
     },
     createdDate: {
         type: String,
     },
-    weeklySurvey: {
+    monthlySurvey: {
         answers: {
             answer1: {
                 type: String,
@@ -69,4 +69,4 @@ const WeeklySurveySchema = new Schema({
     }    
 });
 
-exports.WeeklySurvey = mongoose.model('WeeklySurvey', WeeklySurveySchema);
+exports.MonthlySurvey = mongoose.model('MonthlySurvey', MonthlySurveySchema);
