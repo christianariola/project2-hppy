@@ -10,6 +10,63 @@ h1 {
     font-family: 'Titillium Web', sans-serif;
 }
 
+a {
+    text-decoration: none;
+}
+
+.hero {
+    background: linear-gradient(180deg, #0098FF, #003D66);
+    color: #fff;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.hero .hero-text {
+    padding: 2rem;
+}
+.hero .hero-text h2{
+    font-size: 46px;
+    margin-bottom: 0;
+}
+
+.hero-text p {
+    padding-bottom: 1rem;
+}
+
+.hero-text a {
+    background-color: #00cf92;
+    color: #ffffff;
+    font-size: 1.3rem;
+    font-weight: bold;
+    padding: 1rem;
+}
+
+.wrapper {
+    max-width: 1300px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+main {
+    margin-top: 5rem;
+}
+
+main h2 {
+    text-align: center;
+}
+
+.feature {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    gap: 1rem;
+}
+
+.feature img {
+    min-width: 100%;
+    height: auto;
+}
+
 footer {
     background: linear-gradient(180deg, #0098FF, #003D66);
     color: #fff;
@@ -125,3 +182,48 @@ gap: 1rem;
     font-size: 1.5rem;
     font-weight: bold;
 }
+
+/* =======Surveys */
+.surveys-container{
+    padding: 2rem 3rem;
+    min-height: 85vh;
+}
+.survey {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.survey-question{
+  margin: 1rem auto 3rem auto;
+
+
+}
+.survey-question label,
+.survey-question div {
+  margin: 1rem 0 1rem 0;
+}
+.survey-question textarea{
+    width: 600px;   
+    height: 100px; 
+  }
+
+  /* Table of survey  */
+
+  .all-surveys table {
+    min-width: 100%;
+
+
+  }
+  .all-surveys table th,
+  .all-surveys table td,
+.all-surveys table tr
+{
+       text-align: center;
+    border-bottom: 1px black solid;
+       padding: 0px;
+  }
+
+ 

@@ -3,6 +3,8 @@ import * as tf from "@tensorflow/tfjs";
 import { useState, useEffect } from "react";
 import padSequences from "./helper/paddedSeq";
 import axios from "axios";
+// import { useNavigate } from "react-router-dom"
+
 
 // import { addDailySurvey } from "../features/dailysurvey/surveySlice";
 
@@ -33,10 +35,15 @@ const DailySurvey = () => {
   const [model, setModel] = useState();
   const [sentimentText, setSentimentText] = useState("");
   const [sentimentScore, setSentimentScore] = useState();
-  const [trimedText, setTrim] = useState("");
-  const [seqText, setSeq] = useState("");
-  const [padText, setPad] = useState("");
-  const [inputText, setInput] = useState("");
+  // const [trimedText, setTrim] = useState("");
+  // const [seqText, setSeq] = useState("");
+  // const [padText, setPad] = useState("");
+  // const [inputText, setInput] = useState("");
+
+  const [, setTrim] = useState("");
+  const [, setSeq] = useState("");
+  const [, setPad] = useState("");
+  const [, setInput] = useState("");
 
   //Sentiment Analysis model and metadata URL
 
@@ -107,7 +114,7 @@ const DailySurvey = () => {
     const inputText = text
       .trim()
       .toLowerCase()
-      .replace(/(\.|\,|\!)/g, "")
+      .replace(/(\.|,|!)/g, "")
       .split(" ");
     setTrim(inputText);
     console.log(inputText);
@@ -141,10 +148,13 @@ const DailySurvey = () => {
       loadModel(url);
       loadMetadata(url);
     });
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[]);
 
   // const dispatch = useDispatch();
   //Handle changing of classname on se
+
+  // const navigate = useNavigate()
 
   //Form Submit function
   const handleFormSubmit = (e) => {
@@ -164,7 +174,7 @@ const DailySurvey = () => {
 
     //axios post to /dailySurvey endpoint
     axios
-      .post("/dailySurvey", { dailySurvey, surveyid: surveyid })
+      .post("https://pluto-hppy.herokuapp.com/dailySurvey", { dailySurvey, surveyid: surveyid })
 
       .then((res) => {
         console.log(res);

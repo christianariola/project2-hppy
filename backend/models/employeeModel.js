@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const employeeScheme = mongoose.Schema({
+const employeeSchema = mongoose.Schema({
     firstName: {
         type: String,
         required: [true, 'Please add a first name'],
@@ -26,10 +26,22 @@ const employeeScheme = mongoose.Schema({
         type: String,
         required: [true, 'Please select a role'],
         default: 'employee',
-    }
+    },
+    company_id: {
+        type: String,
+        required: [true, 'Please add a company id'],
+    },
+    company_name: {
+        type: String,
+        required: [true, 'Please add a company name'],
+    },
+    department: {
+        type: String,
+        required: [true, 'Please add a department'],
+    },
 }, 
 {
     timestamps: true,
 })
 
-module.exports = mongoose.model('Employee', employeeScheme)
+module.exports = mongoose.model('Employee', employeeSchema)
