@@ -18,7 +18,7 @@ const DoughnutChart = props => {
         .catch(error=>console.log(error))
      },[]) 
      
-     console.log(report)
+    //  console.log(report)
     
      //sort daily feeling object by date 
     var totalRate = function(){
@@ -34,21 +34,7 @@ const DoughnutChart = props => {
     totalRate();
     console.log(totalRate());
     
-    // var satisfaction = new Array();
-    var satisfaction = [];
-
-     satisfaction.push("france")
-     console.log(satisfaction)
-    const arr = [2,3,4,4,4,5,5,5,1,1,1,1,1,2,2]; 
-
-//     const result = arr.reduce((accu,curr)=> {
-//     accu.set(curr, (accu.get(curr)||0) +1) ;
-//     return accu;
-//     },new Map());
-
-//     for (let [key, value] of result.entries()) {
-//     console.log(key + ' : ' + value );
-// }
+    
     const result = {};
     totalRate().forEach((x)=>{
         result[x] = (result[x] || 0)+1;
