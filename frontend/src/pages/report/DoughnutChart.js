@@ -17,9 +17,23 @@ const DoughnutChart = props => {
          
         .catch(error=>console.log(error))
      },[]) 
-     console.log(surveyItem)
-    //  console.log(surveyItem[1].dailySurvey.surveyName)
+     
+     console.log(report)
+    
+     //sort daily feeling object by date 
+    var totalRate = function(){
+        var rating = [];
+        for(var i=0; i<report.length; i++){
+            if(report[i].dailySurvey.dailySurveyDate === "2022628"){ {/* depends on button value */}
+            rating.push(report[i].dailySurvey.dailyTotalRating);
+            }
+        }
+        return rating;
+    }
 
+    totalRate();
+    console.log(totalRate());
+    
     // var satisfaction = new Array();
     var satisfaction = [];
 
@@ -36,7 +50,7 @@ const DoughnutChart = props => {
 //     console.log(key + ' : ' + value );
 // }
     const result = {};
-    arr.forEach((x)=>{
+    totalRate().forEach((x)=>{
         result[x] = (result[x] || 0)+1;
     })
 
@@ -44,16 +58,21 @@ const DoughnutChart = props => {
     const data = {
         labels: ["Very unsatisfactory", "Unsatisfactory", "Neutral", "Satisfactory", "Very Satisfactory"],
         datasets : [{
-            label: "User Gain",
-            data:[result[1], result[2], result[3], result[4], result[5]],
+            label: "Employee Daily Total Rate",
+            data:[result[1], result[2], result[3],result[4], result[5]],
             backgroundColor:["#0098FF", "#00CF92","#F72564","#F8D919","#E07116"]
         }]
     }
     return(
         <div>
-            <h2>Dairy Survey</h2>
-            <Doughnut data={data} />
-        
+            <h2>Daily Total Rating</h2>
+            <div>
+             {/* {report?.map((report)=> //properly shows the data
+            <h4>{report.dailySurvey.dailyFeeling}</h4>
+             )} */}
+            </div>
+            <Bar data={data} />
+             {/* <Barchart /> */}
         </div>
     )
 }

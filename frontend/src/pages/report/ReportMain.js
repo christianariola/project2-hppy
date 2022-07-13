@@ -21,11 +21,18 @@ const ReportMain = () => {
       <h1>Survey Report</h1>
       <ul>
             {surveyItem?.map((surveyItem)=>
-                <li key={surveyItem.surveyid}>
-                      <Link to="/app/reportchart"><p>{surveyItem.dailySurvey.surveyName}</p></Link>
-                </li>
-                
-            )}
+            <div>
+                <td key={surveyItem.surveyId}>{surveyItem.dailySurvey.dailySurveyDate}</td>
+                <td>{surveyItem.dailySurvey.surveyName}</td>
+                <td>
+                  <button value={surveyItem.dailySurvey.dailySurveyDate} onChange={(event)=>handleChangeDate(event)}>
+                  <Link to="/app/reportchart/{}" >View</Link>
+                  </button>
+                </td>
+                <td>
+                  <button>Active</button>
+                </td>
+            </div>
             
             
         </ul>
