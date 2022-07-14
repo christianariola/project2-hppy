@@ -13,6 +13,7 @@ const Survey1 = () => {
     let q2 = "Q2: Consequat at maecenas vulputate mattis ?";
     let q3 = "Q3: Lorem ipsum dolor sit amet.?";
     let q4 = "Q4: Feugiat sed sit integer id ullamcorper?";
+    let q5 = "Q4: Feugiat sed sit integer id ullamcorper?";
 
 
     const [monthlySurveyDate, setMonthlySurveyDate] = useState();
