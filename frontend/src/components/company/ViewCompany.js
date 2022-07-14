@@ -17,13 +17,20 @@ const ViewCompany = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-
     return <>
         <h2>View Company</h2>
         <p>Name: {company.name}</p>
         <p>Description: {company.description}</p>
 
-        <Link component={RouterLink} to={`/app/employee/add`} variant="button" sx={{ my: 1, mx: 1.5 }}>Add Employee</Link>
+        <p>Departments</p>
+        <ul>
+        {company.departments && company.departments.map((item, index) => <div key={index}>
+            <li>{item.deptName}</li><Link component={RouterLink} to={`/app/company/${item._id}`} variant="button" sx={{ my: 1, mx: 1.5 }}>View</Link>
+        </div>)}
+        </ul>
+
+        <p>Employees</p>
+        <Link component={RouterLink} to={`/app/company/${companyId}/employee/add`} variant="button" sx={{ my: 1, mx: 1.5 }}>Add Employee</Link>
     </>
 }
 

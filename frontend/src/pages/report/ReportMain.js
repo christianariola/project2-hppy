@@ -5,7 +5,6 @@ import {Link} from 'react-router-dom'
 
 const ReportMain = () => {
 
-  
   const [ surveyItem, setSurveyItems ] = useState([])
 
     useEffect(function loadData(){
