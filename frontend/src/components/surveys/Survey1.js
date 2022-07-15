@@ -10,10 +10,14 @@ const Survey1 = () => {
   // bring in employee state from redux store
   const { employee } = useSelector((state) => state.auth);
 
-  let q1 = "Q1: Lorem ipsum dolor sit amet, consectetur ?";
-  let q2 = "Q2: Consequat at maecenas vulputate mattis ?";
-  let q3 = "Q3: Lorem ipsum dolor sit amet.?";
-let q4 = "Q4: Feugiat sed sit integer id ullamcorper?";
+  let q1 = "Q1: How satisfied or dissatisfied are you with your ability to do interesting work in your role?";
+  let q2 = "Q2: How satisfied or dissatisfied are you with your ability to apply your skills in this role?";
+  let q3 = "Q3: How satisfied or dissatisfied are you with your current workload?";
+  let q4 = "Q4: How satisfied or dissatisfied are you with your opportunities for career progression?";
+  let q5 = "Q5: How satisfied or dissatisfied are you with the physical environment at your workplace?";
+  let q6 = "Q6: How satisfied or dissatisfied are you with your relationship with your manager?";
+  let q7 = "Q7: Overall, how satisfied, or dissatisfied are you with your current employer?";
+  let q7a = "Q7a: Please share any additional feedback you may have?";
     
 
   const [monthlySurveyDate, setMonthlySurveyDate] = useState();
@@ -22,11 +26,12 @@ let q4 = "Q4: Feugiat sed sit integer id ullamcorper?";
   const [answer2, setAnswer2] = useState("");
   const [answer3, setAnswer3] = useState("");
   const [answer4, setAnswer4] = useState("");
-  const [question1, setQuestion1] = useState(q1);
-  const [question2, setQuestion2] = useState(q2);
-  const [question3, setQuestion3] = useState(q3);
-  const [question4, setQuestion4] = useState(q4);
+  const [answer5, setAnswer5] = useState('');
+  const [answer6, setAnswer6] = useState('');
+  const [answer7, setAnswer7] = useState('');
+  const [answer7a, setAnswer7a] = useState('');
 
+    
   //Sentiment Analysis Block
   const [monthlyFeeling, setMonthlyFeeling] = useState(3); //This should be an average of the all survey questions
   const [monthlySentiment, setMonthlySentiment] = useState();
@@ -174,13 +179,11 @@ let q4 = "Q4: Feugiat sed sit integer id ullamcorper?";
         answer2,
         answer3,
         answer4,
-      },
-      questions: {
-        question1,
-        question2,
-        question3,
-        question4,
-      },
+        answer5,
+        answer6,
+        answer7,
+        answer7a,
+      }
     };
     const surveyid = employee.email + new Date().getTime();
     // console.log(surveyid);
@@ -235,110 +238,264 @@ let q4 = "Q4: Feugiat sed sit integer id ullamcorper?";
         Survey1 component
         <h2>Survey questions</h2>
         <div className="survey-question">
-          <label htmlFor="answer1">
-            {q1}
-            <div className="answer">
-              <label>
-                <input
-                  type="radio"
-                  name="answer1"
-                  value="Congue praesent ac odio"
-                  onChange={(e) => setAnswer1(e.target.value)}
-                />
-                Congue praesent ac odio
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="answer1"
-                  value="Congue praesent ac turo"
-                  onChange={(e) => setAnswer1(e.target.value)}
-                />
-                Congue praesent ac turo
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="answer1"
-                  value="Congue  ac odio grnds"
-                  onChange={(e) => setAnswer1(e.target.value)}
-                />
-                Congue ac odio grnds
-              </label>
-            </div>
-          </label>
+                  <label htmlFor="answer1">{q1}
+                        <div className="answer">
+                            <label>
+                                <input type="radio" name="answer1" value="7"
+                                onChange={(e) => setAnswer1(e.target.value)}/>Extremely satisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer1" value="6"
+                                onChange={(e) => setAnswer1(e.target.value)}/>Moderately satisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer1" value="5"
+                                onChange={(e) => setAnswer1(e.target.value)} />Slightly satisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer1" value="4"
+                                onChange={(e) => setAnswer1(e.target.value)} />Neither satisfied nor dissatisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer1" value="3"
+                                onChange={(e) => setAnswer1(e.target.value)} />Slightly dissatisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer1" value="2"
+                                onChange={(e) => setAnswer1(e.target.value)} />Moderately dissatisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer1" value="1"
+                                onChange={(e) => setAnswer1(e.target.value)} />Extremely dissatisfied
+                            </label>
+                        </div> 
+                  </label>
         </div>
         <div className="survey-question">
-          <label htmlFor="answer2">{q2}</label>
-          <div className="answer">
-            <textarea
-              type="text"
-              name="answer2"
-              id="answer2"
-              value={sentimentText}
-              onChange={(e) => {
-                setAnswer2(e.target.value);
-                setSentimentText(e.target.value); //set sentimentText to the value of the textarea
-                getSentimentScore(sentimentText); //passing the text to the getSentimentScore function and gets a score on a scale of 0-1
-                sentimentAnalysis(sentimentScore); //passing the score to the sentimentAnalysis function and add or reduce score from overall survey score based on Sentiment score.
-              }}
-            />
+                  <label htmlFor="answer2">{q2}
+                        <div className="answer">
+                            <label>
+                                <input type="radio" name="answer2" value="7"
+                                onChange={(e) => setAnswer2(e.target.value)}/>Extremely satisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer2" value="6"
+                                onChange={(e) => setAnswer2(e.target.value)}
+                                />Moderately satisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer2" value="5"
+                                onChange={(e) => setAnswer2(e.target.value)} />Slightly satisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer2" value="4"
+                                onChange={(e) => setAnswer2(e.target.value)} />Neither satisfied nor dissatisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer2" value="3"
+                                onChange={(e) => setAnswer2(e.target.value)} />Slightly dissatisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer2" value="2"
+                                onChange={(e) => setAnswer2(e.target.value)} />Moderately dissatisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer2" value="1"
+                                onChange={(e) => setAnswer2(e.target.value)} />Extremely dissatisfied
+                            </label>
+                        </div> 
+                  </label>
+          </div>  
+          <div className="survey-question">
+                  <label htmlFor="answer3">{q3}
+                        <div className="answer">
+                            <label>
+                                <input type="radio" name="answer3" value="7"
+                                onChange={(e) => setAnswer3(e.target.value)}/>Extremely satisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer3" value="6"
+                                onChange={(e) => setAnswer3(e.target.value)}/>Moderately satisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer3" value="5"
+                                onChange={(e) => setAnswer3(e.target.value)} />Slightly satisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer3" value="4"
+                                onChange={(e) => setAnswer3(e.target.value)} />Neither satisfied nor dissatisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer3" value="3"
+                                onChange={(e) => setAnswer3(e.target.value)} />Slightly dissatisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer3" value="2"
+                                onChange={(e) => setAnswer3(e.target.value)} />Moderately dissatisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer3" value="1"
+                                onChange={(e) => setAnswer3(e.target.value)} />Extremely dissatisfied
+                            </label>
+                        </div> 
+                  </label>
           </div>
-        </div>
+          <div className="survey-question">
+                    <label htmlFor="answer4">{q4}
+                        <div className="answer">
+                            <label>
+                                <input type="radio" name="answer4" value="7"
+                                onChange={(e) => setAnswer4(e.target.value)}/>Extremely satisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer4" value="6"
+                                onChange={(e) => setAnswer4(e.target.value)}
+                                />Moderately satisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer4" value="5"
+                                onChange={(e) => setAnswer4(e.target.value)} />Slightly satisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer4" value="4"
+                                onChange={(e) => setAnswer4(e.target.value)} />Neither satisfied nor dissatisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer4" value="3"
+                                onChange={(e) => setAnswer4(e.target.value)} />Slightly dissatisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer4" value="2"
+                                onChange={(e) => setAnswer4(e.target.value)} />Moderately dissatisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer4" value="1"
+                                onChange={(e) => setAnswer4(e.target.value)} />Extremely dissatisfied
+                            </label>
+                        </div> 
+                    </label>
+          </div>
+          <div className="survey-question">
+                    <label htmlFor="answer5">{q5}
+                        <div className="answer">
+                            <label>
+                                <input type="radio" name="answer5" value="7"
+                                onChange={(e) => setAnswer5(e.target.value)}/>Extremely satisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer5" value="6"
+                                onChange={(e) => setAnswer5(e.target.value)}
+                                />Moderately satisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer5" value="5"
+                                onChange={(e) => setAnswer5(e.target.value)} />Slightly satisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer5" value="4"
+                                onChange={(e) => setAnswer5(e.target.value)} />Neither satisfied nor dissatisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer5" value="3"
+                                onChange={(e) => setAnswer5(e.target.value)} />Slightly dissatisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer5" value="2"
+                                onChange={(e) => setAnswer5(e.target.value)} />Moderately dissatisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer5" value="1"
+                                onChange={(e) => setAnswer5(e.target.value)} />Extremely dissatisfied
+                            </label>
+                        </div> 
+                    </label>
+                </div>
+                <div className="survey-question">
+                    <label htmlFor="answer6">{q6}
+                        <div className="answer">
+                            <label>
+                                <input type="radio" name="answer6" value="7"
+                                onChange={(e) => setAnswer6(e.target.value)}/>Extremely satisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer6" value="6"
+                                onChange={(e) => setAnswer6(e.target.value)}
+                                />Moderately satisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer6" value="5"
+                                onChange={(e) => setAnswer6(e.target.value)} />Slightly satisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer6" value="4"
+                                onChange={(e) => setAnswer6(e.target.value)} />Neither satisfied nor dissatisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer6" value="3"
+                                onChange={(e) => setAnswer6(e.target.value)} />Slightly dissatisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer6" value="2"
+                                onChange={(e) => setAnswer6(e.target.value)} />Moderately dissatisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer6" value="1"
+                                onChange={(e) => setAnswer6(e.target.value)} />Extremely dissatisfied
+                            </label>
+                        </div> 
+                    </label>
+                </div>
+                <div className="survey-question">
+                    <label htmlFor="answer7">{q7}
+                        <div className="answer">
+                            <label>
+                                <input type="radio" name="answer7" value="7"
+                                onChange={(e) => setAnswer7(e.target.value)}/>Extremely satisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer7" value="6"
+                                onChange={(e) => setAnswer7(e.target.value)}
+                                />Moderately satisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer7" value="5"
+                                onChange={(e) => setAnswer7(e.target.value)} />Slightly satisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer7" value="4"
+                                onChange={(e) => setAnswer1(e.target.value)} />Neither satisfied nor dissatisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer7" value="3"
+                                onChange={(e) => setAnswer1(e.target.value)} />Slightly dissatisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer7" value="2"
+                                onChange={(e) => setAnswer1(e.target.value)} />Moderately dissatisfied
+                            </label>
+                            <label>
+                                <input type="radio" name="answer7" value="1"
+                                onChange={(e) => setAnswer1(e.target.value)} />Extremely dissatisfied
+                            </label>
+                        </div> 
+                    </label>
+                </div>
         <div className="survey-question">
-          <label htmlFor="answer3">{q3}</label>
-          <div className="answer">
-            <label>
-              <input
-                type="radio"
-                name="answer3"
-                id="answer3"
-                value="Bibendum vivamus ut lacinia auctor"
-                onChange={(e) => setAnswer3(e.target.value)}
-              />
-              Bibendum vivamus ut lacinia auctor
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="answer3"
-                id="answer3"
-                value="Congue bibendum vivamu ac turo"
-                onChange={(e) => setAnswer3(e.target.value)}
-              />
-              Congue bibendum vivamu ac turo
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="answer3"
-                id="answer3"
-                value="Ac odio bibendum"
-                onChange={(e) => setAnswer3(e.target.value)}
-              />
-              Ac odio bibendum
-            </label>
-          </div>
-        </div>
-        <div className="survey-question">
-          <label htmlFor="answer4">{q4}</label>
-          <div className="answer">
-            <select name="answer4" onChange={(e) => setAnswer4(e.target.value)}>
-              <option value="Bibendum vivamus ut lacinia auctor">
-                Bibendum vivamus ut lacinia auctor
-              </option>
-              <option value="Bibendum vivamus ut lacinia head">
-                Bibendum vivamus ut lacinia head
-              </option>
-              <option value="Bibendum vivamus ut lacinia employer">
-                Bibendum vivamus ut lacinia employer
-              </option>
-              <option value="Bibendum vivamus ut lacinia footer">
-                Bibendum vivamus ut lacinia footer
-              </option>
-            </select>
-          </div>
-        </div>
+                    <label htmlFor="answer7a">{q7a}</label>
+                    <div className="answer">
+                        <textarea
+                            type="text" name="answer7a" id="answer7a"
+                            value={sentimentText}
+                            onChange={(e) => {
+                                setAnswer2(e.target.value);
+                                setSentimentText(e.target.value); //set sentimentText to the value of the textarea
+                                getSentimentScore(sentimentText); //passing the text to the getSentimentScore function and gets a score on a scale of 0-1
+                                sentimentAnalysis(sentimentScore); //passing the score to the sentimentAnalysis function and add or reduce score from overall survey score based on Sentiment score.
+                            }}
+                        />
+                    </div>
+                </div>
+        
         <button>Submit</button>
       </form>
     </div>
