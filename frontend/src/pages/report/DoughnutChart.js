@@ -4,7 +4,8 @@ import axios from 'axios'
 const DoughnutChart = props => {
 
      //use this state variable to store data fetched from the database
-     const [ report, setReport ] = useState([])
+    const [ report, setReport ] = useState([])
+    const [ employee, setEmployee ] = useState([])
 
 
     useEffect(function loadData(){
@@ -17,6 +18,18 @@ const DoughnutChart = props => {
      },[]) 
      
      console.log(report)
+
+     //fetch employee
+     useEffect(function loadEmployee(){
+        axios.get('/employees') 
+         .then((res)=>{
+            setEmployee(res.data)
+         })
+         
+        .catch(error=>console.log(error))
+     },[]) 
+     
+     console.log(employee)
     
      //sort daily feeling object by date 
     var totalRate = function(){

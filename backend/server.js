@@ -97,6 +97,40 @@ app.post("/monthlySurveys", (req, res) => {
 });
 
 
+//Daily Survey Schema
+const { Employee } = require("./models/employeeModel");
+
+//post employee
+app.post("/employees", (req, res) => {
+  let employee = new Employee(req.body);
+
+  employee.save((err) => {
+    if (err) {
+      console.log(err.code);
+      err.code === 11000
+        ? res.status(400).json({
+            message: "Employee Already Exists",
+          })
+        : res.status(400).send(err);
+    } else {
+      res.status(201).json({
+        message: "New employee Saved"
+      });
+    }
+  });
+});
+
+//get employee
+app.get("/employees",(req, res) => {
+  Employee.find({})
+  .exec((error, result)=>{
+      if(error){
+          res.send(500).json(error)
+      } else {
+          res.json(result)
+      }
+  })
+})
 // Routes
 app.use("/api/employees", require("./routes/employeeRoutes"));
 app.use("/api/survey", require("./routes/surveyRoutes"))
