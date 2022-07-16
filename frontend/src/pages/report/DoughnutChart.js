@@ -1,7 +1,9 @@
 import { Bar } from "react-chartjs-2";
+import { ArcElement } from "chart.js";
+import Chart from'chart.js/auto';
 import { useState, useEffect } from "react";
 import axios from 'axios'
-const DoughnutChart = props => {
+const BarChart = props => {
 
      //use this state variable to store data fetched from the database
     const [ report, setReport ] = useState([])
@@ -74,4 +76,4 @@ const DoughnutChart = props => {
     )
 }
 
-export default DoughnutChart
+export default BarChart
