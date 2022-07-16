@@ -94,7 +94,7 @@ const ReportMain = props => {
                 <td>{sortDailySurvey.surveyTitle}</td>
                 <td>
                   <button value={sortDailySurvey.surveyDate} onChange={(event)=>handleChangeDate(event)}>
-                  <Link to="/app/reportchart/{}" >View</Link>
+                  <Link to="/app/reportchart">View</Link>
                   </button>
                 </td>
                 <td>
