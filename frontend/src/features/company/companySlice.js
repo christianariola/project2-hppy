@@ -70,6 +70,24 @@ export const getCompany = createAsyncThunk(
     }
 );
 
+// Delete company by id
+export const deleteCompany = createAsyncThunk(
+    "company/deleteCompany",
+    async (companyId, thunkAPI) => {
+        try {
+        return await companyService.deleteCompany(companyId);
+        } catch (error) {
+        const message =
+            (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
 
 export const companySlice = createSlice({
     name: 'company',
@@ -114,6 +132,22 @@ export const companySlice = createSlice({
             state.company = action.payload
         })
         .addCase(getCompany.rejected, (state, action) => {
+            state.isLoading = false
+            state.company = null
+            state.isError = true
+            state.message = action.payload
+        })
+        .addCase(deleteCompany.fulfilled, (state, action) => {
+            state.company = action.payload
+            console.log("action", action)
+            const { arg } = action.meta
+
+            if( arg ){
+                state.companyList = state.companyList.filter((item) => item._id !== arg)
+            }
+
+        })
+        .addCase(deleteCompany.rejected, (state, action) => {
             state.isLoading = false
             state.company = null
             state.isError = true

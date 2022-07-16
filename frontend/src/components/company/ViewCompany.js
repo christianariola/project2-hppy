@@ -13,9 +13,12 @@ const ViewCompany = () => {
     const { company } = useSelector(state => state.company)
 
     useEffect(() => {
-        dispatch(getCompany(companyId))
+        if(companyId){
+            dispatch(getCompany(companyId))
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [companyId])
+
 
     return <>
         <h2>View Company</h2>

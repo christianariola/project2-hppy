@@ -1,5 +1,6 @@
 const asyncHandler = require('express-async-handler')
 const jwt = require('jsonwebtoken')
+const { default: mongoose } = require('mongoose')
 
 const Company = require('../models/companyModel')
 
@@ -61,10 +62,32 @@ const getCompany = asyncHandler(async (req, res) => {
         res.status(401)
         throw new Error('Invalid credentials')
     }
-}) 
+})
+
+const deleteCompany = asyncHandler(async (req, res) => {
+
+    const id = req.params.companyId
+
+    if(!mongoose.Types.ObjectId.isValid(id)){
+        return res.status(404).json({ message: `No company exist with id ${id}` })
+    }
+
+    const company = await Company.findByIdAndRemove(id) 
+
+    if(company){
+        res.status(201).json({
+            message: "Company deleted successfully"
+        })
+    } else {
+        res.status(401)
+        throw new Error('Something went wrong...')
+    }
+})
+
 
 module.exports = {
     addCompany,
     getCompanyList,
     getCompany,
+    deleteCompany,
 }

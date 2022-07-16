@@ -22,10 +22,17 @@ const getCompany = async (companyId) => {
     return response.data
 }
 
+const deleteCompany = async (companyId) => {
+    const response = await axios.get(API_URL + `/delete/${companyId}`)
+
+    return response.data
+}
+
 const companyService = {
     addCompany,
     getCompanyList,
     getCompany,
+    deleteCompany,
 }
 
 export default companyService
