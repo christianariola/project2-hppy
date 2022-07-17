@@ -1,8 +1,8 @@
 // import DoughnutChart from "./DoughnutChart"
 import { useState, useEffect } from "react";
 import axios from 'axios'
-import {Link} from 'react-router-dom'
-
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@mui/material/Link';
 const ReportMain = props => {
 
   const [ surveyItem, setSurveyItems ] = useState([])
@@ -37,25 +37,29 @@ const ReportMain = props => {
       
       return singleList;
   }
-      // var dailySingle = [surveyItem.dailySurvey.dailySurveyDate];
-      // var newDaily = dailySingle.concat(surveyItem.dailySurvey.dailySurveyDate)
       dailySingle();
       console.log(dailySingle())
 
-     
-
-      // const newArr = [];
-      // dailySingle().forEach((element) => {
-      //   if (!newArr.includes(element)) {
-      //     newArr.push(element);
-      //   }
-      // });
-      // console.log(newArr)
+    
     
      console.log([...new Set(dailySingle().map(JSON.stringify))].map(JSON.parse));
 
      const sortDailySurvey = [...new Set(dailySingle().map(JSON.stringify))].map(JSON.parse)
 
+    //fetching daily survey date
+    // let { surveyDate } = useParams(); //??
+
+    const [getDate, setGetDate] = useState([]);
+
+    useEffect(function loadDate(){
+    axios.get('/view/:surveyDate')
+    .then((res)=>{
+       setGetDate(res.data)
+     })
+     .catch(error=>console.log(error))
+    },[])
+
+    console.log(getDate)
 
 
      //weekly survey fetching
@@ -69,9 +73,13 @@ const ReportMain = props => {
   console.log(weeklyItem)
 
   //chosen date handler
-  const handleChangeDate = (event)=>{
-    event.preventDefault()
-    props.setChosenDate(event.target.value)
+  const handleChangeDate = (date)=>{
+    // event.preventDefault()
+    // props.handleSelectChartDate(date)
+    props.setGetDate(date) //from App.js
+    console.error(date);
+    // props.setChosenDate(event.target.value)
+
   }
 
   
@@ -93,8 +101,8 @@ const ReportMain = props => {
                 <td key={surveyItem.surveyId}>{sortDailySurvey.surveyDate}</td>
                 <td>{sortDailySurvey.surveyTitle}</td>
                 <td>
-                  <button value={sortDailySurvey.surveyDate} onChange={(event)=>handleChangeDate(event)}>
-                  <Link to="/app/reportchart">View</Link>
+                  <button value={sortDailySurvey.surveyDate} onClick={e => props.handleSelectChartDate(e.target.value)}>
+                  <Link component={RouterLink} to={`/app/reportchart/${sortDailySurvey.surveyDate}`} variant="button" sx={{ my: 1, mx: 1.5 }}>View</Link>
                   </button>
                 </td>
                 <td>
