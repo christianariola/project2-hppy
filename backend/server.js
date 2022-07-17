@@ -30,6 +30,42 @@ app.get("/", (req, res) => {
   res.send("Welcome to Hppy");
 });
 
+//report(view) schema
+const {Report} = require("./models/reportModel");
+
+//post ?? do i need ?
+app.post("/reportview", (req, res) => {
+  let report = new Report(req.body);
+
+  report.save((err) => {
+    if (err) {
+      console.log(err.code);
+      err.code === 11000
+        ? res.status(400).json({
+            message: "Report Exists",
+          })
+        : res.status(400).send(err);
+    } else {
+      res.status(201).json({
+        message: "Report Saved"
+      });
+    }
+  });
+});
+
+//get view data
+app.get('/reportview', (req, res)=>{
+  Report.find({})
+  .exec((error, result)=>{
+      if(error){
+          res.send(500).json(error)
+      } else {
+          res.json(result)
+      }
+  })
+})
+
+
 //Daily Survey Schema
 const { DailySurvey } = require("./models/dailySurveyModel");
 
@@ -97,11 +133,11 @@ app.post("/monthlySurveys", (req, res) => {
 });
 
 
-//Daily Survey Schema
-const { Employee } = require("./models/employeeModel");
+//employee Survey Schema
+const Employee = require("./models/employeeModel");
 
 //post employee
-app.post("/employees", (req, res) => {
+app.post("/getEmployeeAll", (req, res) => {
   let employee = new Employee(req.body);
 
   employee.save((err) => {
@@ -121,7 +157,7 @@ app.post("/employees", (req, res) => {
 });
 
 //get employee
-app.get("/employees",(req, res) => {
+app.get("/getEmployeeAll",(req, res) => {
   Employee.find({})
   .exec((error, result)=>{
       if(error){
@@ -133,6 +169,7 @@ app.get("/employees",(req, res) => {
 })
 // Routes
 app.use("/api/employees", require("./routes/employeeRoutes"));
+app.use("/api/getEmployeeAll", require("./routes/employeeRoutes"));
 app.use("/api/survey", require("./routes/surveyRoutes"))
 app.use("/api/companies", require("./routes/companyRoutes"))
 app.use("/api/reports", require("./routes/reportRoutes"))
