@@ -159,24 +159,23 @@ const BarChart = props => {
         const nameUrl = window.location.href
         const dateUrl = nameUrl.split('/');
         const chartDate = dateUrl[dateUrl.length-1] 
-        console.log(chartDate)
+        // console.log(chartDate)
         for(var i=0; i<filteredDailySurvey.length; i++){
-            if(showEmailArry.includes(filteredDailySurvey[i].dailySurvey.employeeEmail) && filteredDailySurvey[i].dailySurvey.dailySurveyDate == chartDate){
+            if(showEmailArry.includes(filteredDailySurvey[i].dailySurvey.employeeEmail) && filteredDailySurvey[i].dailySurvey.dailySurveyDate == chartDate) {
+                
+
+                console.log(filteredDailySurvey[i].dailySurvey)
                 var surveyState = {};
 
-                surveyState['email'] = showEmailArry;
-                surveyState['date'] = chartDate;
+                surveyState['email'] = filteredDailySurvey[i].dailySurvey.employeeEmail;
                 surveyState['surveyStatement'] = "submitted";
 
                 surveySubmit.push(surveyState)
-            // surveyState.email = showEmailArry[i]
-            // surveyState.date = chartDate
-            // surveyState.surveyStatement = "Submitted"
-            } else {
+                
+        }
+        else {
                
-
-                surveyState['email'] = showEmailArry;
-                surveyState['date'] = chartDate;
+                surveyState['email'] = filteredDailySurvey[i].dailySurvey.employeeEmail;
                 surveyState['surveyStatement'] = "unsubmitted";
 
                 surveySubmit.push(surveyState)
@@ -196,20 +195,40 @@ const BarChart = props => {
     getSurveySubmit();
     console.log(getSurveySubmit());
   
+   
+    // for(var i=0; i<getSurveySubmit().length; i++){
+    //    var totalStatement = []
+    //    totalStatement.push(getSurveySubmit()[i].surveyStatement)
+    // }
 
+    // console.log(totalStatement);
 
-    // const submissionResult = {};
-    // getSurveySubmit().forEach((x)=>{
-    //     submissionResult[x] = (submissionResult[x] || 0)+1;
-    // })
+    var totalStatement = function(){
+      
+        var submissionTotal = [];
+      
+        for(var i=0; i<getSurveySubmit().length; i++){
+            submissionTotal.push(getSurveySubmit()[i].surveyStatement)          
+            }
+        
+            console.log(submissionTotal);
+            return submissionTotal;
+    }
 
-    // console.log(submissionResult);
+    totalStatement()
+
+    const submissionResult = {};
+    totalStatement().forEach((x)=>{
+        submissionResult[x] = (submissionResult[x] || 0)+1;
+    })
+
+    console.log(submissionResult);
 
     const submitData = {
         labels: ["Unsubmitted", "Submitted"],
         datasets : [{
             label: "Daily Survey Submittion Rate",
-            // data:[submissionResult.Unsubmitted, submissionResult.submitted], 
+            data:[submissionResult.unsubmitted, submissionResult.submitted], 
             backgroundColor:["#0098FF", "#00CF92"],
             
         }]
