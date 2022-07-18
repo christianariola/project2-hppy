@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 
 const Surveys = () => {
     const [openSurvey, setOpenSurvey] = useState(false);
-    
+    const [surveyArray, setSurveyArray] = useState([]);
     const [surveyName, setSurveyName] = useState('')
     
     const returnToSurveys = () => {

@@ -21,7 +21,9 @@ const Survey1 = () => {
     
 
   const [monthlySurveyDate, setMonthlySurveyDate] = useState();
-  const [surveyType, setSurveyType] = useState("monthlySurvey");
+  const [surveyType, setSurveyType] = useState('');
+  const [surveyStatus, setSurveyStatus] = useState('');
+  const [surveyOpened, setSurveyOpened] = useState('');
   const [answer1, setAnswer1] = useState("");
   const [answer2, setAnswer2] = useState("");
   const [answer3, setAnswer3] = useState("");
@@ -157,7 +159,7 @@ const Survey1 = () => {
   /////////////////////////////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////////////////////////////
 
-  const questionHandler = () => {};
+
 
   // Used this source as example how to do it: https://stackoverflow.com/questions/43744312/react-js-get-current-date
   const dateHandler = () => {
@@ -170,9 +172,16 @@ const Survey1 = () => {
       `${year}${month < 10 ? `0${month}` : `${month}`}${date}`
     );
   };
+    
+    useEffect(() => {
+        setSurveyStatus("compleated");
+        setSurveyOpened("visited");
+        setSurveyType("monthlySurvey");
+    }, [answer1]);
+
 
   const handleFormSubmit = (e) => {
-    e.preventDefault();
+      e.preventDefault();
     const monthlySurvey = {
       answers: {
         answer1,
@@ -196,7 +205,9 @@ const Survey1 = () => {
       surveyid: surveyid,
       surveyType: surveyType,
       createdDate: monthlySurveyDate,
+      surveyStatus: surveyStatus,
       employeeEmail: employee.email,
+      surveyOpened: surveyOpened,
       monthlyFeeling,
       monthlySentiment,
       monthlyTotalRating,
@@ -209,6 +220,8 @@ const Survey1 = () => {
         surveyid: surveyid,
         surveyType: surveyType,
         createdDate: monthlySurveyDate,
+        surveyStatus: surveyStatus,
+        surveyOpened: surveyOpened,
         employeeEmail: employee.email,
         monthlyFeeling,
         monthlySentiment,
@@ -229,11 +242,11 @@ const Survey1 = () => {
 
   return (
     <div className="survey">
-      <form
-        action="https://pluto-hppy.herokuapp.com/monthlySurveys"
-        method="POST"
-        onSubmit={handleFormSubmit}
-        onChange={dateHandler}
+          <form
+              action="/monthlySurveys"
+              method="POST"
+              onSubmit={handleFormSubmit}
+              onChange={dateHandler}
       >
         Survey1 component
         <h2>Survey questions</h2>
@@ -463,19 +476,19 @@ const Survey1 = () => {
                             </label>
                             <label>
                                 <input type="radio" name="answer7" value="4"
-                                onChange={(e) => setAnswer1(e.target.value)} />Neither satisfied nor dissatisfied
+                                onChange={(e) => setAnswer7(e.target.value)} />Neither satisfied nor dissatisfied
                             </label>
                             <label>
                                 <input type="radio" name="answer7" value="3"
-                                onChange={(e) => setAnswer1(e.target.value)} />Slightly dissatisfied
+                                onChange={(e) => setAnswer7(e.target.value)} />Slightly dissatisfied
                             </label>
                             <label>
                                 <input type="radio" name="answer7" value="2"
-                                onChange={(e) => setAnswer1(e.target.value)} />Moderately dissatisfied
+                                onChange={(e) => setAnswer7(e.target.value)} />Moderately dissatisfied
                             </label>
                             <label>
                                 <input type="radio" name="answer7" value="1"
-                                onChange={(e) => setAnswer1(e.target.value)} />Extremely dissatisfied
+                                onChange={(e) => setAnswer7(e.target.value)} />Extremely dissatisfied
                             </label>
                         </div> 
                     </label>
@@ -487,7 +500,7 @@ const Survey1 = () => {
                             type="text" name="answer7a" id="answer7a"
                             value={sentimentText}
                             onChange={(e) => {
-                                setAnswer2(e.target.value);
+                                setAnswer7a(e.target.value);
                                 setSentimentText(e.target.value); //set sentimentText to the value of the textarea
                                 getSentimentScore(sentimentText); //passing the text to the getSentimentScore function and gets a score on a scale of 0-1
                                 sentimentAnalysis(sentimentScore); //passing the score to the sentimentAnalysis function and add or reduce score from overall survey score based on Sentiment score.
