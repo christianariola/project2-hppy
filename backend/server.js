@@ -6,6 +6,7 @@ const connectDB = require("./config/db");
 const cors = require("cors");
 const { json } = require("express");
 const morgan = require("morgan");
+const schedule = require("node-schedule");
 
 const PORT = process.env.PORT || 3001;
 
@@ -28,6 +29,7 @@ app.use(morgan("dev"));
 
 app.get("/", (req, res) => {
   res.send("Welcome to Hppy");
+
 });
 
 //Daily Survey Schema
@@ -70,17 +72,17 @@ app.get("/dailySurvey", (req, res) => {
   });
 });
 
-//Weekly Survey Schema
+//Monthly Survey Schema
 const { MonthlySurvey } = require("./models/MonthlySurveyModel");
 
-//POST Weekly Survey
+//POST Monthly Survey
 
 app.post("/monthlySurveys", (req, res) => {
   let monthlySurvey = new MonthlySurvey(req.body);
 
   monthlySurvey.save((err) => {
     if (err) {
-      console.log(err.code);
+      console.log(err.response.data);
       err.code === 11000
         ? res.status(400).json({
             message: "Monthly Survey Already Exists",
@@ -102,6 +104,40 @@ app.use("/api/companies", require("./routes/companyRoutes"));
 
 app.use("/api/dailySurvey", require("./routes/surveyRoutes"));
 app.use("/api/Surveys", require("./routes/surveyRoutes"));
-app.use("/api/weeklySurveys", require("./routes/surveyRoutes"));
+app.use("/api/monthlySurvey", require("./routes/surveyRoutes"));
 
 app.use(errorHandler);
+
+
+// Node-schedular 
+// cron tab for every month format: 
+// const scheduleDate = new Date('0 0 1 * *');
+const scheduleDate = new Date('* * * * *');
+const { MonthlySurveyEmpty } = require("./models/MonthlySurveyEmptyModel");
+
+const job = schedule.scheduleJob(scheduleDate, function () {
+  
+  // console.log("A new survey has to bee send to mongoDB at:", new Date().toString());
+  
+  app.post("/monthlySurveys", (req, res) => {
+  let monthlySurveyEmpty = new MonthlySurveyEmpty(req.body);
+
+  monthlySurveyEmpty.save((err) => {
+    if (err) {
+      console.log(err.response.data);
+      err.code === 11000
+        ? res.status(400).json({
+            message: "Monthly Survey Already Exists",
+          })
+        : res.status(400).send(err);
+    } else {
+      console.log(res);
+      res.status(201).json({
+        message: "New Monthly Survey Saved",
+        Survey: monthlySurveyEmpty,
+      });
+    }
+  });
+  });
+  
+});
