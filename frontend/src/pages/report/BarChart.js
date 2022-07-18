@@ -1,4 +1,5 @@
 import { Bar } from "react-chartjs-2";
+import { Pie } from 'react-chartjs-2';
 import { ArcElement } from "chart.js";
 import Chart from'chart.js/auto';
 import { useState, useEffect } from "react";
@@ -10,7 +11,7 @@ const BarChart = props => {
      //use this state variable to store data fetched from the database
     const [ report, setReport ] = useState([])
     const [ employee, setEmployee ] = useState([])
-    // const [ view, setView ] = useState([])
+  
 
     //daily survey fetching
     useEffect(function loadData(){
@@ -39,7 +40,7 @@ const BarChart = props => {
     //  const { loginEmployee } = useSelector(state => state.auth) // ->작동되면 .role = 'superadmin' no filter, role 'admin' filetre by compaby
     //  var company = loginEmployee.company_name
       
-     
+     //store employees' email of the matched company
      var company = "Facebook"
      var showEmailArry = [];
      for(var i=0; i<employee.length; i++){
@@ -47,10 +48,13 @@ const BarChart = props => {
             showEmailArry.push(employee[i].email)
         }
      }
-     //find employee email from daily survey 
-     console.log(showEmailArry)
+     
+     console.log(showEmailArry) //filted empployee email list by company
 
-     var filteredDailySurvey = [];
+    
+
+     //find matched employees' email from daily survey table
+     var filteredDailySurvey = []; //store the daily survey data from filetered employees by company
      for(var i=0; i<report.length; i++){
         if(showEmailArry.includes(report[i].dailySurvey.employeeEmail)){
             filteredDailySurvey.push(report[i])
@@ -72,7 +76,7 @@ const BarChart = props => {
         //find employee email from daily survey 
         console.log(showDepartArry)
    
-        var filteredDailySurvey = [];
+        var filteredDailySurvey = []; 
         for(var i=0; i<report.length; i++){
            if(showDepartArry.includes(report[i].dailySurvey.employeeEmail)){
                filteredDailySurvey.push(report[i])
@@ -84,6 +88,15 @@ const BarChart = props => {
         return filterByDepart
    
        }
+
+    //create unsubmission statement 
+    // var unSubmission = [];
+    //  for(var i=0; i<showEmailArry.length; i++){
+    //     if(showEmailArry[i] !== filteredDailySurvey[i].dailySurvey.employeeEmail){
+    //        unSubmission.push()
+    //     }
+    //  }
+
     
      //fetch  employee view table's data
     //  useEffect(function loadEmployee(){
@@ -138,15 +151,84 @@ const BarChart = props => {
             backgroundColor:["#0098FF", "#00CF92","#F72564","#F8D919","#E07116"]
         }]
     }
+
+    //survey submission data by date
+    var getSurveySubmit = function(){
+        var surveySubmit = [];
+        var surveyState = {};
+        const nameUrl = window.location.href
+        const dateUrl = nameUrl.split('/');
+        const chartDate = dateUrl[dateUrl.length-1] 
+        console.log(chartDate)
+        for(var i=0; i<filteredDailySurvey.length; i++){
+            if(showEmailArry.includes(filteredDailySurvey[i].dailySurvey.employeeEmail) && filteredDailySurvey[i].dailySurvey.dailySurveyDate == chartDate){
+                var surveyState = {};
+
+                surveyState['email'] = showEmailArry;
+                surveyState['date'] = chartDate;
+                surveyState['surveyStatement'] = "submitted";
+
+                surveySubmit.push(surveyState)
+            // surveyState.email = showEmailArry[i]
+            // surveyState.date = chartDate
+            // surveyState.surveyStatement = "Submitted"
+            } else {
+               
+
+                surveyState['email'] = showEmailArry;
+                surveyState['date'] = chartDate;
+                surveyState['surveyStatement'] = "unsubmitted";
+
+                surveySubmit.push(surveyState)
+            }
+        }
+        return surveySubmit;
+        
+        // for(var i=0; i<filteredDailySurvey.length; i++){
+        //     if(filteredDailySurvey[i].dailySurvey.dailySurveyDate === chartDate){
+        //     surveySubmit.push(filteredDailySurvey[i].dailySurvey.dailySurveyState);
+        //     } 
+        // }
+        // return surveySubmit;
+    }
+    
+
+    getSurveySubmit();
+    console.log(getSurveySubmit());
+  
+
+
+    // const submissionResult = {};
+    // getSurveySubmit().forEach((x)=>{
+    //     submissionResult[x] = (submissionResult[x] || 0)+1;
+    // })
+
+    // console.log(submissionResult);
+
+    const submitData = {
+        labels: ["Unsubmitted", "Submitted"],
+        datasets : [{
+            label: "Daily Survey Submittion Rate",
+            // data:[submissionResult.Unsubmitted, submissionResult.submitted], 
+            backgroundColor:["#0098FF", "#00CF92"],
+            
+        }]
+    }
     return(
         <div>
+            <h2>Daily Survey Submission Rate</h2>
+            <Pie data={submitData} 
+                width="20%"
+                height="20%"
+                options ={{ 
+                    responsive: true,
+                    maintainAspectRatio: true,	// Don't maintain w/h ratio
+                  }}
+            />
             <h2>Daily Total Rating</h2>
             <div>
-             {/* {report?.map((report)=> //properly shows the data
-            <h4>{report.dailySurvey.dailyFeeling}</h4>
-             )} */}
+                <Bar data={data} />
             </div>
-            <Bar data={data} />
              {/* <Barchart /> */}
         </div>
     )
