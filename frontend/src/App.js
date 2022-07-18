@@ -2,6 +2,7 @@ import './style.css'
 import RequireAuth from './components/RequireAuth'
 import { Routes, Route } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { useState } from 'react'
 
 import Login from './pages/Login'
 import AddEmployee from './components/employee/AddEmployee'
@@ -21,13 +22,20 @@ import EmployeeDashboard from './pages/employee/EmployeeDashboard'
 import DailySurvey from './components/DailySurvey'
 import ReportMain from './pages/report/ReportMain'
 import Myaccount from  './pages/Myaccout'
-import DoughnutChart from './pages/report/DoughnutChart'
+import BarChart from './pages/report/BarChart'
 
 import Company from './components/company/Company'
 import AddEditCompany from './components/company/AddEditCompany'
 import ViewCompany from './components/company/ViewCompany'
 
 const App = () => {
+
+  const [chartDate, setChartDate] = useState();
+
+  const handleSelectChartDate = (date)=> {
+    setChartDate(date)
+  } 
+
 
   const { employee } = useSelector(state => state.auth)
   let dashboardIndex
@@ -82,8 +90,10 @@ const App = () => {
           <Route path="weeklysurveys" element={<Surveys />}></Route>
           <Route element={<RequireAuth allowedRoles={["superadmin", "admin"]} />}>
             <Route path="company/:companyId/employee/add" element={<AddEmployee />} />
-            <Route path="report" element={<ReportMain />} />
-            <Route path="reportchart" element={<DoughnutChart />} />
+            <Route path="report" element={<ReportMain handleSelectChartDate={handleSelectChartDate} />} />
+            <Route path="reportchart" element={<BarChart />} />
+            <Route path="reportchart/:surveyDate" element={<BarChart chartDate={chartDate} />} /> {/*survey date */}
+            <Route path="reportview" element={<BarChart />} /> {/*employee view  */}
           </Route>
 
           {/* Super Admin Only */}
