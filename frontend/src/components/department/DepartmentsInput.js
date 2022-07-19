@@ -5,13 +5,13 @@ import TextField from "@mui/material/TextField";
 import Downshift from "downshift";
 
 export default function DepartmentsInput({ ...props }) {
-    const { selectedDepartments, placeholder, departments, ...other } = props;
+    const { selectedDepartments, placeholder, departments, deptData, ...other } = props;
     const [inputValue, setInputValue] = useState("");
     const [selectedItem, setSelectedItem] = useState([]);
 
     useEffect(() => {
-        setSelectedItem(departments);
-    }, [departments]);
+        setSelectedItem(deptData);
+    }, [deptData]);
 
     useEffect(() => {
         selectedDepartments(selectedItem);
@@ -61,6 +61,9 @@ export default function DepartmentsInput({ ...props }) {
   function handleInputChange(event) {
     setInputValue(event.target.value);
   }
+
+  // console.log(selectedItem)
+
   return (
       <Downshift
         id="downshift-multiple"

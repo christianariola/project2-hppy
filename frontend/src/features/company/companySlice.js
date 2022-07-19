@@ -70,6 +70,44 @@ export const getCompany = createAsyncThunk(
     }
 );
 
+// Edit company by id
+export const editCompany = createAsyncThunk(
+    "company/editCompany",
+    async ({companyId, updatedCompanyData}, thunkAPI) => {
+        console.log(updatedCompanyData)
+        try {
+        return await companyService.editCompany(updatedCompanyData, companyId);
+        } catch (error) {
+        const message =
+            (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
+
+// Delete company by id
+export const deleteCompany = createAsyncThunk(
+    "company/deleteCompany",
+    async (companyId, thunkAPI) => {
+        try {
+        return await companyService.deleteCompany(companyId);
+        } catch (error) {
+        const message =
+            (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
 
 export const companySlice = createSlice({
     name: 'company',
@@ -114,6 +152,37 @@ export const companySlice = createSlice({
             state.company = action.payload
         })
         .addCase(getCompany.rejected, (state, action) => {
+            state.isLoading = false
+            state.company = null
+            state.isError = true
+            state.message = action.payload
+        })
+        .addCase(editCompany.fulfilled, (state, action) => {
+            state.company = action.payload
+            console.log("action", action)
+            const { 
+                arg: { id },
+            } = action.meta
+
+            if( id ){
+                state.companyList = state.companyList.map((item) => item._id === id ? action.payload : item)
+            }
+        })
+        .addCase(editCompany.rejected, (state, action) => {
+            state.isLoading = false
+            state.company = null
+            state.isError = true
+            state.message = action.payload
+        })
+        .addCase(deleteCompany.fulfilled, (state, action) => {
+            state.company = action.payload
+            const { arg } = action.meta
+
+            if( arg ){
+                state.companyList = state.companyList.filter((item) => item._id !== arg)
+            }
+        })
+        .addCase(deleteCompany.rejected, (state, action) => {
             state.isLoading = false
             state.company = null
             state.isError = true

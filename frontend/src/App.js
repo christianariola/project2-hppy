@@ -91,7 +91,7 @@ const App = () => {
             <Route path="companies" element={<Company />}>
             </Route>
             <Route path="companies/add" element={<AddEditCompany />} />
-            <Route path="companies/edit/:companyId" element={<AddEditCompany />} />
+            <Route path="company/edit/:companyId" element={<AddEditCompany />} />
             <Route path="company/:companyId" element={<ViewCompany />} />
           </Route>
 
