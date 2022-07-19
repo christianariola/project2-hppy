@@ -9,7 +9,7 @@ const Employee = require('../models/employeeModel')
 // @route  /api/employees
 // @access Public
 const registerEmployee = asyncHandler(async (req, res) => {
-    const {company_id, company_name, department, department_id, firstName, lastName, email, password} = req.body
+    const {company_id, company_name, department, firstName, lastName, email, password} = req.body
 
     console.log(req.body)
 
@@ -40,7 +40,6 @@ const registerEmployee = asyncHandler(async (req, res) => {
         company_id,
         company_name,
         department,
-        department_id,
     })
 
     if(employee) {

@@ -63,7 +63,6 @@ const Register = () => {
             company_id: companyId,
             company_name: company.name,
             department: department,
-            department_id: department,
             firstName,
             lastName,
             email,

@@ -35,10 +35,6 @@ const employeeSchema = mongoose.Schema({
         type: String,
         required: [true, 'Please add a company name'],
     },
-    department_id: {
-        type: String,
-        required: [true, 'Please add a department id'],
-    },
     department: {
         type: String,
         required: [true, 'Please add a department'],
