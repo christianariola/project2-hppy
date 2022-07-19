@@ -89,15 +89,7 @@ const BarChart = props => {
    
        }
 
-    //create unsubmission statement 
-    // var unSubmission = [];
-    //  for(var i=0; i<showEmailArry.length; i++){
-    //     if(showEmailArry[i] !== filteredDailySurvey[i].dailySurvey.employeeEmail){
-    //        unSubmission.push()
-    //     }
-    //  }
-
-    
+       
      //fetch  employee view table's data
     //  useEffect(function loadEmployee(){
     //     axios.get('/reportview') 
@@ -235,6 +227,7 @@ const BarChart = props => {
     }
     return(
         <div>
+            {/* if() */}
             <h2>Daily Survey Submission Rate</h2>
             <Pie data={submitData} 
                 width="20%"
@@ -246,6 +239,7 @@ const BarChart = props => {
             />
             <h2>Daily Total Rating</h2>
             <div>
+                
                 <Bar data={data} />
             </div>
              {/* <Barchart /> */}
