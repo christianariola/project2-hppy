@@ -12,7 +12,6 @@ import Link from '@mui/material/Link';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import CssBaseline from '@mui/material/CssBaseline';
 
-
 const Header = () => {
 
     // const navigate = useNavigate()
