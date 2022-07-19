@@ -10,7 +10,7 @@ const ReportMain = props => {
 
   //daily survey fetching
     useEffect(function loadData(){
-        axios.get('/dailySurvey')
+        axios.get('https://pluto-hppy.herokuapp.com/dailySurvey')
         .then((res)=>{
             setSurveyItems(res.data)
          })
@@ -78,7 +78,7 @@ const ReportMain = props => {
     const [getDate, setGetDate] = useState([]);
 
     useEffect(function loadDate(){
-    axios.get('/view/:surveyDate')
+    axios.get('https://pluto-hppy.herokuapp.com/view/:surveyDate')
     .then((res)=>{
        setGetDate(res.data)
      })
@@ -90,7 +90,7 @@ const ReportMain = props => {
 
      //monthly survey fetching
      useEffect(function loadMonthly(){
-      axios.get('/monthlySurveys')
+      axios.get('https://pluto-hppy.herokuapp.com/monthlySurveys')
      .then((res)=>{
       setMonthlyItems(res.data)
       })

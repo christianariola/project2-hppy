@@ -15,7 +15,7 @@ const BarChart = props => {
 
     //daily survey fetching
     useEffect(function loadData(){
-        axios.get('/dailySurvey') 
+        axios.get('https://pluto-hppy.herokuapp.com/dailySurvey') 
          .then((res)=>{
             setReport(res.data)
          })
@@ -27,7 +27,7 @@ const BarChart = props => {
 
      //fetch  employees data
      useEffect(function loadEmployee(){
-        axios.get('/getEmployeeAll') 
+        axios.get('https://pluto-hppy.herokuapp.com/getEmployeeAll') 
          .then((res)=>{
             setEmployee(res.data)
          })

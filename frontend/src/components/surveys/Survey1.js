@@ -216,7 +216,7 @@ const Survey1 = () => {
 
     //axios post to /monthlySurvey endpoint
     axios
-      .post("/monthlySurveys", {
+      .post("https://pluto-hppy.herokuapp.com/monthlySurveys", {
         monthlySurvey: monthlySurvey,
         surveyid: surveyid,
         surveyType: surveyType,
@@ -244,7 +244,7 @@ const Survey1 = () => {
   return (
     <div className="survey">
           <form
-              action="/monthlySurveys"
+              action="https://pluto-hppy.herokuapp.com/monthlySurveys"
               method="POST"
               onSubmit={handleFormSubmit}
               onChange={dateHandler}
