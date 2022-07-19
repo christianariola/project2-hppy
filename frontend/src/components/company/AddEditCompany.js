@@ -16,11 +16,11 @@ const initialState = {
 const AddEditCompany = () => {
 
     const [departments, setDepartments] = useState([])
-    const [deptData, setDeptData] = useState([])
+    const [deptData, ] = useState([])
     
     const [formData, setFormData] = useState(initialState)
 
-    const [logo, setLogo] = useState("")
+    const [, setLogo] = useState("")
     const [image, setImage] = useState("")
 
     const { name, description } = formData
@@ -41,7 +41,7 @@ const AddEditCompany = () => {
                 deptData.push(item.deptName)
             )
         }
-    }, [companyId])
+    }, [companyId, companyList, deptData])
 
     useEffect(() => {
         if(isError){
@@ -108,6 +108,7 @@ const AddEditCompany = () => {
         if(!companyId) {
             dispatch(addCompany(updatedCompanyData))
         } else {
+            console.log(updatedCompanyData)
             dispatch(editCompany({companyId, updatedCompanyData}))
             navigate('/app/companies')
         }
@@ -133,10 +134,10 @@ const AddEditCompany = () => {
 
                 <div className="form-group">
                     <label htmlFor="logo">logo:</label>
-                    <input type="file" className="form-control" id="logo" name="logo" onChange={onFileChange} placeholder="Enter company logo" required accept="image/png, image/jpeg, image/jpg, image/jfif"/>
+                    <input type="file" className="form-control" id="logo" name="logo" onChange={onFileChange} placeholder="Enter company logo" accept="image/png, image/jpeg, image/jpg, image/jfif"/>
                 </div>
                 <div className="preview">
-                    { image ? <img src={image} alt="Preview" /> : "" }
+                    { image ? <img src={image} alt="Preview" style={{width: "200px"}} /> : "" }
                 </div>
                 <div className="form-group">
                 </div>

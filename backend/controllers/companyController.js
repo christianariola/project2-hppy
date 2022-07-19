@@ -69,6 +69,7 @@ const getCompany = asyncHandler(async (req, res) => {
             _id: company._id,
             name: company.name,
             description: company.description,
+            logo: company.logo,
             departments: company.departments,
         })
     } else {
@@ -86,22 +87,57 @@ const editCompany = asyncHandler(async (req, res) => {
         return res.status(404).json({ message: `No company exist with id ${id}` })
     }
 
-    const updatedCompany = {
-        name,
-        description,
-        logo,
-        departments,
-        _id: id
-    }
 
-    const company = await Company.findByIdAndUpdate(id, updatedCompany, { new: true }) 
+    if(logo){
+        const filename = name.trim().toLowerCase()
+        const result = await cloudinary.uploader.upload(logo,
+        {
+            upload_preset: 'unsigned_uploads',
+            public_id: `${filename}-logo`,
+            allowed_formats: ['png', 'jpg', 'jpeg', 'svg', 'ico', 'jfif', 'webp'],
+            width: 300,
+            crop: "scale"
+        });
 
-    if(company){
-        res.status(201).json(updatedCompany)
+        console.log(result)
+        const updatedCompany = {
+            name,
+            description,
+            logo: {
+                public_id: result.public_id,
+                url: result.secure_url
+            },
+            departments,
+            _id: id
+        }
+
+        const company = await Company.findByIdAndUpdate(id, updatedCompany, { new: true }) 
+
+        if(company){
+            res.status(201).json(updatedCompany)
+        } else {
+            res.status(401)
+            throw new Error('Something went wrong...')
+        }
     } else {
-        res.status(401)
-        throw new Error('Something went wrong...')
+        const updatedCompany = {
+            name,
+            description,
+            departments,
+            _id: id
+        }
+
+        const company = await Company.findByIdAndUpdate(id, updatedCompany, { new: true }) 
+
+        if(company){
+            res.status(201).json(updatedCompany)
+        } else {
+            res.status(401)
+            throw new Error('Something went wrong...')
+        }
     }
+
+
 })
 
 const deleteCompany = asyncHandler(async (req, res) => {

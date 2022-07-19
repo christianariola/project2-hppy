@@ -3,6 +3,8 @@ import { Link as RouterLink, useParams } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import { useSelector, useDispatch } from 'react-redux'
 import { getCompany } from "../../features/company/companySlice"
+import Logo from "./Logo"
+
 
 const ViewCompany = () => {
 
@@ -19,9 +21,9 @@ const ViewCompany = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [companyId])
 
-
     return <>
         <h2>View Company</h2>
+        <Logo logo={company.logo} />
         <p>Name: {company.name}</p>
         <p>Description: {company.description}</p>
 

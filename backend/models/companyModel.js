@@ -19,7 +19,7 @@ const companySchema = mongoose.Schema({
             type: String,
             required: true,
         }
-    },
+    }, required: false,
     departments: [{
         deptName: {
             type: String,
