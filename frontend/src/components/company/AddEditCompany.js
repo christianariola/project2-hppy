@@ -37,9 +37,6 @@ const AddEditCompany = () => {
             singleCompany.departments.map((item) =>
                 deptData.push(item.deptName)
             )
-
-
-            // console.log(singleCompany.departments)
         }
     }, [companyId])
 
@@ -91,7 +88,8 @@ const AddEditCompany = () => {
         if(!companyId) {
             dispatch(addCompany(updatedCompanyData))
         } else {
-            dispatch(editCompany(companyId, updatedCompanyData))
+            dispatch(editCompany({companyId, updatedCompanyData}))
+            navigate('/app/companies')
         }
 
     }

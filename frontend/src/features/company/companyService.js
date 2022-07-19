@@ -24,7 +24,7 @@ const getCompany = async (companyId) => {
     return response.data
 }
 
-const editCompany = async (companyId, updatedCompanyData) => {
+const editCompany = async (updatedCompanyData, companyId) => {
     const response = await axios.patch(API_URL + `/edit/${companyId}`, updatedCompanyData)
 
     return response.data
