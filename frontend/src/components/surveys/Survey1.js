@@ -35,7 +35,7 @@ const Survey1 = () => {
 
     
   //Sentiment Analysis Block
-  const [monthlyFeeling, setMonthlyFeeling] = useState(3); //This should be an average of the all survey questions
+  const [monthlyFeeling, ] = useState(3); //This should be an average of the all survey questions
   const [monthlySentiment, setMonthlySentiment] = useState();
   const [monthlyTotalRating, setMonthlyTotalRating] = useState(3);
 
@@ -153,6 +153,7 @@ const Survey1 = () => {
       loadModel(url);
       loadMetadata(url);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /////////////////////////////////////////////////////////////////////////////////////////

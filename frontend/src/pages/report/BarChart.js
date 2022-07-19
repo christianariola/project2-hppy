@@ -1,10 +1,10 @@
 import { Bar } from "react-chartjs-2";
 import { Pie } from 'react-chartjs-2';
-import { ArcElement } from "chart.js";
-import Chart from'chart.js/auto';
+// import { ArcElement } from "chart.js";
+// import Chart from'chart.js/auto';
 import { useState, useEffect } from "react";
 import axios from 'axios'
-import { useSelector } from 'react-redux'
+// import { useSelector } from 'react-redux'
 const BarChart = props => {
 
    
@@ -44,7 +44,7 @@ const BarChart = props => {
      var company = "Facebook"
      var showEmailArry = [];
      for(var i=0; i<employee.length; i++){
-        if(employee[i].company_name != undefined && employee[i].company_name === company ){
+        if(employee[i].company_name !== undefined && employee[i].company_name === company ){
             showEmailArry.push(employee[i].email)
         }
      }
@@ -55,9 +55,9 @@ const BarChart = props => {
 
      //find matched employees' email from daily survey table
      var filteredDailySurvey = []; //store the daily survey data from filetered employees by company
-     for(var i=0; i<report.length; i++){
-        if(showEmailArry.includes(report[i].dailySurvey.employeeEmail)){
-            filteredDailySurvey.push(report[i])
+     for(var j=0; j<report.length; j++){
+        if(showEmailArry.includes(report[j].dailySurvey.employeeEmail)){
+            filteredDailySurvey.push(report[j])
         }
         
      }
@@ -66,28 +66,28 @@ const BarChart = props => {
    
     
      
-    function filterByDepart(depart) { 
-        var showDepartArry = [];
-        for(var i=0; i<employee.length; i++){
-           if(employee[i].department != undefined && employee[i].department === depart ){
-               showDepartArry.push(employee[i].email)
-           }
-        }
-        //find employee email from daily survey 
-        console.log(showDepartArry)
+    // function filterByDepart(depart) { 
+    //     var showDepartArry = [];
+    //     for(var i=0; i<employee.length; i++){
+    //        if(employee[i].department !== undefined && employee[i].department === depart ){
+    //            showDepartArry.push(employee[i].email)
+    //        }
+    //     }
+    //     //find employee email from daily survey 
+    //     console.log(showDepartArry)
    
-        var filteredDailySurvey = []; 
-        for(var i=0; i<report.length; i++){
-           if(showDepartArry.includes(report[i].dailySurvey.employeeEmail)){
-               filteredDailySurvey.push(report[i])
-           }
+    //     var filteredDailySurvey = []; 
+    //     for(var i=0; i<report.length; i++){
+    //        if(showDepartArry.includes(report[i].dailySurvey.employeeEmail)){
+    //            filteredDailySurvey.push(report[i])
+    //        }
            
-        }
-        console.log(filteredDailySurvey)
+    //     }
+    //     console.log(filteredDailySurvey)
    
-        return filterByDepart
+    //     return filterByDepart
    
-       }
+    //    }
 
        
      //fetch  employee view table's data
@@ -117,7 +117,7 @@ const BarChart = props => {
         //     var filteredDailySurvey=filterByDepart(depart)  
         // }
         for(var i=0; i<filteredDailySurvey.length; i++){
-            if(filteredDailySurvey[i].dailySurvey.dailySurveyDate === chartDate){ {/* depends on button value */}
+            if(filteredDailySurvey[i].dailySurvey.dailySurveyDate === chartDate){
             rating.push(filteredDailySurvey[i].dailySurvey.dailyTotalRating)
             }
         }
@@ -153,11 +153,11 @@ const BarChart = props => {
         const chartDate = dateUrl[dateUrl.length-1] 
         // console.log(chartDate)
         for(var i=0; i<filteredDailySurvey.length; i++){
-            if(showEmailArry.includes(filteredDailySurvey[i].dailySurvey.employeeEmail) && filteredDailySurvey[i].dailySurvey.dailySurveyDate == chartDate) {
+            if(showEmailArry.includes(filteredDailySurvey[i].dailySurvey.employeeEmail) && filteredDailySurvey[i].dailySurvey.dailySurveyDate === chartDate) {
                 
 
                 console.log(filteredDailySurvey[i].dailySurvey)
-                var surveyState = {};
+                // var surveyState = {};
 
                 surveyState['email'] = filteredDailySurvey[i].dailySurvey.employeeEmail;
                 surveyState['surveyStatement'] = "submitted";

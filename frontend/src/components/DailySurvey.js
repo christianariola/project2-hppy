@@ -142,6 +142,7 @@ const DailySurvey = () => {
       loadModel(url);
       loadMetadata(url);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //Form Submit function
