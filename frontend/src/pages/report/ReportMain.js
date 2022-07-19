@@ -60,7 +60,7 @@ const ReportMain = props => {
         monthlySingleList.push(obj)
         
         
-          }
+      }
       
       return monthlySingleList;
     }
