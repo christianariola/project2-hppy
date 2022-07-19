@@ -11,8 +11,14 @@ const companySchema = mongoose.Schema({
         required: false,
     },
     logo: {
-        type: String,
-        required: [true, 'Please add a logo'],
+        public_id: {
+            type: String,
+            required: true,
+        },
+        url: {
+            type: String,
+            required: true,
+        }
     },
     departments: [{
         deptName: {

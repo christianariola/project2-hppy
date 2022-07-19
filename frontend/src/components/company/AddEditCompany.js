@@ -20,7 +20,10 @@ const AddEditCompany = () => {
     
     const [formData, setFormData] = useState(initialState)
 
-    const { name, description, logo } = formData
+    const [logo, setLogo] = useState("")
+    const [image, setImage] = useState("")
+
+    const { name, description } = formData
 
     let { companyId } = useParams(); 
 
@@ -62,6 +65,23 @@ const AddEditCompany = () => {
         }))
     }
 
+
+    const previewFiles = (file) => {
+        const reader = new FileReader()
+
+        reader.readAsDataURL(file)
+
+        reader.onloadend = () => {
+            setImage(reader.result)
+        }
+    }
+
+    const onFileChange = (e) => {
+        const file = e.target.files[0]
+        setLogo(file)
+        previewFiles(file)
+    }
+
     const handleSelectedDepartments = (items) => {
         setDepartments(items)
     }
@@ -81,7 +101,7 @@ const AddEditCompany = () => {
         const updatedCompanyData = {
             name,
             description,
-            logo,
+            logo: image,
             departments: deptObj,
         }
 
@@ -93,8 +113,6 @@ const AddEditCompany = () => {
         }
 
     }
-
-    // console.log(deptData)
 
     return <>
         <section>
@@ -115,9 +133,11 @@ const AddEditCompany = () => {
 
                 <div className="form-group">
                     <label htmlFor="logo">logo:</label>
-                    <input type="text" className="form-control" id="logo" name="logo" value={logo} onChange={onChange} placeholder="Enter company logo" required/>
+                    <input type="file" className="form-control" id="logo" name="logo" onChange={onFileChange} placeholder="Enter company logo" required accept="image/png, image/jpeg, image/jpg, image/jfif"/>
                 </div>
-
+                <div className="preview">
+                    { image ? <img src={image} alt="Preview" /> : "" }
+                </div>
                 <div className="form-group">
                 </div>
 

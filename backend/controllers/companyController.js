@@ -1,7 +1,7 @@
 const asyncHandler = require('express-async-handler')
 const jwt = require('jsonwebtoken')
 const { default: mongoose } = require('mongoose')
-
+const cloudinary = require("../cloudinary/cloudinary")
 const Company = require('../models/companyModel')
 
 // @desc   Register a new user
@@ -11,12 +11,24 @@ const addCompany = asyncHandler(async (req, res) => {
 
     const {name, description, logo, departments} = req.body
 
-    // const departments = { deptName: req.body.deptName }
-    // console.log(req.body)
+    const filename = name.trim().toLowerCase()
+
+    const result = await cloudinary.uploader.upload(logo,
+    {
+        upload_preset: 'unsigned_uploads',
+        public_id: `${filename}-logo`,
+        allowed_formats: ['png', 'jpg', 'jpeg', 'svg', 'ico', 'jfif', 'webp'],
+        width: 300,
+        crop: "scale"
+    });
+
     const company = await Company.create({
         name,
         description,
-        logo,
+        logo: {
+            public_id: result.public_id,
+            url: result.secure_url
+        },
         departments
     })
 
@@ -25,7 +37,8 @@ const addCompany = asyncHandler(async (req, res) => {
             _id: company._id,
             name: company.name,
             description: company.description,
-            logo: company.logo
+            logo: company.logo.public_id,
+            logo_url: company.logo.url
         })
     } else {
         res.status(400)

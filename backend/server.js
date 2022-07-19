@@ -4,6 +4,7 @@ const dotenv = require("dotenv").config();
 const { errorHandler } = require("./middleware/errorMiddleware");
 const connectDB = require("./config/db");
 const cors = require("cors");
+const cloudinary = require("./cloudinary/cloudinary")
 const { json } = require("express");
 const morgan = require("morgan")
 
@@ -18,8 +19,8 @@ const app = express();
 app.use(cors());
 //Cors Configuration - End
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({ extended: false, limit: '50mb' }));
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 
