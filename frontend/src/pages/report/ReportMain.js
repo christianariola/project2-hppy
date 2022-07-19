@@ -110,7 +110,7 @@ const ReportMain = props => {
 
   
   return (
-    <div className="report-page">
+    <div className="report-pageA">
       <h1>Reports</h1>
       <table>
         <thead>
