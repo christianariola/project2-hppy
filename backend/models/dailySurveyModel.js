@@ -10,6 +10,11 @@ const dailySurveySchema = new Schema({
     required: [true, "Please add an id"],
     Error: [true, "Survey Already Exists"],
   },
+  surveyType: {
+    type: String,
+    required: [true, "Please add a survey type"],
+    default: "Daily",
+  },
   dailySurvey: {
     employeeEmail: {
       type: String,
