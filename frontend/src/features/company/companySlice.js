@@ -175,13 +175,10 @@ export const companySlice = createSlice({
         })
         .addCase(deleteCompany.fulfilled, (state, action) => {
             state.company = action.payload
-            console.log("action", action)
-            const { 
-                arg: { id },
-            } = action.meta
+            const { arg } = action.meta
 
-            if( id ){
-                state.companyList = state.companyList.filter((item) => item._id !== id)
+            if( arg ){
+                state.companyList = state.companyList.filter((item) => item._id !== arg)
             }
         })
         .addCase(deleteCompany.rejected, (state, action) => {

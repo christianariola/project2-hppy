@@ -7,7 +7,7 @@ import { getCompanyList, deleteCompany } from "../../features/company/companySli
 const Company = () => {
 
     const dispatch = useDispatch()
-
+    
     const { companyList, isLoading } = useSelector((state) => ({...state.company}))
 
     useEffect(() => {
