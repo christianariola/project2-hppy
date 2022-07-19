@@ -6,7 +6,7 @@ import Link from '@mui/material/Link';
 const ReportMain = props => {
 
   const [ surveyItem, setSurveyItems ] = useState([])
-  const [ weeklyItem, setWeeklyItems ] = useState([])
+  const [ monthlyItem, setMonthlyItems ] = useState([])
 
   //daily survey fetching
     useEffect(function loadData(){
@@ -20,7 +20,7 @@ const ReportMain = props => {
      console.log(surveyItem)
 
     
-// store survey date and name to array
+// store daily  survey date and name to array
      var dailySingle = function(){
       
       var singleList = [];
@@ -28,7 +28,8 @@ const ReportMain = props => {
       for(var i=0; i<surveyItem.length; i++){
         var obj = {
           surveyDate : surveyItem[i].dailySurvey.dailySurveyDate,
-          surveyTitle: surveyItem[i].dailySurvey.surveyName
+          // surveyTitle : surveyItem[i].dailySurvey.surveyName
+          surveyTitle: surveyItem[i].surveyType
         }
         singleList.push(obj)
         
@@ -46,8 +47,33 @@ const ReportMain = props => {
 
      const sortDailySurvey = [...new Set(dailySingle().map(JSON.stringify))].map(JSON.parse)
 
-    //fetching daily survey date
-    // let { surveyDate } = useParams(); //??
+    // store monthly survey date and name to array
+    var monthlySingle = function(){
+      
+      var monthlySingleList = [];
+    
+      for(var i=0; i<monthlyItem.length; i++){
+        var obj = {
+          monthlysurveyDate : monthlyItem[i].createdDate,
+          monthlysurveyTitle: monthlyItem[i].surveyType
+        }
+        monthlySingleList.push(obj)
+        
+        
+          }
+      
+      return monthlySingleList;
+    }
+      monthlySingle();
+      console.log(monthlySingle())
+
+    
+    
+     console.log([...new Set(monthlySingle().map(JSON.stringify))].map(JSON.parse));
+
+     const sortMonthlySurvey = [...new Set(monthlySingle().map(JSON.stringify))].map(JSON.parse)
+
+    console.log(sortMonthlySurvey)
 
     const [getDate, setGetDate] = useState([]);
 
@@ -62,15 +88,15 @@ const ReportMain = props => {
     console.log(getDate)
 
 
-     //weekly survey fetching
-     useEffect(function loadWeekly(){
-      axios.get('/weeklysurveys')
+     //monthly survey fetching
+     useEffect(function loadMonthly(){
+      axios.get('/monthlySurveys')
      .then((res)=>{
-      setWeeklyItems(res.data)
+      setMonthlyItems(res.data)
       })
       .catch(error=>console.log(error))
   },[]) 
-  console.log(weeklyItem)
+  console.log(monthlyItem)
 
   //chosen date handler
   const handleChangeDate = (date)=>{
@@ -84,8 +110,8 @@ const ReportMain = props => {
 
   
   return (
-    <div>
-      <h1>Survey Report</h1>
+    <div className="report-page">
+      <h1>Reports</h1>
       <table>
         <thead>
             <tr className="report-list">
@@ -95,31 +121,41 @@ const ReportMain = props => {
             </tr>
         </thead>
         <tbody>
-          <tr>
+          
             {sortDailySurvey?.map((sortDailySurvey)=>
-            <div>
+            <tr className="report-content">
+              
                 <td key={surveyItem.surveyId}>{sortDailySurvey.surveyDate}</td>
+             
                 <td>{sortDailySurvey.surveyTitle}</td>
+                
                 <td>
                   <button value={sortDailySurvey.surveyDate} onClick={e => props.handleSelectChartDate(e.target.value)}>
                   <Link component={RouterLink} to={`/app/reportchart/${sortDailySurvey.surveyDate}`} variant="button" sx={{ my: 1, mx: 1.5 }}>View</Link>
                   </button>
-                </td>
-                <td>
+                
                   <button>Active</button>
                 </td>
-            </div>
+            </tr>
             
               )}
-            <div>
-              {weeklyItem?.map((weeklyItem)=>
-                  <td>{weeklyItem.surveyId}</td>
-                
-              )}
-            </div>  
-            </tr>
+              {sortMonthlySurvey?.map((sortMonthlySurvey)=>
+              <tr className="report-content">
+                  <td key={monthlyItem.surveyid}>{sortMonthlySurvey.monthlysurveyDate}</td>
+                  <td>{sortMonthlySurvey.monthlysurveyTitle}</td>
+                  <td>
+                    <button value={sortMonthlySurvey.monthlysurveyDate} onClick={e => props.handleSelectChartDate(e.target.value)}>
+                    <Link component={RouterLink} to={`/app/reportchart/${sortMonthlySurvey.monthlysurveyDate}`} variant="button" sx={{ my: 1, mx: 1.5 }}>View</Link>
+                  </button>
+                  
+                    <button>Active</button>
+                </td>
+              </tr>
+              )}  
+            
         </tbody>
       </table>
+      <button className="showBtn">Show More</button>
       
     </div>
   )
