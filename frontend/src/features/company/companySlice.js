@@ -70,6 +70,28 @@ export const getCompany = createAsyncThunk(
     }
 );
 
+// Edit company by id
+export const editCompany = createAsyncThunk(
+    "company/editCompany",
+    async (companyId, updatedCompanyData, thunkAPI) => {
+
+        console.log(updatedCompanyData)
+
+        try {
+        return await companyService.editCompany(companyId, updatedCompanyData);
+        } catch (error) {
+        const message =
+            (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
+
 // Delete company by id
 export const deleteCompany = createAsyncThunk(
     "company/deleteCompany",
@@ -137,15 +159,33 @@ export const companySlice = createSlice({
             state.isError = true
             state.message = action.payload
         })
+        .addCase(editCompany.fulfilled, (state, action) => {
+            state.company = action.payload
+            console.log("action", action)
+            const { 
+                arg: { id },
+            } = action.meta
+
+            if( id ){
+                state.companyList = state.companyList.map((item) => item._id === id ? action.payload : item)
+            }
+        })
+        .addCase(editCompany.rejected, (state, action) => {
+            state.isLoading = false
+            state.company = null
+            state.isError = true
+            state.message = action.payload
+        })
         .addCase(deleteCompany.fulfilled, (state, action) => {
             state.company = action.payload
             console.log("action", action)
-            const { arg } = action.meta
+            const { 
+                arg: { id },
+            } = action.meta
 
-            if( arg ){
-                state.companyList = state.companyList.filter((item) => item._id !== arg)
+            if( id ){
+                state.companyList = state.companyList.filter((item) => item._id !== id)
             }
-
         })
         .addCase(deleteCompany.rejected, (state, action) => {
             state.isLoading = false

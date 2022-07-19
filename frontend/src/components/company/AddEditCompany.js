@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 // useSelector to select from global states like company, etc
 // useDispatch to dispatch actions like addCompany, etc
 import { useSelector, useDispatch } from 'react-redux'
-import { addCompany, reset } from "../../features/company/companySlice"
+import { addCompany, editCompany, reset } from "../../features/company/companySlice"
 import DepartmentsInput from "../department/DepartmentsInput"
 
 const initialState = {
@@ -14,17 +14,34 @@ const initialState = {
 }
 
 const AddEditCompany = () => {
-    
+
     const [departments, setDepartments] = useState([])
+    const [deptData, setDeptData] = useState([])
     
     const [formData, setFormData] = useState(initialState)
 
     const { name, description, logo } = formData
 
+    let { companyId } = useParams(); 
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const { isLoading, isError, isSuccess, message } = useSelector(state => state.company)
+    const { isLoading, isError, isSuccess, message, companyList } = useSelector(state => state.company)
+
+    useEffect(() => {
+        if(companyId){
+            const singleCompany = companyList.find((company) => company._id === companyId)
+            setFormData({ ...singleCompany })
+
+            singleCompany.departments.map((item) =>
+                deptData.push(item.deptName)
+            )
+
+
+            // console.log(singleCompany.departments)
+        }
+    }, [companyId])
 
     useEffect(() => {
         if(isError){
@@ -64,18 +81,26 @@ const AddEditCompany = () => {
             return newObj;
         });
 
-        const companyData = {
+        const updatedCompanyData = {
             name,
             description,
             logo,
             departments: deptObj,
         }
-        dispatch(addCompany(companyData))
+
+        if(!companyId) {
+            dispatch(addCompany(updatedCompanyData))
+        } else {
+            dispatch(editCompany(companyId, updatedCompanyData))
+        }
+
     }
+
+    // console.log(deptData)
 
     return <>
         <section>
-            <h1>Add Company</h1>
+            <h1>{ companyId ? "Edit Company" : "Add Company"}</h1>
         </section>
 
         <section>
@@ -108,11 +133,13 @@ const AddEditCompany = () => {
                     name="departments"
                     placeholder="Add Departments"
                     label="Departments"
+                    deptData={deptData}
+
                 />
 
 
                 <div className="form-group">
-                    <button>Submit</button>
+                    <button>{ companyId ? "Save" : "Submit" }</button>
                 </div>
             </form>
         </section>

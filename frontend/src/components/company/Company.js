@@ -35,7 +35,7 @@ const Company = () => {
 
         {companyList && companyList.map((item, index) => <div key={index}>
             <h3><Link component={RouterLink} to={`/app/company/${item._id}`} variant="button" sx={{ my: 1, mx: 1.5 }}>{item.name}</Link></h3>
-            <Link component={RouterLink} to={`/app/company/${item._id}`} variant="button" sx={{ my: 1, mx: 1.5 }}>Edit</Link>
+            <Link component={RouterLink} to={`/app/company/edit/${item._id}`} variant="button" sx={{ my: 1, mx: 1.5 }}>Edit</Link>
             <button onClick={() => handleDelete(item._id)}>Delete</button>
         </div>)}
     </>
