@@ -1,6 +1,6 @@
 import Survey1 from './Survey1';
 import SurveyList from './SurveyList'
-
+import { useSelector } from "react-redux";
 import React, { useState } from 'react';
 
 
@@ -11,16 +11,14 @@ const Surveys = () => {
     const [surveyArray, setSurveyArray] = useState([]);
     const [surveyName, setSurveyName] = useState('')
     
+  const { employee } = useSelector((state) => state.auth);
+
     const returnToSurveys = () => {
         setOpenSurvey(!openSurvey);
         setSurveyName('');
     }
+     
 
-        // const showComponent = () =>       
-
-
-
-  // const [openSurvey, setOpenSurvey] = useState(false);
 
   // add here fetching from database
 

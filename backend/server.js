@@ -6,7 +6,7 @@ const connectDB = require("./config/db");
 const cors = require("cors");
 const { json } = require("express");
 const morgan = require("morgan");
-const schedule = require("node-schedule");
+// const schedule = require("node-schedule");
 
 const PORT = process.env.PORT || 3001;
 
@@ -97,6 +97,17 @@ app.post("/monthlySurveys", (req, res) => {
   });
 });
 
+app.get("monthlySurveys", (req, res) => {
+  Survey.find({})
+    .exec((error, result) => {
+      if (error) {
+        res.send(500).json(error)
+      } else {
+        res.json(result)
+      }
+  })
+})
+
 // Routes
 app.use("/api/employees", require("./routes/employeeRoutes"));
 app.use("/api/survey", require("./routes/surveyRoutes"));
@@ -109,35 +120,123 @@ app.use("/api/monthlySurvey", require("./routes/surveyRoutes"));
 app.use(errorHandler);
 
 
-// Node-schedular 
+// ===== Node-schedular ======= 
 // cron tab for every month format: 
 // const scheduleDate = new Date('0 0 1 * *');
-const scheduleDate = new Date('* * * * *');
-const { MonthlySurveyEmpty } = require("./models/MonthlySurveyEmptyModel");
+// const scheduleDate = new Date('* * * * *');
 
-const job = schedule.scheduleJob(scheduleDate, function () {
-  
-  // console.log("A new survey has to bee send to mongoDB at:", new Date().toString());
-  
-  app.post("/monthlySurveys", (req, res) => {
-  let monthlySurveyEmpty = new MonthlySurveyEmpty(req.body);
+// var array = [];
 
-  monthlySurveyEmpty.save((err) => {
-    if (err) {
-      console.log(err.response.data);
-      err.code === 11000
-        ? res.status(400).json({
-            message: "Monthly Survey Already Exists",
-          })
-        : res.status(400).send(err);
-    } else {
-      console.log(res);
-      res.status(201).json({
-        message: "New Monthly Survey Saved",
-        Survey: monthlySurveyEmpty,
-      });
-    }
-  });
-  });
+
+// took this code from MongoDB documentation: 
+// const { MongoClient } = require("mongodb");
+
+// const uri = "mongodb+srv://project2-pluto:UYEvTx2PLut02022DEtGd3JJd@pluto.x4gsz.mongodb.net/hppyDB?retryWrites=true&w=majority";
+
+// const client = new MongoClient(uri);
+
+// async function run() {
+//   try {
+//     await client.connect();
+//     // database and collection code goes here
+//     const db = client.db("hppyDB");
+//     const collSurveys = db.collection("monthlysurveys");
+    
+//     // for getting data from mongoDB;
+//     const collEmployee = db.collection("employees");
+//     const cursor = collEmployee.find({});
+//     await cursor.forEach(console.log);
+
+
+
+
+
+    // insert code goes here
+    // const docs = [
+    //   {
+    //     surveyid: "",
+    //     employeeEmail: "",
+    //     surveyType: "monthlySurvey",
+    //     createdDate: scheduleDate,
+    //     surveyStatus: "incompleated",
+    //     surveyOpened: "non-visited",
+    //     monthlySurvey: {
+    //       answers: {
+    //         answer1: "",
+    //         answer2: "",
+    //         answer3: "",
+    //         answer4: "",
+    //         answer5: "",
+    //         answer6: "",
+    //         answer7: "",
+    //         answer7a: "",
+    //       }
+    //     },
+    //     monthlyFeeling: "",
+    //     monthlySentiment: "",
+    //     monthlyTotalRating: ""
+    //   }
+    // ];
+
+  //   const result = await collSurveys.insertMany(docs);
+    
+  //   // display the results of your operation
+  //   console.log(result.insertedIds);
+	
+	//   } finally {
+	//     // Ensures that the client will close when you finish/error
+	//     await client.close();
+	//   }
+	// }
+
+
+
+// run().catch(console.dir);
+// console.log(array);
+
+
+// const { MonthlySurvey } = require("./models/MonthlySurveyEmptyModel");
+
+
+
+// const job = schedule.scheduleJob(scheduleDate, function () {
   
-});
+//   console.log("A new survey has to bee send to mongoDB at:", new Date().toString());
+//   // run().catch(console.dir);
+
+
+	    
+
+
+
+
+
+
+
+  // app.post("/monthlySurveys", (req, res) => {
+
+  //   let monthlySurvey = new MonthlySurvey(req.body);
+    
+
+
+
+
+  // monthlySurvey.save((err) => {
+  //   if (err) {
+  //     console.log(err.response.data);
+  //     err.code === 11000
+  //       ? res.status(400).json({
+  //           message: "Monthly Survey Already Exists",
+  //         })
+  //       : res.status(400).send(err);
+  //   } else {
+  //     console.log(res);
+  //     res.status(201).json({
+  //       message: "New Monthly Survey Saved",
+  //       Survey: monthlySurvey,
+  //     });
+  //   }
+  // });
+  // });
+  
+// });
