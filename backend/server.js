@@ -6,7 +6,7 @@ const connectDB = require("./config/db");
 const cors = require("cors");
 const cloudinary = require("./cloudinary/cloudinary")
 const { json } = require("express");
-const morgan = require("morgan")
+const morgan = require("morgan");
 
 const PORT = process.env.PORT || 3001;
 
@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: false, limit: '50mb' }));
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 
 // HTTP request logger
-app.use(morgan("dev"))
+app.use(morgan("dev"));
 
 app.get("/", (req, res) => {
   res.send("Welcome to Hppy");
@@ -61,16 +61,15 @@ app.post("/dailySurvey", (req, res) => {
 });
 
 //get daily survey data and displaying in front by hyewon
-app.get('/dailySurvey', (req, res)=>{
-  DailySurvey.find({})
-  .exec((error, result)=>{
-      if(error){
-          res.send(500).json(error)
-      } else {
-          res.json(result)
-      }
-  })
-})
+app.get("/dailySurvey", (req, res) => {
+  DailySurvey.find({}).exec((error, result) => {
+    if (error) {
+      res.send(500).json(error);
+    } else {
+      res.json(result);
+    }
+  });
+});
 
 //Weekly Survey Schema
 const { MonthlySurvey } = require("./models/MonthlySurveyModel");
@@ -96,7 +95,6 @@ app.post("/monthlySurveys", (req, res) => {
     }
   });
 });
-
 
 // Routes
 app.use("/api/employees", require("./routes/employeeRoutes"));

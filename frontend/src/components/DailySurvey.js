@@ -5,7 +5,6 @@ import padSequences from "./helper/paddedSeq";
 import axios from "axios";
 // import { useNavigate } from "react-router-dom"
 
-
 // import { addDailySurvey } from "../features/dailysurvey/surveySlice";
 
 const DailySurvey = () => {
@@ -35,10 +34,6 @@ const DailySurvey = () => {
   const [model, setModel] = useState();
   const [sentimentText, setSentimentText] = useState("");
   const [sentimentScore, setSentimentScore] = useState();
-  // const [trimedText, setTrim] = useState("");
-  // const [seqText, setSeq] = useState("");
-  // const [padText, setPad] = useState("");
-  // const [inputText, setInput] = useState("");
 
   const [, setTrim] = useState("");
   const [, setSeq] = useState("");
@@ -92,10 +87,10 @@ const DailySurvey = () => {
    * @param sentimentScore - number
    */
   const sentimentAnalysis = (sentimentScore) => {
-    if (sentimentScore < 0.6) {
+    if (sentimentScore < 0.7) {
       setDailySentiment("negative");
       setDailyTotalRating(Number(dailyFeeling) - 1);
-    } else if (sentimentScore > 0.6 && dailyFeeling < 5) {
+    } else if (sentimentScore > 0.8 && dailyFeeling < 5) {
       setDailySentiment("positive");
       setDailyTotalRating(Number(dailyFeeling) + 1);
     } else {
@@ -117,7 +112,6 @@ const DailySurvey = () => {
       .replace(/(\.|,|!)/g, "")
       .split(" ");
     setTrim(inputText);
-    console.log(inputText);
     const sequence = inputText.map((word) => {
       let wordIndex = metadata.word_index[word] + metadata.index_from;
       if (wordIndex > metadata.vocabulary_size) {
@@ -126,16 +120,16 @@ const DailySurvey = () => {
       return wordIndex;
     });
     setSeq(sequence);
-    console.log(sequence);
 
     // Perform truncation and padding.
+    /* Padding the sequence to the max length of the sequence. */
     const paddedSequence = padSequences([sequence], metadata.max_len);
-    console.log(metadata.max_len);
     setPad(paddedSequence);
 
     const input = tf.tensor2d(paddedSequence, [1, metadata.max_len]);
-    console.log(input);
     setInput(input);
+
+    /* The code is using the model to predict the sentiment of the input text. */
     const predictOut = model.predict(input);
     const score = predictOut.dataSync()[0];
     predictOut.dispose();
@@ -148,13 +142,7 @@ const DailySurvey = () => {
       loadModel(url);
       loadMetadata(url);
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[]);
-
-  // const dispatch = useDispatch();
-  //Handle changing of classname on se
-
-  // const navigate = useNavigate()
+  }, []);
 
   //Form Submit function
   const handleFormSubmit = (e) => {
@@ -170,11 +158,14 @@ const DailySurvey = () => {
       dailyTotalRating,
     };
     const surveyid = employee.email + dailySurveyDate;
-    console.log(surveyid);
 
     //axios post to /dailySurvey endpoint
     axios
-      .post("https://pluto-hppy.herokuapp.com/dailySurvey", { dailySurvey, surveyid: surveyid })
+      .post("https://pluto-hppy.herokuapp.com/dailySurvey", {
+        dailySurvey,
+        surveyid: surveyid,
+        surveyType: "Daily",
+      })
 
       .then((res) => {
         console.log(res);
@@ -411,10 +402,6 @@ const DailySurvey = () => {
           }}
         />
       </form>
-      <p>TotalRating:{dailyTotalRating}</p>
-      <p>DailyFeeling:{dailyFeeling}</p>
-      <p>Comment:{sentimentText}</p>
-      <p>Sentiment:{sentimentScore}</p>
     </>
   );
 };
