@@ -107,10 +107,10 @@ app.get('/dailySurvey', (req, res)=>{
   })
 })
 
-//Weekly Survey Schema
+//Monthly Survey Schema
 const { MonthlySurvey } = require("./models/MonthlySurveyModel");
 
-//POST Weekly Survey
+//POST Montly Survey
 
 app.post("/monthlySurveys", (req, res) => {
   let monthlySurvey = new MonthlySurvey(req.body);
@@ -131,7 +131,17 @@ app.post("/monthlySurveys", (req, res) => {
     }
   });
 });
-
+//get monthly survey data
+app.get('/monthlySurveys', (req, res)=>{
+  MonthlySurvey.find({})
+  .exec((error, result)=>{
+      if(error){
+          res.send(500).json(error)
+      } else {
+          res.json(result)
+      }
+  })
+})
 
 //employee Survey Schema
 const Employee = require("./models/employeeModel");
