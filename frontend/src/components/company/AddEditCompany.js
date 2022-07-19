@@ -4,25 +4,22 @@ import { useNavigate } from "react-router-dom"
 // useDispatch to dispatch actions like addCompany, etc
 import { useSelector, useDispatch } from 'react-redux'
 import { addCompany, reset } from "../../features/company/companySlice"
-import DepartmentForm from "../department/DepartmentForm"
+import DepartmentsInput from "../department/DepartmentsInput"
 
-// MUI
+const initialState = {
+    name: "",
+    description: "",
+    logo: "",
+    departments: [],
+}
 
-
-const AddCompany = () => {
-
-    // show/hide department form
-    const [deptForm, setDeptForm] = useState(false)
-    const [department, setDepartment] = useState([])
+const AddEditCompany = () => {
     
-    const [formData, setFormData] = useState({
-        name: '',
-        description: '',
-        logo: '',
-        departments: '',
-    })
+    const [departments, setDepartments] = useState([])
+    
+    const [formData, setFormData] = useState(initialState)
 
-    const { name, description, logo, deptName } = formData
+    const { name, description, logo } = formData
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -51,28 +48,27 @@ const AddCompany = () => {
         }))
     }
 
-    const showDept = () => {
-        setDeptForm(true)
-    }
-    const hideDept = () => {
-        setDeptForm(false)
-    }
-
-    const addDept = () => {
-
-        const deptDetails = { deptName: deptName }
-
-        setDepartment([...department, deptDetails])
+    const handleSelectedDepartments = (items) => {
+        setDepartments(items)
     }
 
     const onSubmit = (e) => {
         e.preventDefault()
 
+        const deptObj = departments.map(function(department) {
+            // create a new object to store dept name.
+            var newObj = {};
+            newObj["deptName"] = department;
+    
+            // // return our new object.
+            return newObj;
+        });
+
         const companyData = {
             name,
             description,
             logo,
-            departments: department,
+            departments: deptObj,
         }
         dispatch(addCompany(companyData))
     }
@@ -86,32 +82,34 @@ const AddCompany = () => {
             <form onSubmit={onSubmit}>
                 <div className="form-group">
                     <label htmlFor="name">Company Name:</label>
-                    <input type="text" className="form-control" id="name" name="name" value={name} onChange={onChange} placeholder="Enter company name" />
+                    <input type="text" className="form-control" id="name" name="name" value={name} onChange={onChange} placeholder="Enter company name" required/>
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="description">Description:</label>
-                    <input type="text" className="form-control" id="description" name="description" value={description} onChange={onChange} placeholder="Enter description" />
+                    <input type="text" className="form-control" id="description" name="description" value={description} onChange={onChange} placeholder="Enter description" required/>
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="logo">logo:</label>
-                    <input type="text" className="form-control" id="logo" name="logo" value={logo} onChange={onChange} placeholder="Enter company logo" />
+                    <input type="text" className="form-control" id="logo" name="logo" value={logo} onChange={onChange} placeholder="Enter company logo" required/>
+                </div>
+
+                <div className="form-group">
                 </div>
 
                 <hr />
 
-                {deptForm === false ? <div onClick={showDept}>Add Department</div> : <div onClick={hideDept}>Cancel</div>}
-                {deptForm === false ? "" : <DepartmentForm deptName={deptName} onChange={onChange} addDept={addDept}  />}
+                <DepartmentsInput
+                    selectedDepartments={handleSelectedDepartments}
+                    fullWidth
+                    variant="outlined"
+                    id="departments"
+                    name="departments"
+                    placeholder="Add Departments"
+                    label="Departments"
+                />
 
-                {department.map((department, index)=>
-                <li key={index}>
-                {department.deptName}&nbsp;
-                <button>Delete</button>
-                </li>
-                )}
-
-                <hr />
 
                 <div className="form-group">
                     <button>Submit</button>
@@ -121,4 +119,4 @@ const AddCompany = () => {
     </>
 }
 
-export default AddCompany
+export default AddEditCompany

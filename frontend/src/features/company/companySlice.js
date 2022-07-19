@@ -35,7 +35,9 @@ export const getCompanyList = createAsyncThunk(
     "company/getCompanyList",
     async (company, thunkAPI) => {
         try {
-        return await companyService.getCompanyList();
+        // return await companyService.getCompanyList();
+            const response = await companyService.getCompanyList();
+            return response.data
         } catch (error) {
         const message =
             (error.response &&
@@ -95,7 +97,11 @@ export const companySlice = createSlice({
             state.isError = true
             state.message = action.payload
         })
+        .addCase(getCompanyList.pending, (state) => {
+            state.isLoading = true
+        })
         .addCase(getCompanyList.fulfilled, (state, action) => {
+            state.isLoading = false
             state.companyList = action.payload
         })
         .addCase(getCompanyList.rejected, (state, action) => {

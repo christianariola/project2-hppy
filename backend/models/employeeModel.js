@@ -26,7 +26,19 @@ const employeeSchema = mongoose.Schema({
         type: String,
         required: [true, 'Please select a role'],
         default: 'employee',
-    }
+    },
+    company_id: {
+        type: String,
+        required: [true, 'Please add a company id'],
+    },
+    company_name: {
+        type: String,
+        required: [true, 'Please add a company name'],
+    },
+    department: {
+        type: String,
+        required: [true, 'Please add a department'],
+    },
 }, 
 {
     timestamps: true,

@@ -9,7 +9,9 @@ const Employee = require('../models/employeeModel')
 // @route  /api/employees
 // @access Public
 const registerEmployee = asyncHandler(async (req, res) => {
-    const {firstName, lastName, email, password} = req.body
+    const {company_id, company_name, department, firstName, lastName, email, password} = req.body
+
+    console.log(req.body)
 
     //Validation
     if(!firstName || !lastName || !email || !password) {
@@ -34,7 +36,10 @@ const registerEmployee = asyncHandler(async (req, res) => {
         firstName,
         lastName,
         email,
-        password: hashedPassword
+        password: hashedPassword,
+        company_id,
+        company_name,
+        department,
     })
 
     if(employee) {

@@ -8,40 +8,28 @@ const Company = () => {
 
     const dispatch = useDispatch()
 
-const { companyList } = useSelector(state => state.company)
+    const { companyList, isLoading } = useSelector((state) => ({...state.company}))
 
     useEffect(() => {
         dispatch(getCompanyList())
-    }, [dispatch])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
     
-    // const results = [];
-
-    if(typeof companyList.data === 'undefined'){
-    } else {
-        // {companyList.data.map((company)=>
-        //     <table>
-        //         {results.push(
-        //             <tr key={company._id}>
-        //             <td>{company.name}</td>
-        //             <td>{company.description}</td>
-        //             <td>
-        //                 <Link component={RouterLink} to={`/app/company/${company._id}`} variant="button" sx={{ my: 1, mx: 1.5 }}>View</Link>
-        //                 <Link component={RouterLink} to='/app/companies' variant="button" sx={{ my: 1, mx: 1.5 }}>Edit</Link>
-        //                 <Link component={RouterLink} to='/app/companies' variant="button" sx={{ my: 1, mx: 1.5 }}>Delete</Link>
-        //             </td>
-        //             </tr>
-        //         )}
-        //     </table>
-        // )}
+    if(isLoading){
+        return <h2>Loading...</h2>
     }
 
-    console.log('List', companyList.data)
     return <>
         <h2>Company Page</h2>
-        <Link component={RouterLink} to='/app/companies/add' variant="button" sx={{ my: 1, mx: 1.5 }}>New Company</Link>
+        <Link component={RouterLink} to='/app/companies/add' variant="button" sx={{ my: 1, mx: 1.5 }}>Add Company</Link>
 
+        {companyList.length === 0 && (
+            <h2>No Companies Found</h2>
+        )}
 
-        {/* {results} */}
+        {companyList && companyList.map((item, index) => <div key={index}>
+            <h3>{item.name}</h3><Link component={RouterLink} to={`/app/company/${item._id}`} variant="button" sx={{ my: 1, mx: 1.5 }}>View</Link>
+        </div>)}
     </>
 }
 

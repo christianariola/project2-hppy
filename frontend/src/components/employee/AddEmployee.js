@@ -1,13 +1,24 @@
 import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 // useSelector to select from global states like employee, etc
 // useDispatch to dispatch actions like addEmployee, etc
 import { useSelector, useDispatch } from 'react-redux'
 import { addEmployee, reset } from "../../features/auth/authSlice"
+import { getCompany } from "../../features/company/companySlice"
 
 const Register = () => {
 
+    let { companyId } = useParams(); 
+
+    const { company } = useSelector(state => state.company)
+
+    useEffect(() => {
+        dispatch(getCompany(companyId))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
     const [formData, setFormData] = useState({
+        department: '',
         firstName: '',
         lastName: '',
         email: '',
@@ -15,7 +26,7 @@ const Register = () => {
         confirmPassword: '',
     })
 
-    const {firstName, lastName, email, password, confirmPassword} = formData
+    const {department, firstName, lastName, email, password, confirmPassword} = formData
 
     // dispatch.addEmployee
     const dispatch = useDispatch()
@@ -32,7 +43,7 @@ const Register = () => {
         // if(isSuccess || employee){
         if(isSuccess){
             console.log("Employee added!")
-            navigate('/dashboard')
+            navigate(`/app/companies`)
         }
 
         dispatch(reset())
@@ -49,6 +60,9 @@ const Register = () => {
         e.preventDefault()
 
         const employeeData = {
+            company_id: companyId,
+            company_name: company.name,
+            department: department,
             firstName,
             lastName,
             email,
@@ -56,7 +70,6 @@ const Register = () => {
         }
 
         dispatch(addEmployee(employeeData))
-
     }
 
     // if(isLoading) {
@@ -70,6 +83,12 @@ const Register = () => {
 
         <section>
             <form onSubmit={onSubmit}>
+                <div className="form-group">
+                    <label htmlFor="department">Department:</label>
+                    <select id="department" name="department" value={department} onChange={onChange}>
+                        {company.departments && company.departments.map((item, index) => <option key={index} value={item.deptName}>{item.deptName}</option>)}
+                    </select>
+                </div>
                 <div className="form-group">
                     <label htmlFor="firstName">First Name:</label>
                     <input type="text" className="form-control" id="firstName" name="firstName" value={firstName} onChange={onChange} placeholder="Enter employee first name" />
