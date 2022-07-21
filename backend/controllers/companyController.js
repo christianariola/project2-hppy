@@ -4,19 +4,33 @@ const { default: mongoose } = require('mongoose')
 const cloudinary = require("../cloudinary/cloudinary")
 const Company = require('../models/companyModel')
 
-// @desc   Register a new user
-// @route  /api/employees
+const generateString = (length) => {
+    var res = '';
+    var availableChars = 'abcdefghijklmnopqrstuvwxyz';
+    var numAvalailableChars = availableChars.length;
+
+    for (var i = 0; i < length; i++) {
+        res += availableChars.charAt(Math.floor(Math.random() * numAvalailableChars));
+    }
+
+    return res;
+}
+
+
+// @desc   Register a new company
+// @route  /api/companies
 // @access Public
 const addCompany = asyncHandler(async (req, res) => {
 
     const {name, description, logo, departments} = req.body
 
     const filename = name.trim().toLowerCase()
+    const randomName = generateString(8)
 
     const result = await cloudinary.uploader.upload(logo,
     {
         upload_preset: 'unsigned_uploads',
-        public_id: `${filename}-logo`,
+        public_id: `${filename}-${randomName}`,
         allowed_formats: ['png', 'jpg', 'jpeg', 'svg', 'ico', 'jfif', 'webp'],
         width: 300,
         crop: "scale"
@@ -87,13 +101,13 @@ const editCompany = asyncHandler(async (req, res) => {
         return res.status(404).json({ message: `No company exist with id ${id}` })
     }
 
-
     if(logo){
         const filename = name.trim().toLowerCase()
+        const randomName = generateString(8)
         const result = await cloudinary.uploader.upload(logo,
         {
             upload_preset: 'unsigned_uploads',
-            public_id: `${filename}-logo`,
+            public_id: `${filename}-${randomName}`,
             allowed_formats: ['png', 'jpg', 'jpeg', 'svg', 'ico', 'jfif', 'webp'],
             width: 300,
             crop: "scale"
