@@ -87,41 +87,30 @@ const BarChart = props => {
 
     
      
-    function filterByDepart(depart) { 
-        var showDepartArry = [];
-        for(var i=0; i<employee.length; i++){
-           if(employee[i].department != undefined && employee[i].department === depart ){
-               showDepartArry.push(employee[i].email)
-           }
-        }
-        //find employee email from daily survey 
-        console.log(showDepartArry)
+    // function filterByDepart(depart) { 
+    //     var showDepartArry = [];
+    //     for(var i=0; i<employee.length; i++){
+    //        if(employee[i].department != undefined && employee[i].department === depart ){
+    //            showDepartArry.push(employee[i].email)
+    //        }
+    //     }
+    //     //find employee email from daily survey 
+    //     console.log(showDepartArry)
    
-        var filteredDailySurvey = []; 
-        for(var i=0; i<report.length; i++){
-           if(showDepartArry.includes(report[i].dailySurvey.employeeEmail)){
-               filteredDailySurvey.push(report[i])
-           }
+    //     var filteredDailySurvey = []; 
+    //     for(var i=0; i<report.length; i++){
+    //        if(showDepartArry.includes(report[i].dailySurvey.employeeEmail)){
+    //            filteredDailySurvey.push(report[i])
+    //        }
            
-        }
-        console.log(filteredDailySurvey)
+    //     }
+    //     console.log(filteredDailySurvey)
    
-        return filterByDepart
+    //     return filterByDepart
    
-       }
+    //    }
 
-       
-     //fetch  employee view table's data
-    //  useEffect(function loadEmployee(){
-    //     axios.get('/reportview') 
-    //      .then((res)=>{
-    //         setView(res.data)
-    //      })
-         
-    //     .catch(error=>console.log(error))
-    //  },[]) 
-     
-    //  console.log(view)
+
     
      //sort daily feeling object by date 
     var totalDailyRate = function(){
@@ -156,7 +145,14 @@ const BarChart = props => {
     })
 
     console.log(result);
-
+    const data = {
+        labels: ["Very unsatisfactory", "Unsatisfactory", "Neutral", "Satisfactory", "Very Satisfactory"],
+        datasets : [{
+            label: "Employee Daily Total Rate",
+            data:[result[1], result[2], result[3],result[4], result[5]],
+            backgroundColor:["#0098FF", "#00CF92","#F72564","#F8D919","#E07116"]
+        }]
+    }
       //sort monthly total feeling object by date 
       var totalMonthlyRate = function(){
         var monthlyRating = [];
@@ -171,12 +167,12 @@ const BarChart = props => {
         // } else {
         //     var filteredDailySurvey=filterByDepart(depart)  
         // }
-        for(var i=0; i<filteredMonthlySurvey.length; i++){
-            if(filteredMonthlySurvey[i].createdDate === chartDate){
-            monthlyRating.push(filteredMonthlySurvey[i].monthlyTotalRating)
+        for(var j=0; j<filteredMonthlySurvey.length; j++){
+            if(filteredMonthlySurvey[j].createdDate === chartDate){
+            monthlyRating.push(filteredMonthlySurvey[j].monthlyTotalRating)
             }
         }
-        console.log(monthlyRating);
+        console.log(monthlyRating); //empty?
         return monthlyRating;
     }
 
@@ -188,14 +184,7 @@ const BarChart = props => {
     totalMonthlyRate().forEach((x)=>{
         monthlyResult[x] = (monthlyResult[x] || 0)+1;
     })
-    const data = {
-        labels: ["Very unsatisfactory", "Unsatisfactory", "Neutral", "Satisfactory", "Very Satisfactory"],
-        datasets : [{
-            label: "Employee Daily Total Rate",
-            data:[result[1], result[2], result[3],result[4], result[5]],
-            backgroundColor:["#0098FF", "#00CF92","#F72564","#F8D919","#E07116"]
-        }]
-    }
+   
     const monthlyData = {
         labels: ["Very unsatisfactory", "Unsatisfactory", "Neutral", "Satisfactory", "Very Satisfactory"],
         datasets : [{
@@ -205,12 +194,16 @@ const BarChart = props => {
         }]
     }
 
+
     //daily survey submission data by date
+
+    var surveySubmit = [];
+    var surveyState = {};
+    const nameUrl = window.location.href
+    const dateUrl = nameUrl.split('/');
+
     var getSurveySubmit = function(){
-        var surveySubmit = [];
-        var surveyState = {};
-        const nameUrl = window.location.href
-        const dateUrl = nameUrl.split('/');
+       
         const chartDate = dateUrl[dateUrl.length-1] 
         // console.log(chartDate)
         for(var i=0; i<filteredDailySurvey.length; i++){
@@ -223,7 +216,7 @@ const BarChart = props => {
                 surveyState['email'] = filteredDailySurvey[i].dailySurvey.employeeEmail;
                 surveyState['surveyStatement'] = "submitted";
 
-                surveySubmit.push(surveyState)
+                surveySubmit.push(surveyState) // something went wrong 
                 
         }
         else {
@@ -246,9 +239,9 @@ const BarChart = props => {
     
 
     getSurveySubmit();
-    
-    const nameUrl = window.location.href
-    const dateUrl = nameUrl.split('/');
+    console.log(getSurveySubmit());
+
+    //global variable
     const surveyType = dateUrl[dateUrl.length-2] 
     console.log(surveyType)
 
