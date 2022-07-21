@@ -3,11 +3,12 @@ import { useState, useEffect } from "react";
 import axios from 'axios'
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@mui/material/Link';
+import { useSelector } from "react-redux";
 const ReportMain = props => {
 
   const [ surveyItem, setSurveyItems ] = useState([])
   const [ monthlyItem, setMonthlyItems ] = useState([])
-
+  const { employee } = useSelector((state) => state.auth);
   //daily survey fetching
     useEffect(function loadData(){
         axios.get('/dailySurvey')
