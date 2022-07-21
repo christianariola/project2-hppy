@@ -11,6 +11,7 @@ const DailySurvey = () => {
   // bring in employee state from redux store
   const { employee } = useSelector((state) => state.auth);
 
+  //Survey States
   const [dailyFeeling, setDailyFeeling] = useState(3);
   const [dailyComment, setDailyComment] = useState("");
   const [dailySentiment, setDailySentiment] = useState();
@@ -105,7 +106,6 @@ const DailySurvey = () => {
    * @param {string} text
    */
   const getSentimentScore = (text) => {
-    console.log(text);
     const inputText = text
       .trim()
       .toLowerCase()
