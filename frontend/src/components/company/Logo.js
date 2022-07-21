@@ -17,10 +17,10 @@ const Logo = ({logo}) => {
         }
     }); 
 
-    const myImage = logo ? cld.image(logo.public_id).resize(thumbnail().width(300).height(300).gravity(focusOn(FocusOn.face()))) : "";
+    const myImage = logo ? cld.image(logo.public_id).resize(thumbnail().width(150).height(150).gravity(focusOn(FocusOn.face()))) : "";
 
     return <>
-        {myImage ? <AdvancedImage cldImg={myImage} style={{width: "300px"}} /> : ""}
+        {myImage ? <AdvancedImage cldImg={myImage} style={{width: "150px", textAlign: "center"}} /> : ""}
     </>
 }
 

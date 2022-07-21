@@ -7,7 +7,7 @@ const cors = require("cors");
 const cloudinary = require("./cloudinary/cloudinary")
 const { json } = require("express");
 const morgan = require("morgan");
-// const schedule = require("node-schedule");
+const schedule = require("node-schedule");
 
 const PORT = process.env.PORT || 3001;
 
@@ -34,39 +34,39 @@ app.get("/", (req, res) => {
 });
 
 //report(view) schema
-const {Report} = require("./models/reportModel");
+// const {Report} = require("./models/reportModel");
 
-//post ?? do i need ?
-app.post("/reportview", (req, res) => {
-  let report = new Report(req.body);
+// //post ?? do i need ?
+// app.post("/reportview", (req, res) => {
+//   let report = new Report(req.body);
 
-  report.save((err) => {
-    if (err) {
-      console.log(err.code);
-      err.code === 11000
-        ? res.status(400).json({
-            message: "Report Exists",
-          })
-        : res.status(400).send(err);
-    } else {
-      res.status(201).json({
-        message: "Report Saved"
-      });
-    }
-  });
-});
+//   report.save((err) => {
+//     if (err) {
+//       console.log(err.code);
+//       err.code === 11000
+//         ? res.status(400).json({
+//             message: "Report Exists",
+//           })
+//         : res.status(400).send(err);
+//     } else {
+//       res.status(201).json({
+//         message: "Report Saved"
+//       });
+//     }
+//   });
+// });
 
 //get view data
-app.get('/reportview', (req, res)=>{
-  Report.find({})
-  .exec((error, result)=>{
-      if(error){
-          res.send(500).json(error)
-      } else {
-          res.json(result)
-      }
-  })
-})
+// app.get('/reportview', (req, res)=>{
+//   Report.find({})
+//   .exec((error, result)=>{
+//       if(error){
+//           res.send(500).json(error)
+//       } else {
+//           res.json(result)
+//       }
+//   })
+// })
 
 
 //Daily Survey Schema
@@ -133,20 +133,10 @@ app.post("/monthlySurveys", (req, res) => {
     }
   });
 });
-//get monthly survey data
-app.get('/monthlySurveys', (req, res)=>{
-  MonthlySurvey.find({})
-  .exec((error, result)=>{
-      if(error){
-          res.send(500).json(error)
-      } else {
-          res.json(result)
-      }
-  })
-})
 
-app.get("monthlySurveys", (req, res) => {
-  Survey.find({})
+
+app.get('/monthlySurveys', (req, res) => {
+  MonthlySurvey.find({})
     .exec((error, result) => {
       if (error) {
         res.send(500).json(error)
@@ -155,6 +145,8 @@ app.get("monthlySurveys", (req, res) => {
         // console.log(result)
       }
   })
+  // getEmployeeEmail()
+
 })
 
 //employee Survey Schema
@@ -208,85 +200,12 @@ app.use(errorHandler);
 // ===== Node-schedular ======= 
 // cron tab for every month format: 
 // const scheduleDate = new Date('0 0 1 * *');
-// const scheduleDate = new Date('* * * * *');
-
-// var array = [];
+const scheduleDate = new Date('* * * * *');
 
 
-// took this code from MongoDB documentation: 
-// const { MongoClient } = require("mongodb");
-
-// const uri = "mongodb+srv://project2-pluto:UYEvTx2PLut02022DEtGd3JJd@pluto.x4gsz.mongodb.net/hppyDB?retryWrites=true&w=majority";
-
-// const client = new MongoClient(uri);
-
-// async function run() {
-//   try {
-//     await client.connect();
-//     // database and collection code goes here
-//     const db = client.db("hppyDB");
-//     const collSurveys = db.collection("monthlysurveys");
-    
-//     // for getting data from mongoDB;
-//     const collEmployee = db.collection("employees");
-//     const cursor = collEmployee.find({});
-//     await cursor.forEach(console.log);
-
-
-
-
-
-    // insert code goes here
-    // const docs = [
-    //   {
-    //     surveyid: "",
-    //     employeeEmail: "",
-    //     surveyType: "monthlySurvey",
-    //     createdDate: scheduleDate,
-    //     surveyStatus: "incompleated",
-    //     surveyOpened: "non-visited",
-    //     monthlySurvey: {
-    //       answers: {
-    //         answer1: "",
-    //         answer2: "",
-    //         answer3: "",
-    //         answer4: "",
-    //         answer5: "",
-    //         answer6: "",
-    //         answer7: "",
-    //         answer7a: "",
-    //       }
-    //     },
-    //     monthlyFeeling: "",
-    //     monthlySentiment: "",
-    //     monthlyTotalRating: ""
-    //   }
-    // ];
-
-  //   const result = await collSurveys.insertMany(docs);
-    
-  //   // display the results of your operation
-  //   console.log(result.insertedIds);
-	
-	//   } finally {
-	//     // Ensures that the client will close when you finish/error
-	//     await client.close();
-	//   }
-	// }
-
-
-
-// run().catch(console.dir);
-// console.log(array);
-
-
-// const { MonthlySurvey } = require("./models/MonthlySurveyEmptyModel");
-
-
-
-// const job = schedule.scheduleJob(scheduleDate, function () {
+const job = schedule.scheduleJob(scheduleDate, function () {
   
-//   console.log("A new survey has to bee send to mongoDB at:", new Date().toString());
+  console.log("A new survey has to bee send to mongoDB at:", new Date().toString());
 //   // run().catch(console.dir);
 
 
@@ -324,4 +243,70 @@ app.use(errorHandler);
   // });
   // });
   
-// });
+});
+    // take all employee emails 
+const dateHandler = () => {
+    let newDate = new Date();
+    let month = newDate.getMonth() + 1;
+    let year = newDate.getFullYear();
+    // console.log(`${year}${month<10?`0${month}`:`${month}`}${date}`)
+    setMonthlySurveyDate(
+      `${year}${month < 10 ? `0${month}` : `${month}`}`
+    );
+  };
+
+const getEmployeeEmail = function () {
+  date = dateHandler();
+              Employee.find({})
+    .exec((error, result)=>{
+      if(error){
+          console.log(error)
+      } else {
+        result.forEach((emp) => {
+          // let test = 'tester.Rod@twitter.com'
+          // console.log(emp.email)
+           let updateValue = {
+        surveyid: test,
+        employeeEmail: emp.email,
+        surveyName: `Survey${date}`,
+        surveyType: "monthlySurvey",
+        createdDate: "2022-07-21",
+        surveyStatus: "incompleated",
+        surveyOpened: false,
+        monthlySurvey: {
+          answers: {
+            answer1: "",
+            answer2: "",
+            answer3: "",
+            answer4: "",
+            answer5: "",
+            answer6: "",
+            answer7: "",
+            answer7a: "",
+          }
+        },
+        monthlyFeeling: "",
+        monthlySentiment: "",
+        monthlyTotalRating: ""
+           }
+          
+          
+        MonthlySurvey.updateMany({ 'employeeEmail': emp.email }, updateValue, function (error, docs) {
+            if (error) {
+              console.log(error)
+            } else {
+              console.log(docs)
+            }
+          })
+         
+          
+        // foundItem.updateOne(updateValue)  
+        })
+      }
+  })
+  }
+
+
+  
+  
+

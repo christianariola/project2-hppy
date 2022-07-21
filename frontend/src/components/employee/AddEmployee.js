@@ -19,14 +19,17 @@ const Register = () => {
 
     const [formData, setFormData] = useState({
         department: '',
+        role: '',
+        employeeNumber: '',
         firstName: '',
         lastName: '',
         email: '',
+        jobTitle: '',
         password: '',
         confirmPassword: '',
     })
 
-    const {department, firstName, lastName, email, password, confirmPassword} = formData
+    const {department, role, employeeNumber, firstName, lastName, email, jobTitle, password, confirmPassword} = formData
 
     // dispatch.addEmployee
     const dispatch = useDispatch()
@@ -43,10 +46,11 @@ const Register = () => {
         // if(isSuccess || employee){
         if(isSuccess){
             console.log("Employee added!")
-            navigate(`/app/companies`)
+            navigate(`/app/company/${companyId}`)
         }
 
         dispatch(reset())
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isError, isSuccess, isLoading, employee, message, navigate, dispatch])
 
     const onChange = (e) => {
@@ -59,22 +63,30 @@ const Register = () => {
     const onSubmit = (e) => {
         e.preventDefault()
 
+        const getDeptID = company?.departments?.find((dept) => dept.deptName === department)
+
         const employeeData = {
             company_id: companyId,
             company_name: company.name,
-            department: department,
+            department_id: getDeptID._id,
+            department_name: department,
+            employeeNumber,
             firstName,
             lastName,
             email,
-            password
+            jobTitle,
+            password,
+            role
         }
 
         dispatch(addEmployee(employeeData))
     }
 
-    // if(isLoading) {
-    //     return "Loading... please wait."
-    // }
+    if(isLoading) {
+        return "Loading... please wait."
+    }
+
+    const userRoles = ["Employee", "Manager", "Admin"]
 
     return <>
         <section>
@@ -84,10 +96,21 @@ const Register = () => {
         <section>
             <form onSubmit={onSubmit}>
                 <div className="form-group">
+                    <label htmlFor="role">User Role:</label>
+                    <select id="role" name="role" value={role} onChange={onChange} required>
+                        <option value="">Select role</option>
+                        { userRoles.map((item, index) => <option key={index} value={item}>{item}</option>)}
+                    </select>
+                </div>
+                <div className="form-group">
                     <label htmlFor="department">Department:</label>
                     <select id="department" name="department" value={department} onChange={onChange}>
                         {company.departments && company.departments.map((item, index) => <option key={index} value={item.deptName}>{item.deptName}</option>)}
                     </select>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="employeeNumber">Employee #:</label>
+                    <input type="text" className="form-control" id="employeeNumber" name="employeeNumber" value={employeeNumber} onChange={onChange} placeholder="Enter employee #" />
                 </div>
                 <div className="form-group">
                     <label htmlFor="firstName">First Name:</label>
@@ -102,6 +125,11 @@ const Register = () => {
                 <div className="form-group">
                     <label htmlFor="email">Email Address:</label>
                     <input type="text" className="form-control" id="email" name="email" value={email} onChange={onChange} placeholder="Enter employee email address" />
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="jobTitle">Job Title:</label>
+                    <input type="text" className="form-control" id="jobTitle" name="jobTitle" value={jobTitle} onChange={onChange} placeholder="Enter employee job title" />
                 </div>
 
                 <div className="form-group">

@@ -19,8 +19,6 @@ const getCompanyList = async () => {
 const getCompany = async (companyId) => {
     const response = await axios.get(API_URL + `/view/${companyId}`)
 
-    console.log(response.data)
-
     return response.data
 }
 
@@ -30,9 +28,20 @@ const editCompany = async (updatedCompanyData, companyId) => {
     return response.data
 }
 
-
 const deleteCompany = async (companyId) => {
     const response = await axios.delete(API_URL + `/delete/${companyId}`)
+
+    return response.data
+}
+
+const getEmployee = async (empId) => {
+    const response = await axios.get(API_URL + `/employee/${empId}`)
+
+    return response.data
+}
+
+const deleteEmployee = async (empId, compempId) => {
+    const response = await axios.delete(API_URL + `/employee/${empId}/${compempId}`)
 
     return response.data
 }
@@ -43,6 +52,8 @@ const companyService = {
     getCompany,
     editCompany,
     deleteCompany,
+    getEmployee,
+    deleteEmployee,
 }
 
 export default companyService

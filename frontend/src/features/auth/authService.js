@@ -27,10 +27,16 @@ const login = async (userData) => {
 // Logout employee
 const logout = () => localStorage.removeItem('employee')
 
+const changePassword = async (userData) => {
+    const response = await axios.post(API_URL + '/changePassword', userData)
+    return response.data
+}
+
 const authService = {
     addEmployee,
     login,
-    logout
+    logout,
+    changePassword
 }
 
 export default authService

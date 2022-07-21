@@ -3,11 +3,13 @@ import { useState, useEffect } from "react";
 import axios from 'axios'
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@mui/material/Link';
+// import { useSelector } from "react-redux";
+// import Button from '@mui/material/Button';
 const ReportMain = props => {
 
   const [ surveyItem, setSurveyItems ] = useState([])
   const [ monthlyItem, setMonthlyItems ] = useState([])
-
+  // const { employee } = useSelector((state) => state.auth);
   //daily survey fetching
     useEffect(function loadData(){
         axios.get('https://pluto-hppy.herokuapp.com/dailySurvey')
@@ -75,18 +77,9 @@ const ReportMain = props => {
 
     console.log(sortMonthlySurvey)
 
-    const [getDate, setGetDate] = useState([]);
+    // const [getDate, setGetDate] = useState([]);
 
-    useEffect(function loadDate(){
-    axios.get('https://pluto-hppy.herokuapp.com/view/:surveyDate')
-    .then((res)=>{
-       setGetDate(res.data)
-     })
-     .catch(error=>console.log(error))
-    },[])
-
-    console.log(getDate)
-
+   
 
      //monthly survey fetching
      useEffect(function loadMonthly(){
@@ -131,24 +124,21 @@ const ReportMain = props => {
                 
                 <td>
                   <button value={sortDailySurvey.surveyDate} onClick={e => props.handleSelectChartDate(e.target.value)}>
-                  <Link component={RouterLink} to={`/app/reportchart/${sortDailySurvey.surveyDate}`} variant="button" sx={{ my: 1, mx: 1.5 }}>View</Link>
+                  <Link component={RouterLink} to={`/app/reportchart/${sortDailySurvey.surveyTitle}/${sortDailySurvey.surveyDate}`} variant="button" sx={{ my: 1, mx: 1.5 }}>View</Link>
                   </button>
-                
-                  <button>Active</button>
                 </td>
             </tr>
             
               )}
+              {/*monthly survey */}
               {sortMonthlySurvey?.map((sortMonthlySurvey)=>
               <tr className="report-content">
                   <td key={monthlyItem.surveyid}>{sortMonthlySurvey.monthlysurveyDate}</td>
                   <td>{sortMonthlySurvey.monthlysurveyTitle}</td>
                   <td>
-                    <button value={sortMonthlySurvey.monthlysurveyDate} onClick={e => props.handleSelectChartDate(e.target.value)}>
-                    <Link component={RouterLink} to={`/app/reportchart/${sortMonthlySurvey.monthlysurveyDate}`} variant="button" sx={{ my: 1, mx: 1.5 }}>View</Link>
+                    <button value={sortDailySurvey.surveyDate} data-value1="monthly" onClick={e => props.handleSelectChartDate(e.target.value)}>
+                    <Link component={RouterLink} to={`/app/reportchart/${sortMonthlySurvey.monthlysurveyTitle}/${sortMonthlySurvey.monthlysurveyDate}`} variant="button" sx={{ my: 1, mx: 1.5 }} >View</Link>
                   </button>
-                  
-                    <button>Active</button>
                 </td>
               </tr>
               )}  

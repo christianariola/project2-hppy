@@ -15,7 +15,7 @@ export const employeeListItems = (
     </ListItemButton>
 
 
-    <ListItemButton component={RouterLink} to='/app/weeklysurveys'>
+    <ListItemButton component={RouterLink} to='/app/monthlySurveys'>
         <img src="/images/dashboard/icons/icon-survey.svg" alt="My Survey" />
         <ListItemText primary="My Surveys" sx={{ ml: '10px' }} />
     </ListItemButton>
@@ -44,10 +44,10 @@ export const superadminListItems = (
         <ListItemText primary="My Account" sx={{ ml: '10px' }} />
     </ListItemButton>
 
-    <ListItemButton>
+    {/* <ListItemButton>
         <img src="/images/dashboard/icons/icon-request.svg" alt="Requests" />
         <ListItemText primary="Requests" sx={{ ml: '10px' }} />
-    </ListItemButton>
+    </ListItemButton> */}
 
     <ListItemButton component={RouterLink} to='/app/report'>
         <img src="/images/dashboard/icons/icon-reports.svg" alt="Reports" />
