@@ -92,7 +92,7 @@ const App = () => {
             <Route path="company/:companyId/employee/add" element={<AddEmployee />} />
             <Route path="report" element={<ReportMain handleSelectChartDate={handleSelectChartDate} />} />
             <Route path="reportchart" element={<BarChart />} />
-            <Route path="reportchart/:surveyDate" element={<BarChart chartDate={chartDate} />} /> {/*survey date */}
+            <Route path="reportchart/:type/:surveyDate" element={<BarChart chartDate={chartDate} />} /> {/*survey date */}
             <Route path="reportview" element={<BarChart />} /> {/*employee view  */}
           </Route>
 

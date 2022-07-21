@@ -77,15 +77,15 @@ const ReportMain = props => {
 
     const [getDate, setGetDate] = useState([]);
 
-    useEffect(function loadDate(){
-    axios.get('/view/:surveyDate')
-    .then((res)=>{
-       setGetDate(res.data)
-     })
-     .catch(error=>console.log(error))
-    },[])
+    // useEffect(function loadDate(){
+    // axios.get('/view/:surveyDate')
+    // .then((res)=>{
+    //    setGetDate(res.data)
+    //  })
+    //  .catch(error=>console.log(error))
+    // },[])
 
-    console.log(getDate)
+    // console.log(getDate)  // cannot bring data
 
 
      //monthly survey fetching
@@ -131,24 +131,21 @@ const ReportMain = props => {
                 
                 <td>
                   <button value={sortDailySurvey.surveyDate} onClick={e => props.handleSelectChartDate(e.target.value)}>
-                  <Link component={RouterLink} to={`/app/reportchart/${sortDailySurvey.surveyDate}`} variant="button" sx={{ my: 1, mx: 1.5 }}>View</Link>
+                  <Link component={RouterLink} to={`/app/reportchart/${sortDailySurvey.surveyTitle}/${sortDailySurvey.surveyDate}`} variant="button" sx={{ my: 1, mx: 1.5 }}>View</Link>
                   </button>
-                
-                  <button>Active</button>
                 </td>
             </tr>
             
               )}
+              {/*monthly survey */}
               {sortMonthlySurvey?.map((sortMonthlySurvey)=>
               <tr className="report-content">
                   <td key={monthlyItem.surveyid}>{sortMonthlySurvey.monthlysurveyDate}</td>
                   <td>{sortMonthlySurvey.monthlysurveyTitle}</td>
                   <td>
-                    <button value={sortMonthlySurvey.monthlysurveyDate} onClick={e => props.handleSelectChartDate(e.target.value)}>
-                    <Link component={RouterLink} to={`/app/reportchart/${sortMonthlySurvey.monthlysurveyDate}`} variant="button" sx={{ my: 1, mx: 1.5 }}>View</Link>
+                    <button value={sortDailySurvey.surveyDate} data-value1="monthly" onClick={e => props.handleSelectChartDate(e.target.value)}>
+                    <Link component={RouterLink} to={`/app/reportchart/${sortMonthlySurvey.monthlysurveyTitle}/${sortMonthlySurvey.monthlysurveyDate}`} variant="button" sx={{ my: 1, mx: 1.5 }}>View</Link>
                   </button>
-                  
-                    <button>Active</button>
                 </td>
               </tr>
               )}  

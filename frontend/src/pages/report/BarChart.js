@@ -10,8 +10,9 @@ const BarChart = props => {
    
      //use this state variable to store data fetched from the database
     const [ report, setReport ] = useState([])
-    const [ employee, setEmployee ] = useState([])
-  
+    const [ employeeData, setEmployeeData ] = useState([])
+    const [ monthlyReport, setMonthlyReport ] = useState([])
+    const { employee } = useSelector((state) => state.auth);
 
     //daily survey fetching
     useEffect(function loadData(){
@@ -29,23 +30,34 @@ const BarChart = props => {
      useEffect(function loadEmployee(){
         axios.get('/getEmployeeAll') 
          .then((res)=>{
-            setEmployee(res.data)
+            setEmployeeData(res.data)
          })
          
         .catch(error=>console.log(error))
      },[]) 
      
-     console.log(employee)
+     console.log(employeeData)
+
+     //monthly survey fetching
+     useEffect(function loadMonthly(){
+        axios.get('/monthlySurveys')
+       .then((res)=>{
+        setMonthlyReport(res.data)
+        })
+        .catch(error=>console.log(error))
+    },[]) 
+    console.log(monthlyReport)
     
     //  const { loginEmployee } = useSelector(state => state.auth) // ->작동되면 .role = 'superadmin' no filter, role 'admin' filetre by compaby
     //  var company = loginEmployee.company_name
       
      //store employees' email of the matched company
-     var company = "Facebook"
+     console.log(employee.company_name)
+     var company = employee.company_name
      var showEmailArry = [];
-     for(var i=0; i<employee.length; i++){
-        if(employee[i].company_name != undefined && employee[i].company_name === company ){
-            showEmailArry.push(employee[i].email)
+     for(var i=0; i<employeeData.length; i++){
+        if(employeeData[i].company_name !== undefined && employeeData[i].company_name === company ){
+            showEmailArry.push(employeeData[i].email)
         }
      }
      
@@ -62,8 +74,17 @@ const BarChart = props => {
         
      }
      console.log(filteredDailySurvey)
+     
+     //find matched employees' email from monthly survey table
+     var filteredMonthlySurvey = []; //store the monthly survey data from filetered employees by company
+     for(var k=0; k<monthlyReport.length; k++){
+        if(showEmailArry.includes(monthlyReport[k].employeeEmail)){
+            filteredMonthlySurvey.push(monthlyReport[k])
+        }
+        
+     }
+     console.log(filteredMonthlySurvey)
 
-   
     
      
     function filterByDepart(depart) { 
@@ -103,7 +124,7 @@ const BarChart = props => {
     //  console.log(view)
     
      //sort daily feeling object by date 
-    var totalRate = function(){
+    var totalDailyRate = function(){
         var rating = [];
         const nameUrl = window.location.href
         const dateUrl = nameUrl.split('/');
@@ -125,16 +146,48 @@ const BarChart = props => {
         return rating;
     }
 
-    totalRate();
+    totalDailyRate();
     // console.log(rating);
     
     
     const result = {};
-    totalRate().forEach((x)=>{
+    totalDailyRate().forEach((x)=>{
         result[x] = (result[x] || 0)+1;
     })
 
     console.log(result);
+
+      //sort monthly total feeling object by date 
+      var totalMonthlyRate = function(){
+        var monthlyRating = [];
+        const nameUrl = window.location.href
+        const dateUrl = nameUrl.split('/');
+        const chartDate = dateUrl[dateUrl.length-1] 
+        console.log(chartDate)
+        // var filteredDailySurvey=filterByCompany()  
+        // date = {props.location.state.chartDate} 
+        // if(depart == null) {
+        //     var filteredDailySurvey=filterByCompany() 
+        // } else {
+        //     var filteredDailySurvey=filterByDepart(depart)  
+        // }
+        for(var i=0; i<filteredMonthlySurvey.length; i++){
+            if(filteredMonthlySurvey[i].createdDate === chartDate){
+            monthlyRating.push(filteredMonthlySurvey[i].monthlyTotalRating)
+            }
+        }
+        console.log(monthlyRating);
+        return monthlyRating;
+    }
+
+    totalMonthlyRate();
+    // console.log(rating);
+    
+    
+    const monthlyResult = {};
+    totalMonthlyRate().forEach((x)=>{
+        monthlyResult[x] = (monthlyResult[x] || 0)+1;
+    })
     const data = {
         labels: ["Very unsatisfactory", "Unsatisfactory", "Neutral", "Satisfactory", "Very Satisfactory"],
         datasets : [{
@@ -143,8 +196,16 @@ const BarChart = props => {
             backgroundColor:["#0098FF", "#00CF92","#F72564","#F8D919","#E07116"]
         }]
     }
+    const monthlyData = {
+        labels: ["Very unsatisfactory", "Unsatisfactory", "Neutral", "Satisfactory", "Very Satisfactory"],
+        datasets : [{
+            label: "Employee monthly Total Rate",
+            data:[monthlyResult[1], monthlyResult[2], monthlyResult[3],monthlyResult[4], monthlyResult[5]],
+            backgroundColor:["#0098FF", "#00CF92","#F72564","#F8D919","#E07116"]
+        }]
+    }
 
-    //survey submission data by date
+    //daily survey submission data by date
     var getSurveySubmit = function(){
         var surveySubmit = [];
         var surveyState = {};
@@ -156,8 +217,8 @@ const BarChart = props => {
             if(showEmailArry.includes(filteredDailySurvey[i].dailySurvey.employeeEmail) && filteredDailySurvey[i].dailySurvey.dailySurveyDate == chartDate) {
                 
 
-                console.log(filteredDailySurvey[i].dailySurvey)
-                var surveyState = {};
+                // console.log(filteredDailySurvey[i].dailySurvey)
+                // var surveyState = {};
 
                 surveyState['email'] = filteredDailySurvey[i].dailySurvey.employeeEmail;
                 surveyState['surveyStatement'] = "submitted";
@@ -185,9 +246,55 @@ const BarChart = props => {
     
 
     getSurveySubmit();
-    console.log(getSurveySubmit());
+    
+    const nameUrl = window.location.href
+    const dateUrl = nameUrl.split('/');
+    const surveyType = dateUrl[dateUrl.length-2] 
+    console.log(surveyType)
+
+    //monthly survey submission data by date
+    var getMonthlySurveySubmit = function(){
+        var monthlysurveySubmit = [];
+        var monthlySurveyState = {};
+        const nameUrl = window.location.href
+        const dateUrl = nameUrl.split('/');
+        const chartDate = dateUrl[dateUrl.length-1] 
+        // console.log(chartDate)
+        for(var i=0; i<filteredMonthlySurvey.length; i++){
+            if(showEmailArry.includes(filteredMonthlySurvey[i].employeeEmail) && filteredMonthlySurvey[i].createdDate == chartDate) {
+                
+
+                // console.log(filteredMonthlySurvey[i].dailySurvey)
+                
+
+                monthlySurveyState['email'] = filteredMonthlySurvey[i].employeeEmail;
+                monthlySurveyState['surveyStatement'] = "submitted";
+
+                monthlysurveySubmit.push(monthlySurveyState)
+                
+        }
+        else {
+               
+                monthlySurveyState['email'] = filteredMonthlySurvey[i].employeeEmail;
+                monthlySurveyState['surveyStatement'] = "unsubmitted";
+
+                monthlysurveySubmit.push(monthlySurveyState)
+            }
+        }
+        return monthlysurveySubmit;
+        
+        // for(var i=0; i<filteredDailySurvey.length; i++){
+        //     if(filteredDailySurvey[i].dailySurvey.dailySurveyDate === chartDate){
+        //     surveySubmit.push(filteredDailySurvey[i].dailySurvey.dailySurveyState);
+        //     } 
+        // }
+        // return surveySubmit;
+    }
+    
+
+    getMonthlySurveySubmit();
+    console.log(getMonthlySurveySubmit());
   
-   
     // for(var i=0; i<getSurveySubmit().length; i++){
     //    var totalStatement = []
     //    totalStatement.push(getSurveySubmit()[i].surveyStatement)
@@ -225,24 +332,79 @@ const BarChart = props => {
             
         }]
     }
+
+    // monthly total
+    var monthlyTotalStatement = function(){
+      
+        var monthlySubmissionTotal = [];
+      
+        for(var i=0; i< getMonthlySurveySubmit().length; i++){
+            monthlySubmissionTotal.push(getMonthlySurveySubmit()[i].surveyStatement)          
+            }
+        
+            console.log(monthlySubmissionTotal);
+            return monthlySubmissionTotal;
+    }
+
+    monthlyTotalStatement()
+
+    const monthlySubmissionResult = {};
+    monthlyTotalStatement().forEach((x)=>{
+        monthlySubmissionResult[x] = (monthlySubmissionResult[x] || 0)+1;
+    })
+
+    console.log(monthlySubmissionResult);
+
+    const monthlySubmitData = {
+        labels: ["Unsubmitted", "Submitted"],
+        datasets : [{
+            label: "Monthly Survey Submittion Rate",
+            data:[monthlySubmissionResult.unsubmitted, monthlySubmissionResult.submitted], 
+            backgroundColor:["#0098FF", "#00CF92"],
+            
+        }]
+    }
+
+    console.log(surveyType)
     return(
         <div>
-            {/* if() */}
-            <h2>Daily Survey Submission Rate</h2>
-            <Pie data={submitData} 
+            {
+            <div> surveyType == "Daily" ?
+                
+                <h2>Daily Survey Submission Rate</h2>
+                <Pie data={submitData} 
+                    width="20%"
+                    height="20%"
+                    options ={{ 
+                        responsive: true,
+                        maintainAspectRatio: true,	// Don't maintain w/h ratio
+                    }}
+                />
+                <h2>Daily Total Rating</h2>
+                    <div>
+                        
+                        <Bar data={data} />
+                    </div>
+                
+            
+            : 
+            <h2>Monthly Survey Submission Rate</h2>
+            <Pie data={monthlySubmitData} 
                 width="20%"
                 height="20%"
                 options ={{ 
                     responsive: true,
                     maintainAspectRatio: true,	// Don't maintain w/h ratio
-                  }}
+                }}
             />
-            <h2>Daily Total Rating</h2>
-            <div>
-                
-                <Bar data={data} />
+            <h2>Monthly Total Rating</h2>
+                <div>
+                    
+                    <Bar data={monthlyData} />
+                </div>
             </div>
-             {/* <Barchart /> */}
+            }
+            
         </div>
     )
 }
