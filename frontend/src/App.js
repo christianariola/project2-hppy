@@ -87,7 +87,7 @@ const App = () => {
           <Route path="dailysurvey" element={<DailySurvey />}></Route>
           <Route path="account" element={<Myaccount />}></Route>
           <Route path="surveys" element={<DailySurvey />}></Route>
-          <Route path="weeklysurveys" element={<Surveys />}></Route>
+          <Route path="monthlySurveys" element={<Surveys />}></Route>
           <Route element={<RequireAuth allowedRoles={["superadmin", "admin"]} />}>
             <Route path="company/:companyId/employee/add" element={<AddEmployee />} />
             <Route path="report" element={<ReportMain handleSelectChartDate={handleSelectChartDate} />} />

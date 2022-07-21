@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import axios from 'axios' 
 import Survey1 from './Survey1';
 import SurveyList from './SurveyList'
 // import { useSelector } from "react-redux";
@@ -7,6 +9,19 @@ import React, { useState } from 'react';
 
 
 const Surveys = () => {
+
+          useEffect(function loadData(){
+        axios.get('http://localhost:3000/monthlySurveys')
+        .then((res)=>{
+            // setSurveyItems(res.data)
+          
+         })
+         
+         .catch(error=>console.log(error))
+     },[]) 
+    //  console.log(surveyItem)
+
+
     const [openSurvey, setOpenSurvey] = useState(false);
     // const [surveyArray, setSurveyArray] = useState([]);
     const [surveyName, setSurveyName] = useState('')
