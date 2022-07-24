@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { ObjectId } = mongoose.SchemaTypes;
 
 const employeeSchema = mongoose.Schema({
     firstName: {
@@ -18,6 +19,16 @@ const employeeSchema = mongoose.Schema({
         required: [true, 'Please add an email'],
         unique: true
     },
+    role: {
+        type: String,
+        required: [true, 'Please add a role'],
+        unique: true
+    },
+    jobTitle: {
+        type: String,
+        required: [true, 'Please add an job title'],
+        unique: true
+    },
     password: {
         type: String,
         required: [true, 'Please add a password'],
@@ -28,16 +39,22 @@ const employeeSchema = mongoose.Schema({
         default: 'employee',
     },
     company_id: {
-        type: String,
+        type: ObjectId,
+        ref: "Company",
         required: [true, 'Please add a company id'],
     },
     company_name: {
         type: String,
         required: [true, 'Please add a company name'],
     },
-    department: {
+    department_id: {
+        type: ObjectId,
+        ref: "Company",
+        required: [true, 'Please add a department id'],
+    },
+    department_name: {
         type: String,
-        required: [true, 'Please add a department'],
+        required: [true, 'Please add a department name'],
     },
 }, 
 {

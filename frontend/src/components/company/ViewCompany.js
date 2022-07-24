@@ -36,6 +36,8 @@ const ViewCompany = () => {
 
         <p>Employees</p>
         <Link component={RouterLink} to={`/app/company/${companyId}/employee/add`} variant="button" sx={{ my: 1, mx: 1.5 }}>Add Employee</Link>
+
+        
     </>
 }
 

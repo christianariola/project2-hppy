@@ -19,8 +19,6 @@ const getCompanyList = async () => {
 const getCompany = async (companyId) => {
     const response = await axios.get(API_URL + `/view/${companyId}`)
 
-    console.log(response.data)
-
     return response.data
 }
 
@@ -29,7 +27,6 @@ const editCompany = async (updatedCompanyData, companyId) => {
 
     return response.data
 }
-
 
 const deleteCompany = async (companyId) => {
     const response = await axios.delete(API_URL + `/delete/${companyId}`)

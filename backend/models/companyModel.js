@@ -25,13 +25,52 @@ const companySchema = mongoose.Schema({
             type: String,
             required: [false, "Please add a department name"],
         },
-        // employees: [
-        //     {
-        //         type: ObjectId,
-        //         ref: "Employee",
-        //         required: [false, "employee_id is required"],
-        //     }
-        // ],
+        manager: [{
+            employee_id: {
+                type: ObjectId,
+                ref: "Employee",
+                required: false,
+            },
+            firstName: {
+                type: String,
+                required: false,
+            },
+            lastName: {
+                type: String,
+                required: false,
+            },
+            email: {
+                type: String,
+                required: false,
+            },
+            jobTitle: {
+                type: String,
+                required: false,
+            },
+        }],
+        employees: [{
+            employee_id: {
+                type: ObjectId,
+                ref: "Employee",
+                required: false,
+            },
+            firstName: {
+                type: String,
+                required: false,
+            },
+            lastName: {
+                type: String,
+                required: false,
+            },
+            email: {
+                type: String,
+                required: false,
+            },
+            jobTitle: {
+                type: String,
+                required: false,
+            },
+        }],
     }], required: false,
 }, 
 {

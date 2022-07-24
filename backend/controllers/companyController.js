@@ -174,6 +174,12 @@ const deleteCompany = asyncHandler(async (req, res) => {
     }
 })
 
+const employeesByCompany = asyncHandler(async (req, res) => {
+    const companyId = req.params.id
+
+    console.log(id)
+})
+
 
 module.exports = {
     addCompany,
@@ -181,4 +187,5 @@ module.exports = {
     getCompany,
     editCompany,
     deleteCompany,
+    employeesByCompany,
 }

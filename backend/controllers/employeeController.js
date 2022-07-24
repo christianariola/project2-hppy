@@ -9,7 +9,7 @@ const Employee = require('../models/employeeModel')
 // @route  /api/employees
 // @access Public
 const registerEmployee = asyncHandler(async (req, res) => {
-    const {company_id, company_name, department, firstName, lastName, email, password} = req.body
+    const {company_id, company_name, department_id, department_name, firstName, lastName, email, role, jobTitle, password} = req.body
 
     console.log(req.body)
 
@@ -36,10 +36,13 @@ const registerEmployee = asyncHandler(async (req, res) => {
         firstName,
         lastName,
         email,
+        role: role.toLowerCase(),
+        jobTitle,
         password: hashedPassword,
         company_id,
         company_name,
-        department,
+        department_id,
+        department_name,
     })
 
     if(employee) {
@@ -48,8 +51,12 @@ const registerEmployee = asyncHandler(async (req, res) => {
             firstName: employee.firstName,
             lastName: employee.lastName,
             email: employee.email,
+            role: employee.role,
+            job_title: employee.jobTitle,
             company_id: employee.company_id,
             company_name: employee.company_name,
+            department_id: employee.department_id,
+            department_name: employee.department_name,
             token: generateToken(employee._id)
         })
     } else {
@@ -75,8 +82,12 @@ const loginEmployee = asyncHandler(async (req, res) => {
             lastName: employee.lastName,
             email: employee.email,
             role: employee.role,
+            job_title: employee.jobTitle,
+            role: employee.role,
             company_id: employee.company_id,
             company_name: employee.company_name,
+            department_id: employee.department_id,
+            department_name: employee.department_name,
             token: generateToken(employee._id)
         })
     } else {

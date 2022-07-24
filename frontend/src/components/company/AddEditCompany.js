@@ -153,7 +153,6 @@ const AddEditCompany = () => {
                     placeholder="Add Departments"
                     label="Departments"
                     deptData={deptData}
-
                 />
 
 
