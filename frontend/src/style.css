@@ -267,3 +267,40 @@ gap: 1rem;
     display:block;
     margin:0 auto;
 }
+
+/*My account page*/
+.account-text {
+    padding-left:6%;
+}
+.profile-form {
+    display:flex;
+}
+
+.profile-form li {
+    width:50%;
+    list-style: none;
+}
+
+.profile-form li input {
+    width:70%;
+    padding:2% 0 2% 2%;
+}
+
+
+.logoutBtn {
+    background-color:white;
+    border:0;
+    margin-left:78%;
+    color:#003D66;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+label {
+    font-family: 'Titillium Web', sans-serif;
+    font-weight: bold;
+}
+
+p{
+    font-family: 'Titillium Web', sans-serif;
+}
