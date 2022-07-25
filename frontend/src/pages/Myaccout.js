@@ -15,27 +15,39 @@ const MyAccount = () => {
     
     return <>
         <h1>My Account page</h1>
-        <p>My Account informtaion is view-only. You cannot edit this informtaion.</p>
+        <p className="account-text">My Account informtaion is view-only. You cannot edit this informtaion.</p>
         <form>
-            <div>
-            <label>First Name</label>
-            <input type="text" placeholder={employee.firstName}></input>
-            <label>Last Name</label>
-            <input type="text" placeholder={employee.lastName}></input>
-            </div>
-            <div>
-            <label>Email</label>
-            <input type="text" placeholder={employee.email}></input>
-            <label>Department</label>
-            <input type="text"></input>
-            </div>
-            <div>
-            <label>Employee Number</label>
-            <input type="text"></input>
-            <label>Job Title</label>
-            <input type="text"></input>
-            </div>
-            <button onClick={onLogout}>Logout</button>
+            <ul className="profile-form">
+            <li>
+                <label>First Name</label>
+                <div><input type="text" placeholder={employee.firstName} disabled></input></div>
+            </li>
+            <li>
+                <label>Last Name</label>
+                <div><input type="text" placeholder={employee.lastName} disabled></input></div>
+            </li>
+            </ul>
+            <ul className="profile-form">
+            <li>
+                <label>Email</label>
+                <div><input type="text" placeholder={employee.email} disabled></input></div>
+            </li>
+            <li>
+                <label>Department</label>
+                <div><input type="text" placeholder={employee.department} disabled></input></div>
+            </li>
+            </ul>
+            <ul className="profile-form">
+            <li>
+                <label>Employee Number</label>
+                <div><input type="text" disabled></input></div>
+            </li>
+            <li>
+                <label>Job Title</label>
+                <div><input type="text" placeholder={employee.role} disabled></input></div>
+            </li>
+            </ul>
+            <button className="logoutBtn" onClick={onLogout} >Logout</button>
         </form>
     </>
 }
