@@ -3,7 +3,7 @@ import RequireAuth from "./components/RequireAuth";
 import { Routes, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState } from "react";
-
+import { ToastContainer } from 'react-toastify';
 import Login from "./pages/Login";
 import AddEmployee from "./components/employee/AddEmployee";
 import DashboardLayout from "./layouts/DashboardLayout";
@@ -65,6 +65,7 @@ const App = () => {
 
   return (
     <>
+      <ToastContainer closeButton={false} position="top-right" />
       <Routes>
         {/** public routes */}
         <Route path="/" element={<MainLayout />} exact>

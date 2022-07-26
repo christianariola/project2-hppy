@@ -18,6 +18,8 @@ import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const theme = createTheme();
 
@@ -54,6 +56,10 @@ const Login = () => {
         dispatch(reset())
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isError, isSuccess, isLoading, employee, message, navigate, dispatch])
+
+    if(isSuccess){
+      toast.success("You have successfully logged in.")
+    }
 
     const onChange = (e) => {
         setFormData((prevState) => ({
