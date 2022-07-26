@@ -80,6 +80,7 @@ const registerEmployee = asyncHandler(async (req, res) => {
     // console.log('Oh! Dark', err)
     // });
 
+    // Insert employee data to company document
     const company = Company.updateOne({
         "_id": company_id,
         "departments._id": department_id

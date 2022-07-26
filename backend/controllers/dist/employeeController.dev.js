@@ -109,6 +109,7 @@ var registerEmployee = asyncHandler(function _callee(req, res) {
           // }).catch(err => {
           // console.log('Oh! Dark', err)
           // });
+          // Insert employee data to company document
 
 
           company = Company.updateOne({
