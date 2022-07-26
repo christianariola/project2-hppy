@@ -1,4 +1,4 @@
-import { Link as RouterLink, useParams, useNavigate } from 'react-router-dom'
+import { Link as RouterLink, useNavigate } from 'react-router-dom'
 import Link from '@mui/material/Link';
 import { useSelector, useDispatch } from 'react-redux'
 import { logout, reset } from '../features/auth/authSlice'

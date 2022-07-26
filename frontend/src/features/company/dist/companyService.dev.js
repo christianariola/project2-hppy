@@ -10,7 +10,8 @@ var _axios = _interopRequireDefault(require("axios"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 // Local API_URL for dev
-var API_URL = '/api/companies'; // const API_URL = 'https://pluto-hppy.herokuapp.com/api/companies'
+// const API_URL = '/api/companies'
+var API_URL = 'https://pluto-hppy.herokuapp.com/api/companies';
 
 var addCompany = function addCompany(companyData) {
   var response;

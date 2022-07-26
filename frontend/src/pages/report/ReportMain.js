@@ -3,13 +3,13 @@ import { useState, useEffect } from "react";
 import axios from 'axios'
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@mui/material/Link';
-import { useSelector } from "react-redux";
-import Button from '@mui/material/Button';
+// import { useSelector } from "react-redux";
+// import Button from '@mui/material/Button';
 const ReportMain = props => {
 
   const [ surveyItem, setSurveyItems ] = useState([])
   const [ monthlyItem, setMonthlyItems ] = useState([])
-  const { employee } = useSelector((state) => state.auth);
+  // const { employee } = useSelector((state) => state.auth);
   //daily survey fetching
     useEffect(function loadData(){
         axios.get('https://pluto-hppy.herokuapp.com/dailySurvey')
@@ -77,7 +77,7 @@ const ReportMain = props => {
 
     console.log(sortMonthlySurvey)
 
-    const [getDate, setGetDate] = useState([]);
+    // const [getDate, setGetDate] = useState([]);
 
     // useEffect(function loadDate(){
     // axios.get('/view/:surveyDate')

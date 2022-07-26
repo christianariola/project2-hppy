@@ -50,6 +50,7 @@ const Register = () => {
         }
 
         dispatch(reset())
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isError, isSuccess, isLoading, employee, message, navigate, dispatch])
 
     const onChange = (e) => {

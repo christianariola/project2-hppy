@@ -1,7 +1,7 @@
 import { Bar } from "react-chartjs-2";
 import { Pie } from 'react-chartjs-2';
-import { ArcElement } from "chart.js";
-import Chart from'chart.js/auto';
+// import { ArcElement } from "chart.js";
+// import Chart from'chart.js/auto';
 import { useState, useEffect } from "react";
 import axios from 'axios'
 import { useSelector } from 'react-redux'
@@ -15,7 +15,7 @@ const MonthylyBar = props => {
     //monthly survey fetching
      
     useEffect(function loadMonthly(){
-        axios.get('/monthlySurveys')
+        axios.get('https://pluto-hppy.herokuapp.com/monthlySurveys')
        .then((res)=>{
         setMonthlyReport(res.data)
         })
@@ -24,7 +24,7 @@ const MonthylyBar = props => {
 
     //fetch  employees data
     useEffect(function loadEmployee(){
-        axios.get('/getEmployeeAll') 
+        axios.get('https://pluto-hppy.herokuapp.com/getEmployeeAll') 
          .then((res)=>{
             setEmployeeData(res.data)
             console.log(res)
@@ -106,7 +106,7 @@ const MonthylyBar = props => {
             const chartDate = dateUrl[dateUrl.length-1] 
             // console.log(chartDate)
             for(var i=0; i<filteredMonthlySurvey.length; i++){
-                if(showEmailArry.includes(filteredMonthlySurvey[i].employeeEmail) && filteredMonthlySurvey[i].createdDate == chartDate) {
+                if(showEmailArry.includes(filteredMonthlySurvey[i].employeeEmail) && filteredMonthlySurvey[i].createdDate === chartDate) {
                     
     
                     // console.log(filteredMonthlySurvey[i].dailySurvey)
@@ -119,7 +119,7 @@ const MonthylyBar = props => {
                     
             }
             else {
-                    var monthlySurveyState = {};
+                    // var monthlySurveyState = {};
                     monthlySurveyState['email'] = filteredMonthlySurvey[i].employeeEmail;
                     monthlySurveyState['surveyStatement'] = "unsubmitted";
     

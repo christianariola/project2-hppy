@@ -1,8 +1,8 @@
 import { Bar } from "react-chartjs-2";
 import { Pie } from 'react-chartjs-2';
-import { Link as RouterLink } from 'react-router-dom';
-import { ArcElement } from "chart.js";
-import Chart from'chart.js/auto';
+// import { Link as RouterLink } from 'react-router-dom';
+// import { ArcElement } from "chart.js";
+// import Chart from'chart.js/auto';
 import { useState, useEffect } from "react";
 import axios from 'axios'
 import { useSelector } from 'react-redux'
@@ -14,8 +14,8 @@ const BarChart = props => {
     const [ report, setReport ] = useState([])
     const [ employeeData, setEmployeeData ] = useState([])
     const { employee } = useSelector((state) => state.auth);
-    const [department, setDepartment] = useState('')
-    const [ barData, setBarChartData ] = useState([])
+    // const [, setDepartment] = useState('')
+    // const [ barData, setBarChartData ] = useState([])
     //daily survey fetching
     useEffect(function loadData(){
         axios.get('https://pluto-hppy.herokuapp.com/dailySurvey') 
@@ -31,7 +31,7 @@ const BarChart = props => {
 
      //fetch  employees data
         useEffect(function loadEmployee(){
-        axios.get('/getEmployeeAll') 
+        axios.get('https://pluto-hppy.herokuapp.com/getEmployeeAll') 
          .then((res)=>{
             setEmployeeData(res.data)
             console.log(res)
@@ -68,7 +68,7 @@ const BarChart = props => {
        console.log([...new Set(dailySingle().map(JSON.stringify))].map(JSON.parse));
   
        const sortDailySurvey = [...new Set(dailySingle().map(JSON.stringify))].map(JSON.parse)
-     
+        console.log(sortDailySurvey)
     // // console.log(monthlyReport)
     
     //  const { loginEmployee } = useSelector(state => state.auth) // ->작동되면 .role = 'superadmin' no filter, role 'admin' filetre by compaby
@@ -79,11 +79,12 @@ const BarChart = props => {
      var company = employee.company_name
      var showEmailArry = [];
      console.log(employeeData.length);
-     console.log(depart)
+    //  console.log(depart)
+    var depart = null
      for(var i=0; i<employeeData.length; i++){
         if(employeeData[i].company_name !== undefined && employeeData[i].company_name === company ){
-            if(depart != "all" && depart !=undefined){
-                if(employeeData[i].department == depart) {
+            if(depart !== "all" && depart !== undefined){
+                if(employeeData[i].department === depart) {
                     showEmailArry.push(employeeData[i].email)
                  } 
              } else {
@@ -95,11 +96,11 @@ const BarChart = props => {
      console.log(showEmailArry) //filted empployee email list by company
 
     
-     var depart = 'all'
+     depart = 'all'
      var rating = [];
      const nameUrl = window.location.href
      const dateUrl = nameUrl.split('/');
-     const titleUrl = dateUrl[dateUrl.length-2] 
+    //  const titleUrl = dateUrl[dateUrl.length-2] 
      const chartDate = dateUrl[dateUrl.length-1] 
      const paramCheck = chartDate.split('?');
     //  const testUrl = nameUrl((JSON.stringify))
@@ -115,9 +116,9 @@ const BarChart = props => {
      console.log(filteredDailySurvey)
      
      //selected department
-     const handleChange = departmentType =>{
-        setDepartment(departmentType)
-    }
+    //  const handleChange = departmentType =>{
+        // setDepartment(departmentType)
+    // }
     
      //filter daily survey result by department and date
      var filteredDailySurveyByDepart = []; 
@@ -126,7 +127,7 @@ const BarChart = props => {
         // var url = nameUrl + '?' + 'param' + '=' + depart;
         // console.log(depart)
         
-        if(depart != undefined && depart == "All"){
+        if(depart !== undefined && depart === "All"){
         axios
           .get("/login")
           .then((res) => {
@@ -144,7 +145,7 @@ const BarChart = props => {
         var showDepartArry = [];
         filteredDailySurveyByDepart.length = 0;
         for(var i=0; i<employeeData.length; i++){
-           if(employeeData[i].department != undefined && employeeData[i].department == depart ){
+           if(employeeData[i].department !== undefined && employeeData[i].department === depart ){
                showDepartArry.push(employeeData[i].email)
            }
         }
@@ -152,28 +153,28 @@ const BarChart = props => {
         console.log(showDepartArry) 
    
         // var filteredDailySurveyByDepart = []; 
-        for(var i=0; i<report.length; i++){
+        for( i=0; i<report.length; i++){
            if(showDepartArry.includes(report[i].dailySurvey.employeeEmail)){
             filteredDailySurveyByDepart.push(report[i])
            }
            
         }
         console.log(filteredDailySurveyByDepart)
-        var totalRatingByDepart = sortRateByDepart()
+        // var totalRatingByDepart = sortRateByDepart()
 
        var rateResultByDepart = {};
        sortRateByDepart().forEach((x)=>{
         rateResultByDepart[x] = (rateResultByDepart[x] || 0)+1;
        })
 
-       const dataByDepart = {
-        labels: ["Very unsatisfactory", "Unsatisfactory", "Neutral", "Satisfactory", "Very Satisfactory"],
-        datasets : [{
-            label: "Employee Daily Total Rate",
-            data:[rateResultByDepart[1], rateResultByDepart[2], rateResultByDepart[3],rateResultByDepart[4], rateResultByDepart[5]],
-            backgroundColor:["#0098FF", "#00CF92","#F72564","#F8D919","#E07116"]
-        }]
-        }
+    //    const dataByDepart = {
+    //     labels: ["Very unsatisfactory", "Unsatisfactory", "Neutral", "Satisfactory", "Very Satisfactory"],
+    //     datasets : [{
+    //         label: "Employee Daily Total Rate",
+    //         data:[rateResultByDepart[1], rateResultByDepart[2], rateResultByDepart[3],rateResultByDepart[4], rateResultByDepart[5]],
+    //         backgroundColor:["#0098FF", "#00CF92","#F72564","#F8D919","#E07116"]
+    //     }]
+    //     }
 
         // var grapharea = document.getElementById("pie-chart").getContext("2d");
         // console.log(grapharea);
@@ -200,7 +201,7 @@ const BarChart = props => {
         //     var filteredDailySurvey=filterByDepart(depart)  
         // }
         for(var i=0; i<filteredDailySurveyByDepart.length; i++){
-            if(filteredDailySurveyByDepart[i].dailySurvey.dailySurveyDate === chartDate){ {/* depends on button value */}
+            if(filteredDailySurveyByDepart[i].dailySurvey.dailySurveyDate === chartDate){
             totalRatingByDepart.push(filteredDailySurveyByDepart[i].dailySurvey.dailyTotalRating)
             }
         }
@@ -289,7 +290,7 @@ const BarChart = props => {
         }
         else {
 
-                var surveyState = {};
+                // var surveyState = {};
                
                 surveyState['email'] = filteredDailySurvey[i].dailySurvey.employeeEmail;
                 surveyState['surveyStatement'] = "unsubmitted";
@@ -359,18 +360,18 @@ const BarChart = props => {
         }]
     }
 
-    const handleFormSubmit = (e) => {
-        e.preventDefault();
+    // const handleFormSubmit = (e) => {
+    //     e.preventDefault();
     
-        //axios post to /dailySurvey endpoint
+    //     //axios post to /dailySurvey endpoint
         
-      };
+    //   };
 
    
     return(
        
         <div>
-            { surveyType == "Daily" ?
+            { surveyType === "Daily" ?
              <div> 
                 <form >
                     <select onChange={(e)=>filterByDepart(e.target.value)}>
@@ -396,7 +397,7 @@ const BarChart = props => {
                         <Bar data={data} />
                     </div>
             </div>
-            : ( surveyType == "Daily" && filterByDepart() != null 
+            : ( surveyType === "Daily" && filterByDepart() != null 
             ?
             <div> 
                 <h1>department</h1>
