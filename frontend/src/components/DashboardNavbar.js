@@ -1,10 +1,10 @@
-import { useNavigate } from 'react-router-dom'
+import { Link as RouterLink, useParams, useNavigate } from 'react-router-dom'
+import Link from '@mui/material/Link';
 import { useSelector, useDispatch } from 'react-redux'
 import { logout, reset } from '../features/auth/authSlice'
 import { useState, useEffect } from "react"
 import { getCompany } from "../features/company/companySlice"
 import Logo from "./company/Logo"
-
 // MUI imports
 import { styled } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
@@ -110,11 +110,14 @@ const DashboardHeader = () => {
     let employeeList
     const { employee } = useSelector(state => state.auth)
 
-    switch(employee.role) {
+    switch(employee.role.toLowerCase()) {
         case "superadmin":
             employeeList = superadminListItems;
             break;
         case "employee":
+            employeeList = employeeListItems;
+            break;
+        case "manager":
             employeeList = employeeListItems;
             break;
         default:
@@ -192,10 +195,10 @@ const DashboardHeader = () => {
                 onClose={handleCloseUserMenu}
             >
                 <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">Profile</Typography>
+                    <Link component={RouterLink} to={`/app/account`}><Typography textAlign="center">My Account</Typography></Link>
                 </MenuItem>
                 <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">Change Password</Typography>
+                    <Link component={RouterLink} to={`/app/account/password`}><Typography textAlign="center">Change Password</Typography></Link>
                 </MenuItem>
                 <MenuItem onClick={handleCloseUserMenu}>
                     <Typography textAlign="center" onClick={onLogout}>Logout</Typography>
