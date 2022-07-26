@@ -4,6 +4,7 @@ import axios from 'axios'
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import { useSelector } from "react-redux";
+import Button from '@mui/material/Button';
 const ReportMain = props => {
 
   const [ surveyItem, setSurveyItems ] = useState([])
@@ -145,7 +146,7 @@ const ReportMain = props => {
                   <td>{sortMonthlySurvey.monthlysurveyTitle}</td>
                   <td>
                     <button value={sortDailySurvey.surveyDate} data-value1="monthly" onClick={e => props.handleSelectChartDate(e.target.value)}>
-                    <Link component={RouterLink} to={`/app/reportchart/${sortMonthlySurvey.monthlysurveyTitle}/${sortMonthlySurvey.monthlysurveyDate}`} variant="button" sx={{ my: 1, mx: 1.5 }}>View</Link>
+                    <Link component={RouterLink} to={`/app/reportchart/${sortMonthlySurvey.monthlysurveyTitle}/${sortMonthlySurvey.monthlysurveyDate}`} variant="button" sx={{ my: 1, mx: 1.5 }} >View</Link>
                   </button>
                 </td>
               </tr>
