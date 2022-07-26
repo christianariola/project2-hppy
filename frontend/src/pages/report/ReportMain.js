@@ -91,15 +91,15 @@ const ReportMain = props => {
   },[]) 
   console.log(monthlyItem)
 
-  //chosen date handler
-  const handleChangeDate = (date)=>{
-    // event.preventDefault()
-    // props.handleSelectChartDate(date)
-    props.setGetDate(date) //from App.js
-    console.error(date);
-    // props.setChosenDate(event.target.value)
+  // //chosen date handler
+  // const handleChangeDate = (date)=>{
+  //   // event.preventDefault()
+  //   // props.handleSelectChartDate(date)
+  //   props.setGetDate(date) //from App.js
+  //   console.error(date);
+  //   // props.setChosenDate(event.target.value)
 
-  }
+  // }
 
   
   return (
