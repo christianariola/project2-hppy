@@ -1,192 +1,202 @@
 /* Google Font */
-@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&display=swap");
 
 body {
-    margin: 0;
-    font-family: 'Titillium Web', Arial, Tahoma, Helvetica, sans-serif;
+  margin: 0;
+  font-family: "Titillium Web", Arial, Tahoma, Helvetica, sans-serif;
 }
 
 h1 {
-    font-family: 'Titillium Web', sans-serif;
+  font-family: "Titillium Web", sans-serif;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .hero {
-    background: linear-gradient(180deg, #0098FF, #003D66);
-    color: #fff;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+  background: linear-gradient(180deg, #0098ff, #003d66);
+  color: #fff;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .hero .hero-text {
-    padding: 2rem;
+  padding: 2rem;
 }
-.hero .hero-text h2{
-    font-size: 46px;
-    margin-bottom: 0;
+.hero .hero-text h2 {
+  font-size: 46px;
+  margin-bottom: 0;
 }
 
 .hero-text p {
-    padding-bottom: 1rem;
+  padding-bottom: 1rem;
 }
 
 .hero-text a {
-    background-color: #00cf92;
-    color: #ffffff;
-    font-size: 1.3rem;
-    font-weight: bold;
-    padding: 1rem;
+  background-color: #00cf92;
+  color: #ffffff;
+  font-size: 1.3rem;
+  font-weight: bold;
+  padding: 1rem;
 }
 
 .wrapper {
-    max-width: 1300px;
-    margin-right: auto;
-    margin-left: auto;
+  max-width: 1300px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 main {
-    margin-top: 5rem;
+  margin-top: 5rem;
 }
 
 main h2 {
-    text-align: center;
+  text-align: center;
 }
 
 .feature {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    align-items: center;
-    gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+  gap: 1rem;
 }
 
 .feature img {
-    min-width: 100%;
-    height: auto;
+  min-width: 100%;
+  height: auto;
 }
 
 footer {
-    background: linear-gradient(180deg, #0098FF, #003D66);
-    color: #fff;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+  background: linear-gradient(180deg, #0098ff, #003d66);
+  color: #fff;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 /* DAILY SURVEY */
 /* animate emoji on hover */
 .survey-rating-row svg:hover path {
-    animation: emoji-animation 1s ease-in-out infinite;
+  animation: emoji-animation 1s ease-in-out infinite;
 }
 emoji-animation {
-    animation-name: emoji-animation;
-    animation-duration: 1s;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
+  animation-name: emoji-animation;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
 }
 
 @keyframes emoji-animation {
-    0% {
-        transform: scale(0.95);
-    }
-    50% {
-        transform: scale(1);
-    }
-    100% {
-        transform: scale(0.95);
-    }
+  0% {
+    transform: scale(0.95);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.95);
+  }
 }
 
 radio-animation {
-    animation-name: emoji-animation;
-    animation-duration: 1s;
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
+  animation-name: emoji-animation;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
 }
 @keyframes radio-animation {
-    0% {
-        transform: scale(2);
-    }
-    50% {
-        transform: scale(1.5);
-    }
-    100% {
-        transform: scale(2);
-    }
+  0% {
+    transform: scale(2);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(2);
+  }
 }
 
 .survey-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    padding: 5rem;
-    border-radius: 1rem;
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
-    gap: 2rem;
-    margin: 0 auto;
-    max-width: 1400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 5rem;
+  border-radius: 1rem;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+  gap: 2rem;
+  margin: 0 auto;
+  max-width: 1400px;
 }
 
 .survey-comment {
-    display: grid;
-    justify-items: center;
-    align-items: center;
-    justify-content: center;
-    align-content: center;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
 }
 .survey-rating-row {
-    display: grid;
-    justify-items: center;
-    align-items: center;
-    justify-content: center;
-    align-content: center;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 1rem;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
 }
 
 .survey-form svg {
-    background-color: #f5f5f5;
-    padding: 1rem;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+  background-color: #f5f5f5;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
 }
 
 .survey-form label {
-display: grid;
-justify-items: center;
-align-items: center;
-justify-content: center;
-align-content: center;
-gap: 1rem;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  gap: 1rem;
 }
 
 .survey-form label > input[type="radio"]:checked {
-    animation: radio-animation 1s ease-in-out infinite;
+  animation: radio-animation 1s ease-in-out infinite;
 }
 
 .survey-form textarea {
-    width: 75%;
-    height: 75%;
-    border: none;
-    /* border-radius: 10px;
+  width: 75%;
+  height: 75%;
+  border: none;
+  /* border-radius: 10px;
         padding: 1rem; */
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
 }
 
 .survey-comment label {
-    padding: 1rem;
-    font-size: 1.5rem;
-    font-weight: bold;
+  padding: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.completed-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+  align-items: center;
+  justify-items: center;
+  align-content: center;
+  justify-content: center;
 }
 
 /* =======Surveys */
-.surveys-container{
-    padding: 2rem 3rem;
-    min-height: 85vh;
+.surveys-container {
+  padding: 2rem 3rem;
+  min-height: 85vh;
 }
 .survey {
   display: flex;
@@ -196,76 +206,71 @@ gap: 1rem;
   margin-right: auto;
 }
 
-.survey-question{
+.survey-question {
   margin: 1rem auto 3rem auto;
-
-
 }
 .survey-question label,
 .survey-question div {
   margin: 1rem 0 1rem 0;
 }
-.survey-question textarea{
-    width: 600px;   
-    height: 100px; 
-  }
+.survey-question textarea {
+  width: 600px;
+  height: 100px;
+}
 
-  /* Table of survey  */
+/* Table of survey  */
 
-  .all-surveys table {
-    min-width: 100%;
-
-
-  }
-  .all-surveys table th,
-  .all-surveys table td,
-.all-surveys table tr
-{
-       text-align: center;
-    border-bottom: 1px black solid;
-       padding: 0px;
-  }
+.all-surveys table {
+  min-width: 100%;
+}
+.all-surveys table th,
+.all-surveys table td,
+.all-surveys table tr {
+  text-align: center;
+  border-bottom: 1px black solid;
+  padding: 0px;
+}
 
 /*survey report list*/
 
 .report-page {
-    padding:0 5%;
+  padding: 0 5%;
 }
 .report-list th {
-    border-bottom:1.3px solid black;
+  border-bottom: 1.3px solid black;
 }
-.report-list th:first-child{
-    width:20%;
-}
- 
-.report-list th:nth-child(2){
-    width:40%;
+.report-list th:first-child {
+  width: 20%;
 }
 
-.report-list th:last-child{
-    width:40%;
+.report-list th:nth-child(2) {
+  width: 40%;
+}
+
+.report-list th:last-child {
+  width: 40%;
 }
 .report-content td {
-    border-bottom:1px solid #ccc;
+  border-bottom: 1px solid #ccc;
 }
-.report-content td:first-child{
-    width:20%;
-    text-align:center;
-}
-
-.report-content td:nth-child(2){
-    width:40%;
-    text-align:center;
+.report-content td:first-child {
+  width: 20%;
+  text-align: center;
 }
 
-.report-content td:last-child{
-    width:40%;
-    text-align:center;
+.report-content td:nth-child(2) {
+  width: 40%;
+  text-align: center;
+}
+
+.report-content td:last-child {
+  width: 40%;
+  text-align: center;
 }
 
 .showBtn {
-    display:block;
-    margin:0 auto;
+  display: block;
+  margin: 0 auto;
 }
 
 .surveys-container h2 {
