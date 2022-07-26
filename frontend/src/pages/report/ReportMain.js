@@ -124,8 +124,8 @@ const ReportMain = props => {
         </thead>
         <tbody>
           
-            {sortDailySurvey?.map((sortDailySurvey)=>
-            <tr className="report-content">
+            {sortDailySurvey?.map((sortDailySurvey, index)=>
+            <tr key={index} className="report-content">
               
                 <td key={surveyItem.surveyId}>{sortDailySurvey.surveyDate}</td>
              
@@ -140,8 +140,8 @@ const ReportMain = props => {
             
               )}
               {/*monthly survey */}
-              {sortMonthlySurvey?.map((sortMonthlySurvey)=>
-              <tr className="report-content">
+              {sortMonthlySurvey?.map((sortMonthlySurvey, index)=>
+              <tr key={index}  className="report-content">
                   <td key={monthlyItem.surveyid}>{sortMonthlySurvey.monthlysurveyDate}</td>
                   <td>{sortMonthlySurvey.monthlysurveyTitle}</td>
                   <td>
