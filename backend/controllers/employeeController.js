@@ -4,6 +4,9 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 const Employee = require('../models/employeeModel')
+const Company = require('../models/companyModel')
+
+const cloudinary = require("../cloudinary/cloudinary")
 
 // @desc   Register a new user
 // @route  /api/employees
@@ -11,7 +14,7 @@ const Employee = require('../models/employeeModel')
 const registerEmployee = asyncHandler(async (req, res) => {
     const {company_id, company_name, department_id, department_name, firstName, lastName, email, role, jobTitle, password} = req.body
 
-    console.log(req.body)
+    // console.log(req.body)
 
     //Validation
     if(!firstName || !lastName || !email || !password) {
@@ -43,6 +46,62 @@ const registerEmployee = asyncHandler(async (req, res) => {
         company_name,
         department_id,
         department_name,
+    })
+
+    let empData = []
+    if(role == 'Manager'){
+        empData = {
+            employee_id: employee._id,
+            firstName,
+            lastName,
+            email,
+            jobTitle,
+            isManager: true
+        }
+    } else {
+        empData = {
+            employee_id: employee._id,
+            firstName,
+            lastName,
+            email,
+            jobTitle,
+        }
+    }
+
+    // const company = Company.findOne({"departments._id": department_id}).then(doc => {
+    //     item = doc.departments.id(department_id);
+
+    //     console.log(item)
+    //     item["employees"] = "new name";
+    //     // item["value"] = "new value";
+    //     doc.save();
+    // //sent respnse to client
+    // }).catch(err => {
+    // console.log('Oh! Dark', err)
+    // });
+
+    const company = Company.updateOne({
+        "_id": company_id,
+        "departments._id": department_id
+    },
+    {
+        $push: {
+            "departments.$[departments].employees": empData
+        }
+    },
+    {
+        arrayFilters: [
+            {
+            "departments._id": department_id
+            }
+        ]
+    },
+    (err, success) => {
+        if(err){
+            console.log("Unsuccessful", err)
+        } else {
+            console.log("Successful", success)
+        }
     })
 
     if(employee) {

@@ -9,58 +9,62 @@ var bcrypt = require('bcryptjs');
 
 var jwt = require('jsonwebtoken');
 
-var Employee = require('../models/employeeModel'); // @desc   Register a new user
+var Employee = require('../models/employeeModel');
+
+var Company = require('../models/companyModel');
+
+var cloudinary = require("../cloudinary/cloudinary"); // @desc   Register a new user
 // @route  /api/employees
 // @access Public
 
 
 var registerEmployee = asyncHandler(function _callee(req, res) {
-  var _req$body, company_id, company_name, department_id, department_name, firstName, lastName, email, role, jobTitle, password, employeeExist, salt, hashedPassword, employee;
+  var _req$body, company_id, company_name, department_id, department_name, firstName, lastName, email, role, jobTitle, password, employeeExist, salt, hashedPassword, employee, empData, company;
 
   return regeneratorRuntime.async(function _callee$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
-          _req$body = req.body, company_id = _req$body.company_id, company_name = _req$body.company_name, department_id = _req$body.department_id, department_name = _req$body.department_name, firstName = _req$body.firstName, lastName = _req$body.lastName, email = _req$body.email, role = _req$body.role, jobTitle = _req$body.jobTitle, password = _req$body.password;
-          console.log(req.body); //Validation
+          _req$body = req.body, company_id = _req$body.company_id, company_name = _req$body.company_name, department_id = _req$body.department_id, department_name = _req$body.department_name, firstName = _req$body.firstName, lastName = _req$body.lastName, email = _req$body.email, role = _req$body.role, jobTitle = _req$body.jobTitle, password = _req$body.password; // console.log(req.body)
+          //Validation
 
           if (!(!firstName || !lastName || !email || !password)) {
-            _context.next = 5;
+            _context.next = 4;
             break;
           }
 
           res.status(400);
           throw new Error('Please include all fields');
 
-        case 5:
-          _context.next = 7;
+        case 4:
+          _context.next = 6;
           return regeneratorRuntime.awrap(Employee.findOne({
             email: email
           }));
 
-        case 7:
+        case 6:
           employeeExist = _context.sent;
 
           if (!employeeExist) {
-            _context.next = 11;
+            _context.next = 10;
             break;
           }
 
           res.status(400);
           throw new Error('User already exists');
 
-        case 11:
-          _context.next = 13;
+        case 10:
+          _context.next = 12;
           return regeneratorRuntime.awrap(bcrypt.genSalt(10));
 
-        case 13:
+        case 12:
           salt = _context.sent;
-          _context.next = 16;
+          _context.next = 15;
           return regeneratorRuntime.awrap(bcrypt.hash(password, salt));
 
-        case 16:
+        case 15:
           hashedPassword = _context.sent;
-          _context.next = 19;
+          _context.next = 18;
           return regeneratorRuntime.awrap(Employee.create({
             firstName: firstName,
             lastName: lastName,
@@ -74,11 +78,60 @@ var registerEmployee = asyncHandler(function _callee(req, res) {
             department_name: department_name
           }));
 
-        case 19:
+        case 18:
           employee = _context.sent;
+          empData = [];
+
+          if (role == 'Manager') {
+            empData = {
+              employee_id: employee._id,
+              firstName: firstName,
+              lastName: lastName,
+              email: email,
+              jobTitle: jobTitle,
+              isManager: true
+            };
+          } else {
+            empData = {
+              employee_id: employee._id,
+              firstName: firstName,
+              lastName: lastName,
+              email: email,
+              jobTitle: jobTitle
+            };
+          } // const company = Company.findOne({"departments._id": department_id}).then(doc => {
+          //     item = doc.departments.id(department_id);
+          //     console.log(item)
+          //     item["employees"] = "new name";
+          //     // item["value"] = "new value";
+          //     doc.save();
+          // //sent respnse to client
+          // }).catch(err => {
+          // console.log('Oh! Dark', err)
+          // });
+
+
+          company = Company.updateOne({
+            "_id": company_id,
+            "departments._id": department_id
+          }, {
+            $push: {
+              "departments.$[departments].employees": empData
+            }
+          }, {
+            arrayFilters: [{
+              "departments._id": department_id
+            }]
+          }, function (err, success) {
+            if (err) {
+              console.log("Unsuccessful", err);
+            } else {
+              console.log("Successful", success);
+            }
+          });
 
           if (!employee) {
-            _context.next = 24;
+            _context.next = 26;
             break;
           }
 
@@ -95,14 +148,14 @@ var registerEmployee = asyncHandler(function _callee(req, res) {
             department_name: employee.department_name,
             token: generateToken(employee._id)
           });
-          _context.next = 26;
+          _context.next = 28;
           break;
 
-        case 24:
+        case 26:
           res.status(400);
           throw new Error('Invalid user data');
 
-        case 26:
+        case 28:
         case "end":
           return _context.stop();
       }
