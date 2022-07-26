@@ -1,8 +1,8 @@
 import { Bar } from "react-chartjs-2";
 import { Pie } from 'react-chartjs-2';
 // import { Link as RouterLink } from 'react-router-dom';
-// import { ArcElement } from "chart.js";
-// import Chart from'chart.js/auto';
+import { ArcElement } from "chart.js";
+import Chart from'chart.js/auto';
 import { useState, useEffect } from "react";
 import axios from 'axios'
 import { useSelector } from 'react-redux'
