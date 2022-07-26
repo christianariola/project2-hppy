@@ -20,6 +20,7 @@ const Register = () => {
     const [formData, setFormData] = useState({
         department: '',
         role: '',
+        employeeNumber: '',
         firstName: '',
         lastName: '',
         email: '',
@@ -28,7 +29,7 @@ const Register = () => {
         confirmPassword: '',
     })
 
-    const {department, role, firstName, lastName, email, jobTitle, password, confirmPassword} = formData
+    const {department, role, employeeNumber, firstName, lastName, email, jobTitle, password, confirmPassword} = formData
 
     // dispatch.addEmployee
     const dispatch = useDispatch()
@@ -68,6 +69,7 @@ const Register = () => {
             company_name: company.name,
             department_id: getDeptID._id,
             department_name: department,
+            employeeNumber,
             firstName,
             lastName,
             email,
@@ -104,6 +106,10 @@ const Register = () => {
                         <option value="">Select role</option>
                         { userRoles.map((item, index) => <option key={index} value={item}>{item}</option>)}
                     </select>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="employeeNumber">Employee #:</label>
+                    <input type="text" className="form-control" id="employeeNumber" name="employeeNumber" value={employeeNumber} onChange={onChange} placeholder="Enter employee #" />
                 </div>
                 <div className="form-group">
                     <label htmlFor="firstName">First Name:</label>

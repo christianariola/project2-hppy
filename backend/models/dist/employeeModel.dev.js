@@ -8,6 +8,10 @@ var mongoose = require('mongoose');
 
 var ObjectId = mongoose.SchemaTypes.ObjectId;
 var employeeSchema = mongoose.Schema((_mongoose$Schema = {
+  employeeNumber: {
+    type: String,
+    required: [true, 'Please add an employee #']
+  },
   firstName: {
     type: String,
     required: [true, 'Please add a first name']

@@ -39,7 +39,7 @@ const ViewCompany = () => {
         <ul>
         {company.departments && company.departments.map((item, index) => <div key={index}>  
             {item.employees.map((employee, index) => 
-                <li key={index}>{employee.firstName}</li>
+                <li key={index}>{employee.firstName} {employee.lastName}</li>
             )}
         </div>)}
         </ul>

@@ -195,7 +195,7 @@ const DashboardHeader = () => {
                     <Typography textAlign="center">Profile</Typography>
                 </MenuItem>
                 <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">Account</Typography>
+                    <Typography textAlign="center">Change Password</Typography>
                 </MenuItem>
                 <MenuItem onClick={handleCloseUserMenu}>
                     <Typography textAlign="center" onClick={onLogout}>Logout</Typography>

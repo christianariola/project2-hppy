@@ -19,13 +19,13 @@ var cloudinary = require("../cloudinary/cloudinary"); // @desc   Register a new 
 
 
 var registerEmployee = asyncHandler(function _callee(req, res) {
-  var _req$body, company_id, company_name, department_id, department_name, firstName, lastName, email, role, jobTitle, password, employeeExist, salt, hashedPassword, employee, empData, company;
+  var _req$body, company_id, company_name, department_id, department_name, employeeNumber, firstName, lastName, email, role, jobTitle, password, employeeExist, salt, hashedPassword, employee, empData, company;
 
   return regeneratorRuntime.async(function _callee$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
-          _req$body = req.body, company_id = _req$body.company_id, company_name = _req$body.company_name, department_id = _req$body.department_id, department_name = _req$body.department_name, firstName = _req$body.firstName, lastName = _req$body.lastName, email = _req$body.email, role = _req$body.role, jobTitle = _req$body.jobTitle, password = _req$body.password; // console.log(req.body)
+          _req$body = req.body, company_id = _req$body.company_id, company_name = _req$body.company_name, department_id = _req$body.department_id, department_name = _req$body.department_name, employeeNumber = _req$body.employeeNumber, firstName = _req$body.firstName, lastName = _req$body.lastName, email = _req$body.email, role = _req$body.role, jobTitle = _req$body.jobTitle, password = _req$body.password; // console.log(req.body)
           //Validation
 
           if (!(!firstName || !lastName || !email || !password)) {
@@ -66,6 +66,7 @@ var registerEmployee = asyncHandler(function _callee(req, res) {
           hashedPassword = _context.sent;
           _context.next = 18;
           return regeneratorRuntime.awrap(Employee.create({
+            employeeNumber: employeeNumber,
             firstName: firstName,
             lastName: lastName,
             email: email,
@@ -85,6 +86,7 @@ var registerEmployee = asyncHandler(function _callee(req, res) {
           if (role == 'Manager') {
             empData = {
               employee_id: employee._id,
+              employeeNumber: employeeNumber,
               firstName: firstName,
               lastName: lastName,
               email: email,
@@ -94,6 +96,7 @@ var registerEmployee = asyncHandler(function _callee(req, res) {
           } else {
             empData = {
               employee_id: employee._id,
+              employeeNumber: employeeNumber,
               firstName: firstName,
               lastName: lastName,
               email: email,
@@ -138,6 +141,7 @@ var registerEmployee = asyncHandler(function _callee(req, res) {
 
           res.status(201).json({
             _id: employee._id,
+            employeeNumber: employee.employeeNumber,
             firstName: employee.firstName,
             lastName: employee.lastName,
             email: employee.email,
@@ -202,6 +206,7 @@ var loginEmployee = asyncHandler(function _callee2(req, res) {
 
           res.status(201).json((_res$status$json = {
             _id: employee._id,
+            employeeNumber: employee.employeeNumber,
             firstName: employee.firstName,
             lastName: employee.lastName,
             email: employee.email,

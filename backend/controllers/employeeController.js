@@ -12,7 +12,7 @@ const cloudinary = require("../cloudinary/cloudinary")
 // @route  /api/employees
 // @access Public
 const registerEmployee = asyncHandler(async (req, res) => {
-    const {company_id, company_name, department_id, department_name, firstName, lastName, email, role, jobTitle, password} = req.body
+    const {company_id, company_name, department_id, department_name, employeeNumber, firstName, lastName, email, role, jobTitle, password} = req.body
 
     // console.log(req.body)
 
@@ -36,6 +36,7 @@ const registerEmployee = asyncHandler(async (req, res) => {
 
     // Create user
     const employee = await Employee.create({
+        employeeNumber,
         firstName,
         lastName,
         email,
@@ -52,6 +53,7 @@ const registerEmployee = asyncHandler(async (req, res) => {
     if(role == 'Manager'){
         empData = {
             employee_id: employee._id,
+            employeeNumber,
             firstName,
             lastName,
             email,
@@ -61,6 +63,7 @@ const registerEmployee = asyncHandler(async (req, res) => {
     } else {
         empData = {
             employee_id: employee._id,
+            employeeNumber,
             firstName,
             lastName,
             email,
@@ -108,6 +111,7 @@ const registerEmployee = asyncHandler(async (req, res) => {
     if(employee) {
         res.status(201).json({
             _id: employee._id,
+            employeeNumber: employee.employeeNumber,
             firstName: employee.firstName,
             lastName: employee.lastName,
             email: employee.email,
@@ -138,6 +142,7 @@ const loginEmployee = asyncHandler(async (req, res) => {
     if(employee && (await bcrypt.compare(password, employee.password))){
         res.status(201).json({
             _id: employee._id,
+            employeeNumber: employee.employeeNumber,
             firstName: employee.firstName,
             lastName: employee.lastName,
             email: employee.email,
