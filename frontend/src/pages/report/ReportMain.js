@@ -79,16 +79,7 @@ const ReportMain = props => {
 
     const [getDate, setGetDate] = useState([]);
 
-    // useEffect(function loadDate(){
-    // axios.get('/view/:surveyDate')
-    // .then((res)=>{
-    //    setGetDate(res.data)
-    //  })
-    //  .catch(error=>console.log(error))
-    // },[])
-
-    // console.log(getDate)  // cannot bring data
-
+   
 
      //monthly survey fetching
      useEffect(function loadMonthly(){
