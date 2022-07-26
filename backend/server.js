@@ -152,6 +152,7 @@ app.get("monthlySurveys", (req, res) => {
         res.send(500).json(error)
       } else {
         res.json(result)
+        // console.log(result)
       }
   })
 })
