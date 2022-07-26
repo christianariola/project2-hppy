@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import * as tf from "@tensorflow/tfjs";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import padSequences from "./helper/paddedSeq";
 import axios from "axios";
 // import { useNavigate } from "react-router-dom"
@@ -10,6 +11,7 @@ import axios from "axios";
 const DailySurvey = () => {
   // bring in employee state from redux store
   const { employee } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   //Survey States
   const [dailyFeeling, setDailyFeeling] = useState(3);
@@ -170,6 +172,8 @@ const DailySurvey = () => {
 
       .then((res) => {
         console.log(res);
+        navigate(`/app/dashboard`);
+        
       })
       .catch((err) => {
         if (err.response.data.message === "Survey Already Exists") {
@@ -220,14 +224,14 @@ const DailySurvey = () => {
                 <path
                   d="M82.259 40.677C82.259 40.677 86.91 27.611 104.031 30.458"
                   stroke="#8B6239"
-                  stroke-miterlimit="10"
-                  stroke-width="0.12323943661971831"
+                  strokeMiterlimit="10"
+                  strokeWidth="0.12323943661971831"
                 />
                 <path
                   d="M58.318 40.677C58.318 40.677 53.667 27.611 36.546 30.458"
                   stroke="#8B6239"
-                  stroke-miterlimit="10"
-                  stroke-width="0.12323943661971831"
+                  strokeMiterlimit="10"
+                  strokeWidth="0.12323943661971831"
                 />
                 <path
                   d="M41.853 85.424C41.853 85.424 70.388 47.765 98.923 85.424C98.923 85.424 70.388 64.274 41.853 85.424Z"

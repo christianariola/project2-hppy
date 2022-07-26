@@ -20,7 +20,7 @@ const MyAccount = () => {
         My Account informtaion is view-only. You cannot edit this informtaion.
       </p>
       <form>
-        <div class="employee-info">
+        <div className="employee-info">
           <label>First Name: </label>
           <Input disabled defaultValue={employee.firstName}></Input>
           <label>Last Name: </label>
