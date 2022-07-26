@@ -3,13 +3,13 @@ import { Pie } from 'react-chartjs-2';
 // import { Link as RouterLink } from 'react-router-dom';
 import { ArcElement } from "chart.js";
 import Chart from'chart.js/auto';
+
 import { useState, useEffect } from "react";
 import axios from 'axios'
 import { useSelector } from 'react-redux'
 import MonthylyBar from "./MonthlyBar";
 const BarChart = props => {
-
-   
+    Chart.register(ArcElement);
      //use this state variable to store data fetched from the database
     const [ report, setReport ] = useState([])
     const [ employeeData, setEmployeeData ] = useState([])
