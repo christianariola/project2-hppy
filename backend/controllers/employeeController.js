@@ -105,19 +105,19 @@ const generateToken = (id) => {
 }
 
 //@desc get all employees
-const getAllEmployees = asyncHandler(async (req, res) => {
-    const employeeAll = {
-        id: req.employee._id,
-        email: req.employee.email,
-        company_name: req.employee.company_name,
-        company_id : req.employee.company_id
-    }
-    res.status(200).json(employeeAll)
-})
+// const getAllEmployees = asyncHandler(async (req, res) => {
+//     const employeeAll = {
+//         id: req.employee._id,
+//         email: req.employee.email,
+//         company_name: req.employee.company_name,
+//         company_id : req.employee.company_id
+//     }
+//     res.status(200).json(employeeAll)
+// })
 
 module.exports = {
     registerEmployee,
     loginEmployee,
     getMe,
-    getAllEmployees
+    // getAllEmployees
 }
