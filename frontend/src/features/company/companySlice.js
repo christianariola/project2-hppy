@@ -237,9 +237,10 @@ export const companySlice = createSlice({
             state.message = action.payload
         })
         .addCase(deleteEmployee.fulfilled, (state, action) => {
+
             state.company = action.payload
             // const { arg } = action.meta
-
+            console.log(state.company)
             // if( arg ){
             //     state.companyList = state.companyList.filter((item) => item._id !== arg)
             // }

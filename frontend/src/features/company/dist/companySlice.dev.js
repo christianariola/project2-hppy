@@ -296,7 +296,8 @@ var companySlice = (0, _toolkit.createSlice)({
       state.message = action.payload;
     }).addCase(deleteEmployee.fulfilled, function (state, action) {
       state.company = action.payload; // const { arg } = action.meta
-      // if( arg ){
+
+      console.log(state.company); // if( arg ){
       //     state.companyList = state.companyList.filter((item) => item._id !== arg)
       // }
     }).addCase(deleteEmployee.rejected, function (state, action) {
