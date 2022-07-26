@@ -12,6 +12,9 @@ const MonthlySurveySchema = new Schema({
   employeeEmail: {
     type: String,
   },
+  surveyName: {
+    type: String,
+  },
   surveyType: {
     type: String,
     enum: ["monthlySurvey", "dailySurvey"],

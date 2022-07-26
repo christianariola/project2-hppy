@@ -133,27 +133,18 @@ app.post("/monthlySurveys", (req, res) => {
     }
   });
 });
-//get monthly survey data
-// app.get('/monthlySurveys', (req, res)=>{
-//   MonthlySurvey.find({})
-//   .exec((error, result)=>{
-//       if(error){
-//           res.send(500).json(error)
-//       } else {
-//           res.json(result)
-//       }
-//   })
-// })
+
 
 app.get('/monthlySurveys', (req, res) => {
-  // Survey.find({})
-  //   .exec((error, result) => {
-  //     if (error) {
-  //       res.send(500).json(error)
-  //     } else {
-  //       res.json(result)
-  //     }
-  // })
+  MonthlySurvey.find({})
+    .exec((error, result) => {
+      if (error) {
+        res.send(500).json(error)
+      } else {
+        res.json(result)
+        console.log(result)
+      }
+  })
   // getEmployeeEmail()
 
 })
@@ -253,8 +244,19 @@ const job = schedule.scheduleJob(scheduleDate, function () {
   // });
   
 });
-    
-  const getEmployeeEmail =  function () {
+    // take all employee emails 
+const dateHandler = () => {
+    let newDate = new Date();
+    let month = newDate.getMonth() + 1;
+    let year = newDate.getFullYear();
+    // console.log(`${year}${month<10?`0${month}`:`${month}`}${date}`)
+    setMonthlySurveyDate(
+      `${year}${month < 10 ? `0${month}` : `${month}`}`
+    );
+  };
+
+const getEmployeeEmail = function () {
+  date = dateHandler();
               Employee.find({})
     .exec((error, result)=>{
       if(error){
@@ -266,10 +268,11 @@ const job = schedule.scheduleJob(scheduleDate, function () {
            let updateValue = {
         surveyid: test,
         employeeEmail: emp.email,
+        surveyName: `Survey${date}`,
         surveyType: "monthlySurvey",
         createdDate: "2022-07-21",
         surveyStatus: "incompleated",
-        surveyOpened: "non-visited",
+        surveyOpened: false,
         monthlySurvey: {
           answers: {
             answer1: "",
