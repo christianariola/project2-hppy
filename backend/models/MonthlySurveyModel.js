@@ -17,59 +17,75 @@ const MonthlySurveySchema = new Schema({
     enum: ["monthlySurvey", "dailySurvey"],
   },
   createdDate: {
+    type: String
+  },
+  surveyStatus: {
     type: String,
+    enum: ["compleated", "incompleated", "expired"],
+  },
+  surveyOpened: {
+    type: String,
+    enum: ["visited", "non-visited"],
   },
   monthlySurvey: {
     answers: {
       answer1: {
         type: String,
         enum: [
-          "Congue praesent ac odio",
-          "Congue praesent ac turo",
-          "Congue  ac odio grnds",
+          "1", "2", "3", "4", "5", "6", "7"
         ],
-        required: [true, "Please answer the question"],
+        required: [true, "Please answer the 1st question"],
       },
       answer2: {
         type: String,
-        minlength: 1,
-        maxlength: 60,
-        required: true,
-        required: [true, "Please answer the question"],
+        enum: [
+          "1", "2", "3", "4", "5", "6", "7"
+        ],
+        required: [true, "Please answer the 2d question"],
       },
       answer3: {
         type: String,
         enum: [
-          "Bibendum vivamus ut lacinia auctor",
-          "Congue bibendum vivamu ac turo",
-          "Ac odio bibendum",
+          "1", "2", "3", "4", "5", "6", "7"
         ],
-        required: [true, "Please answer the question"],
+        required: [true, "Please answer the 3th question"],
       },
       answer4: {
         type: String,
         enum: [
-          "Bibendum vivamus ut lacinia auctor",
-          "Bibendum vivamus ut lacinia head",
-          "Bibendum vivamus ut lacinia employer",
-          "Bibendum vivamus ut lacinia footer",
+          "1", "2", "3", "4", "5", "6", "7"
         ],
-        required: [true, "Please answer the question"],
+        required: [true, "Please answer the 4th question"],
+      },
+      answer5: {
+        type: String,
+        enum: [
+          "1", "2", "3", "4", "5", "6", "7"
+        ],
+        required: [true, "Please answer the 5th question"],
+      },
+      answer6: {
+        type: String,
+        enum: [
+          "1", "2", "3", "4", "5", "6", "7"
+        ],
+        required: [true, "Please answer the 6th question"],
+      },
+      answer7: {
+        type: String,
+        enum: [
+          "1", "2", "3", "4", "5", "6", "7"
+        ],
+        required: [true, "Please answer the 7th question"],
+      },
+      answer7a: {
+        type: String,
+        minlength: 1,
+        maxlength: 60,
+        required: true,
+        required: [true, "Please answer the 7ath question"],
       },
     },
-    questions: {
-      question1: {
-        type: String,
-      },
-      question2: {
-        type: String,
-      },
-      question3: {
-        type: String,
-      },
-      question4: {
-        type: String,
-      },
     },
     monthlyFeeling: {
       type: String,
@@ -83,7 +99,6 @@ const MonthlySurveySchema = new Schema({
       type: Number,
       required: [true, "Please add a daily total rating"],
     },
-  },
 });
 
 exports.MonthlySurvey = mongoose.model("MonthlySurvey", MonthlySurveySchema);
