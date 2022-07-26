@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = exports.reset = exports.authSlice = exports.logout = exports.login = exports.addEmployee = void 0;
+exports["default"] = exports.reset = exports.authSlice = exports.logout = exports.changePassword = exports.login = exports.addEmployee = void 0;
 
 var _toolkit = require("@reduxjs/toolkit");
 
@@ -74,19 +74,47 @@ var login = (0, _toolkit.createAsyncThunk)("auth/login", function _callee2(emplo
       }
     }
   }, null, null, [[0, 6]]);
-});
+}); // Change password
+
 exports.login = login;
-var logout = (0, _toolkit.createAsyncThunk)("auth/logout", function _callee3() {
+var changePassword = (0, _toolkit.createAsyncThunk)("auth/changePassword", function _callee3(employee, thunkAPI) {
+  var message;
   return regeneratorRuntime.async(function _callee3$(_context3) {
     while (1) {
       switch (_context3.prev = _context3.next) {
         case 0:
-          _context3.next = 2;
+          _context3.prev = 0;
+          _context3.next = 3;
+          return regeneratorRuntime.awrap(_authService["default"].changePassword(employee));
+
+        case 3:
+          return _context3.abrupt("return", _context3.sent);
+
+        case 6:
+          _context3.prev = 6;
+          _context3.t0 = _context3["catch"](0);
+          message = _context3.t0.response && _context3.t0.response.data && _context3.t0.response.data.message || _context3.t0.message || _context3.t0.toString();
+          return _context3.abrupt("return", thunkAPI.rejectWithValue(message));
+
+        case 10:
+        case "end":
+          return _context3.stop();
+      }
+    }
+  }, null, null, [[0, 6]]);
+});
+exports.changePassword = changePassword;
+var logout = (0, _toolkit.createAsyncThunk)("auth/logout", function _callee4() {
+  return regeneratorRuntime.async(function _callee4$(_context4) {
+    while (1) {
+      switch (_context4.prev = _context4.next) {
+        case 0:
+          _context4.next = 2;
           return regeneratorRuntime.awrap(_authService["default"].logout());
 
         case 2:
         case "end":
-          return _context3.stop();
+          return _context4.stop();
       }
     }
   });
@@ -128,6 +156,15 @@ var authSlice = (0, _toolkit.createSlice)({
       state.message = action.payload;
     }).addCase(logout.fulfilled, function (state) {
       state.employee = null;
+    }).addCase(changePassword.pending, function (state) {
+      state.isLoading = true;
+    }).addCase(changePassword.fulfilled, function (state, action) {
+      state.isLoading = false;
+      state.isSuccess = true;
+    }).addCase(changePassword.rejected, function (state, action) {
+      state.isLoading = false;
+      state.isError = true;
+      state.message = action.payload;
     });
   }
 });

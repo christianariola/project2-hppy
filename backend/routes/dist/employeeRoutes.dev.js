@@ -8,7 +8,7 @@ var _require = require('../controllers/employeeController'),
     registerEmployee = _require.registerEmployee,
     loginEmployee = _require.loginEmployee,
     getMe = _require.getMe,
-    getAllEmployees = _require.getAllEmployees;
+    changePassword = _require.changePassword;
 
 var _require2 = require("../controllers/surveyController"),
     submitSurvey = _require2.submitSurvey;
@@ -19,5 +19,5 @@ var _require3 = require('../middleware/authMiddleware'),
 router.post('/', registerEmployee);
 router.post('/login', loginEmployee);
 router.get('/me', protect, getMe);
-router.get('/getEmployeeAll', getAllEmployees);
+router.post('/changePassword', changePassword);
 module.exports = router;

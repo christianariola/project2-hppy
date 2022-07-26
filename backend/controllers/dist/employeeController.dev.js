@@ -258,24 +258,86 @@ var generateToken = function generateToken(id) {
   }, process.env.JWT_SECRET, {
     expiresIn: '30d'
   });
-}; //@desc get all employees
+}; // @desc   Login a new user
+// @route  /api/employees/login
+// @access Public
 
 
-var getAllEmployees = asyncHandler(function _callee4(req, res) {
-  var employeeAll;
+var changePassword = asyncHandler(function _callee4(req, res) {
+  var _req$body3, email, currentPassword, newPassword, confirmPassword, employee, salt, hashedPassword, filter, update, doc;
+
   return regeneratorRuntime.async(function _callee4$(_context4) {
     while (1) {
       switch (_context4.prev = _context4.next) {
         case 0:
-          employeeAll = {
-            id: req.employee._id,
-            email: req.employee.email,
-            company_name: req.employee.company_name,
-            company_id: req.employee.company_id
-          };
-          res.status(200).json(employeeAll);
+          _req$body3 = req.body, email = _req$body3.email, currentPassword = _req$body3.currentPassword, newPassword = _req$body3.newPassword, confirmPassword = _req$body3.confirmPassword;
+          _context4.next = 3;
+          return regeneratorRuntime.awrap(Employee.findOne({
+            email: email
+          }));
 
-        case 2:
+        case 3:
+          employee = _context4.sent;
+          _context4.t0 = employee;
+
+          if (!_context4.t0) {
+            _context4.next = 9;
+            break;
+          }
+
+          _context4.next = 8;
+          return regeneratorRuntime.awrap(bcrypt.compare(currentPassword, employee.password));
+
+        case 8:
+          _context4.t0 = _context4.sent;
+
+        case 9:
+          if (!_context4.t0) {
+            _context4.next = 27;
+            break;
+          }
+
+          if (!(newPassword !== confirmPassword)) {
+            _context4.next = 13;
+            break;
+          }
+
+          res.status(401);
+          throw new Error('New and confirm password does not match');
+
+        case 13:
+          _context4.next = 15;
+          return regeneratorRuntime.awrap(bcrypt.genSalt(10));
+
+        case 15:
+          salt = _context4.sent;
+          _context4.next = 18;
+          return regeneratorRuntime.awrap(bcrypt.hash(newPassword, salt));
+
+        case 18:
+          hashedPassword = _context4.sent;
+          filter = {
+            email: email
+          };
+          update = {
+            password: hashedPassword
+          };
+          _context4.next = 23;
+          return regeneratorRuntime.awrap(Employee.findOneAndUpdate(filter, update));
+
+        case 23:
+          doc = _context4.sent;
+          res.status(201).json({
+            message: "You have successfully updated you password"
+          });
+          _context4.next = 29;
+          break;
+
+        case 27:
+          res.status(401);
+          throw new Error('Invalid current password');
+
+        case 29:
         case "end":
           return _context4.stop();
       }
@@ -286,5 +348,5 @@ module.exports = {
   registerEmployee: registerEmployee,
   loginEmployee: loginEmployee,
   getMe: getMe,
-  getAllEmployees: getAllEmployees
+  changePassword: changePassword
 };

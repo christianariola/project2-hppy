@@ -21,7 +21,8 @@ import EmployeeDashboard from "./pages/employee/EmployeeDashboard";
 
 import DailySurvey from "./components/DailySurvey";
 import ReportMain from "./pages/report/ReportMain";
-import Myaccount from "./pages/Myaccout";
+import MyAccount from "./pages/MyAccount";
+import Password from "./pages/Password";
 import BarChart from "./pages/report/BarChart";
 
 import Company from "./components/company/Company";
@@ -79,13 +80,14 @@ const App = () => {
 
         <Route
           element={
-            <RequireAuth allowedRoles={["employee", "superadmin", "admin"]} />
+            <RequireAuth allowedRoles={["employee", "superadmin", "admin", "manager"]} />
           }
         >
           <Route path="/app" element={<DashboardLayout />}>
             <Route path="dashboard" element={dashboardIndex}></Route>
             <Route path="dailysurvey" element={<DailySurvey />}></Route>
-            <Route path="account" element={<Myaccount />}></Route>
+            <Route path="account" element={<MyAccount />}></Route>
+            <Route path="account/password" element={<Password />}></Route>
             <Route path="surveys" element={<DailySurvey />}></Route>
             <Route path="monthlySurveys" element={<Surveys />}></Route>
             <Route

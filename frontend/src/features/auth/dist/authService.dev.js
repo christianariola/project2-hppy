@@ -64,10 +64,32 @@ var logout = function logout() {
   return localStorage.removeItem('employee');
 };
 
+var changePassword = function changePassword(userData) {
+  var response;
+  return regeneratorRuntime.async(function changePassword$(_context3) {
+    while (1) {
+      switch (_context3.prev = _context3.next) {
+        case 0:
+          _context3.next = 2;
+          return regeneratorRuntime.awrap(_axios["default"].post(API_URL + '/changePassword', userData));
+
+        case 2:
+          response = _context3.sent;
+          return _context3.abrupt("return", response.data);
+
+        case 4:
+        case "end":
+          return _context3.stop();
+      }
+    }
+  });
+};
+
 var authService = {
   addEmployee: addEmployee,
   login: login,
-  logout: logout
+  logout: logout,
+  changePassword: changePassword
 };
 var _default = authService;
 exports["default"] = _default;

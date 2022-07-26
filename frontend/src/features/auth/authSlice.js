@@ -50,6 +50,25 @@ export const login = createAsyncThunk(
   }
 );
 
+// Change password
+export const changePassword = createAsyncThunk(
+  "auth/changePassword",
+  async (employee, thunkAPI) => {
+    try {
+      return await authService.changePassword(employee);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const logout = createAsyncThunk("auth/logout", async () => {
   await authService.logout();
 });
@@ -99,6 +118,18 @@ export const authSlice = createSlice({
         })
         .addCase(logout.fulfilled, (state) => {
             state.employee = null
+        })
+        .addCase(changePassword.pending, (state) => {
+          state.isLoading = true
+        })
+        .addCase(changePassword.fulfilled, (state, action) => {
+            state.isLoading = false
+            state.isSuccess = true
+        })
+        .addCase(changePassword.rejected, (state, action) => {
+            state.isLoading = false
+            state.isError = true
+            state.message = action.payload
         })
     },
 })

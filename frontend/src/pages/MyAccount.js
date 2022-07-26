@@ -14,26 +14,26 @@ const MyAccount = () => {
 
     
     return <>
-        <h1>My Account page</h1>
+        <h2>My Account</h2>
         <p>My Account informtaion is view-only. You cannot edit this informtaion.</p>
         <form>
             <div>
             <label>First Name</label>
-            <input type="text" placeholder={employee.firstName}></input>
+            <input type="text" placeholder={employee.firstName} disabled></input>
             <label>Last Name</label>
-            <input type="text" placeholder={employee.lastName}></input>
+            <input type="text" placeholder={employee.lastName} disabled></input>
             </div>
             <div>
             <label>Email</label>
-            <input type="text" placeholder={employee.email}></input>
+            <input type="text" placeholder={employee.email} disabled></input>
             <label>Department</label>
-            <input type="text"></input>
+            <input type="text" placeholder={employee.department_name} disabled></input>
             </div>
             <div>
             <label>Employee Number</label>
-            <input type="text"></input>
+            <input type="text" placeholder={employee.employeeNumber} disabled></input>
             <label>Job Title</label>
-            <input type="text"></input>
+            <input type="text" placeholder={employee.job_title} disabled></input>
             </div>
             <button onClick={onLogout}>Logout</button>
         </form>

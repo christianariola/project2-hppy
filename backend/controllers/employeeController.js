@@ -160,7 +160,6 @@ const loginEmployee = asyncHandler(async (req, res) => {
         throw new Error('Invalid credentials')
     }
 
-
 })
 
 // @desc   get current emploee
@@ -183,20 +182,45 @@ const generateToken = (id) => {
     })
 }
 
-//@desc get all employees
-const getAllEmployees = asyncHandler(async (req, res) => {
-    const employeeAll = {
-        id: req.employee._id,
-        email: req.employee.email,
-        company_name: req.employee.company_name,
-        company_id : req.employee.company_id
+// @desc   Login a new user
+// @route  /api/employees/login
+// @access Public
+const changePassword = asyncHandler(async (req, res) => {
+
+    const { email, currentPassword, newPassword, confirmPassword } = req.body
+
+    const employee = await Employee.findOne({ email })
+
+    // Check employee and password match
+    if(employee && (await bcrypt.compare(currentPassword, employee.password))){
+
+        if(newPassword !== confirmPassword){
+            res.status(401)
+            throw new Error('New and confirm password does not match')
+        }
+
+        // Password encyptions
+        const salt = await bcrypt.genSalt(10)
+        const hashedPassword = await bcrypt.hash(newPassword, salt)
+
+        const filter = { email: email };
+        const update = { password: hashedPassword };
+        let doc = await Employee.findOneAndUpdate(filter, update);
+
+
+        res.status(201).json({
+            message: "You have successfully updated you password"
+        })
+    } else {
+        res.status(401)
+        throw new Error('Invalid current password')
     }
-    res.status(200).json(employeeAll)
+
 })
 
 module.exports = {
     registerEmployee,
     loginEmployee,
     getMe,
-    getAllEmployees
+    changePassword
 }
