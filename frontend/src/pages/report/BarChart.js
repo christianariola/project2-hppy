@@ -114,10 +114,7 @@ const BarChart = props => {
      }
      console.log(filteredDailySurvey)
      
-     //selected department
-     const handleChange = departmentType =>{
-        setDepartment(departmentType)
-    }
+     
     
      //filter daily survey result by department and date
      var filteredDailySurveyByDepart = []; 
