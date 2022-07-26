@@ -31,7 +31,7 @@ const Completedlogo = (props) => (
       </defs>
     </svg>
     <p>
-      <a href="/app/weeklysurveys">Click Here</a> to view your list of Surveys.
+      <a href="/app/monthlySurveys">Click Here</a> to view your list of Surveys.
     </p>
   </div>
 );

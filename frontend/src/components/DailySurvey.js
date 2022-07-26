@@ -184,9 +184,7 @@ const DailySurvey = () => {
   };
 
   if (doneSurvey) {
-    return(
-        <CompletedLogo />
-    )
+    return <CompletedLogo />;
   } else {
     return (
       <>
