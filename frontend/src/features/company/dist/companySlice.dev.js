@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = exports.reset = exports.companySlice = exports.employeesByCompany = exports.deleteCompany = exports.editCompany = exports.getCompany = exports.getCompanyList = exports.addCompany = void 0;
+exports["default"] = exports.reset = exports.companySlice = exports.deleteEmployee = exports.getEmployee = exports.deleteCompany = exports.editCompany = exports.getCompany = exports.getCompanyList = exports.addCompany = void 0;
 
 var _toolkit = require("@reduxjs/toolkit");
 
@@ -13,6 +13,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 var initialState = {
   company: {},
+  employee: '',
   companyList: [],
   isError: false,
   isSuccess: false,
@@ -162,7 +163,7 @@ var deleteCompany = (0, _toolkit.createAsyncThunk)("company/deleteCompany", func
   }, null, null, [[0, 6]]);
 });
 exports.deleteCompany = deleteCompany;
-var employeesByCompany = (0, _toolkit.createAsyncThunk)("company/employeesByCompany", function _callee6(companyId, thunkAPI) {
+var getEmployee = (0, _toolkit.createAsyncThunk)("company/getEmployee", function _callee6(empId, thunkAPI) {
   var message;
   return regeneratorRuntime.async(function _callee6$(_context6) {
     while (1) {
@@ -170,7 +171,7 @@ var employeesByCompany = (0, _toolkit.createAsyncThunk)("company/employeesByComp
         case 0:
           _context6.prev = 0;
           _context6.next = 3;
-          return regeneratorRuntime.awrap(_companyService["default"].employeesByCompany(companyId));
+          return regeneratorRuntime.awrap(_companyService["default"].getEmployee(empId));
 
         case 3:
           return _context6.abrupt("return", _context6.sent);
@@ -188,7 +189,36 @@ var employeesByCompany = (0, _toolkit.createAsyncThunk)("company/employeesByComp
     }
   }, null, null, [[0, 6]]);
 });
-exports.employeesByCompany = employeesByCompany;
+exports.getEmployee = getEmployee;
+var deleteEmployee = (0, _toolkit.createAsyncThunk)("company/deleteEmployee", function _callee7(_ref2, thunkAPI) {
+  var companyId, deptId, empId, compempId, message;
+  return regeneratorRuntime.async(function _callee7$(_context7) {
+    while (1) {
+      switch (_context7.prev = _context7.next) {
+        case 0:
+          companyId = _ref2.companyId, deptId = _ref2.deptId, empId = _ref2.empId, compempId = _ref2.compempId;
+          console.log(companyId);
+          _context7.prev = 2;
+          _context7.next = 5;
+          return regeneratorRuntime.awrap(_companyService["default"].deleteEmployee(companyId, deptId, empId, compempId));
+
+        case 5:
+          return _context7.abrupt("return", _context7.sent);
+
+        case 8:
+          _context7.prev = 8;
+          _context7.t0 = _context7["catch"](2);
+          message = _context7.t0.response && _context7.t0.response.data && _context7.t0.response.data.message || _context7.t0.message || _context7.t0.toString();
+          return _context7.abrupt("return", thunkAPI.rejectWithValue(message));
+
+        case 12:
+        case "end":
+          return _context7.stop();
+      }
+    }
+  }, null, null, [[2, 8]]);
+});
+exports.deleteEmployee = deleteEmployee;
 var companySlice = (0, _toolkit.createSlice)({
   name: 'company',
   initialState: initialState,
@@ -218,7 +248,7 @@ var companySlice = (0, _toolkit.createSlice)({
       state.companyList = action.payload;
     }).addCase(getCompanyList.rejected, function (state, action) {
       state.isLoading = false;
-      state.company = null;
+      state.compay = null;
       state.isError = true;
       state.message = action.payload;
     }).addCase(getCompany.fulfilled, function (state, action) {
@@ -253,6 +283,28 @@ var companySlice = (0, _toolkit.createSlice)({
         });
       }
     }).addCase(deleteCompany.rejected, function (state, action) {
+      state.isLoading = false;
+      state.company = null;
+      state.isError = true;
+      state.message = action.payload;
+    }).addCase(getEmployee.fulfilled, function (state, action) {
+      state.isLoading = false;
+      state.employee = action.payload;
+    }).addCase(getEmployee.rejected, function (state, action) {
+      state.isLoading = false;
+      state.employee = null;
+      state.isError = true;
+      state.message = action.payload;
+    }).addCase(deleteEmployee.fulfilled, function (state, action) {
+      state.company = action.payload;
+      var arg = action.meta.arg;
+
+      if (arg) {
+        state.companyList = state.companyList.filter(function (item) {
+          return item._id !== arg;
+        });
+      }
+    }).addCase(deleteEmployee.rejected, function (state, action) {
       state.isLoading = false;
       state.company = null;
       state.isError = true;

@@ -117,12 +117,56 @@ var deleteCompany = function deleteCompany(companyId) {
   });
 };
 
+var getEmployee = function getEmployee(empId) {
+  var response;
+  return regeneratorRuntime.async(function getEmployee$(_context6) {
+    while (1) {
+      switch (_context6.prev = _context6.next) {
+        case 0:
+          _context6.next = 2;
+          return regeneratorRuntime.awrap(_axios["default"].get(API_URL + "/employee/".concat(empId)));
+
+        case 2:
+          response = _context6.sent;
+          return _context6.abrupt("return", response.data);
+
+        case 4:
+        case "end":
+          return _context6.stop();
+      }
+    }
+  });
+};
+
+var deleteEmployee = function deleteEmployee(companyId, deptId, empId, compempId) {
+  var response;
+  return regeneratorRuntime.async(function deleteEmployee$(_context7) {
+    while (1) {
+      switch (_context7.prev = _context7.next) {
+        case 0:
+          _context7.next = 2;
+          return regeneratorRuntime.awrap(_axios["default"]["delete"](API_URL + "/employee/".concat(companyId, "/").concat(deptId, "/").concat(empId, "/").concat(compempId)));
+
+        case 2:
+          response = _context7.sent;
+          return _context7.abrupt("return", response.data);
+
+        case 4:
+        case "end":
+          return _context7.stop();
+      }
+    }
+  });
+};
+
 var companyService = {
   addCompany: addCompany,
   getCompanyList: getCompanyList,
   getCompany: getCompany,
   editCompany: editCompany,
-  deleteCompany: deleteCompany
+  deleteCompany: deleteCompany,
+  getEmployee: getEmployee,
+  deleteEmployee: deleteEmployee
 };
 var _default = companyService;
 exports["default"] = _default;

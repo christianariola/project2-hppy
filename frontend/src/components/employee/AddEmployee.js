@@ -85,7 +85,7 @@ const Register = () => {
         return "Loading... please wait."
     }
 
-    const userRoles = ["Employee", "Manager"]
+    const userRoles = ["Employee", "Manager", "Admin"]
 
     return <>
         <section>
@@ -95,16 +95,16 @@ const Register = () => {
         <section>
             <form onSubmit={onSubmit}>
                 <div className="form-group">
-                    <label htmlFor="department">Department:</label>
-                    <select id="department" name="department" value={department} onChange={onChange}>
-                        {company.departments && company.departments.map((item, index) => <option key={index} value={item.deptName}>{item.deptName}</option>)}
-                    </select>
-                </div>
-                <div className="form-group">
                     <label htmlFor="role">User Role:</label>
                     <select id="role" name="role" value={role} onChange={onChange} required>
                         <option value="">Select role</option>
                         { userRoles.map((item, index) => <option key={index} value={item}>{item}</option>)}
+                    </select>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="department">Department:</label>
+                    <select id="department" name="department" value={department} onChange={onChange}>
+                        {company.departments && company.departments.map((item, index) => <option key={index} value={item.deptName}>{item.deptName}</option>)}
                     </select>
                 </div>
                 <div className="form-group">

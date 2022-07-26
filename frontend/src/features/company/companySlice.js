@@ -4,6 +4,7 @@ import companyService from "./companyService";
 
 const initialState = {
     company: {},
+    employee: '',
     companyList: [],
     isError: false,
     isSuccess: false,
@@ -109,11 +110,30 @@ export const deleteCompany = createAsyncThunk(
     }
 );
 
-export const employeesByCompany = createAsyncThunk(
-    "company/employeesByCompany",
-    async (companyId, thunkAPI) => {
+export const getEmployee = createAsyncThunk(
+    "company/getEmployee",
+    async (empId, thunkAPI) => {
         try {
-        return await companyService.employeesByCompany(companyId);
+        return await companyService.getEmployee(empId);
+        } catch (error) {
+        const message =
+            (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
+
+export const deleteEmployee = createAsyncThunk(
+    "company/deleteEmployee",
+    async ({companyId, deptId, empId, compempId}, thunkAPI) => {
+        console.log(companyId)
+        try {
+        return await companyService.deleteEmployee(companyId, deptId, empId, compempId);
         } catch (error) {
         const message =
             (error.response &&
@@ -162,7 +182,7 @@ export const companySlice = createSlice({
         })
         .addCase(getCompanyList.rejected, (state, action) => {
             state.isLoading = false
-            state.company = null
+            state.compay = null
             state.isError = true
             state.message = action.payload
         })
@@ -201,6 +221,30 @@ export const companySlice = createSlice({
             }
         })
         .addCase(deleteCompany.rejected, (state, action) => {
+            state.isLoading = false
+            state.company = null
+            state.isError = true
+            state.message = action.payload
+        })
+        .addCase(getEmployee.fulfilled, (state, action) => {
+            state.isLoading = false
+            state.employee = action.payload
+        })
+        .addCase(getEmployee.rejected, (state, action) => {
+            state.isLoading = false
+            state.employee = null
+            state.isError = true
+            state.message = action.payload
+        })
+        .addCase(deleteEmployee.fulfilled, (state, action) => {
+            state.company = action.payload
+            const { arg } = action.meta
+
+            if( arg ){
+                state.companyList = state.companyList.filter((item) => item._id !== arg)
+            }
+        })
+        .addCase(deleteEmployee.rejected, (state, action) => {
             state.isLoading = false
             state.company = null
             state.isError = true

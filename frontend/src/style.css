@@ -51,10 +51,6 @@ main {
   margin-top: 5rem;
 }
 
-main h2 {
-  text-align: center;
-}
-
 .feature {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

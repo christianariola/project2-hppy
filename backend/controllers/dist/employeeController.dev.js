@@ -93,6 +93,16 @@ var registerEmployee = asyncHandler(function _callee(req, res) {
               jobTitle: jobTitle,
               isManager: true
             };
+          } else if (role == 'Admin') {
+            empData = {
+              employee_id: employee._id,
+              employeeNumber: employeeNumber,
+              firstName: firstName,
+              lastName: lastName,
+              email: email,
+              jobTitle: jobTitle,
+              isAdmin: true
+            };
           } else {
             empData = {
               employee_id: employee._id,

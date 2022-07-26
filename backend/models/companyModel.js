@@ -47,6 +47,11 @@ const companySchema = mongoose.Schema({
                 type: String,
                 required: false,
             },
+            isAdmin: {
+                type: String,
+                required: false,
+                default: false,
+            },
             isManager: {
                 type: String,
                 required: false,

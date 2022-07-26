@@ -28,6 +28,8 @@ import BarChart from "./pages/report/BarChart";
 import Company from "./components/company/Company";
 import AddEditCompany from "./components/company/AddEditCompany";
 import ViewCompany from "./components/company/ViewCompany";
+import ViewEmployee from "./components/employee/ViewEmployee";
+import EditEmployee from "./components/employee/EditEmployee";
 
 const App = () => {
   const [chartDate, setChartDate] = useState();
@@ -47,7 +49,7 @@ const App = () => {
       case "admin":
         dashboardIndex = <AdminDashboard />;
         break;
-      case "hod":
+      case "manager":
         dashboardIndex = <HodDashboard />;
         break;
       case "employee":
@@ -93,10 +95,9 @@ const App = () => {
             <Route
               element={<RequireAuth allowedRoles={["superadmin", "admin"]} />}
             >
-              <Route
-                path="company/:companyId/employee/add"
-                element={<AddEmployee />}
-              />
+              <Route path="company/:companyId/employee/add" element={<AddEmployee />} />
+              <Route path="company/:companyId/employee/view/:empId" element={<ViewEmployee />} />
+              <Route path="company/:companyId/employee/edit/:empId" element={<EditEmployee />} />
               <Route
                 path="report"
                 element={

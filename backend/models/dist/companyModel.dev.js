@@ -52,6 +52,11 @@ var companySchema = mongoose.Schema(_defineProperty({
         type: String,
         required: false
       },
+      isAdmin: {
+        type: String,
+        required: false,
+        "default": false
+      },
       isManager: {
         type: String,
         required: false,

@@ -60,6 +60,16 @@ const registerEmployee = asyncHandler(async (req, res) => {
             jobTitle,
             isManager: true
         }
+    } else if(role == 'Admin'){
+        empData = {
+            employee_id: employee._id,
+            employeeNumber,
+            firstName,
+            lastName,
+            email,
+            jobTitle,
+            isAdmin: true
+        }
     } else {
         empData = {
             employee_id: employee._id,

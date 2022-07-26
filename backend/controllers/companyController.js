@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 const { default: mongoose } = require('mongoose')
 const cloudinary = require("../cloudinary/cloudinary")
 const Company = require('../models/companyModel')
+const Employee = require('../models/employeeModel')
 
 const generateString = (length) => {
     var res = '';
@@ -88,7 +89,7 @@ const getCompany = asyncHandler(async (req, res) => {
         })
     } else {
         res.status(401)
-        throw new Error('Invalid credentials')
+        throw new Error('No data found')
     }
 })
 
@@ -125,7 +126,7 @@ const editCompany = asyncHandler(async (req, res) => {
             _id: id
         }
 
-        const company = await Company.findByIdAndUpdate(id, updatedCompany, { new: true }) 
+        const company = await Company.findByIdAndUpdate(id, updatedCompany) 
 
         if(company){
             res.status(201).json(updatedCompany)
@@ -141,7 +142,7 @@ const editCompany = asyncHandler(async (req, res) => {
             _id: id
         }
 
-        const company = await Company.findByIdAndUpdate(id, updatedCompany, { new: true }) 
+        const company = await Company.findByIdAndUpdate(id, updatedCompany) 
 
         if(company){
             res.status(201).json(updatedCompany)
@@ -174,10 +175,68 @@ const deleteCompany = asyncHandler(async (req, res) => {
     }
 })
 
-const employeesByCompany = asyncHandler(async (req, res) => {
-    const companyId = req.params.id
+const employeeByCompany = asyncHandler(async (req, res) => {
+    const empId = req.params.empId
+    // console.log(empId)
+    const employee = await Employee.findOne({ _id: empId })    
 
-    console.log(id)
+    if(empId){
+        if(employee){
+            res.status(201).json({
+                _id: employee._id,
+                employeeNumber: employee.employeeNumber,
+                firstName: employee.firstName,
+                lastName: employee.lastName,
+                email: employee.email,
+                role: employee.role,
+                job_title: employee.jobTitle,
+                role: employee.role,
+                company_id: employee.company_id,
+                company_name: employee.company_name,
+                department_id: employee.department_id,
+                department_name: employee.department_name,
+            })
+        } else {
+            res.status(401)
+            throw new Error('No data found')
+        }
+    }
+
+})
+
+const deleteEmployee = asyncHandler(async (req, res) => {
+
+    const {companyId, deptId, empId, compempId} = req.params
+
+    console.log(companyId)
+    console.log(deptId)
+    console.log(empId)
+    console.log(compempId)
+    
+    try {
+
+        // Remove on employee collection
+        const employee = await Employee.findByIdAndRemove(empId) 
+
+        // Remove on company collection
+        const company = Company.updateOne({'departments.employees._id': compempId},
+        { $pull: {'departments.$.employees':  {'_id': compempId}}  },
+        {multi: true},
+        (err, success) => {
+            if(err){
+                console.log("Unsuccessful", err)
+            } else {
+                console.log("Successful", success)
+            }
+        })
+
+
+    } catch (error) {
+        
+    }
+
+
+
 })
 
 
@@ -187,5 +246,6 @@ module.exports = {
     getCompany,
     editCompany,
     deleteCompany,
-    employeesByCompany,
+    employeeByCompany,
+    deleteEmployee,
 }

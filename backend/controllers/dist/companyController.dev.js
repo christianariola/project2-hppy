@@ -1,5 +1,7 @@
 "use strict";
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var asyncHandler = require('express-async-handler');
 
 var jwt = require('jsonwebtoken');
@@ -10,6 +12,8 @@ var _require = require('mongoose'),
 var cloudinary = require("../cloudinary/cloudinary");
 
 var Company = require('../models/companyModel');
+
+var Employee = require('../models/employeeModel');
 
 var generateString = function generateString(length) {
   var res = '';
@@ -152,7 +156,7 @@ var getCompany = asyncHandler(function _callee3(req, res) {
 
         case 7:
           res.status(401);
-          throw new Error('Invalid credentials');
+          throw new Error('No data found');
 
         case 9:
         case "end":
@@ -211,9 +215,7 @@ var editCompany = asyncHandler(function _callee4(req, res) {
             _id: id
           };
           _context4.next = 14;
-          return regeneratorRuntime.awrap(Company.findByIdAndUpdate(id, updatedCompany, {
-            "new": true
-          }));
+          return regeneratorRuntime.awrap(Company.findByIdAndUpdate(id, updatedCompany));
 
         case 14:
           company = _context4.sent;
@@ -243,9 +245,7 @@ var editCompany = asyncHandler(function _callee4(req, res) {
             _id: id
           };
           _context4.next = 26;
-          return regeneratorRuntime.awrap(Company.findByIdAndUpdate(id, _updatedCompany, {
-            "new": true
-          }));
+          return regeneratorRuntime.awrap(Company.findByIdAndUpdate(id, _updatedCompany));
 
         case 26:
           _company = _context4.sent;
@@ -316,21 +316,105 @@ var deleteCompany = asyncHandler(function _callee5(req, res) {
     }
   });
 });
-var employeesByCompany = asyncHandler(function _callee6(req, res) {
-  var companyId;
+var employeeByCompany = asyncHandler(function _callee6(req, res) {
+  var empId, employee, _res$status$json;
+
   return regeneratorRuntime.async(function _callee6$(_context6) {
     while (1) {
       switch (_context6.prev = _context6.next) {
         case 0:
-          companyId = req.params.id;
-          console.log(id);
+          empId = req.params.empId; // console.log(empId)
 
-        case 2:
+          _context6.next = 3;
+          return regeneratorRuntime.awrap(Employee.findOne({
+            _id: empId
+          }));
+
+        case 3:
+          employee = _context6.sent;
+
+          if (!empId) {
+            _context6.next = 11;
+            break;
+          }
+
+          if (!employee) {
+            _context6.next = 9;
+            break;
+          }
+
+          res.status(201).json((_res$status$json = {
+            _id: employee._id,
+            employeeNumber: employee.employeeNumber,
+            firstName: employee.firstName,
+            lastName: employee.lastName,
+            email: employee.email,
+            role: employee.role,
+            job_title: employee.jobTitle
+          }, _defineProperty(_res$status$json, "role", employee.role), _defineProperty(_res$status$json, "company_id", employee.company_id), _defineProperty(_res$status$json, "company_name", employee.company_name), _defineProperty(_res$status$json, "department_id", employee.department_id), _defineProperty(_res$status$json, "department_name", employee.department_name), _res$status$json));
+          _context6.next = 11;
+          break;
+
+        case 9:
+          res.status(401);
+          throw new Error('No data found');
+
+        case 11:
         case "end":
           return _context6.stop();
       }
     }
   });
+});
+var deleteEmployee = asyncHandler(function _callee7(req, res) {
+  var _req$params, companyId, deptId, empId, compempId, employee, company;
+
+  return regeneratorRuntime.async(function _callee7$(_context7) {
+    while (1) {
+      switch (_context7.prev = _context7.next) {
+        case 0:
+          _req$params = req.params, companyId = _req$params.companyId, deptId = _req$params.deptId, empId = _req$params.empId, compempId = _req$params.compempId;
+          console.log(companyId);
+          console.log(deptId);
+          console.log(empId);
+          console.log(compempId);
+          _context7.prev = 5;
+          _context7.next = 8;
+          return regeneratorRuntime.awrap(Employee.findByIdAndRemove(empId));
+
+        case 8:
+          employee = _context7.sent;
+          // Remove on company collection
+          company = Company.updateOne({
+            'departments.employees._id': compempId
+          }, {
+            $pull: {
+              'departments.$.employees': {
+                '_id': compempId
+              }
+            }
+          }, {
+            multi: true
+          }, function (err, success) {
+            if (err) {
+              console.log("Unsuccessful", err);
+            } else {
+              console.log("Successful", success);
+            }
+          });
+          _context7.next = 14;
+          break;
+
+        case 12:
+          _context7.prev = 12;
+          _context7.t0 = _context7["catch"](5);
+
+        case 14:
+        case "end":
+          return _context7.stop();
+      }
+    }
+  }, null, null, [[5, 12]]);
 });
 module.exports = {
   addCompany: addCompany,
@@ -338,5 +422,6 @@ module.exports = {
   getCompany: getCompany,
   editCompany: editCompany,
   deleteCompany: deleteCompany,
-  employeesByCompany: employeesByCompany
+  employeeByCompany: employeeByCompany,
+  deleteEmployee: deleteEmployee
 };
