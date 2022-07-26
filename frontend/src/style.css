@@ -267,10 +267,91 @@ gap: 1rem;
     display:block;
     margin:0 auto;
 }
-/*My Account Page*/
-.employee-info {
-    display: grid ;
-    grid-template-columns: 20% 80%;
-    gap: 1rem;
-    margin: .5rem;
+
+.surveys-container h2 {
+    text-align: left;
+}
+/* square buttons */
+.answer {
+    display: flex;
+    /* flex-flow: row nowrap; */
+    /* flex: 1 0 0; */
+}
+.survey-question .squareRadio {
+  display: none;
+}
+.survey-question label {
+  display: inline-block;
+  padding: 0px 0px;
+  cursor: pointer;
+}
+.survey-question label span {
+  position: relative;
+  line-height: 30px;
+  text-align: center;
+}
+.survey-question label span:before,
+.survey-question label span:after {
+  content: '';
+}
+
+.survey-question label span:before {
+  border: 0px solid #CCCCCC;
+  min-width: 98%;
+  height: 30px;
+  margin-right: 0px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.survey-question label span:after {
+  border: 3px solid #CCCCCC;
+  min-width: 100%;
+  height: 32px;
+  position: absolute;
+  top: -6px;
+  left: 0%;
+  transition: 300ms;
+  opacity: 0;
+}
+.survey-question label input:checked+span:after {
+  opacity: 1;
+}
+
+
+.survey-question label .ES:before {
+  background: #003D66;
+  content: '7';
+  color: white;
+
+}
+.survey-question label .MS:before {
+  background: #336485;
+  content: '6';
+   color: white;
+}
+.survey-question label .SS:before {
+  background: #668BA3;
+  content: '5';
+   color: white;
+}
+.survey-question label .NSND:before {
+  background: #92adc1;
+  content: '4';
+   color: white;
+}
+.survey-question label .SD:before {
+  background:  #99B1C2;
+  content: '3';
+   color: white;
+}
+.survey-question label .MD:before {
+  background:  #adbbc5;
+  content: '2';
+   color: white;
+}
+.survey-question label .ED:before {
+  background:  #CCD8E0;
+  content: '1';
+  color: white;
 }
