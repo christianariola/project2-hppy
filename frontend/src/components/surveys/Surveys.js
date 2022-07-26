@@ -36,6 +36,7 @@ const Surveys = () => {
 
   useEffect(() => {
     ListOfSurveys()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[monthlySurvey ,employee.email] )
 
   // console.log(filteredList)

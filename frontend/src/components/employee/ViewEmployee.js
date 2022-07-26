@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { useSelector, useDispatch } from 'react-redux'
-import { Link as RouterLink, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { getCompany, getEmployee } from "../../features/company/companySlice"
 
 const ViewEmployee = () => {
