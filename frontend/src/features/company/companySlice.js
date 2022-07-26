@@ -130,10 +130,10 @@ export const getEmployee = createAsyncThunk(
 
 export const deleteEmployee = createAsyncThunk(
     "company/deleteEmployee",
-    async ({companyId, deptId, empId, compempId}, thunkAPI) => {
-        console.log(companyId)
+    async ({empId, compempId}, thunkAPI) => {
+
         try {
-        return await companyService.deleteEmployee(companyId, deptId, empId, compempId);
+        return await companyService.deleteEmployee(empId, compempId);
         } catch (error) {
         const message =
             (error.response &&
@@ -238,11 +238,11 @@ export const companySlice = createSlice({
         })
         .addCase(deleteEmployee.fulfilled, (state, action) => {
             state.company = action.payload
-            const { arg } = action.meta
+            // const { arg } = action.meta
 
-            if( arg ){
-                state.companyList = state.companyList.filter((item) => item._id !== arg)
-            }
+            // if( arg ){
+            //     state.companyList = state.companyList.filter((item) => item._id !== arg)
+            // }
         })
         .addCase(deleteEmployee.rejected, (state, action) => {
             state.isLoading = false

@@ -8,6 +8,7 @@ const {
     deleteCompany,
     employeeByCompany,
     deleteEmployee,
+    editEmployee,
 } = require('../controllers/companyController')
 
 router.post('/add', addCompany)
@@ -16,6 +17,7 @@ router.get('/view/:companyId', getCompany)
 router.patch('/edit/:companyId', editCompany)
 router.delete('/delete/:companyId', deleteCompany)
 router.get('/employee/:empId', employeeByCompany)
-router.delete('/employee/:companyId/:deptId/:empId/:compempId', deleteEmployee)
+router.patch('/employee/:empId', editEmployee)
+router.delete('/employee/:empId/:compempId', deleteEmployee)
 
 module.exports = router

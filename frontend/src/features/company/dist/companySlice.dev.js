@@ -191,32 +191,31 @@ var getEmployee = (0, _toolkit.createAsyncThunk)("company/getEmployee", function
 });
 exports.getEmployee = getEmployee;
 var deleteEmployee = (0, _toolkit.createAsyncThunk)("company/deleteEmployee", function _callee7(_ref2, thunkAPI) {
-  var companyId, deptId, empId, compempId, message;
+  var empId, compempId, message;
   return regeneratorRuntime.async(function _callee7$(_context7) {
     while (1) {
       switch (_context7.prev = _context7.next) {
         case 0:
-          companyId = _ref2.companyId, deptId = _ref2.deptId, empId = _ref2.empId, compempId = _ref2.compempId;
-          console.log(companyId);
-          _context7.prev = 2;
-          _context7.next = 5;
-          return regeneratorRuntime.awrap(_companyService["default"].deleteEmployee(companyId, deptId, empId, compempId));
+          empId = _ref2.empId, compempId = _ref2.compempId;
+          _context7.prev = 1;
+          _context7.next = 4;
+          return regeneratorRuntime.awrap(_companyService["default"].deleteEmployee(empId, compempId));
 
-        case 5:
+        case 4:
           return _context7.abrupt("return", _context7.sent);
 
-        case 8:
-          _context7.prev = 8;
-          _context7.t0 = _context7["catch"](2);
+        case 7:
+          _context7.prev = 7;
+          _context7.t0 = _context7["catch"](1);
           message = _context7.t0.response && _context7.t0.response.data && _context7.t0.response.data.message || _context7.t0.message || _context7.t0.toString();
           return _context7.abrupt("return", thunkAPI.rejectWithValue(message));
 
-        case 12:
+        case 11:
         case "end":
           return _context7.stop();
       }
     }
-  }, null, null, [[2, 8]]);
+  }, null, null, [[1, 7]]);
 });
 exports.deleteEmployee = deleteEmployee;
 var companySlice = (0, _toolkit.createSlice)({
@@ -296,14 +295,10 @@ var companySlice = (0, _toolkit.createSlice)({
       state.isError = true;
       state.message = action.payload;
     }).addCase(deleteEmployee.fulfilled, function (state, action) {
-      state.company = action.payload;
-      var arg = action.meta.arg;
-
-      if (arg) {
-        state.companyList = state.companyList.filter(function (item) {
-          return item._id !== arg;
-        });
-      }
+      state.company = action.payload; // const { arg } = action.meta
+      // if( arg ){
+      //     state.companyList = state.companyList.filter((item) => item._id !== arg)
+      // }
     }).addCase(deleteEmployee.rejected, function (state, action) {
       state.isLoading = false;
       state.company = null;

@@ -11,7 +11,8 @@ var _require = require('../controllers/companyController'),
     editCompany = _require.editCompany,
     deleteCompany = _require.deleteCompany,
     employeeByCompany = _require.employeeByCompany,
-    deleteEmployee = _require.deleteEmployee;
+    deleteEmployee = _require.deleteEmployee,
+    editEmployee = _require.editEmployee;
 
 router.post('/add', addCompany);
 router.get('/list', getCompanyList);
@@ -19,5 +20,6 @@ router.get('/view/:companyId', getCompany);
 router.patch('/edit/:companyId', editCompany);
 router["delete"]('/delete/:companyId', deleteCompany);
 router.get('/employee/:empId', employeeByCompany);
-router["delete"]('/employee/:companyId/:deptId/:empId/:compempId', deleteEmployee);
+router.patch('/employee/:empId', editEmployee);
+router["delete"]('/employee/:empId/:compempId', deleteEmployee);
 module.exports = router;

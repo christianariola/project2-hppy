@@ -142,14 +142,14 @@ const editCompany = asyncHandler(async (req, res) => {
             _id: id
         }
 
-        const company = await Company.findByIdAndUpdate(id, updatedCompany) 
+        // const company = await Company.findByIdAndUpdate(id, updatedCompany) 
 
-        if(company){
-            res.status(201).json(updatedCompany)
-        } else {
-            res.status(401)
-            throw new Error('Something went wrong...')
-        }
+        // if(company){
+        //     res.status(201).json(updatedCompany)
+        // } else {
+        //     res.status(401)
+        //     throw new Error('Something went wrong...')
+        // }
     }
 
 
@@ -206,10 +206,8 @@ const employeeByCompany = asyncHandler(async (req, res) => {
 
 const deleteEmployee = asyncHandler(async (req, res) => {
 
-    const {companyId, deptId, empId, compempId} = req.params
+    const {empId, compempId} = req.params
 
-    console.log(companyId)
-    console.log(deptId)
     console.log(empId)
     console.log(compempId)
     
@@ -219,7 +217,7 @@ const deleteEmployee = asyncHandler(async (req, res) => {
         const employee = await Employee.findByIdAndRemove(empId) 
 
         // Remove on company collection
-        const company = Company.updateOne({'departments.employees._id': compempId},
+        const company = Company.updateOne({'departments.employees._id': compempId },
         { $pull: {'departments.$.employees':  {'_id': compempId}}  },
         {multi: true},
         (err, success) => {
@@ -230,13 +228,28 @@ const deleteEmployee = asyncHandler(async (req, res) => {
             }
         })
 
+        const newcompany = await Company.findOne({ 'departments.employees._id': compempId })    
+
+        if(newcompany){
+            res.status(201).json({
+                _id: company._id,
+                name: company.name,
+                description: company.description,
+                logo: company.logo,
+                departments: company.departments,
+            })
+        } else {
+            res.status(401)
+            throw new Error('No data found')
+        }
 
     } catch (error) {
-        
+        console.log(error)
     }
 
+})
 
-
+const editEmployee = asyncHandler(async (req, res) => {
 })
 
 
@@ -248,4 +261,5 @@ module.exports = {
     deleteCompany,
     employeeByCompany,
     deleteEmployee,
+    editEmployee,
 }

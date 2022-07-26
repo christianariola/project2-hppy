@@ -166,7 +166,7 @@ var getCompany = asyncHandler(function _callee3(req, res) {
   });
 });
 var editCompany = asyncHandler(function _callee4(req, res) {
-  var id, _req$body2, name, description, logo, departments, filename, randomName, result, updatedCompany, company, _updatedCompany, _company;
+  var id, _req$body2, name, description, logo, departments, filename, randomName, result, updatedCompany, company, _updatedCompany;
 
   return regeneratorRuntime.async(function _callee4$(_context4) {
     while (1) {
@@ -234,7 +234,7 @@ var editCompany = asyncHandler(function _callee4(req, res) {
           throw new Error('Something went wrong...');
 
         case 21:
-          _context4.next = 33;
+          _context4.next = 24;
           break;
 
         case 23:
@@ -243,27 +243,15 @@ var editCompany = asyncHandler(function _callee4(req, res) {
             description: description,
             departments: departments,
             _id: id
-          };
-          _context4.next = 26;
-          return regeneratorRuntime.awrap(Company.findByIdAndUpdate(id, _updatedCompany));
+          }; // const company = await Company.findByIdAndUpdate(id, updatedCompany) 
+          // if(company){
+          //     res.status(201).json(updatedCompany)
+          // } else {
+          //     res.status(401)
+          //     throw new Error('Something went wrong...')
+          // }
 
-        case 26:
-          _company = _context4.sent;
-
-          if (!_company) {
-            _context4.next = 31;
-            break;
-          }
-
-          res.status(201).json(_updatedCompany);
-          _context4.next = 33;
-          break;
-
-        case 31:
-          res.status(401);
-          throw new Error('Something went wrong...');
-
-        case 33:
+        case 24:
         case "end":
           return _context4.stop();
       }
@@ -367,22 +355,20 @@ var employeeByCompany = asyncHandler(function _callee6(req, res) {
   });
 });
 var deleteEmployee = asyncHandler(function _callee7(req, res) {
-  var _req$params, companyId, deptId, empId, compempId, employee, company;
+  var _req$params, empId, compempId, employee, company, newcompany;
 
   return regeneratorRuntime.async(function _callee7$(_context7) {
     while (1) {
       switch (_context7.prev = _context7.next) {
         case 0:
-          _req$params = req.params, companyId = _req$params.companyId, deptId = _req$params.deptId, empId = _req$params.empId, compempId = _req$params.compempId;
-          console.log(companyId);
-          console.log(deptId);
+          _req$params = req.params, empId = _req$params.empId, compempId = _req$params.compempId;
           console.log(empId);
           console.log(compempId);
-          _context7.prev = 5;
-          _context7.next = 8;
+          _context7.prev = 3;
+          _context7.next = 6;
           return regeneratorRuntime.awrap(Employee.findByIdAndRemove(empId));
 
-        case 8:
+        case 6:
           employee = _context7.sent;
           // Remove on company collection
           company = Company.updateOne({
@@ -402,19 +388,59 @@ var deleteEmployee = asyncHandler(function _callee7(req, res) {
               console.log("Successful", success);
             }
           });
-          _context7.next = 14;
+          _context7.next = 10;
+          return regeneratorRuntime.awrap(Company.findOne({
+            'departments.employees._id': compempId
+          }));
+
+        case 10:
+          newcompany = _context7.sent;
+
+          if (!newcompany) {
+            _context7.next = 15;
+            break;
+          }
+
+          res.status(201).json({
+            _id: company._id,
+            name: company.name,
+            description: company.description,
+            logo: company.logo,
+            departments: company.departments
+          });
+          _context7.next = 17;
           break;
 
-        case 12:
-          _context7.prev = 12;
-          _context7.t0 = _context7["catch"](5);
+        case 15:
+          res.status(401);
+          throw new Error('No data found');
 
-        case 14:
+        case 17:
+          _context7.next = 22;
+          break;
+
+        case 19:
+          _context7.prev = 19;
+          _context7.t0 = _context7["catch"](3);
+          console.log(_context7.t0);
+
+        case 22:
         case "end":
           return _context7.stop();
       }
     }
-  }, null, null, [[5, 12]]);
+  }, null, null, [[3, 19]]);
+});
+var editEmployee = asyncHandler(function _callee8(req, res) {
+  return regeneratorRuntime.async(function _callee8$(_context8) {
+    while (1) {
+      switch (_context8.prev = _context8.next) {
+        case 0:
+        case "end":
+          return _context8.stop();
+      }
+    }
+  });
 });
 module.exports = {
   addCompany: addCompany,
@@ -423,5 +449,6 @@ module.exports = {
   editCompany: editCompany,
   deleteCompany: deleteCompany,
   employeeByCompany: employeeByCompany,
-  deleteEmployee: deleteEmployee
+  deleteEmployee: deleteEmployee,
+  editEmployee: editEmployee
 };

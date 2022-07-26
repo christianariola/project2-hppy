@@ -138,14 +138,14 @@ var getEmployee = function getEmployee(empId) {
   });
 };
 
-var deleteEmployee = function deleteEmployee(companyId, deptId, empId, compempId) {
+var deleteEmployee = function deleteEmployee(empId, compempId) {
   var response;
   return regeneratorRuntime.async(function deleteEmployee$(_context7) {
     while (1) {
       switch (_context7.prev = _context7.next) {
         case 0:
           _context7.next = 2;
-          return regeneratorRuntime.awrap(_axios["default"]["delete"](API_URL + "/employee/".concat(companyId, "/").concat(deptId, "/").concat(empId, "/").concat(compempId)));
+          return regeneratorRuntime.awrap(_axios["default"]["delete"](API_URL + "/employee/".concat(empId, "/").concat(compempId)));
 
         case 2:
           response = _context7.sent;

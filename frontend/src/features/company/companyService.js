@@ -40,8 +40,8 @@ const getEmployee = async (empId) => {
     return response.data
 }
 
-const deleteEmployee = async (companyId, deptId, empId, compempId) => {
-    const response = await axios.delete(API_URL + `/employee/${companyId}/${deptId}/${empId}/${compempId}`)
+const deleteEmployee = async (empId, compempId) => {
+    const response = await axios.delete(API_URL + `/employee/${empId}/${compempId}`)
 
     return response.data
 }
