@@ -52,6 +52,7 @@ const AddEditCompany = () => {
         // if(isSuccess || employee){
         if(isSuccess){
             console.log("Company added!")
+            console.log(message)
             navigate('/app/companies')
         }
 
@@ -153,7 +154,6 @@ const AddEditCompany = () => {
                     placeholder="Add Departments"
                     label="Departments"
                     deptData={deptData}
-
                 />
 
 

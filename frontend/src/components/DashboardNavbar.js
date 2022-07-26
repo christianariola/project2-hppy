@@ -1,7 +1,9 @@
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout, reset } from '../features/auth/authSlice'
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { getCompany } from "../features/company/companySlice"
+import Logo from "./company/Logo"
 
 // MUI imports
 import { styled } from '@mui/material/styles';
@@ -123,6 +125,14 @@ const DashboardHeader = () => {
     // const empName = `${employee.firstName} ${employee.lastName}`
     const empInitials = employee.firstName.charAt(0)+employee.lastName.charAt(0)
 
+    const { company } = useSelector(state => state.company)
+    useEffect(() => {
+        if(employee.company_id){
+            dispatch(getCompany(employee.company_id))
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [employee.company_id])
+
     return <>
 
         <AppBar position="absolute" open={open} color="default">
@@ -185,7 +195,7 @@ const DashboardHeader = () => {
                     <Typography textAlign="center">Profile</Typography>
                 </MenuItem>
                 <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">Account</Typography>
+                    <Typography textAlign="center">Change Password</Typography>
                 </MenuItem>
                 <MenuItem onClick={handleCloseUserMenu}>
                     <Typography textAlign="center" onClick={onLogout}>Logout</Typography>
@@ -204,8 +214,8 @@ const DashboardHeader = () => {
             }
         }}
         >
-            <img src="/images/hppy-logo.svg" alt="Hppy" />
-
+            {employee.company_id ? <Logo logo={company.logo} /> : <img src="/images/hppy-logo.svg" alt="Hppy" /> }
+        
             <Divider />
             
             <List component="nav">

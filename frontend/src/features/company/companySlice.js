@@ -109,6 +109,24 @@ export const deleteCompany = createAsyncThunk(
     }
 );
 
+export const employeesByCompany = createAsyncThunk(
+    "company/employeesByCompany",
+    async (companyId, thunkAPI) => {
+        try {
+        return await companyService.employeesByCompany(companyId);
+        } catch (error) {
+        const message =
+            (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
+
 export const companySlice = createSlice({
     name: 'company',
     initialState,

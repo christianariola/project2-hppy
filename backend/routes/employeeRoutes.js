@@ -4,7 +4,7 @@ const {
     registerEmployee, 
     loginEmployee, 
     getMe,
-    getAllEmployees
+    getAllEmployees,
 } = require('../controllers/employeeController')
 
 const { submitSurvey } = require("../controllers/surveyController");

@@ -19,6 +19,8 @@ const EmployeeDashboard = () => {
 
   const { doneDaily } = useSelector(state => state.survey)
 
+  console.log(doneDaily)
+
   useEffect(() => {
     const employeeData = {
       surveyid: surveyId
@@ -29,7 +31,7 @@ const EmployeeDashboard = () => {
 
 
   return <>
-    {(doneDaily) ? "No daily survey available. Thank you!" : <DailySurvey />}
+    {doneDaily ? "No daily survey available. Thank you!" : <DailySurvey />}
   </>
 }
 

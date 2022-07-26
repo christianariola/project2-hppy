@@ -21,6 +21,7 @@ const ViewCompany = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [companyId])
 
+    console.log(company)
     return <>
         <h2>View Company</h2>
         <Logo logo={company.logo} />
@@ -35,7 +36,16 @@ const ViewCompany = () => {
         </ul>
 
         <p>Employees</p>
+        <ul>
+        {company.departments && company.departments.map((item, index) => <div key={index}>  
+            {item.employees.map((employee, index) => 
+                <li key={index}>{employee.firstName} {employee.lastName}</li>
+            )}
+        </div>)}
+        </ul>
         <Link component={RouterLink} to={`/app/company/${companyId}/employee/add`} variant="button" sx={{ my: 1, mx: 1.5 }}>Add Employee</Link>
+
+        
     </>
 }
 
