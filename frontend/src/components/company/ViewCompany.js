@@ -45,7 +45,7 @@ const ViewCompany = () => {
             {item.employees.map((employee, index) => 
                 <li key={index}>
                     <Link component={RouterLink} to={`/app/company/${companyId}/employee/view/${employee.employee_id}`}>{employee.firstName} {employee.lastName}</Link>
-                    <Link component={RouterLink} to={`/app/company/${item._id}/employee/edit/${employee.employee_id}`} sx={{ my: 1, mx: 1.5 }}>Edit</Link>
+                    <Link component={RouterLink} to={`/app/company/${companyId}/employee/edit/${employee.employee_id}`} sx={{ my: 1, mx: 1.5 }}>Edit</Link>
                     <button onClick={() => handleDelete(employee.employee_id, employee._id)}>Delete</button>
                 </li>
             )}
