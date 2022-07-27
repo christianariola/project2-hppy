@@ -23,12 +23,20 @@ import DailySurvey from './components/DailySurvey'
 import ReportMain from './pages/report/ReportMain'
 import Myaccount from  './pages/Myaccout'
 import BarChart from './pages/report/BarChart'
+import Department from './pages/report/Department'
 
 import Company from './components/company/Company'
 import AddEditCompany from './components/company/AddEditCompany'
 import ViewCompany from './components/company/ViewCompany'
+import SuperAdminChart from './pages/report/SuperAdminChart'
 
 const App = () => {
+
+  // const customTheme =createMuiTheme({
+  //   palette:{
+  //     main:'#003D66'
+  //   }
+  // })
 
   const [chartDate, setChartDate] = useState();
 
@@ -93,7 +101,8 @@ const App = () => {
             <Route path="report" element={<ReportMain handleSelectChartDate={handleSelectChartDate} />} />
             <Route path="reportchart" element={<BarChart />} />
             <Route path="reportchart/:type/:surveyDate" element={<BarChart chartDate={chartDate} />} /> {/*survey date */}
-            <Route path="reportview" element={<BarChart />} /> {/*employee view  */}
+            <Route path="reportchart/:type/:surveyDate/:companyName" element={<SuperAdminChart />} />
+            {/* <Route path="reportview" element={<BarChart />} /> employee view  */}
           </Route>
 
           {/* Super Admin Only */}
