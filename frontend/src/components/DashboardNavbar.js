@@ -19,7 +19,7 @@ import Badge from '@mui/material/Badge';
 import MenuIcon from '@mui/icons-material/Menu';
 // import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { employeeListItems, superadminListItems } from '../components/ListItems'
+import { employeeListItems, adminListItems, superadminListItems } from '../components/ListItems'
 
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
@@ -119,6 +119,9 @@ const DashboardHeader = () => {
             break;
         case "manager":
             employeeList = employeeListItems;
+            break;
+        case "admin":
+            employeeList = adminListItems;
             break;
         default:
             employeeList = employeeListItems;

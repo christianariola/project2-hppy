@@ -31,6 +31,9 @@ import ViewCompany from "./components/company/ViewCompany";
 import ViewEmployee from "./components/employee/ViewEmployee";
 import EditEmployee from "./components/employee/EditEmployee";
 
+import CompanySettings from './pages/admin/CompanySettings'
+import Department from './pages/admin/Department'
+
 const App = () => {
   const [chartDate, setChartDate] = useState();
 
@@ -42,7 +45,7 @@ const App = () => {
   let dashboardIndex;
 
   if (employee) {
-    switch (employee.role) {
+    switch (employee.role.toLowerCase()) {
       case "superadmin":
         dashboardIndex = <SuperAdminDashboard />;
         break;
@@ -110,6 +113,12 @@ const App = () => {
               {/*survey date */}
               <Route path="reportview" element={<BarChart />} />{" "}
               {/*employee view  */}
+            </Route>
+
+            {/* Admin Only */}
+            <Route element={<RequireAuth allowedRoles={["admin"]} />}>
+              <Route path="company/settings" element={<CompanySettings />}></Route>
+              <Route path="company/departments" element={<Department />}></Route>
             </Route>
 
             {/* Super Admin Only */}
