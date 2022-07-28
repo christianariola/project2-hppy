@@ -24,10 +24,12 @@ const DailySurvey = () => {
 
   ///Survey Date
   const dateHandler = () => {
+    const date=new Date();
     const currentYear = new Date().getFullYear();
-    const currentMonth = new Date().getMonth() + 1;
-    const currentDay = new Date().getDate();
-    const together = [currentYear, currentMonth, currentDay].join("");
+    const currentMonth = String(date.getMonth() + 1).padStart(2, "0");
+    const currentDay = String(date.getDate()).padStart(2, "0");
+    const together = [currentYear, currentMonth, currentDay].join("-");
+    console.log(together);
     setDailySurveyDate(together);
     setSurveyName("DailySurvey" + together);
   };
