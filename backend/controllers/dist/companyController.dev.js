@@ -1,10 +1,20 @@
 "use strict";
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var asyncHandler = require('express-async-handler');
 
 var jwt = require('jsonwebtoken');
+
+var bcrypt = require('bcryptjs');
 
 var _require = require('mongoose'),
     mongoose = _require["default"];
@@ -432,10 +442,151 @@ var deleteEmployee = asyncHandler(function _callee7(req, res) {
   }, null, null, [[3, 19]]);
 });
 var editEmployee = asyncHandler(function _callee8(req, res) {
+  var empId, _req$body3, department_id, department_name, employeeNumber, firstName, lastName, email, role, jobTitle, password, empData, company, employeeData, salt, hashedPassword, employee;
+
   return regeneratorRuntime.async(function _callee8$(_context8) {
     while (1) {
       switch (_context8.prev = _context8.next) {
         case 0:
+          empId = req.params.empId;
+          _req$body3 = req.body, department_id = _req$body3.department_id, department_name = _req$body3.department_name, employeeNumber = _req$body3.employeeNumber, firstName = _req$body3.firstName, lastName = _req$body3.lastName, email = _req$body3.email, role = _req$body3.role, jobTitle = _req$body3.jobTitle, password = _req$body3.password; // updating company collection nested document
+
+          empData = [];
+
+          if (role == 'manager') {
+            empData = {
+              employee_id: empId,
+              employeeNumber: employeeNumber,
+              firstName: firstName,
+              lastName: lastName,
+              email: email,
+              jobTitle: jobTitle,
+              isManager: true
+            };
+          } else if (role == 'admin') {
+            empData = {
+              employee_id: empId,
+              employeeNumber: employeeNumber,
+              firstName: firstName,
+              lastName: lastName,
+              email: email,
+              jobTitle: jobTitle,
+              isAdmin: true
+            };
+          } else {
+            empData = {
+              employee_id: empId,
+              employeeNumber: employeeNumber,
+              firstName: firstName,
+              lastName: lastName,
+              email: email,
+              jobTitle: jobTitle
+            };
+          } // const company = Company.updateOne({
+          //     // "_id": '62df922b736253a622c857df',
+          //     "departments._id": department_id
+          // },
+          // {
+          //     $push: {
+          //         "departments.$[departments].employees": empData
+          //     }
+          // },
+          // {
+          //     arrayFilters: [
+          //         {
+          //         "departments._id": department_id
+          //         }
+          //     ]
+          // },
+          // (err, success) => {
+          //     if(err){
+          //         console.log("Unsuccessful", err)
+          //     } else {
+          //         console.log("Successful", success)
+          //     }
+          // })
+
+
+          company = Company.findOne({
+            "departments._id": department_id
+          }).then(function (doc) {
+            item = doc.departments.id(department_id); // console.log(item.employees)
+
+            var employeeDoc = item.employees.filter(function (employees) {
+              return employees.email !== email;
+            });
+            var empInsert = [].concat(_toConsumableArray(employeeDoc), [empData]); // console.log(empInsert)
+
+            item["employees"] = empInsert;
+            doc.save(); //sent respnse to client
+          })["catch"](function (err) {
+            console.log('Oh! Dark', err);
+          });
+
+          if (!password) {
+            _context8.next = 15;
+            break;
+          }
+
+          _context8.next = 8;
+          return regeneratorRuntime.awrap(bcrypt.genSalt(10));
+
+        case 8:
+          salt = _context8.sent;
+          _context8.next = 11;
+          return regeneratorRuntime.awrap(bcrypt.hash(password, salt));
+
+        case 11:
+          hashedPassword = _context8.sent;
+          employeeData = {
+            employeeNumber: employeeNumber,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            role: role.toLowerCase(),
+            jobTitle: jobTitle,
+            password: hashedPassword,
+            department_id: department_id,
+            department_name: department_name
+          };
+          _context8.next = 16;
+          break;
+
+        case 15:
+          employeeData = {
+            employeeNumber: employeeNumber,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            role: role.toLowerCase(),
+            jobTitle: jobTitle,
+            department_id: department_id,
+            department_name: department_name
+          };
+
+        case 16:
+          employee = Employee.findByIdAndUpdate(empId, employeeData, function (err, success) {
+            if (err) {// console.log("Unsuccessful", err)
+            } else {// console.log("Successful", success)
+              }
+          });
+
+          if (!(employee && company)) {
+            _context8.next = 21;
+            break;
+          }
+
+          res.status(201).json({
+            message: "Success"
+          });
+          _context8.next = 23;
+          break;
+
+        case 21:
+          res.status(400);
+          throw new Error('Invalid user data');
+
+        case 23:
         case "end":
           return _context8.stop();
       }

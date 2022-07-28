@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 // Local API_URL for dev
-// const API_URL = '/api/companies'
-const API_URL = 'https://pluto-hppy.herokuapp.com/api/companies'
+const API_URL = '/api/companies'
+// const API_URL = 'https://pluto-hppy.herokuapp.com/api/companies'
 
 const addCompany = async (companyData) => {
     const response = await axios.post(API_URL + '/add', companyData)
@@ -46,6 +46,12 @@ const deleteEmployee = async (empId, compempId) => {
     return response.data
 }
 
+const updateEmployee = async (updatedEmployeeData, empId) => {
+    const response = await axios.patch(API_URL + `/employee/${empId}`, updatedEmployeeData)
+
+    return response.data
+}
+
 const companyService = {
     addCompany,
     getCompanyList,
@@ -54,6 +60,7 @@ const companyService = {
     deleteCompany,
     getEmployee,
     deleteEmployee,
+    updateEmployee,
 }
 
 export default companyService

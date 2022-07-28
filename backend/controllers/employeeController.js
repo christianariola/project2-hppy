@@ -232,5 +232,5 @@ module.exports = {
     registerEmployee,
     loginEmployee,
     getMe,
-    changePassword
+    changePassword,
 }

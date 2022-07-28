@@ -1,7 +1,10 @@
 const asyncHandler = require('express-async-handler')
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs')
+
 const { default: mongoose } = require('mongoose')
 const cloudinary = require("../cloudinary/cloudinary")
+
 const Company = require('../models/companyModel')
 const Employee = require('../models/employeeModel')
 
@@ -250,6 +253,132 @@ const deleteEmployee = asyncHandler(async (req, res) => {
 })
 
 const editEmployee = asyncHandler(async (req, res) => {
+
+    const {empId} = req.params
+
+    const {department_id, department_name, employeeNumber, firstName, lastName, email, role, jobTitle, password} = req.body
+
+    // updating company collection nested document
+    let empData = []
+    if(role == 'manager'){
+        empData = {
+            employee_id: empId,
+            employeeNumber,
+            firstName,
+            lastName,
+            email,
+            jobTitle,
+            isManager: true
+        }
+    } else if(role == 'admin'){
+        empData = {
+            employee_id: empId,
+            employeeNumber,
+            firstName,
+            lastName,
+            email,
+            jobTitle,
+            isAdmin: true
+        }
+    } else {
+        empData = {
+            employee_id: empId,
+            employeeNumber,
+            firstName,
+            lastName,
+            email,
+            jobTitle,
+        }
+    }
+
+    // const company = Company.updateOne({
+    //     // "_id": '62df922b736253a622c857df',
+    //     "departments._id": department_id
+    // },
+    // {
+    //     $push: {
+    //         "departments.$[departments].employees": empData
+    //     }
+    // },
+    // {
+    //     arrayFilters: [
+    //         {
+    //         "departments._id": department_id
+    //         }
+    //     ]
+    // },
+    // (err, success) => {
+    //     if(err){
+    //         console.log("Unsuccessful", err)
+    //     } else {
+    //         console.log("Successful", success)
+    //     }
+    // })
+
+    const company = Company.findOne({"departments._id": department_id}).then(doc => {
+        item = doc.departments.id(department_id);
+
+        // console.log(item.employees)
+        const employeeDoc = item.employees.filter((employees) => employees.email !== email)
+        const empInsert = [...employeeDoc, empData]
+
+        // console.log(empInsert)
+        item["employees"] = empInsert;
+
+        doc.save();
+    //sent respnse to client
+    }).catch(err => {
+    console.log('Oh! Dark', err)
+    });
+
+    let employeeData 
+    if(password){
+
+        // Password encyptions
+        const salt = await bcrypt.genSalt(10)
+        const hashedPassword = await bcrypt.hash(password, salt)
+
+        employeeData = {
+            employeeNumber,
+            firstName,
+            lastName,
+            email,
+            role: role.toLowerCase(),
+            jobTitle,
+            password: hashedPassword,
+            department_id,
+            department_name,
+        }
+    } else {
+        employeeData = {
+            employeeNumber,
+            firstName,
+            lastName,
+            email,
+            role: role.toLowerCase(),
+            jobTitle,
+            department_id,
+            department_name,
+        }
+    }
+
+    const employee = Employee.findByIdAndUpdate(empId, employeeData,
+    (err, success) => {
+        if(err){
+            // console.log("Unsuccessful", err)
+        } else {
+            // console.log("Successful", success)
+        }
+    })
+
+    if(employee && company) {
+        res.status(201).json({
+            message: "Success"
+        })
+    } else {
+        res.status(400)
+        throw new Error('Invalid user data')
+    }
 })
 
 

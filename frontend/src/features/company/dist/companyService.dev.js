@@ -10,8 +10,7 @@ var _axios = _interopRequireDefault(require("axios"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 // Local API_URL for dev
-// const API_URL = '/api/companies'
-var API_URL = 'https://pluto-hppy.herokuapp.com/api/companies';
+var API_URL = '/api/companies'; // const API_URL = 'https://pluto-hppy.herokuapp.com/api/companies'
 
 var addCompany = function addCompany(companyData) {
   var response;
@@ -160,6 +159,27 @@ var deleteEmployee = function deleteEmployee(empId, compempId) {
   });
 };
 
+var updateEmployee = function updateEmployee(updatedEmployeeData, empId) {
+  var response;
+  return regeneratorRuntime.async(function updateEmployee$(_context8) {
+    while (1) {
+      switch (_context8.prev = _context8.next) {
+        case 0:
+          _context8.next = 2;
+          return regeneratorRuntime.awrap(_axios["default"].patch(API_URL + "/employee/".concat(empId), updatedEmployeeData));
+
+        case 2:
+          response = _context8.sent;
+          return _context8.abrupt("return", response.data);
+
+        case 4:
+        case "end":
+          return _context8.stop();
+      }
+    }
+  });
+};
+
 var companyService = {
   addCompany: addCompany,
   getCompanyList: getCompanyList,
@@ -167,7 +187,8 @@ var companyService = {
   editCompany: editCompany,
   deleteCompany: deleteCompany,
   getEmployee: getEmployee,
-  deleteEmployee: deleteEmployee
+  deleteEmployee: deleteEmployee,
+  updateEmployee: updateEmployee
 };
 var _default = companyService;
 exports["default"] = _default;

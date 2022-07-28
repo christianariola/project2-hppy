@@ -147,6 +147,24 @@ export const deleteEmployee = createAsyncThunk(
     }
 );
 
+export const updateEmployee = createAsyncThunk(
+    "company/updateEmployee",
+    async ({updatedEmployeeData, empId}, thunkAPI) => {
+        try {
+        return await companyService.updateEmployee(updatedEmployeeData, empId);
+        } catch (error) {
+        const message =
+            (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
+
 export const companySlice = createSlice({
     name: 'company',
     initialState,
@@ -213,7 +231,7 @@ export const companySlice = createSlice({
             state.message = action.payload
         })
         .addCase(deleteCompany.fulfilled, (state, action) => {
-            state.company = action.payload
+            // state.company = action.payload
             const { arg } = action.meta
 
             if( arg ){
@@ -222,7 +240,7 @@ export const companySlice = createSlice({
         })
         .addCase(deleteCompany.rejected, (state, action) => {
             state.isLoading = false
-            state.company = null
+            // state.company = null
             state.isError = true
             state.message = action.payload
         })
@@ -240,7 +258,7 @@ export const companySlice = createSlice({
 
             state.company = action.payload
             // const { arg } = action.meta
-            console.log(state.company)
+            // console.log(state.company)
             // if( arg ){
             //     state.companyList = state.companyList.filter((item) => item._id !== arg)
             // }
@@ -248,6 +266,16 @@ export const companySlice = createSlice({
         .addCase(deleteEmployee.rejected, (state, action) => {
             state.isLoading = false
             state.company = null
+            state.isError = true
+            state.message = action.payload
+        })
+        .addCase(updateEmployee.fulfilled, (state, action) => {
+            state.isLoading = false
+            // state.employee = action.payload
+        })
+        .addCase(updateEmployee.rejected, (state, action) => {
+            state.isLoading = false
+            state.employee = null
             state.isError = true
             state.message = action.payload
         })

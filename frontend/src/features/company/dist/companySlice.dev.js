@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = exports.reset = exports.companySlice = exports.deleteEmployee = exports.getEmployee = exports.deleteCompany = exports.editCompany = exports.getCompany = exports.getCompanyList = exports.addCompany = void 0;
+exports["default"] = exports.reset = exports.companySlice = exports.updateEmployee = exports.deleteEmployee = exports.getEmployee = exports.deleteCompany = exports.editCompany = exports.getCompany = exports.getCompanyList = exports.addCompany = void 0;
 
 var _toolkit = require("@reduxjs/toolkit");
 
@@ -218,6 +218,34 @@ var deleteEmployee = (0, _toolkit.createAsyncThunk)("company/deleteEmployee", fu
   }, null, null, [[1, 7]]);
 });
 exports.deleteEmployee = deleteEmployee;
+var updateEmployee = (0, _toolkit.createAsyncThunk)("company/updateEmployee", function _callee8(_ref3, thunkAPI) {
+  var updatedEmployeeData, empId, message;
+  return regeneratorRuntime.async(function _callee8$(_context8) {
+    while (1) {
+      switch (_context8.prev = _context8.next) {
+        case 0:
+          updatedEmployeeData = _ref3.updatedEmployeeData, empId = _ref3.empId;
+          _context8.prev = 1;
+          _context8.next = 4;
+          return regeneratorRuntime.awrap(_companyService["default"].updateEmployee(updatedEmployeeData, empId));
+
+        case 4:
+          return _context8.abrupt("return", _context8.sent);
+
+        case 7:
+          _context8.prev = 7;
+          _context8.t0 = _context8["catch"](1);
+          message = _context8.t0.response && _context8.t0.response.data && _context8.t0.response.data.message || _context8.t0.message || _context8.t0.toString();
+          return _context8.abrupt("return", thunkAPI.rejectWithValue(message));
+
+        case 11:
+        case "end":
+          return _context8.stop();
+      }
+    }
+  }, null, null, [[1, 7]]);
+});
+exports.updateEmployee = updateEmployee;
 var companySlice = (0, _toolkit.createSlice)({
   name: 'company',
   initialState: initialState,
@@ -273,7 +301,7 @@ var companySlice = (0, _toolkit.createSlice)({
       state.isError = true;
       state.message = action.payload;
     }).addCase(deleteCompany.fulfilled, function (state, action) {
-      state.company = action.payload;
+      // state.company = action.payload
       var arg = action.meta.arg;
 
       if (arg) {
@@ -282,8 +310,8 @@ var companySlice = (0, _toolkit.createSlice)({
         });
       }
     }).addCase(deleteCompany.rejected, function (state, action) {
-      state.isLoading = false;
-      state.company = null;
+      state.isLoading = false; // state.company = null
+
       state.isError = true;
       state.message = action.payload;
     }).addCase(getEmployee.fulfilled, function (state, action) {
@@ -296,13 +324,20 @@ var companySlice = (0, _toolkit.createSlice)({
       state.message = action.payload;
     }).addCase(deleteEmployee.fulfilled, function (state, action) {
       state.company = action.payload; // const { arg } = action.meta
-
-      console.log(state.company); // if( arg ){
+      // console.log(state.company)
+      // if( arg ){
       //     state.companyList = state.companyList.filter((item) => item._id !== arg)
       // }
     }).addCase(deleteEmployee.rejected, function (state, action) {
       state.isLoading = false;
       state.company = null;
+      state.isError = true;
+      state.message = action.payload;
+    }).addCase(updateEmployee.fulfilled, function (state, action) {
+      state.isLoading = false; // state.employee = action.payload
+    }).addCase(updateEmployee.rejected, function (state, action) {
+      state.isLoading = false;
+      state.employee = null;
       state.isError = true;
       state.message = action.payload;
     });
