@@ -90,7 +90,31 @@ const EditEmployee = () => {
         }
     }
 
-    const userRoles = ["Employee", "Manager", "Admin"]
+    if(company){
+        let employeeDoc
+        for (var i = 0, l = company.departments.length; i < l; i++) {
+            var departments = company.departments[i];
+    
+            for (var j = 0, h = departments.employees.length; j < h; j++) {
+                var isAdmin = departments.employees[j].isAdmin;
+                var isManager = departments.employees[j].isManager;
+    
+            }
+ 
+            console.log(isAdmin)
+            // employees.find((admin) => admin.isAdmin === true)
+    
+        }
+    }
+
+    if(isLoading) {
+        return "Loading... please wait."
+    }
+
+    let userRoles = ["Employee", "Manager", "Admin"]
+    if(isAdmin){
+        userRoles = ["Employee", "Manager"]
+    } 
 
     return <>
         <section>
