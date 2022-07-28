@@ -27,8 +27,8 @@ const MonthlySurveySchema = new Schema({
     enum: ["compleated", "incompleated", "expired"],
   },
   surveyOpened: {
-    type: String,
-    enum: ["visited", "non-visited"],
+    type: Boolean,
+    required: false,
   },
   monthlySurvey: {
     answers: {
