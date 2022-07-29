@@ -170,7 +170,7 @@ const { update } = require("./models/employeeModel");
 //post employee
 app.post("/getEmployeeAll", (req, res) => {
   let employee = new Employee(req.body);
-
+ 
   employee.save((err) => {
     if (err) {
       console.log(err.code);
@@ -189,6 +189,7 @@ app.post("/getEmployeeAll", (req, res) => {
 
 //get employee
 app.get("/getEmployeeAll",(req, res) => {
+  console.log("here!!!!!!")
   Employee.find({})
   .exec((error, result)=>{
       if(error){

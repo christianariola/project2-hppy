@@ -25,13 +25,29 @@ import MyAccount from "./pages/MyAccount";
 import Password from "./pages/Password";
 import BarChart from "./pages/report/BarChart";
 
-import Company from "./components/company/Company";
-import AddEditCompany from "./components/company/AddEditCompany";
-import ViewCompany from "./components/company/ViewCompany";
+
+import Myaccount from  './pages/Myaccout'
+
+import Department from './pages/report/Department'
+
+import Company from './components/company/Company'
+import AddEditCompany from './components/company/AddEditCompany'
+import ViewCompany from './components/company/ViewCompany'
+import SuperAdminChart from './pages/report/SuperAdminChart'
+
+
+
 import ViewEmployee from "./components/employee/ViewEmployee";
 import EditEmployee from "./components/employee/EditEmployee";
 
 const App = () => {
+
+  // const customTheme =createMuiTheme({
+  //   palette:{
+  //     main:'#003D66'
+  //   }
+  // })
+
   const [chartDate, setChartDate] = useState();
 
   const handleSelectChartDate = (date) => {

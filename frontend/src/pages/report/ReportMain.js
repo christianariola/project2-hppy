@@ -9,7 +9,10 @@ const ReportMain = props => {
 
   const [ surveyItem, setSurveyItems ] = useState([])
   const [ monthlyItem, setMonthlyItems ] = useState([])
-  // const { employee } = useSelector((state) => state.auth);
+  const { employee } = useSelector((state) => state.auth);
+  const [ employeeData, setEmployeeData ] = useState([])
+
+
   //daily survey fetching
     useEffect(function loadData(){
         axios.get('https://pluto-hppy.herokuapp.com/dailySurvey')
@@ -21,8 +24,92 @@ const ReportMain = props => {
      },[]) 
      console.log(surveyItem)
 
+
+      //fetch  employees data
+      useEffect(function loadEmployee(){
+        axios.get('/getEmployeeAll') 
+         .then((res)=>{
+            setEmployeeData(res.data)
+            console.log(res)
+         
+         })
+         
+        .catch(error=>console.log(error))
+     },[]) 
+    console.log(employeeData)
+
+     //monthly survey fetching
+     useEffect(function loadMonthly(){
+      axios.get('/monthlySurveys')
+     .then((res)=>{
+      setMonthlyItems(res.data)
+      })
+      .catch(error=>console.log(error))
+  },[]) 
+  console.log(monthlyItem)
+
+
+    //@desc report main for superadmin
+    //sorting employees' email and company name
+    var showEmailArry =[]
+    for(var i=0; i<employeeData.length; i++){
+      if(employeeData[i].company_name !== undefined ){
+        var showEmailObj= {
+          email: employeeData[i].email,
+          company : employeeData[i].company_name
+        }
+
+        showEmailArry.push(showEmailObj)
+      }
+      }
+
+    console.log(showEmailArry) //store every employees' email and company name that are in company
     
-// store daily  survey date and name to array
+      //sorting dailysurvey 
+      var dailyArry = [];
+      for(var i=0; i<surveyItem.length; i++){
+        for(var k=0; k<showEmailArry.length; k++){
+          if(surveyItem[i].dailySurvey.employeeEmail != undefined && surveyItem[i].dailySurvey.employeeEmail == showEmailArry[k].email){
+          var emailObj = {
+            surveyDate : surveyItem[i].dailySurvey.dailySurveyDate,
+            surveyTitle: surveyItem[i].surveyType,
+            // emails : surveyItem[i].dailySurvey.employeeEmail,
+            companyName : showEmailArry[k].company
+          }
+          dailyArry.push(emailObj)
+         }
+        }
+      }
+      console.log(dailyArry)
+      
+      const sortDailySurveyByCompany = [...new Set(dailyArry.map(JSON.stringify))].map(JSON.parse)
+      console.log(sortDailySurveyByCompany)
+    
+    
+      var monthlyArry = [];
+      for(var i=0; i<monthlyItem.length; i++){
+        for(var k=0; k<showEmailArry.length; k++){
+          if(monthlyItem[i].employeeEmail != undefined && monthlyItem[i].employeeEmail == showEmailArry[k].email){
+          var monthlyEmailObj = {
+            surveyDate : monthlyItem[i].createdDate,
+            surveyTitle: monthlyItem[i].surveyType,
+            // emails : surveyItem[i].dailySurvey.employeeEmail,
+            companyName : showEmailArry[k].company
+          }
+          monthlyArry.push(monthlyEmailObj)
+         }
+        }
+      }
+      console.log(monthlyArry)
+      
+      const sortMonthlySurveyByCompany = [...new Set(monthlyArry.map(JSON.stringify))].map(JSON.parse)
+      console.log(sortMonthlySurveyByCompany)
+
+
+
+
+    //@desc report main for admin
+    // store daily  survey date and name to array
      var dailySingle = function(){
       
       var singleList = [];
@@ -37,6 +124,9 @@ const ReportMain = props => {
         
         
           }
+      // if (surveyItem[i].dailySurvey.employeeEmail == employeeData.email){
+      //   singleList.push(employeeObj)
+      // }
       
       return singleList;
   }
@@ -81,30 +171,76 @@ const ReportMain = props => {
 
    
 
-     //monthly survey fetching
-     useEffect(function loadMonthly(){
-      axios.get('https://pluto-hppy.herokuapp.com/monthlySurveys')
-     .then((res)=>{
-      setMonthlyItems(res.data)
-      })
-      .catch(error=>console.log(error))
-  },[]) 
-  console.log(monthlyItem)
+
+    
 
   //chosen date handler
-  // const handleChangeDate = (date)=>{
-  //   // event.preventDefault()
-  //   // props.handleSelectChartDate(date)
-  //   props.setGetDate(date) //from App.js
-  //   console.error(date);
-  //   // props.setChosenDate(event.target.value)
+  const handleChangeDate = (date)=>{
+    // event.preventDefault()
+    // props.handleSelectChartDate(date)
+    props.setGetDate(date) //from App.js
+    console.error(date);
+    // props.setChosenDate(event.target.value)
 
-  // }
-
+  }
+  console.log(employee.role)
   
   return (
+    
     <div className="report-pageA">
-      <h1>Reports</h1>
+   
+      {employee.role == "superadmin" ?
+      <div>
+        <h1>Super Admin Reports</h1>
+      
+      <table>
+        <thead>
+            <tr className="report-list">
+              <th>Date</th>
+              <th>Type</th>
+              <th>Company</th>
+              <th>Action</th>
+            </tr>
+        </thead>
+         <tbody>
+          
+            {sortDailySurveyByCompany?.map((sortDailySurveyByCompany)=>
+            
+              <tr className="report-content">
+                
+                  <td key={surveyItem.surveyId}>{sortDailySurveyByCompany.surveyDate}</td>
+              
+                  <td>{sortDailySurveyByCompany.surveyTitle}</td>
+                  <td>{sortDailySurveyByCompany.companyName}</td>
+                  
+                  <td>
+                    <button value={sortDailySurveyByCompany.surveyDate} onClick={e => props.handleSelectChartDate(e.target.value)}>
+                    <Link component={RouterLink} to={`/app/reportchart/${sortDailySurveyByCompany.surveyTitle}/${sortDailySurveyByCompany.surveyDate}/${sortDailySurveyByCompany.companyName}`} variant="button" sx={{ my: 1, mx: 1.5 }}>View</Link>
+                    </button>
+                  </td>
+              </tr>
+              
+                
+                )}
+                
+               {sortMonthlySurveyByCompany?.map((sortMonthlySurveyByCompany)=>
+                <tr className="report-content">
+                    <td key={monthlyItem.surveyid}>{sortMonthlySurveyByCompany.surveyDate}</td>
+                    <td>{sortMonthlySurveyByCompany.surveyTitle}</td>
+                    <td>{sortMonthlySurveyByCompany.companyName}</td>
+                    <td>
+                      <button value={sortMonthlySurveyByCompany.surveyDate}  onClick={e => props.handleSelectChartDate(e.target.value)}>
+                      <Link component={RouterLink} to={`/app/reportchart/${sortMonthlySurveyByCompany.surveyTitle}/${sortMonthlySurveyByCompany.surveyDate}/${sortMonthlySurveyByCompany.companyName}`} variant="button" sx={{ my: 1, mx: 1.5 }} >View</Link>
+                    </button>
+                  </td>
+                </tr>
+                ) }
+        </tbody>
+      </table>
+      </div>
+      :(
+        <div>
+      
       <table>
         <thead>
             <tr className="report-list">
@@ -113,40 +249,48 @@ const ReportMain = props => {
               <th>Action</th>
             </tr>
         </thead>
-        <tbody>
+         <tbody>
           
             {sortDailySurvey?.map((sortDailySurvey)=>
-            <tr className="report-content">
-              
-                <td key={surveyItem.surveyId}>{sortDailySurvey.surveyDate}</td>
-             
-                <td>{sortDailySurvey.surveyTitle}</td>
-                
-                <td>
-                  <button value={sortDailySurvey.surveyDate} onClick={e => props.handleSelectChartDate(e.target.value)}>
-                  <Link component={RouterLink} to={`/app/reportchart/${sortDailySurvey.surveyTitle}/${sortDailySurvey.surveyDate}`} variant="button" sx={{ my: 1, mx: 1.5 }}>View</Link>
-                  </button>
-                </td>
-            </tr>
             
-              )}
-              {/*monthly survey */}
-              {sortMonthlySurvey?.map((sortMonthlySurvey)=>
               <tr className="report-content">
-                  <td key={monthlyItem.surveyid}>{sortMonthlySurvey.monthlysurveyDate}</td>
-                  <td>{sortMonthlySurvey.monthlysurveyTitle}</td>
+                
+                  <td key={surveyItem.surveyId}>{sortDailySurvey.surveyDate}</td>
+              
+                  <td>{sortDailySurvey.surveyTitle}</td>
+                  
                   <td>
-                    <button value={sortDailySurvey.surveyDate} data-value1="monthly" onClick={e => props.handleSelectChartDate(e.target.value)}>
-                    <Link component={RouterLink} to={`/app/reportchart/${sortMonthlySurvey.monthlysurveyTitle}/${sortMonthlySurvey.monthlysurveyDate}`} variant="button" sx={{ my: 1, mx: 1.5 }} >View</Link>
-                  </button>
-                </td>
+                    <button value={sortDailySurvey.surveyDate} onClick={e => props.handleSelectChartDate(e.target.value)}>
+                    <Link component={RouterLink} to={`/app/reportchart/${sortDailySurvey.surveyTitle}/${sortDailySurvey.surveyDate}`} variant="button" sx={{ my: 1, mx: 1.5 }}>View</Link>
+                    </button>
+                  </td>
               </tr>
-              )}  
-            
+              
+                
+                )}
+                
+               {sortMonthlySurvey?.map((sortMonthlySurvey)=>
+                <tr className="report-content">
+                    <td key={monthlyItem.surveyid}>{sortMonthlySurvey.monthlysurveyDate}</td>
+                    <td>{sortMonthlySurvey.monthlysurveyTitle}</td>
+                    <td>
+                      <button value={sortDailySurvey.surveyDate} data-value1="monthly" onClick={e => props.handleSelectChartDate(e.target.value)}>
+                      <Link component={RouterLink} to={`/app/reportchart/${sortMonthlySurvey.monthlysurveyTitle}/${sortMonthlySurvey.monthlysurveyDate}`} variant="button" sx={{ my: 1, mx: 1.5 }} >View</Link>
+                    </button>
+                  </td>
+                </tr>
+                ) }
         </tbody>
       </table>
-      <button className="showBtn">Show More</button>
+      </div>
+                )
+               
+              }
+      {/* <button className="showBtn">Show More</button> */}
+     
       
+      
+    
     </div>
   )
 }

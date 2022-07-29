@@ -2,23 +2,22 @@ import { Bar } from "react-chartjs-2";
 import { Pie } from 'react-chartjs-2';
 import { ArcElement } from "chart.js";
 import Chart from'chart.js/auto';
-
 import { useState, useEffect } from "react";
 import axios from 'axios'
 import { useSelector } from 'react-redux'
-import MonthylyBar from "./MonthlyBar";
-import SuperAdminChart from "./SuperAdminChart";
-const BarChart = props => {
-    Chart.register(ArcElement);
+import SuperAdminMonthly from "./SuperAdminMonthly";
+const SuperAdminChart = props => {
+
+   
      //use this state variable to store data fetched from the database
     const [ report, setReport ] = useState([])
     const [ employeeData, setEmployeeData ] = useState([])
     const { employee } = useSelector((state) => state.auth);
-    // const [department, setDepartment] = useState('')
+    const [department, setDepartment] = useState('')
 
     //daily survey fetching
     useEffect(function loadData(){
-        axios.get('https://pluto-hppy.herokuapp.com/dailySurvey') 
+        axios.get('/dailySurvey') 
          .then((res)=>{
             setReport(res.data)
          })
@@ -31,7 +30,7 @@ const BarChart = props => {
 
      //fetch  employees data
         useEffect(function loadEmployee(){
-        axios.get('https://pluto-hppy.herokuapp.com/getEmployeeAll') 
+        axios.get('/getEmployeeAll') 
          .then((res)=>{
             setEmployeeData(res.data)
             console.log(res)
@@ -45,21 +44,25 @@ const BarChart = props => {
 
 
      
+     const nameUrl = window.location.href
+     const dateUrl = nameUrl.split('/');
+     const chartDate = dateUrl[dateUrl.length-2] 
+     const selectedCompany = dateUrl[dateUrl.length-1] 
     // // console.log(monthlyReport)
     
     //  const { loginEmployee } = useSelector(state => state.auth) // ->작동되면 .role = 'superadmin' no filter, role 'admin' filetre by compaby
     //  var company = loginEmployee.company_name
       
      //store employees' email of the matched company
-     console.log(employee.company_name)
-     var company = employee.company_name
+    //  console.log(employee.company_name)
+    //  var company = employee.company_name
      var showEmailArry = [];
      console.log(employeeData.length);
     //  console.log(depart)
      for(var i=0; i<employeeData.length; i++){
-        if(employeeData[i].company_name !== undefined && employeeData[i].company_name === company ){
+        if(employeeData[i].company_name !== undefined && employeeData[i].company_name === selectedCompany ){
             
-                if(employeeData[i].department == "Meta") {
+                if(employeeData[i].department == selectedCompany) {
                     showEmailArry.push(employeeData[i].email)
                  } 
               else {
@@ -73,25 +76,23 @@ const BarChart = props => {
     
     //  var depart = 'all'
     
-     const nameUrl = window.location.href
-     const dateUrl = nameUrl.split('/');
-     const chartDate = dateUrl[dateUrl.length-1] 
-     const paramCheck = chartDate.split('?');
+
+    //  const paramCheck = chartDate.split('?');
      
      //find matched employees' email from daily survey table
      var filteredDailySurvey = []; //store the daily survey data from filetered employees by company
-     for(var j=0; j<report.length; j++){
-        if(showEmailArry.includes(report[j].dailySurvey.employeeEmail)){
-            filteredDailySurvey.push(report[j])
+     for(var i=0; i<report.length; i++){
+        if(showEmailArry.includes(report[i].dailySurvey.employeeEmail)){
+            filteredDailySurvey.push(report[i])
         }
         
      }
      console.log(filteredDailySurvey)
      
      //selected department
-    //  const handleChange = departmentType =>{
-    //     setDepartment(departmentType)
-    // }
+     const handleChange = departmentType =>{
+        setDepartment(departmentType)
+    }
     
      //filter daily survey result by department and date
      var filteredDailySurveyByDepart = []; 
@@ -108,7 +109,7 @@ const BarChart = props => {
         console.log(showDepartArry) 
    
         // var filteredDailySurveyByDepart = []; 
-        for( i=0; i<report.length; i++){
+        for(var i=0; i<report.length; i++){
            if(showDepartArry.includes(report[i].dailySurvey.employeeEmail)){
             filteredDailySurveyByDepart.push(report[i])
            }
@@ -124,7 +125,7 @@ const BarChart = props => {
        //total rating by departmnet
        function sortRateByDepart(){
         var totalRatingByDepart = [];
-        const chartDate = dateUrl[dateUrl.length-1] 
+        const chartDate = dateUrl[dateUrl.length-2] 
         
         console.log(chartDate)
         // var filteredDailySurvey=filterByCompany()  
@@ -135,7 +136,7 @@ const BarChart = props => {
         //     var filteredDailySurvey=filterByDepart(depart)  
         // }
         for(var i=0; i<filteredDailySurveyByDepart.length; i++){
-            if(filteredDailySurveyByDepart[i].dailySurvey.dailySurveyDate === chartDate){
+            if(filteredDailySurveyByDepart[i].dailySurvey.dailySurveyDate === chartDate){ {/* depends on button value */}
             totalRatingByDepart.push(filteredDailySurveyByDepart[i].dailySurvey.dailyTotalRating)
             }
         }
@@ -180,11 +181,11 @@ const BarChart = props => {
         //     var filteredDailySurvey=filterByDepart(depart)  
         // }
         for(var i=0; i<filteredDailySurvey.length; i++){
-            if(filteredDailySurvey[i].dailySurvey.dailySurveyDate === chartDate){
+            if(filteredDailySurvey[i].dailySurvey.dailySurveyDate === chartDate){ {/* depends on button value */}
             rating.push(filteredDailySurvey[i].dailySurvey.dailyTotalRating)
             }
         }
-        // console.log(rating);
+        console.log(rating);
         return rating;
     }
 
@@ -214,10 +215,10 @@ const BarChart = props => {
         var surveySubmit = [];
         // const nameUrl = window.location.href
         // const dateUrl = nameUrl.split('/');
-        const chartDate = dateUrl[dateUrl.length-1] 
+        const chartDate = dateUrl[dateUrl.length-2] 
         // console.log(chartDate)
         for(var i=0; i<filteredDailySurvey.length; i++){
-            if(showEmailArry.includes(filteredDailySurvey[i].dailySurvey.employeeEmail) && filteredDailySurvey[i].dailySurvey.dailySurveyDate === chartDate) {
+            if(showEmailArry.includes(filteredDailySurvey[i].dailySurvey.employeeEmail) && filteredDailySurvey[i].dailySurvey.dailySurveyDate == chartDate) {
                 
 
                 // console.log(filteredDailySurvey[i].dailySurvey)
@@ -231,7 +232,7 @@ const BarChart = props => {
         }
         else {
 
-                // var surveyState = {};
+                var surveyState = {};
                
                 surveyState['email'] = filteredDailySurvey[i].dailySurvey.employeeEmail;
                 surveyState['surveyStatement'] = "unsubmitted";
@@ -256,7 +257,7 @@ const BarChart = props => {
     //global variable
     // var nameUrl = window.location.href
     // const dateUrl = nameUrl.split('/');
-    const surveyType = dateUrl[dateUrl.length-2] 
+    const surveyType = dateUrl[dateUrl.length-3] 
     console.log(surveyType)
 
   
@@ -301,19 +302,20 @@ const BarChart = props => {
         }]
     }
 
-    // const handleFormSubmit = (e) => {
-    //     e.preventDefault();
+    const handleFormSubmit = (e) => {
+        e.preventDefault();
     
-    //     //axios post to /dailySurvey endpoint
+        //axios post to /dailySurvey endpoint
         
-    //   };
+      };
 
    
     return(
        
         <div>
-            { surveyType == "Daily" && employee.role == "admin" ?
+            { surveyType == "Daily" ?
              <div> 
+                <h1>{selectedCompany} Report</h1>
                 <form>
                     <select onChange={e => filterByDepart(e.target.value)}>
                         <option>All</option>
@@ -335,31 +337,11 @@ const BarChart = props => {
                         <Bar data={data} />
                     </div>
             </div>
-            : ( surveyType == "Daily" && employee.role == "superadmin" 
-            ?
-            <div> 
-                <SuperAdminChart />
-            {/* <form>
-                <select>
-                <select onChange={e => filterByDepart()}>
-                        <option>Department</option>
-                        <option value="Meta">Meta</option>
-                        <option value='Martketplace'>Marketplace</option>
-                    </select>
-                </select>
-            </form>
-            <h2>Daily Survey Submission Rate By "Department name"</h2>
-            <Pie data={dataByDepart} />
-            <h2>Daily Total Rating</h2>
-                <div>
-                    <Bar data={data} />
-                </div> */}
-        </div>
-        :<MonthylyBar />
-            )
+            
+            : <SuperAdminMonthly />
             }
         </div>
     )
 }
 
-export default BarChart
+export default SuperAdminChart
