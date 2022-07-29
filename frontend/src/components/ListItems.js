@@ -24,11 +24,6 @@ export const employeeListItems = (
         <img src="/images/dashboard/icons/icon-account.svg" alt="My Account" />
         <ListItemText primary="My Account" sx={{ ml: '10px' }} />
     </ListItemButton>
-
-    <ListItemButton component={RouterLink} to='/app/report'>
-        <img src="/images/dashboard/icons/icon-reports.svg" alt="Reports" />
-        <ListItemText primary="Reports" sx={{ ml: '10px' }} />
-    </ListItemButton>
 </>
 )
 
