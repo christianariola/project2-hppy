@@ -59,7 +59,7 @@ export const adminListItems = (
         Admin Section
     </ListSubheader>
 
-    <ListItemButton component={RouterLink} to='/app/company/settings'>
+    <ListItemButton component={RouterLink} to='/app/company/settings/'>
         <img src="/images/dashboard/icons/icon-survey.svg" alt="Companies" />
         <ListItemText primary="Company" sx={{ ml: '10px' }} />
     </ListItemButton>

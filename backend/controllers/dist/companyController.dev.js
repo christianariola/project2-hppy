@@ -176,14 +176,14 @@ var getCompany = asyncHandler(function _callee3(req, res) {
   });
 });
 var editCompany = asyncHandler(function _callee4(req, res) {
-  var id, _req$body2, name, description, logo, departments, filename, randomName, result, updatedCompany, company, _updatedCompany;
+  var id, _req$body2, name, description, logo, departments, filename, randomName, result, updatedCompany, company, _updatedCompany, _company;
 
   return regeneratorRuntime.async(function _callee4$(_context4) {
     while (1) {
       switch (_context4.prev = _context4.next) {
         case 0:
           id = req.params.companyId;
-          _req$body2 = req.body, name = _req$body2.name, description = _req$body2.description, logo = _req$body2.logo, departments = _req$body2.departments;
+          _req$body2 = req.body, name = _req$body2.name, description = _req$body2.description, logo = _req$body2.logo, departments = _req$body2.departments; // console.log(req.body)
 
           if (mongoose.Types.ObjectId.isValid(id)) {
             _context4.next = 4;
@@ -225,7 +225,13 @@ var editCompany = asyncHandler(function _callee4(req, res) {
             _id: id
           };
           _context4.next = 14;
-          return regeneratorRuntime.awrap(Company.findByIdAndUpdate(id, updatedCompany));
+          return regeneratorRuntime.awrap(Company.findByIdAndUpdate(id, updatedCompany, function (err, success) {
+            if (err) {
+              console.log("Unsuccessful", err);
+            } else {
+              console.log("Successful", success);
+            }
+          }));
 
         case 14:
           company = _context4.sent;
@@ -244,7 +250,7 @@ var editCompany = asyncHandler(function _callee4(req, res) {
           throw new Error('Something went wrong...');
 
         case 21:
-          _context4.next = 24;
+          _context4.next = 33;
           break;
 
         case 23:
@@ -253,15 +259,27 @@ var editCompany = asyncHandler(function _callee4(req, res) {
             description: description,
             departments: departments,
             _id: id
-          }; // const company = await Company.findByIdAndUpdate(id, updatedCompany) 
-          // if(company){
-          //     res.status(201).json(updatedCompany)
-          // } else {
-          //     res.status(401)
-          //     throw new Error('Something went wrong...')
-          // }
+          };
+          _context4.next = 26;
+          return regeneratorRuntime.awrap(Company.findByIdAndUpdate(id, _updatedCompany));
 
-        case 24:
+        case 26:
+          _company = _context4.sent;
+
+          if (!_company) {
+            _context4.next = 31;
+            break;
+          }
+
+          res.status(201).json(_company);
+          _context4.next = 33;
+          break;
+
+        case 31:
+          res.status(401);
+          throw new Error('Something went wrong...');
+
+        case 33:
         case "end":
           return _context4.stop();
       }

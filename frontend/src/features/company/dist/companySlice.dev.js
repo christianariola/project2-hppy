@@ -113,26 +113,25 @@ var editCompany = (0, _toolkit.createAsyncThunk)("company/editCompany", function
       switch (_context4.prev = _context4.next) {
         case 0:
           companyId = _ref.companyId, updatedCompanyData = _ref.updatedCompanyData;
-          console.log(updatedCompanyData);
-          _context4.prev = 2;
-          _context4.next = 5;
+          _context4.prev = 1;
+          _context4.next = 4;
           return regeneratorRuntime.awrap(_companyService["default"].editCompany(updatedCompanyData, companyId));
 
-        case 5:
+        case 4:
           return _context4.abrupt("return", _context4.sent);
 
-        case 8:
-          _context4.prev = 8;
-          _context4.t0 = _context4["catch"](2);
+        case 7:
+          _context4.prev = 7;
+          _context4.t0 = _context4["catch"](1);
           message = _context4.t0.response && _context4.t0.response.data && _context4.t0.response.data.message || _context4.t0.message || _context4.t0.toString();
           return _context4.abrupt("return", thunkAPI.rejectWithValue(message));
 
-        case 12:
+        case 11:
         case "end":
           return _context4.stop();
       }
     }
-  }, null, null, [[2, 8]]);
+  }, null, null, [[1, 7]]);
 }); // Delete company by id
 
 exports.editCompany = editCompany;

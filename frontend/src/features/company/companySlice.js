@@ -75,7 +75,7 @@ export const getCompany = createAsyncThunk(
 export const editCompany = createAsyncThunk(
     "company/editCompany",
     async ({companyId, updatedCompanyData}, thunkAPI) => {
-        console.log(updatedCompanyData)
+        // console.log(updatedCompanyData)
         try {
         return await companyService.editCompany(updatedCompanyData, companyId);
         } catch (error) {

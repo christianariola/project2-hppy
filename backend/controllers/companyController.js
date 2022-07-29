@@ -101,6 +101,8 @@ const editCompany = asyncHandler(async (req, res) => {
     const id = req.params.companyId
     const { name, description, logo, departments } = req.body
 
+    // console.log(req.body)
+
     if(!mongoose.Types.ObjectId.isValid(id)){
         return res.status(404).json({ message: `No company exist with id ${id}` })
     }
@@ -129,7 +131,14 @@ const editCompany = asyncHandler(async (req, res) => {
             _id: id
         }
 
-        const company = await Company.findByIdAndUpdate(id, updatedCompany) 
+        const company = await Company.findByIdAndUpdate(id, updatedCompany,
+            (err, success) => {
+                if(err){
+                    console.log("Unsuccessful", err)
+                } else {
+                    console.log("Successful", success)
+                }
+            })
 
         if(company){
             res.status(201).json(updatedCompany)
@@ -145,14 +154,14 @@ const editCompany = asyncHandler(async (req, res) => {
             _id: id
         }
 
-        // const company = await Company.findByIdAndUpdate(id, updatedCompany) 
+        const company = await Company.findByIdAndUpdate(id, updatedCompany) 
 
-        // if(company){
-        //     res.status(201).json(updatedCompany)
-        // } else {
-        //     res.status(401)
-        //     throw new Error('Something went wrong...')
-        // }
+        if(company){
+            res.status(201).json(company)
+        } else {
+            res.status(401)
+            throw new Error('Something went wrong...')
+        }
     }
 
 
