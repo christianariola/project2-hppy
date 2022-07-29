@@ -46,7 +46,14 @@ const Register = () => {
         // if(isSuccess || employee){
         if(isSuccess){
             console.log("Employee added!")
-            navigate(`/app/company/${companyId}`)
+
+            if(employee.role.toLowerCase() === 'superadmin'){
+                navigate(`/app/company/${companyId}`)
+            } else {
+                navigate(`/app/company/departments`)
+            }
+
+
         }
 
         dispatch(reset())

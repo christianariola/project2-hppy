@@ -209,9 +209,9 @@ const deleteCompany = asyncHandler(async (req, res) => {
 
 const employeeByCompany = asyncHandler(async (req, res) => {
     const empId = req.params.empId
-    // console.log(empId)
-    const employee = await Employee.findOne({ _id: empId })    
 
+    const employee = await Employee.findOne({ _id: empId })    
+    console.log(employee)
     if(empId){
         if(employee){
             res.status(201).json({

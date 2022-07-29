@@ -358,8 +358,7 @@ var employeeByCompany = asyncHandler(function _callee6(req, res) {
     while (1) {
       switch (_context6.prev = _context6.next) {
         case 0:
-          empId = req.params.empId; // console.log(empId)
-
+          empId = req.params.empId;
           _context6.next = 3;
           return regeneratorRuntime.awrap(Employee.findOne({
             _id: empId
@@ -367,14 +366,15 @@ var employeeByCompany = asyncHandler(function _callee6(req, res) {
 
         case 3:
           employee = _context6.sent;
+          console.log(employee);
 
           if (!empId) {
-            _context6.next = 11;
+            _context6.next = 12;
             break;
           }
 
           if (!employee) {
-            _context6.next = 9;
+            _context6.next = 10;
             break;
           }
 
@@ -387,14 +387,14 @@ var employeeByCompany = asyncHandler(function _callee6(req, res) {
             role: employee.role,
             job_title: employee.jobTitle
           }, _defineProperty(_res$status$json, "role", employee.role), _defineProperty(_res$status$json, "company_id", employee.company_id), _defineProperty(_res$status$json, "company_name", employee.company_name), _defineProperty(_res$status$json, "department_id", employee.department_id), _defineProperty(_res$status$json, "department_name", employee.department_name), _res$status$json));
-          _context6.next = 11;
+          _context6.next = 12;
           break;
 
-        case 9:
+        case 10:
           res.status(401);
           throw new Error('No data found');
 
-        case 11:
+        case 12:
         case "end":
           return _context6.stop();
       }
