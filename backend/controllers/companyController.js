@@ -99,13 +99,33 @@ const getCompany = asyncHandler(async (req, res) => {
 const editCompany = asyncHandler(async (req, res) => {
 
     const id = req.params.companyId
-    const { name, description, logo, departments } = req.body
+    const { name, description, logo, newDeptArr, removeOldArr } = req.body
 
     // console.log(req.body)
 
     if(!mongoose.Types.ObjectId.isValid(id)){
         return res.status(404).json({ message: `No company exist with id ${id}` })
     }
+
+    // query company departments with employees
+    const deptEmployees = Company.findOne({"_id": id}).then(doc => {
+
+        // console.log(departments)
+        item = doc.departments;
+
+        const deptDoc = item.filter(ar => !removeOldArr.find(rm => (rm.deptName === ar.deptName) ))
+        const empInsert = [...deptDoc, ...newDeptArr]
+
+
+        doc["departments"] = empInsert;
+        // console.log(doc["departments"])
+        doc.save();
+
+    //sent respnse to client
+    }).catch(err => {
+    console.log('Oh! Dark', err)
+    });
+
 
     if(logo){
         const filename = name.trim().toLowerCase()
@@ -127,7 +147,7 @@ const editCompany = asyncHandler(async (req, res) => {
                 public_id: result.public_id,
                 url: result.secure_url
             },
-            departments,
+            // departments,
             _id: id
         }
 
@@ -150,7 +170,7 @@ const editCompany = asyncHandler(async (req, res) => {
         const updatedCompany = {
             name,
             description,
-            departments,
+            // departments,
             _id: id
         }
 
@@ -299,30 +319,6 @@ const editEmployee = asyncHandler(async (req, res) => {
             jobTitle,
         }
     }
-
-    // const company = Company.updateOne({
-    //     // "_id": '62df922b736253a622c857df',
-    //     "departments._id": department_id
-    // },
-    // {
-    //     $push: {
-    //         "departments.$[departments].employees": empData
-    //     }
-    // },
-    // {
-    //     arrayFilters: [
-    //         {
-    //         "departments._id": department_id
-    //         }
-    //     ]
-    // },
-    // (err, success) => {
-    //     if(err){
-    //         console.log("Unsuccessful", err)
-    //     } else {
-    //         console.log("Successful", success)
-    //     }
-    // })
 
     const company = Company.findOne({"departments._id": department_id}).then(doc => {
         item = doc.departments.id(department_id);

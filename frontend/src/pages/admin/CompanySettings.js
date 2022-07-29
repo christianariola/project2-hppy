@@ -90,7 +90,53 @@ const CompanySettings = () => {
     const onSubmit = (e) => {
         e.preventDefault()
 
-        const deptObj = departments.map(function(department) {
+        const sortEntriesByKey = ([a], [b]) => a.localeCompare(b),
+        filter = deptData.reduce((r, o) => {
+            Object
+                .entries(o)
+                .sort(sortEntriesByKey)
+                .reduce((o, [k, v]) => (o[k] ??= {})[v] ??= {}, r);
+            return r;
+        }, {});
+        const newDept = departments.filter((o) => {
+            let f = filter;
+            return !Object
+                .entries(o)
+                .sort(sortEntriesByKey)
+                .every(([k, v]) => f = f[k]?.[v]);
+        });
+
+        // console.log(deptData)
+        // console.log(departments)
+        console.log(newDept)
+
+        const filter2 = departments.reduce((r, o) => {
+            Object
+                .entries(o)
+                .sort(sortEntriesByKey)
+                .reduce((o, [k, v]) => (o[k] ??= {})[v] ??= {}, r);
+            return r;
+        }, {});
+        const removeOld = deptData.filter((o) => {
+            let f = filter2;
+            return !Object
+                .entries(o)
+                .sort(sortEntriesByKey)
+                .every(([k, v]) => f = f[k]?.[v]);
+        });
+
+        console.log(removeOld)
+
+        const newDeptArr = newDept.map(function(department) {
+            // create a new object to store dept name.
+            var newObj = {};
+            newObj["deptName"] = department;
+    
+            // // return our new object.
+            return newObj;
+        });
+
+        const removeOldArr = removeOld.map(function(department) {
             // create a new object to store dept name.
             var newObj = {};
             newObj["deptName"] = department;
@@ -103,14 +149,13 @@ const CompanySettings = () => {
             name,
             description,
             logo: image,
-            departments: deptObj,
+            newDeptArr: newDeptArr,
+            removeOldArr: removeOldArr,
         }
-
 
         const companyId = employee.company_id
         dispatch(editCompany({companyId, updatedCompanyData}))
-        navigate('/app/company/settings')
-    
+        navigate('/app/companies')
 
     }
 

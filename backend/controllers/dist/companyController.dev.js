@@ -1,5 +1,7 @@
 "use strict";
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -7,8 +9,6 @@ function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread n
 function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var asyncHandler = require('express-async-handler');
 
@@ -176,14 +176,14 @@ var getCompany = asyncHandler(function _callee3(req, res) {
   });
 });
 var editCompany = asyncHandler(function _callee4(req, res) {
-  var id, _req$body2, name, description, logo, departments, filename, randomName, result, updatedCompany, company, _updatedCompany, _company;
+  var id, _req$body2, name, description, logo, newDeptArr, removeOldArr, deptEmployees, filename, randomName, result, updatedCompany, company, _updatedCompany, _company;
 
   return regeneratorRuntime.async(function _callee4$(_context4) {
     while (1) {
       switch (_context4.prev = _context4.next) {
         case 0:
           id = req.params.companyId;
-          _req$body2 = req.body, name = _req$body2.name, description = _req$body2.description, logo = _req$body2.logo, departments = _req$body2.departments; // console.log(req.body)
+          _req$body2 = req.body, name = _req$body2.name, description = _req$body2.description, logo = _req$body2.logo, newDeptArr = _req$body2.newDeptArr, removeOldArr = _req$body2.removeOldArr; // console.log(req.body)
 
           if (mongoose.Types.ObjectId.isValid(id)) {
             _context4.next = 4;
@@ -195,14 +195,33 @@ var editCompany = asyncHandler(function _callee4(req, res) {
           }));
 
         case 4:
+          // query company departments with employees
+          deptEmployees = Company.findOne({
+            "_id": id
+          }).then(function (doc) {
+            // console.log(departments)
+            item = doc.departments;
+            var deptDoc = item.filter(function (ar) {
+              return !removeOldArr.find(function (rm) {
+                return rm.deptName === ar.deptName;
+              });
+            });
+            var empInsert = [].concat(_toConsumableArray(deptDoc), _toConsumableArray(newDeptArr));
+            doc["departments"] = empInsert; // console.log(doc["departments"])
+
+            doc.save(); //sent respnse to client
+          })["catch"](function (err) {
+            console.log('Oh! Dark', err);
+          });
+
           if (!logo) {
-            _context4.next = 23;
+            _context4.next = 24;
             break;
           }
 
           filename = name.trim().toLowerCase();
           randomName = generateString(8);
-          _context4.next = 9;
+          _context4.next = 10;
           return regeneratorRuntime.awrap(cloudinary.uploader.upload(logo, {
             upload_preset: 'unsigned_uploads',
             public_id: "".concat(filename, "-").concat(randomName),
@@ -211,7 +230,7 @@ var editCompany = asyncHandler(function _callee4(req, res) {
             crop: "scale"
           }));
 
-        case 9:
+        case 10:
           result = _context4.sent;
           console.log(result);
           updatedCompany = {
@@ -221,10 +240,10 @@ var editCompany = asyncHandler(function _callee4(req, res) {
               public_id: result.public_id,
               url: result.secure_url
             },
-            departments: departments,
+            // departments,
             _id: id
           };
-          _context4.next = 14;
+          _context4.next = 15;
           return regeneratorRuntime.awrap(Company.findByIdAndUpdate(id, updatedCompany, function (err, success) {
             if (err) {
               console.log("Unsuccessful", err);
@@ -233,53 +252,53 @@ var editCompany = asyncHandler(function _callee4(req, res) {
             }
           }));
 
-        case 14:
+        case 15:
           company = _context4.sent;
 
           if (!company) {
-            _context4.next = 19;
+            _context4.next = 20;
             break;
           }
 
           res.status(201).json(updatedCompany);
-          _context4.next = 21;
+          _context4.next = 22;
           break;
 
-        case 19:
+        case 20:
           res.status(401);
           throw new Error('Something went wrong...');
 
-        case 21:
-          _context4.next = 33;
+        case 22:
+          _context4.next = 34;
           break;
 
-        case 23:
+        case 24:
           _updatedCompany = {
             name: name,
             description: description,
-            departments: departments,
+            // departments,
             _id: id
           };
-          _context4.next = 26;
+          _context4.next = 27;
           return regeneratorRuntime.awrap(Company.findByIdAndUpdate(id, _updatedCompany));
 
-        case 26:
+        case 27:
           _company = _context4.sent;
 
           if (!_company) {
-            _context4.next = 31;
+            _context4.next = 32;
             break;
           }
 
           res.status(201).json(_company);
-          _context4.next = 33;
+          _context4.next = 34;
           break;
 
-        case 31:
+        case 32:
           res.status(401);
           throw new Error('Something went wrong...');
 
-        case 33:
+        case 34:
         case "end":
           return _context4.stop();
       }
@@ -500,30 +519,7 @@ var editEmployee = asyncHandler(function _callee8(req, res) {
               email: email,
               jobTitle: jobTitle
             };
-          } // const company = Company.updateOne({
-          //     // "_id": '62df922b736253a622c857df',
-          //     "departments._id": department_id
-          // },
-          // {
-          //     $push: {
-          //         "departments.$[departments].employees": empData
-          //     }
-          // },
-          // {
-          //     arrayFilters: [
-          //         {
-          //         "departments._id": department_id
-          //         }
-          //     ]
-          // },
-          // (err, success) => {
-          //     if(err){
-          //         console.log("Unsuccessful", err)
-          //     } else {
-          //         console.log("Successful", success)
-          //     }
-          // })
-
+          }
 
           company = Company.findOne({
             "departments._id": department_id
