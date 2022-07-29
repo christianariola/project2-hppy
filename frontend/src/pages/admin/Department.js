@@ -1,16 +1,19 @@
 import { useState, useEffect } from "react"
-import { Link as RouterLink, useParams } from 'react-router-dom';
+import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import { useSelector, useDispatch } from 'react-redux'
 import { getCompany, deleteEmployee } from "../../features/company/companySlice"
-import Logo from "./Logo"
+import Logo from "../../components/company/Logo"
 
 
-const ViewCompany = () => {
+const Department = () => {
 
-    let { companyId } = useParams(); 
+    const { employee } = useSelector(state => state.auth)
+    let companyId = employee.company_id; 
 
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+
     const { company } = useSelector(state => state.company)
     const [reload, setReload] = useState(false)
     useEffect(() => {
@@ -26,27 +29,22 @@ const ViewCompany = () => {
             dispatch(deleteEmployee({empId, compempId}))
         }
 
+        navigate(`/app/company/departments`)
         setReload(true)
     }
 
-
-    // console.log(company)
     return <>
-        <h2>View Company</h2>
-        <Logo logo={company.logo} />
-        <p>Name: {company.name}</p>
-        <p>Description: {company.description}</p>
-
-        <p>Departments</p>
+        <h2>Department List</h2>
         <ul>
         {company.departments && company.departments.map((item, index) => <div key={index}>
             <li>{item.deptName}
             <ul>
-            {item.employees.map((employee, index) => 
-                <li key={index}>
-                    <Link component={RouterLink} to={`/app/company/${companyId}/employee/view/${employee.employee_id}`}>{employee.firstName} {employee.lastName}</Link>
-                    <Link component={RouterLink} to={`/app/company/${companyId}/employee/edit/${employee.employee_id}`} sx={{ my: 1, mx: 1.5 }}>Edit</Link>
-                    <button onClick={() => handleDelete(employee.employee_id, employee._id)}>Delete</button>
+            {item.employees.map((emplo, index) => 
+
+                <li key={index}>{emplo.email !== employee.email ? "" : ""}
+                    {emplo.email !== employee.email ? <Link component={RouterLink} to={`/app/company/${companyId}/employee/view/${emplo.employee_id}`}>{emplo.firstName} {emplo.lastName}</Link> : ''}
+                    {emplo.email !== employee.email ? <Link component={RouterLink} to={`/app/company/${companyId}/employee/edit/${emplo.employee_id}`} sx={{ my: 1, mx: 1.5 }}>Edit</Link> : ''}
+                    {emplo.email !== employee.email ? <button onClick={() => handleDelete(emplo.employee_id, emplo._id)}>Delete</button> : ''}
                 </li>
             )}
             </ul>
@@ -55,9 +53,7 @@ const ViewCompany = () => {
         </ul>
 
         <Link component={RouterLink} to={`/app/company/${companyId}/employee/add`} variant="button" sx={{ my: 1, mx: 1.5 }}>Add Employee</Link>
-
-        
     </>
 }
 
-export default ViewCompany
+export default Department

@@ -46,7 +46,14 @@ const Register = () => {
         // if(isSuccess || employee){
         if(isSuccess){
             console.log("Employee added!")
-            navigate(`/app/company/${companyId}`)
+
+            if(employee.role.toLowerCase() === 'superadmin'){
+                navigate(`/app/company/${companyId}`)
+            } else {
+                navigate(`/app/company/departments`)
+            }
+
+
         }
 
         dispatch(reset())
@@ -82,11 +89,33 @@ const Register = () => {
         dispatch(addEmployee(employeeData))
     }
 
+
+    if(company){
+        let employeeDoc
+        for (var i = 0, l = company.departments.length; i < l; i++) {
+            var departments = company.departments[i];
+    
+            for (var j = 0, h = departments.employees.length; j < h; j++) {
+                var isAdmin = departments.employees[j].isAdmin;
+                var isManager = departments.employees[j].isManager;
+    
+            }
+ 
+            console.log(isAdmin)
+            // employees.find((admin) => admin.isAdmin === true)
+    
+        }
+    }
+
     if(isLoading) {
         return "Loading... please wait."
     }
 
-    const userRoles = ["Employee", "Manager", "Admin"]
+    let userRoles = ["Employee", "Manager", "Admin"]
+    if(isAdmin){
+        userRoles = ["Employee", "Manager"]
+    } 
+
 
     return <>
         <section>

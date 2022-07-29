@@ -1,7 +1,10 @@
 const asyncHandler = require('express-async-handler')
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs')
+
 const { default: mongoose } = require('mongoose')
 const cloudinary = require("../cloudinary/cloudinary")
+
 const Company = require('../models/companyModel')
 const Employee = require('../models/employeeModel')
 
@@ -96,11 +99,33 @@ const getCompany = asyncHandler(async (req, res) => {
 const editCompany = asyncHandler(async (req, res) => {
 
     const id = req.params.companyId
-    const { name, description, logo, departments } = req.body
+    const { name, description, logo, newDeptArr, removeOldArr } = req.body
+
+    // console.log(req.body)
 
     if(!mongoose.Types.ObjectId.isValid(id)){
         return res.status(404).json({ message: `No company exist with id ${id}` })
     }
+
+    // query company departments with employees
+    const deptEmployees = Company.findOne({"_id": id}).then(doc => {
+
+        // console.log(departments)
+        item = doc.departments;
+
+        const deptDoc = item.filter(ar => !removeOldArr.find(rm => (rm.deptName === ar.deptName) ))
+        const empInsert = [...deptDoc, ...newDeptArr]
+
+
+        doc["departments"] = empInsert;
+        // console.log(doc["departments"])
+        doc.save();
+
+    //sent respnse to client
+    }).catch(err => {
+    console.log('Oh! Dark', err)
+    });
+
 
     if(logo){
         const filename = name.trim().toLowerCase()
@@ -122,11 +147,18 @@ const editCompany = asyncHandler(async (req, res) => {
                 public_id: result.public_id,
                 url: result.secure_url
             },
-            departments,
+            // departments,
             _id: id
         }
 
-        const company = await Company.findByIdAndUpdate(id, updatedCompany) 
+        const company = await Company.findByIdAndUpdate(id, updatedCompany,
+            (err, success) => {
+                if(err){
+                    console.log("Unsuccessful", err)
+                } else {
+                    console.log("Successful", success)
+                }
+            })
 
         if(company){
             res.status(201).json(updatedCompany)
@@ -138,18 +170,18 @@ const editCompany = asyncHandler(async (req, res) => {
         const updatedCompany = {
             name,
             description,
-            departments,
+            // departments,
             _id: id
         }
 
-        // const company = await Company.findByIdAndUpdate(id, updatedCompany) 
+        const company = await Company.findByIdAndUpdate(id, updatedCompany) 
 
-        // if(company){
-        //     res.status(201).json(updatedCompany)
-        // } else {
-        //     res.status(401)
-        //     throw new Error('Something went wrong...')
-        // }
+        if(company){
+            res.status(201).json(company)
+        } else {
+            res.status(401)
+            throw new Error('Something went wrong...')
+        }
     }
 
 
@@ -177,9 +209,9 @@ const deleteCompany = asyncHandler(async (req, res) => {
 
 const employeeByCompany = asyncHandler(async (req, res) => {
     const empId = req.params.empId
-    // console.log(empId)
-    const employee = await Employee.findOne({ _id: empId })    
 
+    const employee = await Employee.findOne({ _id: empId })    
+    console.log(employee)
     if(empId){
         if(employee){
             res.status(201).json({
@@ -250,6 +282,108 @@ const deleteEmployee = asyncHandler(async (req, res) => {
 })
 
 const editEmployee = asyncHandler(async (req, res) => {
+
+    const {empId} = req.params
+
+    const {department_id, department_name, employeeNumber, firstName, lastName, email, role, jobTitle, password} = req.body
+
+    // updating company collection nested document
+    let empData = []
+    if(role == 'manager'){
+        empData = {
+            employee_id: empId,
+            employeeNumber,
+            firstName,
+            lastName,
+            email,
+            jobTitle,
+            isManager: true
+        }
+    } else if(role == 'admin'){
+        empData = {
+            employee_id: empId,
+            employeeNumber,
+            firstName,
+            lastName,
+            email,
+            jobTitle,
+            isAdmin: true
+        }
+    } else {
+        empData = {
+            employee_id: empId,
+            employeeNumber,
+            firstName,
+            lastName,
+            email,
+            jobTitle,
+        }
+    }
+
+    const company = Company.findOne({"departments._id": department_id}).then(doc => {
+        item = doc.departments.id(department_id);
+
+        // console.log(item.employees)
+        const employeeDoc = item.employees.filter((employees) => employees.email !== email)
+        const empInsert = [...employeeDoc, empData]
+
+        // console.log(empInsert)
+        item["employees"] = empInsert;
+
+        doc.save();
+    //sent respnse to client
+    }).catch(err => {
+    console.log('Oh! Dark', err)
+    });
+
+    let employeeData 
+    if(password){
+
+        // Password encyptions
+        const salt = await bcrypt.genSalt(10)
+        const hashedPassword = await bcrypt.hash(password, salt)
+
+        employeeData = {
+            employeeNumber,
+            firstName,
+            lastName,
+            email,
+            role: role.toLowerCase(),
+            jobTitle,
+            password: hashedPassword,
+            department_id,
+            department_name,
+        }
+    } else {
+        employeeData = {
+            employeeNumber,
+            firstName,
+            lastName,
+            email,
+            role: role.toLowerCase(),
+            jobTitle,
+            department_id,
+            department_name,
+        }
+    }
+
+    const employee = Employee.findByIdAndUpdate(empId, employeeData,
+    (err, success) => {
+        if(err){
+            // console.log("Unsuccessful", err)
+        } else {
+            // console.log("Successful", success)
+        }
+    })
+
+    if(employee && company) {
+        res.status(201).json({
+            message: "Success"
+        })
+    } else {
+        res.status(400)
+        throw new Error('Invalid user data')
+    }
 })
 
 

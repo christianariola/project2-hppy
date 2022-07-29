@@ -46,6 +46,12 @@ const deleteEmployee = async (empId, compempId) => {
     return response.data
 }
 
+const updateEmployee = async (updatedEmployeeData, empId) => {
+    const response = await axios.patch(API_URL + `/employee/${empId}`, updatedEmployeeData)
+
+    return response.data
+}
+
 const companyService = {
     addCompany,
     getCompanyList,
@@ -54,6 +60,7 @@ const companyService = {
     deleteCompany,
     getEmployee,
     deleteEmployee,
+    updateEmployee,
 }
 
 export default companyService

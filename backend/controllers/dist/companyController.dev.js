@@ -2,9 +2,19 @@
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 var asyncHandler = require('express-async-handler');
 
 var jwt = require('jsonwebtoken');
+
+var bcrypt = require('bcryptjs');
 
 var _require = require('mongoose'),
     mongoose = _require["default"];
@@ -166,14 +176,14 @@ var getCompany = asyncHandler(function _callee3(req, res) {
   });
 });
 var editCompany = asyncHandler(function _callee4(req, res) {
-  var id, _req$body2, name, description, logo, departments, filename, randomName, result, updatedCompany, company, _updatedCompany;
+  var id, _req$body2, name, description, logo, newDeptArr, removeOldArr, deptEmployees, filename, randomName, result, updatedCompany, company, _updatedCompany, _company;
 
   return regeneratorRuntime.async(function _callee4$(_context4) {
     while (1) {
       switch (_context4.prev = _context4.next) {
         case 0:
           id = req.params.companyId;
-          _req$body2 = req.body, name = _req$body2.name, description = _req$body2.description, logo = _req$body2.logo, departments = _req$body2.departments;
+          _req$body2 = req.body, name = _req$body2.name, description = _req$body2.description, logo = _req$body2.logo, newDeptArr = _req$body2.newDeptArr, removeOldArr = _req$body2.removeOldArr; // console.log(req.body)
 
           if (mongoose.Types.ObjectId.isValid(id)) {
             _context4.next = 4;
@@ -185,14 +195,33 @@ var editCompany = asyncHandler(function _callee4(req, res) {
           }));
 
         case 4:
+          // query company departments with employees
+          deptEmployees = Company.findOne({
+            "_id": id
+          }).then(function (doc) {
+            // console.log(departments)
+            item = doc.departments;
+            var deptDoc = item.filter(function (ar) {
+              return !removeOldArr.find(function (rm) {
+                return rm.deptName === ar.deptName;
+              });
+            });
+            var empInsert = [].concat(_toConsumableArray(deptDoc), _toConsumableArray(newDeptArr));
+            doc["departments"] = empInsert; // console.log(doc["departments"])
+
+            doc.save(); //sent respnse to client
+          })["catch"](function (err) {
+            console.log('Oh! Dark', err);
+          });
+
           if (!logo) {
-            _context4.next = 23;
+            _context4.next = 24;
             break;
           }
 
           filename = name.trim().toLowerCase();
           randomName = generateString(8);
-          _context4.next = 9;
+          _context4.next = 10;
           return regeneratorRuntime.awrap(cloudinary.uploader.upload(logo, {
             upload_preset: 'unsigned_uploads',
             public_id: "".concat(filename, "-").concat(randomName),
@@ -201,7 +230,7 @@ var editCompany = asyncHandler(function _callee4(req, res) {
             crop: "scale"
           }));
 
-        case 9:
+        case 10:
           result = _context4.sent;
           console.log(result);
           updatedCompany = {
@@ -211,47 +240,65 @@ var editCompany = asyncHandler(function _callee4(req, res) {
               public_id: result.public_id,
               url: result.secure_url
             },
-            departments: departments,
+            // departments,
             _id: id
           };
-          _context4.next = 14;
-          return regeneratorRuntime.awrap(Company.findByIdAndUpdate(id, updatedCompany));
+          _context4.next = 15;
+          return regeneratorRuntime.awrap(Company.findByIdAndUpdate(id, updatedCompany, function (err, success) {
+            if (err) {
+              console.log("Unsuccessful", err);
+            } else {
+              console.log("Successful", success);
+            }
+          }));
 
-        case 14:
+        case 15:
           company = _context4.sent;
 
           if (!company) {
-            _context4.next = 19;
+            _context4.next = 20;
             break;
           }
 
           res.status(201).json(updatedCompany);
-          _context4.next = 21;
+          _context4.next = 22;
           break;
 
-        case 19:
+        case 20:
           res.status(401);
           throw new Error('Something went wrong...');
 
-        case 21:
-          _context4.next = 24;
+        case 22:
+          _context4.next = 34;
           break;
 
-        case 23:
+        case 24:
           _updatedCompany = {
             name: name,
             description: description,
-            departments: departments,
+            // departments,
             _id: id
-          }; // const company = await Company.findByIdAndUpdate(id, updatedCompany) 
-          // if(company){
-          //     res.status(201).json(updatedCompany)
-          // } else {
-          //     res.status(401)
-          //     throw new Error('Something went wrong...')
-          // }
+          };
+          _context4.next = 27;
+          return regeneratorRuntime.awrap(Company.findByIdAndUpdate(id, _updatedCompany));
 
-        case 24:
+        case 27:
+          _company = _context4.sent;
+
+          if (!_company) {
+            _context4.next = 32;
+            break;
+          }
+
+          res.status(201).json(_company);
+          _context4.next = 34;
+          break;
+
+        case 32:
+          res.status(401);
+          throw new Error('Something went wrong...');
+
+        case 34:
         case "end":
           return _context4.stop();
       }
@@ -311,8 +358,7 @@ var employeeByCompany = asyncHandler(function _callee6(req, res) {
     while (1) {
       switch (_context6.prev = _context6.next) {
         case 0:
-          empId = req.params.empId; // console.log(empId)
-
+          empId = req.params.empId;
           _context6.next = 3;
           return regeneratorRuntime.awrap(Employee.findOne({
             _id: empId
@@ -320,14 +366,15 @@ var employeeByCompany = asyncHandler(function _callee6(req, res) {
 
         case 3:
           employee = _context6.sent;
+          console.log(employee);
 
           if (!empId) {
-            _context6.next = 11;
+            _context6.next = 12;
             break;
           }
 
           if (!employee) {
-            _context6.next = 9;
+            _context6.next = 10;
             break;
           }
 
@@ -340,14 +387,14 @@ var employeeByCompany = asyncHandler(function _callee6(req, res) {
             role: employee.role,
             job_title: employee.jobTitle
           }, _defineProperty(_res$status$json, "role", employee.role), _defineProperty(_res$status$json, "company_id", employee.company_id), _defineProperty(_res$status$json, "company_name", employee.company_name), _defineProperty(_res$status$json, "department_id", employee.department_id), _defineProperty(_res$status$json, "department_name", employee.department_name), _res$status$json));
-          _context6.next = 11;
+          _context6.next = 12;
           break;
 
-        case 9:
+        case 10:
           res.status(401);
           throw new Error('No data found');
 
-        case 11:
+        case 12:
         case "end":
           return _context6.stop();
       }
@@ -432,10 +479,128 @@ var deleteEmployee = asyncHandler(function _callee7(req, res) {
   }, null, null, [[3, 19]]);
 });
 var editEmployee = asyncHandler(function _callee8(req, res) {
+  var empId, _req$body3, department_id, department_name, employeeNumber, firstName, lastName, email, role, jobTitle, password, empData, company, employeeData, salt, hashedPassword, employee;
+
   return regeneratorRuntime.async(function _callee8$(_context8) {
     while (1) {
       switch (_context8.prev = _context8.next) {
         case 0:
+          empId = req.params.empId;
+          _req$body3 = req.body, department_id = _req$body3.department_id, department_name = _req$body3.department_name, employeeNumber = _req$body3.employeeNumber, firstName = _req$body3.firstName, lastName = _req$body3.lastName, email = _req$body3.email, role = _req$body3.role, jobTitle = _req$body3.jobTitle, password = _req$body3.password; // updating company collection nested document
+
+          empData = [];
+
+          if (role == 'manager') {
+            empData = {
+              employee_id: empId,
+              employeeNumber: employeeNumber,
+              firstName: firstName,
+              lastName: lastName,
+              email: email,
+              jobTitle: jobTitle,
+              isManager: true
+            };
+          } else if (role == 'admin') {
+            empData = {
+              employee_id: empId,
+              employeeNumber: employeeNumber,
+              firstName: firstName,
+              lastName: lastName,
+              email: email,
+              jobTitle: jobTitle,
+              isAdmin: true
+            };
+          } else {
+            empData = {
+              employee_id: empId,
+              employeeNumber: employeeNumber,
+              firstName: firstName,
+              lastName: lastName,
+              email: email,
+              jobTitle: jobTitle
+            };
+          }
+
+          company = Company.findOne({
+            "departments._id": department_id
+          }).then(function (doc) {
+            item = doc.departments.id(department_id); // console.log(item.employees)
+
+            var employeeDoc = item.employees.filter(function (employees) {
+              return employees.email !== email;
+            });
+            var empInsert = [].concat(_toConsumableArray(employeeDoc), [empData]); // console.log(empInsert)
+
+            item["employees"] = empInsert;
+            doc.save(); //sent respnse to client
+          })["catch"](function (err) {
+            console.log('Oh! Dark', err);
+          });
+
+          if (!password) {
+            _context8.next = 15;
+            break;
+          }
+
+          _context8.next = 8;
+          return regeneratorRuntime.awrap(bcrypt.genSalt(10));
+
+        case 8:
+          salt = _context8.sent;
+          _context8.next = 11;
+          return regeneratorRuntime.awrap(bcrypt.hash(password, salt));
+
+        case 11:
+          hashedPassword = _context8.sent;
+          employeeData = {
+            employeeNumber: employeeNumber,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            role: role.toLowerCase(),
+            jobTitle: jobTitle,
+            password: hashedPassword,
+            department_id: department_id,
+            department_name: department_name
+          };
+          _context8.next = 16;
+          break;
+
+        case 15:
+          employeeData = {
+            employeeNumber: employeeNumber,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            role: role.toLowerCase(),
+            jobTitle: jobTitle,
+            department_id: department_id,
+            department_name: department_name
+          };
+
+        case 16:
+          employee = Employee.findByIdAndUpdate(empId, employeeData, function (err, success) {
+            if (err) {// console.log("Unsuccessful", err)
+            } else {// console.log("Successful", success)
+              }
+          });
+
+          if (!(employee && company)) {
+            _context8.next = 21;
+            break;
+          }
+
+          res.status(201).json({
+            message: "Success"
+          });
+          _context8.next = 23;
+          break;
+
+        case 21:
+          res.status(400);
+          throw new Error('Invalid user data');
+
+        case 23:
         case "end":
           return _context8.stop();
       }
