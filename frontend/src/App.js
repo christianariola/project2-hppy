@@ -26,7 +26,7 @@ import Password from "./pages/Password";
 import BarChart from "./pages/report/BarChart";
 
 
-import Myaccount from  './pages/Myaccout'
+// import Myaccount from  './pages/Myaccout'
 
 import Department from './pages/report/Department'
 
@@ -41,7 +41,7 @@ import ViewEmployee from "./components/employee/ViewEmployee";
 import EditEmployee from "./components/employee/EditEmployee";
 
 import CompanySettings from './pages/admin/CompanySettings'
-import Department from './pages/admin/Department'
+import DepartmentAdmin from './pages/admin/Department'
 
 const App = () => {
 
@@ -134,7 +134,7 @@ const App = () => {
             {/* Admin Only */}
             <Route element={<RequireAuth allowedRoles={["admin"]} />}>
               <Route path="company/settings" element={<CompanySettings />}></Route>
-              <Route path="company/departments" element={<Department />}></Route>
+              <Route path="company/departments" element={<DepartmentAdmin />}></Route>
             </Route>
 
             {/* Super Admin Only */}
