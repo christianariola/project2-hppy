@@ -133,7 +133,21 @@ app.post("/monthlySurveys", (req, res) => {
     }
   });
 });
+app.patch("/monthlySurveys", async (req, res, error) => {
+  try {
+    let query = { surveyid: req.body.surveyid }
+    const updatedDoc = await MonthlySurvey.findOne(query)
+    await updatedDoc.updateOne(req.body)
+    const result = await MonthlySurvey.findOne(query)
+    console.log(result)
+  }
+  catch (error) {
+    console.error(error);
+  }
+  
+  // console.log(req.body)
 
+});
 
 app.get('/monthlySurveys', (req, res) => {
   MonthlySurvey.find({})
@@ -151,6 +165,7 @@ app.get('/monthlySurveys', (req, res) => {
 
 //employee Survey Schema
 const Employee = require("./models/employeeModel");
+const { update } = require("./models/employeeModel");
 
 //post employee
 app.post("/getEmployeeAll", (req, res) => {
@@ -200,61 +215,28 @@ app.use(errorHandler);
 // ===== Node-schedular ======= 
 // cron tab for every month format: 
 // const scheduleDate = new Date('0 0 1 * *');
-const scheduleDate = new Date('* * * * *');
 
+//  in order to do not compomise data just before presentation, this function commented out
+// const scheduleDate = new Date('* * * * *');
 
-const job = schedule.scheduleJob(scheduleDate, function () {
+// const job = schedule.scheduleJob(scheduleDate, function () {
+  //   getEmployeeEmail()
+  // console.log("A new survey has to bee send to mongoDB at:", new Date().toString());
   
-  console.log("A new survey has to bee send to mongoDB at:", new Date().toString());
-//   // run().catch(console.dir);
+// });
 
 
-	    
-
-
-
-
-
-
-
-  // app.post("/monthlySurveys", (req, res) => {
-
-  //   let monthlySurvey = new MonthlySurvey(req.body);
-    
-
-
-
-
-  // monthlySurvey.save((err) => {
-  //   if (err) {
-  //     console.log(err.response.data);
-  //     err.code === 11000
-  //       ? res.status(400).json({
-  //           message: "Monthly Survey Already Exists",
-  //         })
-  //       : res.status(400).send(err);
-  //   } else {
-  //     console.log(res);
-  //     res.status(201).json({
-  //       message: "New Monthly Survey Saved",
-  //       Survey: monthlySurvey,
-  //     });
-  //   }
-  // });
-  // });
-  
-});
-    // take all employee emails 
+// create a dateHandler for date variable
 const dateHandler = () => {
     let newDate = new Date();
     let month = newDate.getMonth() + 1;
     let year = newDate.getFullYear();
     // console.log(`${year}${month<10?`0${month}`:`${month}`}${date}`)
-    setMonthlySurveyDate(
+    return (
       `${year}${month < 10 ? `0${month}` : `${month}`}`
     );
   };
-
+    // take all employee emails 
 const getEmployeeEmail = function () {
   date = dateHandler();
               Employee.find({})
@@ -266,11 +248,11 @@ const getEmployeeEmail = function () {
           // let test = 'tester.Rod@twitter.com'
           // console.log(emp.email)
            let updateValue = {
-        surveyid: test,
+        surveyid: emp.email+202205,
         employeeEmail: emp.email,
-        surveyName: `Survey${date}`,
+        surveyName: `Survey${202205}`,
         surveyType: "monthlySurvey",
-        createdDate: "2022-07-21",
+        createdDate: "202205",
         surveyStatus: "incompleated",
         surveyOpened: false,
         monthlySurvey: {
@@ -291,16 +273,18 @@ const getEmployeeEmail = function () {
            }
           
           
-        MonthlySurvey.updateMany({ 'employeeEmail': emp.email }, updateValue, function (error, docs) {
+          MonthlySurvey.updateMany({ 'employeeEmail': emp.email },
+         
+         
+          // MonthlySurvey.save({ 'employeeEmail': emp.email },
+            
+            updateValue, function (error, docs) {
             if (error) {
               console.log(error)
             } else {
               console.log(docs)
             }
           })
-         
-          
-        // foundItem.updateOne(updateValue)  
         })
       }
   })

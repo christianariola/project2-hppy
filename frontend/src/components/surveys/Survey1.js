@@ -1,15 +1,17 @@
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import padSequences from "../helper/paddedSeq";
+import padSequences from "../../components/helper/paddedSeq.js";
 import * as tf from "@tensorflow/tfjs";
 // import { get } from "http";
 // import { getTimeMeasureUtils } from "@reduxjs/toolkit/dist/utils";
 
-const Survey1 = ({choosenSurvey}) => {
+const Survey1 = ({ choosenSurvey,  setOpenSurvey }) => {
   // bring in employee state from redux store
   const { employee } = useSelector((state) => state.auth);
-    console.log(choosenSurvey)
+  // console.log(choosenSurvey)
+  // let mongoID = choosenSurvey._id
+  // console.log(mongoID);
   let q1 = "Q1: How satisfied or dissatisfied are you with your ability to do interesting work in your role?";
   let q2 = "Q2: How satisfied or dissatisfied are you with your ability to apply your skills in this role?";
   let q3 = "Q3: How satisfied or dissatisfied are you with your current workload?";
@@ -20,8 +22,6 @@ const Survey1 = ({choosenSurvey}) => {
   let q7a = "Q7a: Please share any additional feedback you may have?";
     
 
-  const [monthlySurveyDate, setMonthlySurveyDate] = useState();
-  const [surveyType, setSurveyType] = useState('');
   const [surveyStatus, setSurveyStatus] = useState('');
   const [surveyOpened, setSurveyOpened] = useState('');
   const [answer1, setAnswer1] = useState("");
@@ -32,6 +32,7 @@ const Survey1 = ({choosenSurvey}) => {
   const [answer6, setAnswer6] = useState('');
   const [answer7, setAnswer7] = useState('');
   const [answer7a, setAnswer7a] = useState('');
+
 
     
   //Sentiment Analysis Block
@@ -162,27 +163,25 @@ const Survey1 = ({choosenSurvey}) => {
 
 
 
-  // Used this source as example how to do it: https://stackoverflow.com/questions/43744312/react-js-get-current-date
-  const dateHandler = () => {
-    let newDate = new Date();
-    let date = newDate.getDate();
-    let month = newDate.getMonth() + 1;
-    let year = newDate.getFullYear();
-    // console.log(`${year}${month<10?`0${month}`:`${month}`}${date}`)
-    setMonthlySurveyDate(
-      `${year}${month < 10 ? `0${month}` : `${month}`}${date}`
-    );
-  };
+
     
     useEffect(() => {
         setSurveyStatus("compleated");
-        setSurveyOpened("visited");
-        setSurveyType("monthlySurvey");
+        setSurveyOpened(true);
     }, [answer1]);
 
 
+ 
+
+
+
+
   const handleFormSubmit = (e) => {
-      e.preventDefault();
+    e.preventDefault();
+    // setSurveyType("monthlySurvey");
+    setSurveyOpened(true);
+    setOpenSurvey(false)
+    setSurveyStatus("compleated");
     const monthlySurvey = {
       answers: {
         answer1,
@@ -195,35 +194,22 @@ const Survey1 = ({choosenSurvey}) => {
         answer7a,
       }
     };
-    const surveyid = employee.email + new Date().getTime();
-    // console.log(surveyid);
-    // console.log(monthlySurvey);
-    // console.log("createdDate:", monthlySurveyDate);
-    // console.log("surveyType:", surveyType);
-    console.log(new Date().getTime());
-    console.log({
-      monthlySurvey: monthlySurvey,
-      surveyid: surveyid,
-      surveyType: surveyType,
-      createdDate: monthlySurveyDate,
-      surveyStatus: surveyStatus,
-      employeeEmail: employee.email,
-      surveyOpened: surveyOpened,
-      monthlyFeeling,
-      monthlySentiment,
-      monthlyTotalRating,
-    });
+  
 
     //axios post to /monthlySurvey endpoint
     axios
-      .post("https://pluto-hppy.herokuapp.com/monthlySurveys", {
+      .patch(
+        // "https://pluto-hppy.herokuapp.com/monthlySurveys"
+        "/monthlySurveys"
+        , {  
         monthlySurvey: monthlySurvey,
-        surveyid: surveyid,
-        surveyType: surveyType,
-        createdDate: monthlySurveyDate,
+        surveyid: choosenSurvey.surveyid,
+        surveyType: choosenSurvey.surveyType,
+        createdDate: choosenSurvey.createdDate,
         surveyStatus: surveyStatus,
         surveyOpened: surveyOpened,
         employeeEmail: employee.email,
+        surveyName: choosenSurvey.surveyName,
         monthlyFeeling,
         monthlySentiment,
         monthlyTotalRating,
@@ -241,476 +227,475 @@ const Survey1 = ({choosenSurvey}) => {
       });
   };
 
-  return (
-    <div className="survey">
-          <form
-              action="https://pluto-hppy.herokuapp.com/monthlySurveys"
-              method="POST"
-              onSubmit={handleFormSubmit}
-              onChange={dateHandler}
-      >
-        <h3>Survey questions</h3>
-        <div className="survey-question">
-                  <label htmlFor="answer1">{q1}
-                        <div className="answer">
+    return (
+      <div className="survey">
+        <form
+          // action="https://pluto-hppy.herokuapp.com/monthlySurveys"
+          onSubmit={handleFormSubmit}
+        // onChange={dateHandler}
+        >
+          <h3>Survey questions</h3>
+          <div className="survey-question">
+            <label htmlFor="answer1">{q1}
+              <div className="answer">
                             
-                            <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer1"
-                                  value="1"
-                                  onChange={(e) => setAnswer1(e.target.value)} />
-                              <span className="ED"></span>
-                              <div>Extremely dissatisfied</div>
-                          </label>
-                          <label className='squareIcon'>
-                                <input className="squareRadio" type="radio" name="answer1" value="2"
-                                  onChange={(e) => setAnswer1(e.target.value)} />
-                              <span className="MD"></span>
-                              <div>Moderately dissatisfied</div>
-                            </label>
-                         <label className='squareIcon'>
-                                <input className="squareRadio" type="radio" name="answer1" value="3"
-                                  onChange={(e) => setAnswer1(e.target.value)} />
-                              <span className="SD"></span>
-                              <div>Slightly dissatisfied</div>
-                            </label>
-                            <label className='squareIcon'>
-                                <input  className="squareRadio" type="radio" name="answer1" value="4"
-                                  onChange={(e) => setAnswer1(e.target.value)} />
-                              <span className="NSND"></span>
-                              <div>Neither satisfied nor dissatisfied</div>
-                            </label>
-                           <label className='squareIcon'>
-                                <input className="squareRadio" type="radio" name="answer1" value="5"
-                                  onChange={(e) => setAnswer1(e.target.value)} />
-                              <span className="SS"></span>
-                              <div>Slightly satisfied</div>
-                            </label>
-                           <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer1"
-                                  value="6"
-                                  onChange={(e) => setAnswer1(e.target.value)} />
-                              <span className="MS"></span>
-                              <div>Moderately satisfied</div>
-                            </label>
-                          <label className='squareIcon'> 
-                              <input className="squareRadio"
-                                  type="radio"
-                                  name="answer1"
-                                  value="7"
-                                  onChange={(e) => setAnswer1(e.target.value)} />
-                              <span className="ES"></span>
-                              <div>Extremely satisfied</div>
-                            </label>
-                        </div> 
-                  </label>
-        </div>
-        <div className="survey-question">
-                    <label htmlFor="answer2">{q2}
-                        <div className="answer">
-                            
-                            <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer2"
-                                  value="1"
-                                  onChange={(e) => setAnswer2(e.target.value)} />
-                              <span className="ED"></span>
-                              <div>Extremely dissatisfied</div>
-                          </label>
-                          <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer2"
-                                  value="2"
-                                  onChange={(e) => setAnswer2(e.target.value)} />
-                              <span className="MD"></span>
-                              <div>Moderately dissatisfied</div>
-                            </label>
-                         <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer2"
-                                  value="3"
-                                  onChange={(e) => setAnswer2(e.target.value)} />
-                              <span className="SD"></span>
-                              <div>Slightly dissatisfied</div>
-                            </label>
-                            <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer2"
-                                  value="4"
-                                  onChange={(e) => setAnswer2(e.target.value)} />
-                              <span className="NSND"></span>
-                              <div>Neither satisfied nor dissatisfied</div>
-                            </label>
-                           <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer2"
-                                  value="5"
-                                  onChange={(e) => setAnswer2(e.target.value)} />
-                              <span className="SS"></span>
-                              <div>Slightly satisfied</div>
-                            </label>
-                           <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer2"
-                                  value="6"
-                                  onChange={(e) => setAnswer2(e.target.value)} />
-                              <span className="MS"></span>
-                              <div>Moderately satisfied</div>
-                            </label>
-                          <label className='squareIcon'> 
-                              <input className="squareRadio"
-                                  type="radio"
-                                  name="answer2"
-                                  value="7"
-                                  onChange={(e) => setAnswer2(e.target.value)} />
-                              <span className="ES"></span>
-                              <div>Extremely satisfied</div>
-                            </label>
-                        </div> 
-                  </label>
-          </div>  
-              <div className="survey-question">
-                    <label htmlFor="answer3">{q3}
-                        <div className="answer">
-                            
-                            <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer3"
-                                  value="1"
-                                  onChange={(e) => setAnswer3(e.target.value)} />
-                              <span className="ED"></span>
-                              <div>Extremely dissatisfied</div>
-                          </label>
-                          <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer3"
-                                  value="2"
-                                  onChange={(e) => setAnswer3(e.target.value)} />
-                              <span className="MD"></span>
-                              <div>Moderately dissatisfied</div>
-                            </label>
-                         <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer3"
-                                  value="3"
-                                  onChange={(e) => setAnswer3(e.target.value)} />
-                              <span className="SD"></span>
-                              <div>Slightly dissatisfied</div>
-                            </label>
-                            <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer3"
-                                  value="4"
-                                  onChange={(e) => setAnswer3(e.target.value)} />
-                              <span className="NSND"></span>
-                              <div>Neither satisfied nor dissatisfied</div>
-                            </label>
-                           <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer3"
-                                  value="5"
-                                  onChange={(e) => setAnswer3(e.target.value)} />
-                              <span className="SS"></span>
-                              <div>Slightly satisfied</div>
-                            </label>
-                           <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer3"
-                                  value="6"
-                                  onChange={(e) => setAnswer3(e.target.value)} />
-                              <span className="MS"></span>
-                              <div>Moderately satisfied</div>
-                            </label>
-                          <label className='squareIcon'> 
-                              <input className="squareRadio"
-                                  type="radio"
-                                  name="answer3"
-                                  value="7"
-                                  onChange={(e) => setAnswer3(e.target.value)} />
-                              <span className="ES"></span>
-                              <div>Extremely satisfied</div>
-                            </label>
-                        </div> 
-                  </label>
+                <label className='squareIcon'>
+                  <input className="squareRadio" type="radio"
+                    name="answer1"
+                    value="1"
+                    onChange={(e) => setAnswer1(e.target.value)} />
+                  <span className="ED"></span>
+                  <div>Extremely dissatisfied</div>
+                </label>
+                <label className='squareIcon'>
+                  <input className="squareRadio" type="radio" name="answer1" value="2"
+                    onChange={(e) => setAnswer1(e.target.value)} />
+                  <span className="MD"></span>
+                  <div>Moderately dissatisfied</div>
+                </label>
+                <label className='squareIcon'>
+                  <input className="squareRadio" type="radio" name="answer1" value="3"
+                    onChange={(e) => setAnswer1(e.target.value)} />
+                  <span className="SD"></span>
+                  <div>Slightly dissatisfied</div>
+                </label>
+                <label className='squareIcon'>
+                  <input className="squareRadio" type="radio" name="answer1" value="4"
+                    onChange={(e) => setAnswer1(e.target.value)} />
+                  <span className="NSND"></span>
+                  <div>Neither satisfied nor dissatisfied</div>
+                </label>
+                <label className='squareIcon'>
+                  <input className="squareRadio" type="radio" name="answer1" value="5"
+                    onChange={(e) => setAnswer1(e.target.value)} />
+                  <span className="SS"></span>
+                  <div>Slightly satisfied</div>
+                </label>
+                <label className='squareIcon'>
+                  <input className="squareRadio" type="radio"
+                    name="answer1"
+                    value="6"
+                    onChange={(e) => setAnswer1(e.target.value)} />
+                  <span className="MS"></span>
+                  <div>Moderately satisfied</div>
+                </label>
+                <label className='squareIcon'>
+                  <input className="squareRadio"
+                    type="radio"
+                    name="answer1"
+                    value="7"
+                    onChange={(e) => setAnswer1(e.target.value)} />
+                  <span className="ES"></span>
+                  <div>Extremely satisfied</div>
+                </label>
+              </div>
+            </label>
           </div>
           <div className="survey-question">
-                    <label htmlFor="answer4">{q4}
-                        <div className="answer">
+            <label htmlFor="answer2">{q2}
+              <div className="answer">
                             
-                            <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer4"
-                                  value="1"
-                                  onChange={(e) => setAnswer4(e.target.value)} />
-                              <span className="ED"></span>
-                              <div>Extremely dissatisfied</div>
-                          </label>
-                          <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer4"
-                                  value="2"
-                                  onChange={(e) => setAnswer4(e.target.value)} />
-                              <span className="MD"></span>
-                              <div>Moderately dissatisfied</div>
-                            </label>
-                         <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer4"
-                                  value="3"
-                                  onChange={(e) => setAnswer4(e.target.value)} />
-                              <span className="SD"></span>
-                              <div>Slightly dissatisfied</div>
-                            </label>
-                            <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer4"
-                                  value="4"
-                                  onChange={(e) => setAnswer4(e.target.value)} />
-                              <span className="NSND"></span>
-                              <div>Neither satisfied nor dissatisfied</div>
-                            </label>
-                           <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer4"
-                                  value="5"
-                                  onChange={(e) => setAnswer4(e.target.value)} />
-                              <span className="SS"></span>
-                              <div>Slightly satisfied</div>
-                            </label>
-                           <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer4"
-                                  value="6"
-                                  onChange={(e) => setAnswer4(e.target.value)} />
-                              <span className="MS"></span>
-                              <div>Moderately satisfied</div>
-                            </label>
-                          <label className='squareIcon'> 
-                              <input className="squareRadio"
-                                  type="radio"
-                                  name="answer4"
-                                  value="7"
-                                  onChange={(e) => setAnswer4(e.target.value)} />
-                              <span className="ES"></span>
-                              <div>Extremely satisfied</div>
-                            </label>
-                        </div> 
-                  </label>
+                <label >
+                  <input type="radio"
+                    name="answer2"
+                    value="1"
+                    onChange={(e) => setAnswer2(e.target.value)} />
+                  <span className="ED"></span>
+                  <div>Extremely dissatisfied</div>
+                </label>
+                <label >
+                  <input type="radio"
+                    name="answer2"
+                    value="2"
+                    onChange={(e) => setAnswer2(e.target.value)} />
+                  <span className="MD"></span>
+                  <div>Moderately dissatisfied</div>
+                </label>
+                <label >
+                  <input type="radio"
+                    name="answer2"
+                    value="3"
+                    onChange={(e) => setAnswer2(e.target.value)} />
+                  <span className="SD"></span>
+                  <div>Slightly dissatisfied</div>
+                </label>
+                <label >
+                  <input type="radio"
+                    name="answer2"
+                    value="4"
+                    onChange={(e) => setAnswer2(e.target.value)} />
+                  <span className="NSND"></span>
+                  <div>Neither satisfied nor dissatisfied</div>
+                </label>
+                <label >
+                  <input type="radio"
+                    name="answer2"
+                    value="5"
+                    onChange={(e) => setAnswer2(e.target.value)} />
+                  <span className="SS"></span>
+                  <div>Slightly satisfied</div>
+                </label>
+                <label >
+                  <input type="radio"
+                    name="answer2"
+                    value="6"
+                    onChange={(e) => setAnswer2(e.target.value)} />
+                  <span className="MS"></span>
+                  <div>Moderately satisfied</div>
+                </label>
+                <label >
+                  <input
+                    type="radio"
+                    name="answer2"
+                    value="7"
+                    onChange={(e) => setAnswer2(e.target.value)} />
+                  <span className="ES"></span>
+                  <div>Extremely satisfied</div>
+                </label>
+              </div>
+            </label>
           </div>
           <div className="survey-question">
-                    <label htmlFor="answer5">{q5}
-                        <div className="answer">
+            <label htmlFor="answer3">{q3}
+              <div className="answer">
                             
-                            <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer5"
-                                  value="1"
-                                  onChange={(e) => setAnswer5(e.target.value)} />
-                              <span className="ED"></span>
-                              <div>Extremely dissatisfied</div>
-                          </label>
-                          <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer5"
-                                  value="2"
-                                  onChange={(e) => setAnswer5(e.target.value)} />
-                              <span className="MD"></span>
-                              <div>Moderately dissatisfied</div>
-                            </label>
-                         <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer5"
-                                  value="3"
-                                  onChange={(e) => setAnswer5(e.target.value)} />
-                              <span className="SD"></span>
-                              <div>Slightly dissatisfied</div>
-                            </label>
-                            <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer5"
-                                  value="4"
-                                  onChange={(e) => setAnswer5(e.target.value)} />
-                              <span className="NSND"></span>
-                              <div>Neither satisfied nor dissatisfied</div>
-                            </label>
-                           <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer5"
-                                  value="5"
-                                  onChange={(e) => setAnswer5(e.target.value)} />
-                              <span className="SS"></span>
-                              <div>Slightly satisfied</div>
-                            </label>
-                           <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer5"
-                                  value="6"
-                                  onChange={(e) => setAnswer5(e.target.value)} />
-                              <span className="MS"></span>
-                              <div>Moderately satisfied</div>
-                            </label>
-                          <label className='squareIcon'> 
-                              <input className="squareRadio"
-                                  type="radio"
-                                  name="answer5"
-                                  value="7"
-                                  onChange={(e) => setAnswer5(e.target.value)} />
-                              <span className="ES"></span>
-                              <div>Extremely satisfied</div>
-                            </label>
-                        </div> 
-                  </label>
+                <label className='squareIconType2'>
+                  <input className="squareRadio" type="radio"
+                    name="answer3"
+                    value="1"
+                    onChange={(e) => setAnswer3(e.target.value)} />
+                  <span className="ED"></span>
+                  <div>Extremely dissatisfied</div>
+                </label>
+                <label className='squareIconType2'>
+                  <input className="squareRadio" type="radio"
+                    name="answer3"
+                    value="2"
+                    onChange={(e) => setAnswer3(e.target.value)} />
+                  <span className="MD"></span>
+                  <div>Moderately dissatisfied</div>
+                </label>
+                <label className='squareIconType2'>
+                  <input className="squareRadio" type="radio"
+                    name="answer3"
+                    value="3"
+                    onChange={(e) => setAnswer3(e.target.value)} />
+                  <span className="SD"></span>
+                  <div>Slightly dissatisfied</div>
+                </label>
+                <label className='squareIconType2'>
+                  <input className="squareRadio" type="radio"
+                    name="answer3"
+                    value="4"
+                    onChange={(e) => setAnswer3(e.target.value)} />
+                  <span className="NSND"></span>
+                  <div>Neither satisfied nor dissatisfied</div>
+                </label>
+                <label className='squareIconType2'>
+                  <input className="squareRadio" type="radio"
+                    name="answer3"
+                    value="5"
+                    onChange={(e) => setAnswer3(e.target.value)} />
+                  <span className="SS"></span>
+                  <div>Slightly satisfied</div>
+                </label>
+                <label className='squareIconType2'>
+                  <input className="squareRadio" type="radio"
+                    name="answer3"
+                    value="6"
+                    onChange={(e) => setAnswer3(e.target.value)} />
+                  <span className="MS"></span>
+                  <div>Moderately satisfied</div>
+                </label>
+                <label className='squareIconType2'>
+                  <input className="squareRadio"
+                    type="radio"
+                    name="answer3"
+                    value="7"
+                    onChange={(e) => setAnswer3(e.target.value)} />
+                  <span className="ES"></span>
+                  <div>Extremely satisfied</div>
+                </label>
+              </div>
+            </label>
+          </div>
+          <div className="survey-question">
+            <label htmlFor="answer4">{q4}
+              <div className="answer">
+                            
+                <label className='squareIcon'>
+                  <input className="squareRadio" type="radio"
+                    name="answer4"
+                    value="1"
+                    onChange={(e) => setAnswer4(e.target.value)} />
+                  <span className="ED"></span>
+                  <div>Extremely dissatisfied</div>
+                </label>
+                <label className='squareIcon'>
+                  <input className="squareRadio" type="radio"
+                    name="answer4"
+                    value="2"
+                    onChange={(e) => setAnswer4(e.target.value)} />
+                  <span className="MD"></span>
+                  <div>Moderately dissatisfied</div>
+                </label>
+                <label className='squareIcon'>
+                  <input className="squareRadio" type="radio"
+                    name="answer4"
+                    value="3"
+                    onChange={(e) => setAnswer4(e.target.value)} />
+                  <span className="SD"></span>
+                  <div>Slightly dissatisfied</div>
+                </label>
+                <label className='squareIcon'>
+                  <input className="squareRadio" type="radio"
+                    name="answer4"
+                    value="4"
+                    onChange={(e) => setAnswer4(e.target.value)} />
+                  <span className="NSND"></span>
+                  <div>Neither satisfied nor dissatisfied</div>
+                </label>
+                <label className='squareIcon'>
+                  <input className="squareRadio" type="radio"
+                    name="answer4"
+                    value="5"
+                    onChange={(e) => setAnswer4(e.target.value)} />
+                  <span className="SS"></span>
+                  <div>Slightly satisfied</div>
+                </label>
+                <label className='squareIcon'>
+                  <input className="squareRadio" type="radio"
+                    name="answer4"
+                    value="6"
+                    onChange={(e) => setAnswer4(e.target.value)} />
+                  <span className="MS"></span>
+                  <div>Moderately satisfied</div>
+                </label>
+                <label className='squareIcon'>
+                  <input className="squareRadio"
+                    type="radio"
+                    name="answer4"
+                    value="7"
+                    onChange={(e) => setAnswer4(e.target.value)} />
+                  <span className="ES"></span>
+                  <div>Extremely satisfied</div>
+                </label>
+              </div>
+            </label>
+          </div>
+          <div className="survey-question">
+            <label htmlFor="answer5">{q5}
+              <div className="answer">
+                            
+                <label >
+                  <input type="radio"
+                    name="answer5"
+                    value="1"
+                    onChange={(e) => setAnswer5(e.target.value)} />
+                  <span className="ED"></span>
+                  <div>Extremely dissatisfied</div>
+                </label>
+                <label >
+                  <input type="radio"
+                    name="answer5"
+                    value="2"
+                    onChange={(e) => setAnswer5(e.target.value)} />
+                  <span className="MD"></span>
+                  <div>Moderately dissatisfied</div>
+                </label>
+                <label >
+                  <input type="radio"
+                    name="answer5"
+                    value="3"
+                    onChange={(e) => setAnswer5(e.target.value)} />
+                  <span className="SD"></span>
+                  <div>Slightly dissatisfied</div>
+                </label>
+                <label >
+                  <input type="radio"
+                    name="answer5"
+                    value="4"
+                    onChange={(e) => setAnswer5(e.target.value)} />
+                  <span className="NSND"></span>
+                  <div>Neither satisfied nor dissatisfied</div>
+                </label>
+                <label >
+                  <input type="radio"
+                    name="answer5"
+                    value="5"
+                    onChange={(e) => setAnswer5(e.target.value)} />
+                  <span className="SS"></span>
+                  <div>Slightly satisfied</div>
+                </label>
+                <label >
+                  <input type="radio"
+                    name="answer5"
+                    value="6"
+                    onChange={(e) => setAnswer5(e.target.value)} />
+                  <span className="MS"></span>
+                  <div>Moderately satisfied</div>
+                </label>
+                <label >
+                  <input
+                    type="radio"
+                    name="answer5"
+                    value="7"
+                    onChange={(e) => setAnswer5(e.target.value)} />
+                  <span className="ES"></span>
+                  <div>Extremely satisfied</div>
+                </label>
+              </div>
+            </label>
 
-                </div>
-                <div className="survey-question">
-                    <label htmlFor="answer6">{q6}
-                        <div className="answer">
+          </div>
+          <div className="survey-question">
+            <label htmlFor="answer6">{q6}
+              <div className="answer">
                             
-                            <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer6"
-                                  value="1"
-                                  onChange={(e) => setAnswer6(e.target.value)} />
-                              <span className="ED"></span>
-                              <div>Extremely dissatisfied</div>
-                          </label>
-                          <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer6"
-                                  value="2"
-                                  onChange={(e) => setAnswer6(e.target.value)} />
-                              <span className="MD"></span>
-                              <div>Moderately dissatisfied</div>
-                            </label>
-                         <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer6"
-                                  value="3"
-                                  onChange={(e) => setAnswer6(e.target.value)} />
-                              <span className="SD"></span>
-                              <div>Slightly dissatisfied</div>
-                            </label>
-                            <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer6"
-                                  value="4"
-                                  onChange={(e) => setAnswer6(e.target.value)} />
-                              <span className="NSND"></span>
-                              <div>Neither satisfied nor dissatisfied</div>
-                            </label>
-                           <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer6"
-                                  value="5"
-                                  onChange={(e) => setAnswer6(e.target.value)} />
-                              <span className="SS"></span>
-                              <div>Slightly satisfied</div>
-                            </label>
-                           <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer6"
-                                  value="6"
-                                  onChange={(e) => setAnswer6(e.target.value)} />
-                              <span className="MS"></span>
-                              <div>Moderately satisfied</div>
-                            </label>
-                          <label className='squareIcon'> 
-                              <input className="squareRadio"
-                                  type="radio"
-                                  name="answer6"
-                                  value="7"
-                                  onChange={(e) => setAnswer6(e.target.value)} />
-                              <span className="ES"></span>
-                              <div>Extremely satisfied</div>
-                            </label>
-                        </div> 
-                  </label>
-                </div>
-                <div className="survey-question">
-                    <label htmlFor="answer7">{q7}
-                        <div className="answer">
+                <label className='squareIconType2'>
+                  <input className="squareRadio" type="radio"
+                    name="answer6"
+                    value="1"
+                    onChange={(e) => setAnswer6(e.target.value)} />
+                  <span className="ED"></span>
+                  <div>Extremely dissatisfied</div>
+                </label>
+                <label className='squareIconType2'>
+                  <input className="squareRadio" type="radio"
+                    name="answer6"
+                    value="2"
+                    onChange={(e) => setAnswer6(e.target.value)} />
+                  <span className="MD"></span>
+                  <div>Moderately dissatisfied</div>
+                </label>
+                <label className='squareIconType2'>
+                  <input className="squareRadio" type="radio"
+                    name="answer6"
+                    value="3"
+                    onChange={(e) => setAnswer6(e.target.value)} />
+                  <span className="SD"></span>
+                  <div>Slightly dissatisfied</div>
+                </label>
+                <label className='squareIconType2'>
+                  <input className="squareRadio" type="radio"
+                    name="answer6"
+                    value="4"
+                    onChange={(e) => setAnswer6(e.target.value)} />
+                  <span className="NSND"></span>
+                  <div>Neither satisfied nor dissatisfied</div>
+                </label>
+                <label className='squareIconType2'>
+                  <input className="squareRadio" type="radio"
+                    name="answer6"
+                    value="5"
+                    onChange={(e) => setAnswer6(e.target.value)} />
+                  <span className="SS"></span>
+                  <div>Slightly satisfied</div>
+                </label>
+                <label className='squareIconType2'>
+                  <input className="squareRadio" type="radio"
+                    name="answer6"
+                    value="6"
+                    onChange={(e) => setAnswer6(e.target.value)} />
+                  <span className="MS"></span>
+                  <div>Moderately satisfied</div>
+                </label>
+                <label className='squareIconType2'>
+                  <input className="squareRadio"
+                    type="radio"
+                    name="answer6"
+                    value="7"
+                    onChange={(e) => setAnswer6(e.target.value)} />
+                  <span className="ES"></span>
+                  <div>Extremely satisfied</div>
+                </label>
+              </div>
+            </label>
+          </div>
+          <div className="survey-question">
+            <label htmlFor="answer7">{q7}
+              <div className="answer">
                             
-                            <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer7"
-                                  value="1"
-                                  onChange={(e) => setAnswer7(e.target.value)} />
-                              <span className="ED"></span>
-                              <div>Extremely dissatisfied</div>
-                          </label>
-                          <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer7"
-                                  value="2"
-                                  onChange={(e) => setAnswer7(e.target.value)} />
-                              <span className="MD"></span>
-                              <div>Moderately dissatisfied</div>
-                            </label>
-                         <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer7"
-                                  value="3"
-                                  onChange={(e) => setAnswer7(e.target.value)} />
-                              <span className="SD"></span>
-                              <div>Slightly dissatisfied</div>
-                            </label>
-                            <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer7"
-                                  value="4"
-                                  onChange={(e) => setAnswer7(e.target.value)} />
-                              <span className="NSND"></span>
-                              <div>Neither satisfied nor dissatisfied</div>
-                            </label>
-                           <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer7"
-                                  value="5"
-                                  onChange={(e) => setAnswer7(e.target.value)} />
-                              <span className="SS"></span>
-                              <div>Slightly satisfied</div>
-                            </label>
-                           <label className='squareIcon'>
-                              <input className="squareRadio" type="radio"
-                                  name="answer7"
-                                  value="6"
-                                  onChange={(e) => setAnswer7(e.target.value)} />
-                              <span className="MS"></span>
-                              <div>Moderately satisfied</div>
-                            </label>
-                          <label className='squareIcon'> 
-                              <input className="squareRadio"
-                                  type="radio"
-                                  name="answer7"
-                                  value="7"
-                                  onChange={(e) => setAnswer7(e.target.value)} />
-                              <span className="ES"></span>
-                              <div>Extremely satisfied</div>
-                            </label>
-                        </div> 
-                  </label>
-                </div>
-        <div className="survey-question">
-                    <label htmlFor="answer7a">{q7a}</label>
-                    <div className="answer">
-                        <textarea
-                            type="text" name="answer7a" id="answer7a"
-                            value={sentimentText}
-                            onChange={(e) => {
-                                setAnswer7a(e.target.value);
-                                setSentimentText(e.target.value); //set sentimentText to the value of the textarea
-                                getSentimentScore(sentimentText); //passing the text to the getSentimentScore function and gets a score on a scale of 0-1
-                                sentimentAnalysis(sentimentScore); //passing the score to the sentimentAnalysis function and add or reduce score from overall survey score based on Sentiment score.
-                            }}
-                        />
-                    </div>
-                </div>
+                <label className='squareIcon'>
+                  <input className="squareRadio" type="radio"
+                    name="answer7"
+                    value="1"
+                    onChange={(e) => setAnswer7(e.target.value)} />
+                  <span className="ED"></span>
+                  <div>Extremely dissatisfied</div>
+                </label>
+                <label className='squareIcon'>
+                  <input className="squareRadio" type="radio"
+                    name="answer7"
+                    value="2"
+                    onChange={(e) => setAnswer7(e.target.value)} />
+                  <span className="MD"></span>
+                  <div>Moderately dissatisfied</div>
+                </label>
+                <label className='squareIcon'>
+                  <input className="squareRadio" type="radio"
+                    name="answer7"
+                    value="3"
+                    onChange={(e) => setAnswer7(e.target.value)} />
+                  <span className="SD"></span>
+                  <div>Slightly dissatisfied</div>
+                </label>
+                <label className='squareIcon'>
+                  <input className="squareRadio" type="radio"
+                    name="answer7"
+                    value="4"
+                    onChange={(e) => setAnswer7(e.target.value)} />
+                  <span className="NSND"></span>
+                  <div>Neither satisfied nor dissatisfied</div>
+                </label>
+                <label className='squareIcon'>
+                  <input className="squareRadio" type="radio"
+                    name="answer7"
+                    value="5"
+                    onChange={(e) => setAnswer7(e.target.value)} />
+                  <span className="SS"></span>
+                  <div>Slightly satisfied</div>
+                </label>
+                <label className='squareIcon'>
+                  <input className="squareRadio" type="radio"
+                    name="answer7"
+                    value="6"
+                    onChange={(e) => setAnswer7(e.target.value)} />
+                  <span className="MS"></span>
+                  <div>Moderately satisfied</div>
+                </label>
+                <label className='squareIcon'>
+                  <input className="squareRadio"
+                    type="radio"
+                    name="answer7"
+                    value="7"
+                    onChange={(e) => setAnswer7(e.target.value)} />
+                  <span className="ES"></span>
+                  <div>Extremely satisfied</div>
+                </label>
+              </div>
+            </label>
+          </div>
+          <div className="survey-question">
+            <label htmlFor="answer7a">{q7a}</label>
+            <div className="answer">
+              <textarea
+                type="text" name="answer7a" id="answer7a"
+                value={sentimentText}
+                onChange={(e) => {
+                  setAnswer7a(e.target.value);
+                  setSentimentText(e.target.value); //set sentimentText to the value of the textarea
+                  getSentimentScore(sentimentText); //passing the text to the getSentimentScore function and gets a score on a scale of 0-1
+                  sentimentAnalysis(sentimentScore); //passing the score to the sentimentAnalysis function and add or reduce score from overall survey score based on Sentiment score.
+                }}
+              />
+            </div>
+          </div>
         
-        <button>Submit</button>
-      </form>
-    </div>
-  );
+          <button className="submit_btn">Submit</button>
+        </form>
+      </div>
+    );
 };
 
 export default Survey1;

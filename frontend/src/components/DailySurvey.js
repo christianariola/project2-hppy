@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
 import * as tf from "@tensorflow/tfjs";
 import { useState, useEffect } from "react";
-import padSequences from "./helper/paddedSeq";
 import axios from "axios";
+import padSequences from "../components/helper/paddedSeq";
 import CompletedLogo from "./helper/Completedlogo";
 // import { useNavigate } from "react-router-dom"
 
