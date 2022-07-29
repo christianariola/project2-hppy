@@ -58,7 +58,7 @@ const CompanySettings = () => {
         }
 
         dispatch(reset())
-    }, [isError, isSuccess, isLoading, message, navigate, dispatch])
+    }, [isError, isSuccess, isLoading, message, navigate, dispatch, reset])
 
     const onChange = (e) => {
         setFormData((prevState) => ({
@@ -155,7 +155,7 @@ const CompanySettings = () => {
 
         const companyId = employee.company_id
         dispatch(editCompany({companyId, updatedCompanyData}))
-        navigate('/app/companies')
+        // navigate('/app/companies')
 
     }
 
