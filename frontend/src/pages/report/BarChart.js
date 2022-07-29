@@ -27,14 +27,14 @@ const BarChart = props => {
      },[]) 
     
      
-    console.log(report)
+    // console.log(report)
 
      //fetch  employees data
         useEffect(function loadEmployee(){
         axios.get('https://pluto-hppy.herokuapp.com/getEmployeeAll') 
          .then((res)=>{
             setEmployeeData(res.data)
-            console.log(res)
+            // console.log(res)
          
          })
          
@@ -51,10 +51,10 @@ const BarChart = props => {
     //  var company = loginEmployee.company_name
       
      //store employees' email of the matched company
-     console.log(employee.company_name)
+    //  console.log(employee.company_name)
      var company = employee.company_name
      var showEmailArry = [];
-     console.log(employeeData.length);
+    //  console.log(employeeData.length);
     //  console.log(depart)
      for(var i=0; i<employeeData.length; i++){
         if(employeeData[i].company_name !== undefined && employeeData[i].company_name === company ){
@@ -68,7 +68,7 @@ const BarChart = props => {
         }
      }
      
-     console.log(showEmailArry) //filted empployee email list by company
+    //  console.log(showEmailArry) //filted empployee email list by company
 
     
     //  var depart = 'all'
@@ -86,7 +86,7 @@ const BarChart = props => {
         }
         
      }
-     console.log(filteredDailySurvey)
+    //  console.log(filteredDailySurvey)
      
      //selected department
     //  const handleChange = departmentType =>{
@@ -105,7 +105,7 @@ const BarChart = props => {
            }
         }
         //filtered employee email by department
-        console.log(showDepartArry) 
+        // console.log(showDepartArry) 
    
         // var filteredDailySurveyByDepart = []; 
         for( i=0; i<report.length; i++){
@@ -114,7 +114,7 @@ const BarChart = props => {
            }
            
         }
-        console.log(filteredDailySurveyByDepart)
+        // console.log(filteredDailySurveyByDepart)
         
         return filterByDepart
    
@@ -126,7 +126,7 @@ const BarChart = props => {
         var totalRatingByDepart = [];
         const chartDate = dateUrl[dateUrl.length-1] 
         
-        console.log(chartDate)
+        // console.log(chartDate)
         // var filteredDailySurvey=filterByCompany()  
         // date = {props.location.state.chartDate} 
         // if(depart == null) {
@@ -140,7 +140,7 @@ const BarChart = props => {
             }
         }
         
-        console.log(totalRatingByDepart)
+        // console.log(totalRatingByDepart)
         return totalRatingByDepart
        
        }
@@ -152,7 +152,7 @@ const BarChart = props => {
         rateResultByDepart[x] = (rateResultByDepart[x] || 0)+1;
        })
    
-       console.log(rateResultByDepart);
+    //    console.log(rateResultByDepart);
        const dataByDepart = {
            labels: ["Very unsatisfactory", "Unsatisfactory", "Neutral", "Satisfactory", "Very Satisfactory"],
            datasets : [{
@@ -197,7 +197,7 @@ const BarChart = props => {
         result[x] = (result[x] || 0)+1;
     })
 
-    console.log(result);
+    // console.log(result);
     const data = {
         labels: ["Very unsatisfactory", "Unsatisfactory", "Neutral", "Satisfactory", "Very Satisfactory"],
         datasets : [{
@@ -231,7 +231,7 @@ const BarChart = props => {
         }
         else {
 
-                // var surveyState = {};
+                var surveyState = {};
                
                 surveyState['email'] = filteredDailySurvey[i].dailySurvey.employeeEmail;
                 surveyState['surveyStatement'] = "unsubmitted";
@@ -251,13 +251,13 @@ const BarChart = props => {
     
 
     getSurveySubmit();
-    console.log(getSurveySubmit());
+    // console.log(getSurveySubmit());
 
     //global variable
     // var nameUrl = window.location.href
     // const dateUrl = nameUrl.split('/');
     const surveyType = dateUrl[dateUrl.length-2] 
-    console.log(surveyType)
+    // console.log(surveyType)
 
   
   
@@ -277,7 +277,7 @@ const BarChart = props => {
             submissionTotal.push(getSurveySubmit()[i].surveyStatement)          
             }
         
-            console.log(submissionTotal);
+            // console.log(submissionTotal);
             return submissionTotal;
     }
 
@@ -288,7 +288,7 @@ const BarChart = props => {
         submissionResult[x] = (submissionResult[x] || 0)+1;
     })
 
-    console.log(submissionResult);
+    // console.log(submissionResult);
 
     
     const submitData = {
@@ -314,14 +314,15 @@ const BarChart = props => {
         <div>
             { surveyType == "Daily" && employee.role == "admin" ?
              <div> 
-                <form>
+                <h1>Daily Survey Report</h1>
+                {/* <form>
                     <select onChange={e => filterByDepart(e.target.value)}>
                         <option>All</option>
                         <option value="Meta">Meta</option>
                         <option value="Marketplace">Marketplace</option>
                     </select>
-                </form>
-                <h2>Daily Survey Submission Rate</h2>
+                </form> */}
+                <h2 className="report-title">Submission Rate</h2>
                 <Pie data={submitData} 
                     width="20%"
                     height="20%"
@@ -330,7 +331,7 @@ const BarChart = props => {
                         maintainAspectRatio: true,	// Don't maintain w/h ratio
                     }}
                 />
-                <h2>Daily Total Rating</h2>
+                <h2 class="report-title">Total Rating</h2>
                     <div>
                         <Bar data={data} />
                     </div>

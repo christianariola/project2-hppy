@@ -33,7 +33,7 @@ const SuperAdminChart = props => {
         axios.get('/getEmployeeAll') 
          .then((res)=>{
             setEmployeeData(res.data)
-            console.log(res)
+            // console.log(res)
          
          })
          
@@ -57,7 +57,7 @@ const SuperAdminChart = props => {
     //  console.log(employee.company_name)
     //  var company = employee.company_name
      var showEmailArry = [];
-     console.log(employeeData.length);
+    //  console.log(employeeData.length);
     //  console.log(depart)
      for(var i=0; i<employeeData.length; i++){
         if(employeeData[i].company_name !== undefined && employeeData[i].company_name === selectedCompany ){
@@ -71,7 +71,7 @@ const SuperAdminChart = props => {
         }
      }
      
-     console.log(showEmailArry) //filted empployee email list by company
+    //  console.log(showEmailArry) //filted empployee email list by company
 
     
     //  var depart = 'all'
@@ -87,7 +87,7 @@ const SuperAdminChart = props => {
         }
         
      }
-     console.log(filteredDailySurvey)
+    //  console.log(filteredDailySurvey)
      
      //selected department
      const handleChange = departmentType =>{
@@ -106,7 +106,7 @@ const SuperAdminChart = props => {
            }
         }
         //filtered employee email by department
-        console.log(showDepartArry) 
+        // console.log(showDepartArry) 
    
         // var filteredDailySurveyByDepart = []; 
         for(var i=0; i<report.length; i++){
@@ -115,7 +115,7 @@ const SuperAdminChart = props => {
            }
            
         }
-        console.log(filteredDailySurveyByDepart)
+        // console.log(filteredDailySurveyByDepart)
         
         return filterByDepart
    
@@ -127,7 +127,7 @@ const SuperAdminChart = props => {
         var totalRatingByDepart = [];
         const chartDate = dateUrl[dateUrl.length-2] 
         
-        console.log(chartDate)
+        // console.log(chartDate)
         // var filteredDailySurvey=filterByCompany()  
         // date = {props.location.state.chartDate} 
         // if(depart == null) {
@@ -141,7 +141,7 @@ const SuperAdminChart = props => {
             }
         }
         
-        console.log(totalRatingByDepart)
+        // console.log(totalRatingByDepart)
         return totalRatingByDepart
        
        }
@@ -153,7 +153,7 @@ const SuperAdminChart = props => {
         rateResultByDepart[x] = (rateResultByDepart[x] || 0)+1;
        })
    
-       console.log(rateResultByDepart);
+    //    console.log(rateResultByDepart);
        const dataByDepart = {
            labels: ["Very unsatisfactory", "Unsatisfactory", "Neutral", "Satisfactory", "Very Satisfactory"],
            datasets : [{
@@ -185,7 +185,7 @@ const SuperAdminChart = props => {
             rating.push(filteredDailySurvey[i].dailySurvey.dailyTotalRating)
             }
         }
-        console.log(rating);
+        // console.log(rating);
         return rating;
     }
 
@@ -198,7 +198,7 @@ const SuperAdminChart = props => {
         result[x] = (result[x] || 0)+1;
     })
 
-    console.log(result);
+    // console.log(result);
     const data = {
         labels: ["Very unsatisfactory", "Unsatisfactory", "Neutral", "Satisfactory", "Very Satisfactory"],
         datasets : [{
@@ -252,13 +252,13 @@ const SuperAdminChart = props => {
     
 
     getSurveySubmit();
-    console.log(getSurveySubmit());
+    // console.log(getSurveySubmit());
 
     //global variable
     // var nameUrl = window.location.href
     // const dateUrl = nameUrl.split('/');
     const surveyType = dateUrl[dateUrl.length-3] 
-    console.log(surveyType)
+    // console.log(surveyType)
 
   
   
@@ -278,7 +278,7 @@ const SuperAdminChart = props => {
             submissionTotal.push(getSurveySubmit()[i].surveyStatement)          
             }
         
-            console.log(submissionTotal);
+            // console.log(submissionTotal);
             return submissionTotal;
     }
 
@@ -289,7 +289,7 @@ const SuperAdminChart = props => {
         submissionResult[x] = (submissionResult[x] || 0)+1;
     })
 
-    console.log(submissionResult);
+    // console.log(submissionResult);
 
     
     const submitData = {
@@ -302,12 +302,12 @@ const SuperAdminChart = props => {
         }]
     }
 
-    const handleFormSubmit = (e) => {
-        e.preventDefault();
+    // const handleFormSubmit = (e) => {
+    //     e.preventDefault();
     
-        //axios post to /dailySurvey endpoint
+    //     //axios post to /dailySurvey endpoint
         
-      };
+    //   };
 
    
     return(
@@ -315,15 +315,15 @@ const SuperAdminChart = props => {
         <div>
             { surveyType == "Daily" ?
              <div> 
-                <h1>{selectedCompany} Report</h1>
-                <form>
+                <h1>{selectedCompany}'s' Daily Report</h1>
+                {/* <form>
                     <select onChange={e => filterByDepart(e.target.value)}>
                         <option>All</option>
                         <option value="Meta">Meta</option>
                         <option value="Marketplace">Marketplace</option>
                     </select>
-                </form>
-                <h2>Daily Survey Submission Rate</h2>
+                </form> */}
+                <h2 className="report-title">Submission Rate</h2>
                 <Pie data={submitData} 
                     width="20%"
                     height="20%"
@@ -332,7 +332,7 @@ const SuperAdminChart = props => {
                         maintainAspectRatio: true,	// Don't maintain w/h ratio
                     }}
                 />
-                <h2>Daily Total Rating</h2>
+                <h2 className="report-title">Total Rating</h2>
                     <div>
                         <Bar data={data} />
                     </div>

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
-import Input from "@mui/material/Input";
+import TextField from "@mui/material/TextField";
 
 const MyAccount = () => {
   const { employee } = useSelector((state) => state.auth);
@@ -16,25 +16,55 @@ const MyAccount = () => {
   return (
     <>
       <h2>My Account</h2>
-      <p>
+      <p  className="account-text">
         My Account informtaion is view-only. You cannot edit this informtaion.
       </p>
       <form>
         <div class="employee-info">
-          <label>First Name: </label>
-          <Input disabled defaultValue={employee.firstName}></Input>
-          <label>Last Name: </label>
-          <Input disabled defaultValue={employee.lastName}></Input>
-          <label>Email: </label>
-          <Input disabled defaultValue={employee.email}></Input>
-          <label>Department: </label>
-          <Input disabled defaultValue={employee.department}></Input>
-          <label>Employee Number: </label>
-          <Input disabled defaultValue={employee.employeeNumber}></Input>
-          <label>Job Title: </label>
-          <Input disabled defaultValue={employee.jobTitle}></Input>
+          <ul className="profile-form">
+            <li>
+              <label>First Name </label>
+                <div>
+                  <TextField disabled defaultValue={employee.firstName} variant="outlined" fullWidth></TextField>
+                </div>
+            </li>
+            <li>
+              <label>Last Name </label>
+              <div>
+                <TextField disabled defaultValue={employee.lastName} fullWidth></TextField>
+              </div>
+            </li>
+          </ul>
+          <ul className="profile-form">
+            <li>
+              <label>Email </label>
+              <div>
+                <TextField disabled defaultValue={employee.email} fullWidth></TextField>
+              </div>
+            </li>
+            <li>
+              <label>Department </label>
+              <div>
+                <TextField disabled defaultValue={employee.department_name} fullWidth></TextField>
+              </div>
+            </li>
+          </ul>
+          <ul className="profile-form">
+            <li>
+              <label>Employee Number </label>
+              <div>
+                <TextField disabled defaultValue={employee.employeeNumber} fullWidth></TextField>
+              </div>
+            </li>
+            <li>
+              <label>Job Title </label>
+              <div>
+                <TextField disabled defaultValue={employee.jobTitle} fullWidth></TextField>
+              </div>
+            </li>
+          </ul>
         </div>
-        <button onClick={onLogout}>Logout</button>
+          <button className="logoutBtn" onClick={onLogout}>Logout</button>
       </form>
     </>
   );

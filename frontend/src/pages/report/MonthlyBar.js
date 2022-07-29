@@ -27,13 +27,13 @@ const MonthylyBar = props => {
         axios.get('https://pluto-hppy.herokuapp.com/getEmployeeAll') 
          .then((res)=>{
             setEmployeeData(res.data)
-            console.log(res)
+            // console.log(res)
          
          })
          
         .catch(error=>console.log(error))
      },[]) 
-     console.log(employee)  
+    //  console.log(employee)  
     
     
     var company = employee.company_name
@@ -44,7 +44,7 @@ const MonthylyBar = props => {
        }
     }
     
-    console.log(showEmailArry)
+    // console.log(showEmailArry)
     //find matched employees' email from monthly survey table
     var filteredMonthlySurvey = []; //store the monthly survey data from filetered employees by company
     for(var k=0; k<monthlyReport.length; k++){
@@ -53,7 +53,7 @@ const MonthylyBar = props => {
        }
        
     }
-   //  console.log(filteredMonthlySurvey)
+    // console.log(filteredMonthlySurvey)
 
     // monthly survey
     //sort monthly total feeling object by date 
@@ -62,7 +62,7 @@ const MonthylyBar = props => {
         const nameUrl = window.location.href
         const dateUrl = nameUrl.split('/');
         const chartDate = dateUrl[dateUrl.length-1] 
-        console.log(chartDate)
+        // console.log(chartDate)
         // var filteredDailySurvey=filterByCompany()  
         // date = {props.location.state.chartDate} 
         // if(depart == null) {
@@ -75,7 +75,7 @@ const MonthylyBar = props => {
             monthlyRating.push(filteredMonthlySurvey[j].monthlyTotalRating)
             }
         }
-        console.log(monthlyRating); //empty?
+        // console.log(monthlyRating); //empty?
         return monthlyRating;
         }
     
@@ -106,7 +106,7 @@ const MonthylyBar = props => {
             const chartDate = dateUrl[dateUrl.length-1] 
             // console.log(chartDate)
             for(var i=0; i<filteredMonthlySurvey.length; i++){
-                if(showEmailArry.includes(filteredMonthlySurvey[i].employeeEmail) && filteredMonthlySurvey[i].createdDate === chartDate) {
+                if(showEmailArry.includes(filteredMonthlySurvey[i].employeeEmail) && filteredMonthlySurvey[i].createdDate === chartDate && filteredMonthlySurvey[i].monthlyTotalRating != null) {
                     
     
                     // console.log(filteredMonthlySurvey[i].dailySurvey)
@@ -116,10 +116,10 @@ const MonthylyBar = props => {
                     monthlySurveyState['surveyStatement'] = "submitted";
     
                     monthlysurveySubmit.push(monthlySurveyState)
-                    
+                  
             }
             else {
-                    // var monthlySurveyState = {};
+                    var monthlySurveyState = {};
                     monthlySurveyState['email'] = filteredMonthlySurvey[i].employeeEmail;
                     monthlySurveyState['surveyStatement'] = "unsubmitted";
     
@@ -138,7 +138,7 @@ const MonthylyBar = props => {
         
     
         getMonthlySurveySubmit();
-        console.log(getMonthlySurveySubmit());
+        // console.log(getMonthlySurveySubmit());
     
         var monthlyTotalStatement = function(){
           
@@ -148,7 +148,7 @@ const MonthylyBar = props => {
                 monthlySubmissionTotal.push(getMonthlySurveySubmit()[i].surveyStatement)          
                 }
             
-                console.log(monthlySubmissionTotal);
+                // console.log(monthlySubmissionTotal);
                 return monthlySubmissionTotal;
         }
     
@@ -159,7 +159,7 @@ const MonthylyBar = props => {
             monthlySubmissionResult[x] = (monthlySubmissionResult[x] || 0)+1;
         })
     
-        console.log(monthlySubmissionResult);
+        // console.log(monthlySubmissionResult);
     
         const monthlySubmitData = {
             labels: ["Unsubmitted", "Submitted"],
@@ -172,7 +172,8 @@ const MonthylyBar = props => {
         }
     return(
          <div>
-                <h2>Monthly Survey Submission Rate</h2>
+            <h1>Monthly Report</h1>
+                <h2 className="report-title">Submission Rate</h2>
                 <Pie data={monthlySubmitData} 
                     width="20%"
                     height="20%"
@@ -181,7 +182,7 @@ const MonthylyBar = props => {
                         maintainAspectRatio: true,	// Don't maintain w/h ratio
                     }}
                 />
-                <h2>Monthly Total Rating</h2>
+                <h2 className="report-title">Total Rating</h2>
                     <div>
                         
                         <Bar data={monthlyData} />

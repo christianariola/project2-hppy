@@ -25,20 +25,12 @@ import MyAccount from "./pages/MyAccount";
 import Password from "./pages/Password";
 import BarChart from "./pages/report/BarChart";
 
-
-// import Myaccount from  './pages/Myaccout'
-
-import Department from './pages/report/Department'
-
 import Company from './components/company/Company'
 import AddEditCompany from './components/company/AddEditCompany'
 import ViewCompany from './components/company/ViewCompany'
-import SuperAdminChart from './pages/report/SuperAdminChart'
-
-
-
 import ViewEmployee from "./components/employee/ViewEmployee";
 import EditEmployee from "./components/employee/EditEmployee";
+import SuperAdminChart from './pages/report/SuperAdminChart'
 
 import CompanySettings from './pages/admin/CompanySettings'
 import DepartmentAdmin from './pages/admin/Department'
@@ -127,6 +119,7 @@ const App = () => {
               <Route path="reportchart" element={<BarChart />} />
               <Route path="reportchart/:type/:surveyDate" element={<BarChart chartDate={chartDate} />} />
               {/*survey date */}
+              <Route path="reportchart/:type/:surveyDate/:companyName" element={<SuperAdminChart />} />
               <Route path="reportview" element={<BarChart />} />{" "}
               {/*employee view  */}
             </Route>

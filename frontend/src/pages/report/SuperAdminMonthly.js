@@ -27,20 +27,20 @@ const SuperAdminMonthly = props => {
         axios.get('/getEmployeeAll') 
          .then((res)=>{
             setEmployeeData(res.data)
-            console.log(res)
+            // console.log(res)
          
          })
          
         .catch(error=>console.log(error))
      },[]) 
-     console.log(employee)  
+    //  console.log(employee)  
     
      const nameUrl = window.location.href
      const dateUrl = nameUrl.split('/');
      const chartDate = dateUrl[dateUrl.length-2] 
      const selectedCompany = dateUrl[dateUrl.length-1] 
 
-     console.log(selectedCompany)
+    //  console.log(selectedCompany)
 
 
     
@@ -51,7 +51,7 @@ const SuperAdminMonthly = props => {
        }
     }
     
-    console.log(showEmailArry)
+    // console.log(showEmailArry)
     //find matched employees' email from monthly survey table
     var filteredMonthlySurvey = []; //store the monthly survey data from filetered employees by company
     for(var k=0; k<monthlyReport.length; k++){
@@ -60,7 +60,7 @@ const SuperAdminMonthly = props => {
        }
        
     }
-    console.log(filteredMonthlySurvey)
+    // console.log(filteredMonthlySurvey)
 
     // monthly survey
     //sort monthly total feeling object by date 
@@ -69,7 +69,7 @@ const SuperAdminMonthly = props => {
         // const nameUrl = window.location.href
         // const dateUrl = nameUrl.split('/');
         // const chartDate = dateUrl[dateUrl.length-2] 
-        console.log(chartDate)
+        // console.log(chartDate)
         // var filteredDailySurvey=filterByCompany()  
         // date = {props.location.state.chartDate} 
         // if(depart == null) {
@@ -82,7 +82,7 @@ const SuperAdminMonthly = props => {
             monthlyRating.push(filteredMonthlySurvey[j].monthlyTotalRating)
             }
         }
-        console.log(monthlyRating); //empty?
+        // console.log(monthlyRating); //empty?
         return monthlyRating;
         }
     
@@ -113,7 +113,7 @@ const SuperAdminMonthly = props => {
             // const chartDate = dateUrl[dateUrl.length-2] 
             // console.log(chartDate)f
             for(var i=0; i<filteredMonthlySurvey.length; i++){
-                if(showEmailArry.includes(filteredMonthlySurvey[i].employeeEmail) && filteredMonthlySurvey[i].createdDate == chartDate) {
+                if(showEmailArry.includes(filteredMonthlySurvey[i].employeeEmail) && filteredMonthlySurvey[i].createdDate == chartDate && filteredMonthlySurvey[i].monthlyTotalRating != null ) {
                     
     
                     // console.log(filteredMonthlySurvey[i].dailySurvey)
@@ -124,6 +124,7 @@ const SuperAdminMonthly = props => {
     
                     monthlysurveySubmit.push(monthlySurveyState)
                     
+                    
             }
             else {
                     var monthlySurveyState = {};
@@ -131,6 +132,7 @@ const SuperAdminMonthly = props => {
                     monthlySurveyState['surveyStatement'] = "unsubmitted";
     
                     monthlysurveySubmit.push(monthlySurveyState)
+                   
                 }
             }
             return monthlysurveySubmit;
@@ -145,7 +147,7 @@ const SuperAdminMonthly = props => {
         
     
         getMonthlySurveySubmit();
-        console.log(getMonthlySurveySubmit());
+        // console.log(getMonthlySurveySubmit());
     
         var monthlyTotalStatement = function(){
           
@@ -155,7 +157,7 @@ const SuperAdminMonthly = props => {
                 monthlySubmissionTotal.push(getMonthlySurveySubmit()[i].surveyStatement)          
                 }
             
-                console.log(monthlySubmissionTotal);
+                // console.log(monthlySubmissionTotal);
                 return monthlySubmissionTotal;
         }
     
@@ -166,7 +168,7 @@ const SuperAdminMonthly = props => {
             monthlySubmissionResult[x] = (monthlySubmissionResult[x] || 0)+1;
         })
     
-        console.log(monthlySubmissionResult);
+        // console.log(monthlySubmissionResult);
     
         const monthlySubmitData = {
             labels: ["Unsubmitted", "Submitted"],
@@ -179,7 +181,8 @@ const SuperAdminMonthly = props => {
         }
     return(
          <div>
-                <h2>Monthly Survey Submission Rate</h2>
+            <h1>{selectedCompany}'s Monthly Report</h1>
+            <h2 className="report-title">Submission Rate</h2>
                 <Pie data={monthlySubmitData} 
                     width="20%"
                     height="20%"
@@ -188,7 +191,7 @@ const SuperAdminMonthly = props => {
                         maintainAspectRatio: true,	// Don't maintain w/h ratio
                     }}
                 />
-                <h2>Monthly Total Rating</h2>
+                <h2 className="report-title">Total Rating</h2>
                     <div>
                         
                         <Bar data={monthlyData} />
