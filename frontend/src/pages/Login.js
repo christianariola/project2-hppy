@@ -17,6 +17,17 @@ import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
+import IconButton from '@mui/material/IconButton';
+import Input from '@mui/material/Input';
+import FilledInput from '@mui/material/FilledInput';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from '@mui/material/FormControl';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -28,9 +39,10 @@ const Login = () => {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
+        showPassword: false,
     })
 
-    const {email, password} = formData
+    const {email, password, showPassword} = formData
 
     // dispatch.addEmployee
     const dispatch = useDispatch()
@@ -61,12 +73,27 @@ const Login = () => {
       toast.success("You have successfully logged in.")
     }
 
+    if(isError){
+      toast.error(message)
+    }
+
     const onChange = (e) => {
         setFormData((prevState) => ({
             ...prevState,
             [e.target.name]: e.target.value,
         }))
     }
+
+    const handleClickShowPassword = () => {
+      setFormData({
+        ...formData,
+        showPassword: !formData.showPassword,
+      });
+    };
+    
+    const handleMouseDownPassword = (event) => {
+      event.preventDefault();
+    };
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -78,14 +105,14 @@ const Login = () => {
 
         dispatch(login(employeeData))
     }
-
+    console.log(formData)
     return <>
     <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: '100vh' }}>
+      <Grid container sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid
           item
-          xs={false}
+          xs={14}
           sm={4}
           md={5}
           sx={{
@@ -127,7 +154,7 @@ const Login = () => {
                 value={email} 
                 onChange={onChange}
                 />
-                <TextField
+                {/* <TextField
                 margin="normal"
                 required
                 fullWidth
@@ -138,7 +165,34 @@ const Login = () => {
                 autoComplete="current-password"
                 value={password}
                 onChange={onChange}
+                /> */}
+
+              <FormControl fullWidth variant="outlined">
+                <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-password"
+                  type={formData.showPassword ? 'text' : 'password'}
+                  value={formData.password}
+                  onChange={onChange}
+                  // onChange={onChange('password')}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {formData.showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="Password"
+                  name="password"
+                  required
                 />
+              </FormControl>
+
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
@@ -153,17 +207,19 @@ const Login = () => {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
+                  {/* <Link href="#" variant="body2">
                     Forgot password?
-                  </Link>
+                  </Link> */}
                 </Grid>
               </Grid>
             </Box>
           </Box>
         </Grid>
+
+        <Footer />
       </Grid>
 
-      <Footer />
+
     </ThemeProvider>
 
 

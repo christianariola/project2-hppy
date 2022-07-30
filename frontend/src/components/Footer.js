@@ -3,8 +3,6 @@
 const Footer = () => {
     return <>
         <footer>
-
-
             <div className="copyright">
                 <img src="images/footer-logo.svg" alt="Hppy" />
                 <p>&copy; 2022 Hppy | Team Pluto</p>

@@ -63,11 +63,24 @@ main {
   height: auto;
 }
 
+/* Main Footer ==================== */
 footer {
   background: linear-gradient(180deg, #0098ff, #003d66);
   color: #fff;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 2fr 1fr;
+  width: 100%;
+  align-content: center;
+  align-items: center;
+}
+
+footer ul li {
+  list-style: none;
+  display: inline;
+}
+
+.copyright, .footer-nav, .footer-sns {
+  border:1px solid red;
 }
 
 /* DAILY SURVEY */
