@@ -74,6 +74,7 @@ footer {
 /* animate emoji on hover */
 .survey-rating-row svg:hover path {
   animation: emoji-animation 1s ease-in-out infinite;
+  cursor: pointer;
 }
 emoji-animation {
   animation-name: emoji-animation;
@@ -145,10 +146,10 @@ radio-animation {
 }
 
 .survey-form svg {
-  background-color: #f5f5f5;
+  /* background-color: #f5f5f5; */
   padding: 1rem;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+  /* border-radius: 10px; */
+  /* box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75); */
 }
 
 .survey-form label {
@@ -165,8 +166,8 @@ radio-animation {
 }
 
 .survey-form textarea {
-  width: 75%;
-  height: 75%;
+  /* width: 75%;
+  height: 75%; */
   border: none;
   /* border-radius: 10px;
         padding: 1rem; */
@@ -179,6 +180,15 @@ radio-animation {
   font-weight: bold;
 }
 
+.survey-submitBtn {
+  background: #336485;
+  border-radius: 5px;
+  color: #ffffff;
+  padding: 8px 50px;
+  gap: 10px;
+  cursor: pointer;
+}
+
 .completed-container {
   display: grid;
   grid-template-columns: 1fr;
@@ -189,6 +199,9 @@ radio-animation {
   justify-content: center;
 }
 
+.dailywrapper h2 {
+  text-align: center;
+}
 /* =======Surveys */
 .surveys-container {
   padding: 2rem 3rem;
@@ -223,16 +236,14 @@ radio-animation {
 .all-surveys table td,
 .all-surveys table tr {
   text-align: center;
-  border-bottom: 1px #C4C4C4 solid;
+  border-bottom: 1px #c4c4c4 solid;
   padding: 0px;
 }
-
-
 
 /*survey report list*/
 .report-pageA table {
   font-family: "Titillium Web", Arial, Tahoma, Helvetica, sans-serif;
-  text-align:center;
+  text-align: center;
 }
 
 .report-list th {
@@ -256,7 +267,7 @@ radio-animation {
 }
 
 .view-btn {
-  color:white;
+  color: white;
 }
 /* .showBtn {
   display: block;
@@ -264,35 +275,32 @@ radio-animation {
 } */
 
 .surveys-container h2 {
-    text-align: left;
+  text-align: left;
 }
 
 .view-btn {
-  background-color:#003D66;
-  border:0;
+  background-color: #003d66;
+  border: 0;
 }
 .report-title {
-  text-align:center;
+  text-align: center;
 }
 /* square buttons */
 
 .answer {
-    display: flex;
-
+  display: flex;
 }
 .survey-question .squareRadio {
   display: none;
 }
 .survey-question .squareIcon,
-.survey-question .squareIconType2 
-{
+.survey-question .squareIconType2 {
   display: inline-block;
   padding: 0px 0px;
   cursor: pointer;
 }
 .survey-question .squareIcon span,
-.survey-question .squareIconType2 span
- {
+.survey-question .squareIconType2 span {
   position: relative;
   line-height: 30px;
   text-align: center;
@@ -300,15 +308,12 @@ radio-animation {
 .survey-question .squareIcon span:before,
 .survey-question .squareIcon span:after,
 .survey-question .squareIconType2 span:before,
-.survey-question .squareIconType2 span:after
-{
-  content: '';
+.survey-question .squareIconType2 span:after {
+  content: "";
 }
 
-
-
 .survey-question .squareIcon span:before {
-  border: 0px solid #CCCCCC;
+  border: 0px solid #cccccc;
   min-width: 98%;
   height: 30px;
   margin-right: 0px;
@@ -316,7 +321,7 @@ radio-animation {
   vertical-align: top;
 }
 .survey-question .squareIconType2 span:before {
-  border: 2px solid #CCCCCC;
+  border: 2px solid #cccccc;
   min-width: 20px;
   height: 20px;
   margin-right: 0px;
@@ -325,7 +330,7 @@ radio-animation {
 }
 
 .survey-question .squareIcon span:after {
-  border: 3px solid #CCCCCC;
+  border: 3px solid #cccccc;
   min-width: 100%;
   height: 32px;
   position: absolute;
@@ -335,8 +340,8 @@ radio-animation {
   opacity: 0;
 }
 .survey-question .squareIconType2 span:after {
-  border: 3px solid #CCCCCC;
-  background: #0098FF;
+  border: 3px solid #cccccc;
+  background: #0098ff;
   min-width: 20px;
   height: 20px;
   position: absolute;
@@ -345,47 +350,44 @@ radio-animation {
   transition: 300ms;
   opacity: 0;
 }
-.survey-question .squareIcon input:checked+span:after,
-.survey-question .squareIconType2 input:checked+span:after
-{
+.survey-question .squareIcon input:checked + span:after,
+.survey-question .squareIconType2 input:checked + span:after {
   opacity: 1;
 }
 
-
 .survey-question .squareIcon .ES:before {
-  background: #003D66;
-  content: '7';
+  background: #003d66;
+  content: "7";
   color: white;
-
 }
 .survey-question .squareIcon .MS:before {
   background: #336485;
-  content: '6';
-   color: white;
+  content: "6";
+  color: white;
 }
 .survey-question .squareIcon .SS:before {
-  background: #668BA3;
-  content: '5';
-   color: white;
+  background: #668ba3;
+  content: "5";
+  color: white;
 }
 .survey-question .squareIcon .NSND:before {
   background: #92adc1;
-  content: '4';
-   color: white;
+  content: "4";
+  color: white;
 }
 .survey-question .squareIcon .SD:before {
-  background:  #99B1C2;
-  content: '3';
-   color: white;
+  background: #99b1c2;
+  content: "3";
+  color: white;
 }
 .survey-question .squareIcon .MD:before {
-  background:  #adbbc5;
-  content: '2';
-   color: white;
+  background: #adbbc5;
+  content: "2";
+  color: white;
 }
 .survey-question .squareIcon .ED:before {
-  background:  #CCD8E0;
-  content: '1';
+  background: #ccd8e0;
+  content: "1";
   color: white;
 }
 .survey-question textarea {
@@ -403,7 +405,7 @@ radio-animation {
   color: white;
   display: flex;
   align-items: center;
-  
+
   padding: 8px 50px;
   gap: 10px;
   border-radius: 5px;
@@ -411,48 +413,49 @@ radio-animation {
 .surveys-container .all-surveys {
   font-size: 16px;
 }
-.surveys-container .all-surveys table, th, td{
-  border-color: #C4C4C4;
-} 
+.surveys-container .all-surveys table,
+th,
+td {
+  border-color: #c4c4c4;
+}
 .survey_inactive {
   color: #767676;
-;
 }
 
 /*My account page*/
 .account-text {
-  padding-left:6%;
+  padding-left: 6%;
 }
 .profile-form {
-  display:flex;
+  display: flex;
 }
 
 .profile-form li {
-  width:50%;
+  width: 50%;
   list-style: none;
-  margin-right:8%;
+  margin-right: 8%;
 }
 
 .profile-form li input {
-  width:70%;
-  padding:2% 0 2% 2%;
+  width: 70%;
+  padding: 2% 0 2% 2%;
 }
 
-
 .logoutBtn {
-  background-color:white;
-  border:0;
-  color:#003D66;
+  background-color: white;
+  border: 0;
+  color: #003d66;
   font-weight: bold;
   text-decoration: underline;
-  padding-left:86%;
+  padding-left: 86%;
+  cursor: pointer;
 }
 
 .employee-info label {
-  font-family: 'Titillium Web', sans-serif;
+  font-family: "Titillium Web", sans-serif;
   font-weight: bold;
 }
 
-p{
-  font-family: 'Titillium Web', sans-serif;
+p {
+  font-family: "Titillium Web", sans-serif;
 }

@@ -195,7 +195,7 @@ const DailySurvey = () => {
       <>
         <div className="dailywrapper">
           <h2>How was your Shift?</h2>
-          <p>Welcome, {employee.firstName}</p>
+          {/* <p>Welcome, {employee.firstName}</p> */}
           <form
             className="survey-form"
             onSubmit={handleFormSubmit}
@@ -406,7 +406,7 @@ const DailySurvey = () => {
             </div>
             <div className="survey-comment">
               <label htmlFor="questionTwo">
-                What did you like most about your shift?
+                Write anything about your shift today.
               </label>
               <textarea
                 name="questionTwo"
@@ -422,6 +422,7 @@ const DailySurvey = () => {
               ></textarea>
             </div>
             <input
+              className="survey-submitBtn"
               type="submit"
               value="Submit"
               onClick={() => {
