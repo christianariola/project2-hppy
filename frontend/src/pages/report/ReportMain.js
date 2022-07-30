@@ -253,21 +253,21 @@ const ReportMain = props => {
         <div>
           <h1>Reports</h1>
                   <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                  <InputLabel id="demo-simple-select-label">Type</InputLabel>
+                  <InputLabel>Type</InputLabel>
                     <Select>
-                      <MenuItem><Link component={RouterLink} to={`/app/report`} >Daily</Link></MenuItem>
-                      <MenuItem><Link component={RouterLink} to={`/app/report/monthly`} >Monthly</Link></MenuItem>
+                      <MenuItem><Link component={RouterLink} to={`/app/report`} underline="none" color="inherit" >Daily</Link></MenuItem>
+                      <MenuItem><Link component={RouterLink} to={`/app/report/monthly`} underline="none" color="inherit" >Monthly</Link></MenuItem>
                     </Select>
                   </FormControl>
           <table>
-            <thead>
+            <thead className="daily-list">
                 <tr className="report-list">
                   <th>Date</th>
                   <th>Type</th>
                   <th>Action</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody className="daily-report">
           
             {sortDailySurvey?.map((sortDailySurvey)=>
             
@@ -275,7 +275,7 @@ const ReportMain = props => {
                 
                   <td key={surveyItem.surveyId}>{sortDailySurvey.surveyDate}</td>
               
-                  <td>{sortDailySurvey.surveyTitle}</td>
+                  <td>{sortDailySurvey.surveyTitle} </td>
                   
                   <td>
                     <button className="view-btn" value={sortDailySurvey.surveyDate} onClick={e => props.handleSelectChartDate(e.target.value)}>

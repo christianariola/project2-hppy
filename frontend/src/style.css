@@ -233,6 +233,12 @@ radio-animation {
 .report-pageA table {
   font-family: "Titillium Web", Arial, Tahoma, Helvetica, sans-serif;
   text-align:center;
+  width:90%;
+  margin:0 auto;
+}
+
+.report-pageA tbody {
+  width:100%;
 }
 
 .report-list th {
@@ -255,9 +261,6 @@ radio-animation {
   border-bottom: 1px solid #ccc;
 }
 
-.view-btn {
-  color:white;
-}
 /* .showBtn {
   display: block;
   margin: 0 auto;
@@ -269,11 +272,13 @@ radio-animation {
 
 .view-btn {
   background-color:#003D66;
+  color:white;
   border:0;
 }
 .report-title {
   text-align:center;
 }
+
 /* square buttons */
 
 .answer {
