@@ -315,7 +315,7 @@ const SuperAdminChart = props => {
         <div>
             { surveyType == "Daily" ?
              <div> 
-                <h1>{selectedCompany}'s' Daily Report</h1>
+                <h1>{selectedCompany}'s Daily Report - {chartDate} </h1>
                 {/* <form>
                     <select onChange={e => filterByDepart(e.target.value)}>
                         <option>All</option>
@@ -330,11 +330,22 @@ const SuperAdminChart = props => {
                     options ={{ 
                         responsive: true,
                         maintainAspectRatio: true,	// Don't maintain w/h ratio
+                        
                     }}
                 />
                 <h2 className="report-title">Total Rating</h2>
                     <div>
-                        <Bar data={data} />
+                        <Bar data={data} 
+                            options={{
+                                scales:{
+                                    y:{
+                                        min:0,
+                                        max:5,
+                                        ticks:{stepSize:1}
+                                    }
+                                }
+                            }}
+                        />
                     </div>
             </div>
             

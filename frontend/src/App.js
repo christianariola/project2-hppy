@@ -34,6 +34,7 @@ import SuperAdminChart from './pages/report/SuperAdminChart'
 
 import CompanySettings from './pages/admin/CompanySettings'
 import DepartmentAdmin from './pages/admin/Department'
+import ReportMainMonthly from "./pages/report/ReportMainMonthly";
 
 const App = () => {
 
@@ -116,6 +117,7 @@ const App = () => {
                   <ReportMain handleSelectChartDate={handleSelectChartDate} />
                 }
               />
+              <Route path="report/:type" element={<ReportMainMonthly />} />
               <Route path="reportchart" element={<BarChart />} />
               <Route path="reportchart/:type/:surveyDate" element={<BarChart chartDate={chartDate} />} />
               {/*survey date */}

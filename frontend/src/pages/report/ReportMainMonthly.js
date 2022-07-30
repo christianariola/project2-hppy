@@ -10,13 +10,13 @@ import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem"
 // import Button from '@mui/material/Button';
-const ReportMain = props => {
+const ReportMainMonthly = props => {
 
   const [ surveyItem, setSurveyItems ] = useState([])
   const [ monthlyItem, setMonthlyItems ] = useState([])
   const { employee } = useSelector((state) => state.auth);
   const [ employeeData, setEmployeeData ] = useState([])
-  const [ type, setType ] = useState('false');
+  const [ state, setState ] = useState('false');
 
   //daily survey fetching
     useEffect(function loadData(){
@@ -215,7 +215,7 @@ const ReportMain = props => {
         </thead>
          <tbody>
           
-            {sortDailySurveyByCompany?.map((sortDailySurveyByCompany)=>
+            {/* {sortDailySurveyByCompany?.map((sortDailySurveyByCompany)=>
             
               <tr className="report-content">
                 
@@ -232,9 +232,9 @@ const ReportMain = props => {
               </tr>
               
                 
-                )}
+                )} */}
                 
-               {/* {sortMonthlySurveyByCompany?.map((sortMonthlySurveyByCompany)=>
+               {sortMonthlySurveyByCompany?.map((sortMonthlySurveyByCompany)=>
                 <tr className="report-content">
                     <td key={monthlyItem.surveyid}>{sortMonthlySurveyByCompany.surveyDate}</td>
                     <td>{sortMonthlySurveyByCompany.surveyTitle}</td>
@@ -245,31 +245,31 @@ const ReportMain = props => {
                     </button>
                   </td>
                 </tr>
-                ) } */}
+                ) }
         </tbody>
       </table>
       </div>
       :(
         <div>
-          <h1>Reports</h1>
-                  <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                  <InputLabel id="demo-simple-select-label">Type</InputLabel>
-                    <Select>
-                      <MenuItem><Link component={RouterLink} to={`/app/report`} >Daily</Link></MenuItem>
-                      <MenuItem><Link component={RouterLink} to={`/app/report/monthly`} >Monthly</Link></MenuItem>
-                    </Select>
-                  </FormControl>
-          <table>
-            <thead>
-                <tr className="report-list">
-                  <th>Date</th>
-                  <th>Type</th>
-                  <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
+            <h1>Reports</h1>
+        <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+        <InputLabel id="demo-simple-select-label">Type</InputLabel>
+          <Select>
+            <MenuItem><Link component={RouterLink} to={`/app/report`} >Daily</Link></MenuItem>
+            <MenuItem><Link component={RouterLink} to={`/app/report/monthly`} >Monthly</Link></MenuItem>
+          </Select>
+        </FormControl>   
+      <table>
+        <thead>
+            <tr className="report-list">
+              <th>Date</th>
+              <th>Type</th>
+              <th>Action</th>
+            </tr>
+        </thead>
+         <tbody>
           
-            {sortDailySurvey?.map((sortDailySurvey)=>
+            {/* {sortDailySurvey?.map((sortDailySurvey)=>
             
               <tr className="report-content">
                 
@@ -285,9 +285,9 @@ const ReportMain = props => {
               </tr>
               
                 
-                )}
+                )} */}
                 
-               {/* {sortMonthlySurvey?.map((sortMonthlySurvey)=>
+               {sortMonthlySurvey?.map((sortMonthlySurvey)=>
                 <tr className="report-content">
                     <td key={monthlyItem.surveyid}>{sortMonthlySurvey.monthlysurveyDate}</td>
                     <td>{sortMonthlySurvey.monthlysurveyTitle}</td>
@@ -297,7 +297,7 @@ const ReportMain = props => {
                     </button>
                   </td>
                 </tr>
-                ) } */}
+                ) }
         </tbody>
       </table>
       </div>
@@ -313,4 +313,4 @@ const ReportMain = props => {
   )
 }
 
-export default ReportMain
+export default ReportMainMonthly

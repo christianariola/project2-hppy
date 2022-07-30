@@ -96,7 +96,12 @@ const MonthylyBar = props => {
                 backgroundColor:["#0098FF", "#00CF92","#F72564","#F8D919","#E07116"]
             }]
         }
-    
+        
+        const nameUrl = window.location.href
+        const dateUrl = nameUrl.split('/');
+        const chartDate = dateUrl[dateUrl.length-1] 
+
+
           //monthly survey submission data by date
           var getMonthlySurveySubmit = function(){
             var monthlysurveySubmit = [];
@@ -172,7 +177,7 @@ const MonthylyBar = props => {
         }
     return(
          <div>
-            <h1>Monthly Report</h1>
+            <h1>Monthly Report -{chartDate}</h1>
                 <h2 className="report-title">Submission Rate</h2>
                 <Pie data={monthlySubmitData} 
                     width="20%"
@@ -185,7 +190,17 @@ const MonthylyBar = props => {
                 <h2 className="report-title">Total Rating</h2>
                     <div>
                         
-                        <Bar data={monthlyData} />
+                        <Bar data={monthlyData}
+                             options={{
+                                scales:{
+                                    y:{
+                                        min:0,
+                                        max:5,
+                                        ticks:{stepSize:1}
+                                    }
+                                }
+                            }}
+                        />
                     </div>
         </div> 
         

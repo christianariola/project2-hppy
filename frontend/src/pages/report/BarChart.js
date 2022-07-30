@@ -314,7 +314,7 @@ const BarChart = props => {
         <div>
             { surveyType == "Daily" && employee.role == "admin" ?
              <div> 
-                <h1>Daily Survey Report</h1>
+                <h1>Daily Survey Report - {chartDate}  </h1>
                 {/* <form>
                     <select onChange={e => filterByDepart(e.target.value)}>
                         <option>All</option>
@@ -329,11 +329,22 @@ const BarChart = props => {
                     options ={{ 
                         responsive: true,
                         maintainAspectRatio: true,	// Don't maintain w/h ratio
+                        
                     }}
                 />
                 <h2 class="report-title">Total Rating</h2>
                     <div>
-                        <Bar data={data} />
+                        <Bar data={data} 
+                             options={{
+                                scales:{
+                                    y:{
+                                        min:0,
+                                        max:5,
+                                        ticks:{stepSize:1}
+                                    }
+                                }
+                            }}
+                        />
                     </div>
             </div>
             : ( surveyType == "Daily" && employee.role == "superadmin" 

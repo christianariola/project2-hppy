@@ -98,7 +98,7 @@ const SuperAdminMonthly = props => {
         const monthlyData = {
             labels: ["Very unsatisfactory", "Unsatisfactory", "Neutral", "Satisfactory", "Very Satisfactory"],
             datasets : [{
-                label: "Employee monthly Total Rate",
+                label: "Employee monthly Survey Total Rate",
                 data:[monthlyResult[1], monthlyResult[2], monthlyResult[3],monthlyResult[4], monthlyResult[5]],
                 backgroundColor:["#0098FF", "#00CF92","#F72564","#F8D919","#E07116"]
             }]
@@ -181,7 +181,7 @@ const SuperAdminMonthly = props => {
         }
     return(
          <div>
-            <h1>{selectedCompany}'s Monthly Report</h1>
+            <h1>{selectedCompany}'s Monthly Report - {chartDate}</h1>
             <h2 className="report-title">Submission Rate</h2>
                 <Pie data={monthlySubmitData} 
                     width="20%"
@@ -194,7 +194,17 @@ const SuperAdminMonthly = props => {
                 <h2 className="report-title">Total Rating</h2>
                     <div>
                         
-                        <Bar data={monthlyData} />
+                        <Bar data={monthlyData}
+                             options={{
+                                scales:{
+                                    y:{
+                                        min:0,
+                                        max:5,
+                                        ticks:{stepSize:1}
+                                    }
+                                }
+                            }}
+                        />
                     </div>
         </div> 
         
