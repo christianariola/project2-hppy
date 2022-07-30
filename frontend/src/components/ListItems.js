@@ -15,7 +15,7 @@ export const employeeListItems = (
     </ListItemButton>
 
 
-    <ListItemButton component={RouterLink} to='/app/weeklysurveys'>
+    <ListItemButton component={RouterLink} to='/app/monthlySurveys'>
         <img src="/images/dashboard/icons/icon-survey.svg" alt="My Survey" />
         <ListItemText primary="My Surveys" sx={{ ml: '10px' }} />
     </ListItemButton>
@@ -25,11 +25,46 @@ export const employeeListItems = (
         <ListItemText primary="My Account" sx={{ ml: '10px' }} />
     </ListItemButton>
 
+</>
+)
+
+export const adminListItems = (
+    <>
+    <ListItemButton component={RouterLink} to='/app/dashboard'>
+        <img src="/images/dashboard/icons/icon-home.svg" alt="Home" />
+        <ListItemText primary="Home" sx={{ ml: '10px' }} />
+    </ListItemButton>
+
+    <ListItemButton component={RouterLink} to='/app/account'>
+        <img src="/images/dashboard/icons/icon-account.svg" alt="My Account" />
+        <ListItemText primary="My Account" sx={{ ml: '10px' }} />
+    </ListItemButton>
+
+    {/* <ListItemButton>
+        <img src="/images/dashboard/icons/icon-request.svg" alt="Requests" />
+        <ListItemText primary="Requests" sx={{ ml: '10px' }} />
+    </ListItemButton> */}
+
     <ListItemButton component={RouterLink} to='/app/report'>
         <img src="/images/dashboard/icons/icon-reports.svg" alt="Reports" />
         <ListItemText primary="Reports" sx={{ ml: '10px' }} />
     </ListItemButton>
-</>
+    
+    <Divider sx={{ my: 1 }} />
+    <ListSubheader component="div" sx={{ backgroundColor: '#336485', textColor: 'white' }} color="inherit">
+        Admin Section
+    </ListSubheader>
+
+    <ListItemButton component={RouterLink} to='/app/company/settings/'>
+        <img src="/images/dashboard/icons/icon-survey.svg" alt="Companies" />
+        <ListItemText primary="Company" sx={{ ml: '10px' }} />
+    </ListItemButton>
+
+    <ListItemButton component={RouterLink} to='/app/company/departments'>
+        <img src="/images/dashboard/icons/icon-survey.svg" alt="Companies" />
+        <ListItemText primary="Departments" sx={{ ml: '10px' }} />
+    </ListItemButton>
+    </>
 )
 
 export const superadminListItems = (
@@ -44,10 +79,10 @@ export const superadminListItems = (
         <ListItemText primary="My Account" sx={{ ml: '10px' }} />
     </ListItemButton>
 
-    <ListItemButton>
+    {/* <ListItemButton>
         <img src="/images/dashboard/icons/icon-request.svg" alt="Requests" />
         <ListItemText primary="Requests" sx={{ ml: '10px' }} />
-    </ListItemButton>
+    </ListItemButton> */}
 
     <ListItemButton component={RouterLink} to='/app/report'>
         <img src="/images/dashboard/icons/icon-reports.svg" alt="Reports" />
@@ -56,7 +91,7 @@ export const superadminListItems = (
     
     <Divider sx={{ my: 1 }} />
     <ListSubheader component="div" sx={{ backgroundColor: '#336485', textColor: 'white' }} color="inherit">
-        Admin Section
+        Super Admin Section
     </ListSubheader>
 
     <ListItemButton component={RouterLink} to='/app/companies'>

@@ -1,9 +1,11 @@
 import { useSelector } from "react-redux";
 import * as tf from "@tensorflow/tfjs";
 import { useState, useEffect } from "react";
-import padSequences from "./helper/paddedSeq";
 import axios from "axios";
+import padSequences from "../components/helper/paddedSeq";
 import CompletedLogo from "./helper/Completedlogo";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // import { useNavigate } from "react-router-dom"
 
 // import { addDailySurvey } from "../features/dailysurvey/surveySlice";
@@ -173,12 +175,13 @@ const DailySurvey = () => {
       })
 
       .then((res) => {
-        alert(`Thank you for submitting the Daily Survey`);
+        toast.success("Survey Submitted Successfully");
         setdoneSurvey(true);
       })
       .catch((err) => {
         if (err.response.data.message === "Survey Already Exists") {
-          alert(`Daily Survey already submitted by User: ${employee.email}`);
+          toast.error("Survey already submitted for user");
+          // alert(`Daily Survey already submitted by User: ${employee.email}`);
         } else {
           console.log(err);
         }
@@ -417,7 +420,6 @@ const DailySurvey = () => {
               }}
             ></textarea>
           </div>
-
           <input
             type="submit"
             value="Submit"

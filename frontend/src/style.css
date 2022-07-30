@@ -51,10 +51,6 @@ main {
   margin-top: 5rem;
 }
 
-main h2 {
-  text-align: center;
-}
-
 .feature {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -227,55 +223,236 @@ radio-animation {
 .all-surveys table td,
 .all-surveys table tr {
   text-align: center;
-  border-bottom: 1px black solid;
+  border-bottom: 1px #C4C4C4 solid;
   padding: 0px;
 }
 
-/*survey report list*/
 
-.report-page {
-  padding: 0 5%;
+
+/*survey report list*/
+.report-pageA table {
+  font-family: "Titillium Web", Arial, Tahoma, Helvetica, sans-serif;
+  text-align:center;
 }
+
 .report-list th {
   border-bottom: 1.3px solid black;
 }
 .report-list th:first-child {
-  width: 20%;
+  width: 30%;
 }
 
 .report-list th:nth-child(2) {
+  width: 20%;
+}
+.report-list th:nth-child(3) {
   width: 40%;
 }
-
 .report-list th:last-child {
   width: 40%;
 }
 .report-content td {
   border-bottom: 1px solid #ccc;
 }
-.report-content td:first-child {
-  width: 20%;
-  text-align: center;
-}
 
-.report-content td:nth-child(2) {
-  width: 40%;
-  text-align: center;
+.view-btn {
+  color:white;
 }
-
-.report-content td:last-child {
-  width: 40%;
-  text-align: center;
-}
-
-.showBtn {
+/* .showBtn {
   display: block;
   margin: 0 auto;
+} */
+
+.surveys-container h2 {
+    text-align: left;
 }
-/*My Account Page*/
-.employee-info {
-  display: grid;
-  grid-template-columns: 20% 80%;
-  gap: 1rem;
-  margin: 0.5rem;
+
+.view-btn {
+  background-color:#003D66;
+  border:0;
+}
+.report-title {
+  text-align:center;
+}
+/* square buttons */
+
+.answer {
+    display: flex;
+
+}
+.survey-question .squareRadio {
+  display: none;
+}
+.survey-question .squareIcon,
+.survey-question .squareIconType2 
+{
+  display: inline-block;
+  padding: 0px 0px;
+  cursor: pointer;
+}
+.survey-question .squareIcon span,
+.survey-question .squareIconType2 span
+ {
+  position: relative;
+  line-height: 30px;
+  text-align: center;
+}
+.survey-question .squareIcon span:before,
+.survey-question .squareIcon span:after,
+.survey-question .squareIconType2 span:before,
+.survey-question .squareIconType2 span:after
+{
+  content: '';
+}
+
+
+
+.survey-question .squareIcon span:before {
+  border: 0px solid #CCCCCC;
+  min-width: 98%;
+  height: 30px;
+  margin-right: 0px;
+  display: inline-block;
+  vertical-align: top;
+}
+.survey-question .squareIconType2 span:before {
+  border: 2px solid #CCCCCC;
+  min-width: 20px;
+  height: 20px;
+  margin-right: 0px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.survey-question .squareIcon span:after {
+  border: 3px solid #CCCCCC;
+  min-width: 100%;
+  height: 32px;
+  position: absolute;
+  top: -6px;
+  left: 0%;
+  transition: 300ms;
+  opacity: 0;
+}
+.survey-question .squareIconType2 span:after {
+  border: 3px solid #CCCCCC;
+  background: #0098FF;
+  min-width: 20px;
+  height: 20px;
+  position: absolute;
+  top: -6px;
+  left: 0%;
+  transition: 300ms;
+  opacity: 0;
+}
+.survey-question .squareIcon input:checked+span:after,
+.survey-question .squareIconType2 input:checked+span:after
+{
+  opacity: 1;
+}
+
+
+.survey-question .squareIcon .ES:before {
+  background: #003D66;
+  content: '7';
+  color: white;
+
+}
+.survey-question .squareIcon .MS:before {
+  background: #336485;
+  content: '6';
+   color: white;
+}
+.survey-question .squareIcon .SS:before {
+  background: #668BA3;
+  content: '5';
+   color: white;
+}
+.survey-question .squareIcon .NSND:before {
+  background: #92adc1;
+  content: '4';
+   color: white;
+}
+.survey-question .squareIcon .SD:before {
+  background:  #99B1C2;
+  content: '3';
+   color: white;
+}
+.survey-question .squareIcon .MD:before {
+  background:  #adbbc5;
+  content: '2';
+   color: white;
+}
+.survey-question .squareIcon .ED:before {
+  background:  #CCD8E0;
+  content: '1';
+  color: white;
+}
+.survey-question textarea {
+  border-radius: 5px;
+}
+.surveys-container h2 {
+  font-family: "Titillium Web", sans-serif;
+}
+/* submit button */
+.submit_btn {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #336485;
+  color: white;
+  display: flex;
+  align-items: center;
+  
+  padding: 8px 50px;
+  gap: 10px;
+  border-radius: 5px;
+}
+.surveys-container .all-surveys {
+  font-size: 16px;
+}
+.surveys-container .all-surveys table, th, td{
+  border-color: #C4C4C4;
+} 
+.survey_inactive {
+  color: #767676;
+;
+}
+
+/*My account page*/
+.account-text {
+  padding-left:6%;
+}
+.profile-form {
+  display:flex;
+}
+
+.profile-form li {
+  width:50%;
+  list-style: none;
+  margin-right:8%;
+}
+
+.profile-form li input {
+  width:70%;
+  padding:2% 0 2% 2%;
+}
+
+
+.logoutBtn {
+  background-color:white;
+  border:0;
+  color:#003D66;
+  font-weight: bold;
+  text-decoration: underline;
+  padding-left:86%;
+}
+
+.employee-info label {
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: bold;
+}
+
+p{
+  font-family: 'Titillium Web', sans-serif;
 }

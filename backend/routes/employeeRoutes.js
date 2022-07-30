@@ -4,7 +4,7 @@ const {
     registerEmployee, 
     loginEmployee, 
     getMe,
-    getAllEmployees
+    changePassword,
 } = require('../controllers/employeeController')
 
 const { submitSurvey } = require("../controllers/surveyController");
@@ -13,6 +13,6 @@ const { protect } = require('../middleware/authMiddleware')
 router.post('/', registerEmployee)
 router.post('/login', loginEmployee)
 router.get('/me', protect, getMe)
-router.get('/getEmployeeAll', getAllEmployees)
+router.post('/changePassword', changePassword)
 
 module.exports = router

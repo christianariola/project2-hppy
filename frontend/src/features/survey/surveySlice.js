@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import surveyService from "../survey/surveyService";
 
 const initialState = {
-  doneDaily: false,
+  doneDaily: true,
 };
 
 // Add new Daily Survey
@@ -35,8 +35,8 @@ export const surveySlice = createSlice({
     .addCase(dailySurveyChecker.fulfilled, (state, action) => {
         // console.log(action.payload.checker)
 
-        if(action.payload.checker){
-          state.doneDaily = true
+        if(!action.payload.checker){
+          state.doneDaily = false
         }
 
     })

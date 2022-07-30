@@ -4,6 +4,6 @@ const {
     getReportByDate,
 } = require('../controllers/reportController')
 
-router.get('/view/:surveyDate', getReportByDate)
+router.get('reportchart/:type/:surveyDate', getReportByDate)
 
 module.exports = router

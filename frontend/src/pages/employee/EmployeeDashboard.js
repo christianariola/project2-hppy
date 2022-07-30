@@ -19,6 +19,8 @@ const EmployeeDashboard = () => {
 
   const { doneDaily } = useSelector((state) => state.survey);
 
+  console.log(doneDaily)
+
   useEffect(() => {
     const employeeData = {
       surveyid: surveyId,

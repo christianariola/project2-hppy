@@ -4,7 +4,7 @@ const { ObjectId } = mongoose.SchemaTypes;
 const companySchema = mongoose.Schema({
     name: {
         type: String,
-        required: [true, 'Please add a company name'],
+        required: [false, 'Please add a company name'],
     },
     description: {
         type: String,
@@ -13,11 +13,11 @@ const companySchema = mongoose.Schema({
     logo: {
         public_id: {
             type: String,
-            required: true,
+            required: false,
         },
         url: {
             type: String,
-            required: true,
+            required: false,
         }
     }, required: false,
     departments: [{
@@ -25,13 +25,39 @@ const companySchema = mongoose.Schema({
             type: String,
             required: [false, "Please add a department name"],
         },
-        // employees: [
-        //     {
-        //         type: ObjectId,
-        //         ref: "Employee",
-        //         required: [false, "employee_id is required"],
-        //     }
-        // ],
+        employees: [{
+            employee_id: {
+                type: ObjectId,
+                ref: "Employee",
+                required: false,
+            },
+            firstName: {
+                type: String,
+                required: false,
+            },
+            lastName: {
+                type: String,
+                required: false,
+            },
+            email: {
+                type: String,
+                required: false,
+            },
+            jobTitle: {
+                type: String,
+                required: false,
+            },
+            isAdmin: {
+                type: String,
+                required: false,
+                default: false,
+            },
+            isManager: {
+                type: String,
+                required: false,
+                default: false,
+            },
+        }], required: false,
     }], required: false,
 }, 
 {

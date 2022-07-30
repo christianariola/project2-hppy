@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { useSelector, useDispatch } from 'react-redux'
 import { addCompany, editCompany, reset } from "../../features/company/companySlice"
 import DepartmentsInput from "../department/DepartmentsInput"
+import Logo from "./Logo"
 
 const initialState = {
     name: "",
@@ -52,6 +53,7 @@ const AddEditCompany = () => {
         // if(isSuccess || employee){
         if(isSuccess){
             console.log("Company added!")
+            console.log("Message", message)
             navigate('/app/companies')
         }
 
@@ -89,26 +91,90 @@ const AddEditCompany = () => {
     const onSubmit = (e) => {
         e.preventDefault()
 
-        const deptObj = departments.map(function(department) {
-            // create a new object to store dept name.
-            var newObj = {};
-            newObj["deptName"] = department;
-    
-            // // return our new object.
-            return newObj;
-        });
-
-        const updatedCompanyData = {
-            name,
-            description,
-            logo: image,
-            departments: deptObj,
-        }
-
         if(!companyId) {
+
+            const deptObj = departments.map(function(department) {
+                // create a new object to store dept name.
+                var newObj = {};
+                newObj["deptName"] = department;
+        
+                // // return our new object.
+                return newObj;
+            });
+    
+            const updatedCompanyData = {
+                name,
+                description,
+                logo: image,
+                departments: deptObj,
+            }
+
             dispatch(addCompany(updatedCompanyData))
         } else {
-            console.log(updatedCompanyData)
+
+            const sortEntriesByKey = ([a], [b]) => a.localeCompare(b),
+            filter = deptData.reduce((r, o) => {
+                Object
+                    .entries(o)
+                    .sort(sortEntriesByKey)
+                    .reduce((o, [k, v]) => (o[k] ??= {})[v] ??= {}, r);
+                return r;
+            }, {});
+            const newDept = departments.filter((o) => {
+                let f = filter;
+                return !Object
+                    .entries(o)
+                    .sort(sortEntriesByKey)
+                    .every(([k, v]) => f = f[k]?.[v]);
+            });
+
+            // console.log(deptData)
+            // console.log(departments)
+            console.log(newDept)
+
+            const filter2 = departments.reduce((r, o) => {
+                Object
+                    .entries(o)
+                    .sort(sortEntriesByKey)
+                    .reduce((o, [k, v]) => (o[k] ??= {})[v] ??= {}, r);
+                return r;
+            }, {});
+            const removeOld = deptData.filter((o) => {
+                let f = filter2;
+                return !Object
+                    .entries(o)
+                    .sort(sortEntriesByKey)
+                    .every(([k, v]) => f = f[k]?.[v]);
+            });
+
+            console.log(removeOld)
+
+            const newDeptArr = newDept.map(function(department) {
+                // create a new object to store dept name.
+                var newObj = {};
+                newObj["deptName"] = department;
+        
+                // // return our new object.
+                return newObj;
+            });
+
+            const removeOldArr = removeOld.map(function(department) {
+                // create a new object to store dept name.
+                var newObj = {};
+                newObj["deptName"] = department;
+        
+                // // return our new object.
+                return newObj;
+            });
+    
+            const updatedCompanyData = {
+                name,
+                description,
+                logo: image,
+                newDeptArr: newDeptArr,
+                removeOldArr: removeOldArr,
+            }
+
             dispatch(editCompany({companyId, updatedCompanyData}))
             navigate('/app/companies')
         }
@@ -137,7 +203,7 @@ const AddEditCompany = () => {
                     <input type="file" className="form-control" id="logo" name="logo" onChange={onFileChange} placeholder="Enter company logo" accept="image/png, image/jpeg, image/jpg, image/jfif"/>
                 </div>
                 <div className="preview">
-                    { image ? <img src={image} alt="Preview" style={{width: "200px"}} /> : "" }
+                    { image ? <img src={image} alt="Preview" style={{width: "200px"}} /> : <Logo logo={formData.logo} /> }
                 </div>
                 <div className="form-group">
                 </div>
@@ -153,7 +219,6 @@ const AddEditCompany = () => {
                     placeholder="Add Departments"
                     label="Departments"
                     deptData={deptData}
-
                 />
 
 

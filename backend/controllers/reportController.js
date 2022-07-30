@@ -6,7 +6,11 @@ const asyncHandler = require('express-async-handler')
 const getReportByDate = asyncHandler(async (req, res) => {
 
     console.log(req.params.surveyDate);  
-    const dailySurveyModel = await dailySurveyModel.findAll({dailySurveyDate:req.params.surveyDate})
+    const dailySurveyModel = await dailySurveyModel.findAll({
+        dailySurveyDate:req.params.surveyDate, 
+        surveyType:req.params.type,
+    });
+    // const monthlySurveyModel = await monthlySurveyModel.findAll({surveyType:req.params.surveyType});
     // if(company){
     //     res.status(201).json({
     //     })

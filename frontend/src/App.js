@@ -3,7 +3,7 @@ import RequireAuth from "./components/RequireAuth";
 import { Routes, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState } from "react";
-
+import { ToastContainer } from 'react-toastify';
 import Login from "./pages/Login";
 import AddEmployee from "./components/employee/AddEmployee";
 import DashboardLayout from "./layouts/DashboardLayout";
@@ -21,14 +21,28 @@ import EmployeeDashboard from "./pages/employee/EmployeeDashboard";
 
 import DailySurvey from "./components/DailySurvey";
 import ReportMain from "./pages/report/ReportMain";
-import Myaccount from "./pages/Myaccout";
+import MyAccount from "./pages/MyAccount";
+import Password from "./pages/Password";
 import BarChart from "./pages/report/BarChart";
 
-import Company from "./components/company/Company";
-import AddEditCompany from "./components/company/AddEditCompany";
-import ViewCompany from "./components/company/ViewCompany";
+import Company from './components/company/Company'
+import AddEditCompany from './components/company/AddEditCompany'
+import ViewCompany from './components/company/ViewCompany'
+import ViewEmployee from "./components/employee/ViewEmployee";
+import EditEmployee from "./components/employee/EditEmployee";
+import SuperAdminChart from './pages/report/SuperAdminChart'
+
+import CompanySettings from './pages/admin/CompanySettings'
+import DepartmentAdmin from './pages/admin/Department'
 
 const App = () => {
+
+  // const customTheme =createMuiTheme({
+  //   palette:{
+  //     main:'#003D66'
+  //   }
+  // })
+
   const [chartDate, setChartDate] = useState();
 
   const handleSelectChartDate = (date) => {
@@ -39,14 +53,14 @@ const App = () => {
   let dashboardIndex;
 
   if (employee) {
-    switch (employee.role) {
+    switch (employee.role.toLowerCase()) {
       case "superadmin":
         dashboardIndex = <SuperAdminDashboard />;
         break;
       case "admin":
         dashboardIndex = <AdminDashboard />;
         break;
-      case "hod":
+      case "manager":
         dashboardIndex = <HodDashboard />;
         break;
       case "employee":
@@ -62,6 +76,7 @@ const App = () => {
 
   return (
     <>
+      <ToastContainer closeButton={false} position="top-right" />
       <Routes>
         {/** public routes */}
         <Route path="/" element={<MainLayout />} exact>
@@ -79,22 +94,22 @@ const App = () => {
 
         <Route
           element={
-            <RequireAuth allowedRoles={["employee", "superadmin", "admin"]} />
+            <RequireAuth allowedRoles={["employee", "superadmin", "admin", "manager"]} />
           }
         >
           <Route path="/app" element={<DashboardLayout />}>
             <Route path="dashboard" element={dashboardIndex}></Route>
             <Route path="dailysurvey" element={<DailySurvey />}></Route>
-            <Route path="account" element={<Myaccount />}></Route>
+            <Route path="account" element={<MyAccount />}></Route>
+            <Route path="account/password" element={<Password />}></Route>
             <Route path="surveys" element={<DailySurvey />}></Route>
-            <Route path="weeklysurveys" element={<Surveys />}></Route>
+            <Route path="monthlySurveys" element={<Surveys />}></Route>
             <Route
               element={<RequireAuth allowedRoles={["superadmin", "admin"]} />}
             >
-              <Route
-                path="company/:companyId/employee/add"
-                element={<AddEmployee />}
-              />
+              <Route path="company/:companyId/employee/add" element={<AddEmployee />} />
+              <Route path="company/:companyId/employee/view/:empId" element={<ViewEmployee />} />
+              <Route path="company/:companyId/employee/edit/:empId" element={<EditEmployee />} />
               <Route
                 path="report"
                 element={
@@ -102,13 +117,17 @@ const App = () => {
                 }
               />
               <Route path="reportchart" element={<BarChart />} />
-              <Route
-                path="reportchart/:surveyDate"
-                element={<BarChart chartDate={chartDate} />}
-              />{" "}
+              <Route path="reportchart/:type/:surveyDate" element={<BarChart chartDate={chartDate} />} />
               {/*survey date */}
+              <Route path="reportchart/:type/:surveyDate/:companyName" element={<SuperAdminChart />} />
               <Route path="reportview" element={<BarChart />} />{" "}
               {/*employee view  */}
+            </Route>
+
+            {/* Admin Only */}
+            <Route element={<RequireAuth allowedRoles={["admin"]} />}>
+              <Route path="company/settings" element={<CompanySettings />}></Route>
+              <Route path="company/departments" element={<DepartmentAdmin />}></Route>
             </Route>
 
             {/* Super Admin Only */}

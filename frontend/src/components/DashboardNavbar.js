@@ -1,8 +1,10 @@
-import { useNavigate } from 'react-router-dom'
+import { Link as RouterLink, useNavigate } from 'react-router-dom'
+import Link from '@mui/material/Link';
 import { useSelector, useDispatch } from 'react-redux'
 import { logout, reset } from '../features/auth/authSlice'
-import { useState } from "react"
-
+import { useState, useEffect } from "react"
+import { getCompany } from "../features/company/companySlice"
+import Logo from "./company/Logo"
 // MUI imports
 import { styled } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
@@ -17,7 +19,7 @@ import Badge from '@mui/material/Badge';
 import MenuIcon from '@mui/icons-material/Menu';
 // import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { employeeListItems, superadminListItems } from '../components/ListItems'
+import { employeeListItems, adminListItems, superadminListItems } from '../components/ListItems'
 
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
@@ -108,12 +110,18 @@ const DashboardHeader = () => {
     let employeeList
     const { employee } = useSelector(state => state.auth)
 
-    switch(employee.role) {
+    switch(employee.role.toLowerCase()) {
         case "superadmin":
             employeeList = superadminListItems;
             break;
         case "employee":
             employeeList = employeeListItems;
+            break;
+        case "manager":
+            employeeList = employeeListItems;
+            break;
+        case "admin":
+            employeeList = adminListItems;
             break;
         default:
             employeeList = employeeListItems;
@@ -122,6 +130,14 @@ const DashboardHeader = () => {
 
     // const empName = `${employee.firstName} ${employee.lastName}`
     const empInitials = employee.firstName.charAt(0)+employee.lastName.charAt(0)
+
+    const { company } = useSelector(state => state.company)
+    useEffect(() => {
+        if(employee.company_id){
+            dispatch(getCompany(employee.company_id))
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [employee.company_id])
 
     return <>
 
@@ -182,10 +198,10 @@ const DashboardHeader = () => {
                 onClose={handleCloseUserMenu}
             >
                 <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">Profile</Typography>
+                    <Link component={RouterLink} to={`/app/account`}><Typography textAlign="center">My Account</Typography></Link>
                 </MenuItem>
                 <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">Account</Typography>
+                    <Link component={RouterLink} to={`/app/account/password`}><Typography textAlign="center">Change Password</Typography></Link>
                 </MenuItem>
                 <MenuItem onClick={handleCloseUserMenu}>
                     <Typography textAlign="center" onClick={onLogout}>Logout</Typography>
@@ -204,8 +220,8 @@ const DashboardHeader = () => {
             }
         }}
         >
-            <img src="/images/hppy-logo.svg" alt="Hppy" />
-
+            {employee.company_id ? <Logo logo={company.logo} /> : <img src="/images/hppy-logo.svg" alt="Hppy" /> }
+        
             <Divider />
             
             <List component="nav">

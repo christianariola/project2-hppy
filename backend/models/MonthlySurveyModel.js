@@ -12,6 +12,9 @@ const MonthlySurveySchema = new Schema({
   employeeEmail: {
     type: String,
   },
+  surveyName: {
+    type: String,
+  },
   surveyType: {
     type: String,
     enum: ["monthlySurvey", "dailySurvey"],
@@ -24,8 +27,8 @@ const MonthlySurveySchema = new Schema({
     enum: ["compleated", "incompleated", "expired"],
   },
   surveyOpened: {
-    type: String,
-    enum: ["visited", "non-visited"],
+    type: Boolean,
+    required: false,
   },
   monthlySurvey: {
     answers: {

@@ -1,22 +1,40 @@
 const asyncHandler = require('express-async-handler')
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs')
+
 const { default: mongoose } = require('mongoose')
 const cloudinary = require("../cloudinary/cloudinary")
-const Company = require('../models/companyModel')
 
-// @desc   Register a new user
-// @route  /api/employees
+const Company = require('../models/companyModel')
+const Employee = require('../models/employeeModel')
+
+const generateString = (length) => {
+    var res = '';
+    var availableChars = 'abcdefghijklmnopqrstuvwxyz';
+    var numAvalailableChars = availableChars.length;
+
+    for (var i = 0; i < length; i++) {
+        res += availableChars.charAt(Math.floor(Math.random() * numAvalailableChars));
+    }
+
+    return res;
+}
+
+
+// @desc   Register a new company
+// @route  /api/companies
 // @access Public
 const addCompany = asyncHandler(async (req, res) => {
 
     const {name, description, logo, departments} = req.body
 
     const filename = name.trim().toLowerCase()
+    const randomName = generateString(8)
 
     const result = await cloudinary.uploader.upload(logo,
     {
         upload_preset: 'unsigned_uploads',
-        public_id: `${filename}-logo`,
+        public_id: `${filename}-${randomName}`,
         allowed_formats: ['png', 'jpg', 'jpeg', 'svg', 'ico', 'jfif', 'webp'],
         width: 300,
         crop: "scale"
@@ -74,26 +92,48 @@ const getCompany = asyncHandler(async (req, res) => {
         })
     } else {
         res.status(401)
-        throw new Error('Invalid credentials')
+        throw new Error('No data found')
     }
 })
 
 const editCompany = asyncHandler(async (req, res) => {
 
     const id = req.params.companyId
-    const { name, description, logo, departments } = req.body
+    const { name, description, logo, newDeptArr, removeOldArr } = req.body
+
+    // console.log(req.body)
 
     if(!mongoose.Types.ObjectId.isValid(id)){
         return res.status(404).json({ message: `No company exist with id ${id}` })
     }
 
+    // query company departments with employees
+    const deptEmployees = Company.findOne({"_id": id}).then(doc => {
+
+        // console.log(departments)
+        item = doc.departments;
+
+        const deptDoc = item.filter(ar => !removeOldArr.find(rm => (rm.deptName === ar.deptName) ))
+        const empInsert = [...deptDoc, ...newDeptArr]
+
+
+        doc["departments"] = empInsert;
+        // console.log(doc["departments"])
+        doc.save();
+
+    //sent respnse to client
+    }).catch(err => {
+    console.log('Oh! Dark', err)
+    });
+
 
     if(logo){
         const filename = name.trim().toLowerCase()
+        const randomName = generateString(8)
         const result = await cloudinary.uploader.upload(logo,
         {
             upload_preset: 'unsigned_uploads',
-            public_id: `${filename}-logo`,
+            public_id: `${filename}-${randomName}`,
             allowed_formats: ['png', 'jpg', 'jpeg', 'svg', 'ico', 'jfif', 'webp'],
             width: 300,
             crop: "scale"
@@ -107,11 +147,18 @@ const editCompany = asyncHandler(async (req, res) => {
                 public_id: result.public_id,
                 url: result.secure_url
             },
-            departments,
+            // departments,
             _id: id
         }
 
-        const company = await Company.findByIdAndUpdate(id, updatedCompany, { new: true }) 
+        const company = await Company.findByIdAndUpdate(id, updatedCompany,
+            (err, success) => {
+                if(err){
+                    console.log("Unsuccessful", err)
+                } else {
+                    console.log("Successful", success)
+                }
+            })
 
         if(company){
             res.status(201).json(updatedCompany)
@@ -123,14 +170,14 @@ const editCompany = asyncHandler(async (req, res) => {
         const updatedCompany = {
             name,
             description,
-            departments,
+            // departments,
             _id: id
         }
 
-        const company = await Company.findByIdAndUpdate(id, updatedCompany, { new: true }) 
+        const company = await Company.findByIdAndUpdate(id, updatedCompany) 
 
         if(company){
-            res.status(201).json(updatedCompany)
+            res.status(201).json(company)
         } else {
             res.status(401)
             throw new Error('Something went wrong...')
@@ -160,6 +207,185 @@ const deleteCompany = asyncHandler(async (req, res) => {
     }
 })
 
+const employeeByCompany = asyncHandler(async (req, res) => {
+    const empId = req.params.empId
+
+    const employee = await Employee.findOne({ _id: empId })    
+    console.log(employee)
+    if(empId){
+        if(employee){
+            res.status(201).json({
+                _id: employee._id,
+                employeeNumber: employee.employeeNumber,
+                firstName: employee.firstName,
+                lastName: employee.lastName,
+                email: employee.email,
+                role: employee.role,
+                job_title: employee.jobTitle,
+                role: employee.role,
+                company_id: employee.company_id,
+                company_name: employee.company_name,
+                department_id: employee.department_id,
+                department_name: employee.department_name,
+            })
+        } else {
+            res.status(401)
+            throw new Error('No data found')
+        }
+    }
+
+})
+
+const deleteEmployee = asyncHandler(async (req, res) => {
+
+    const {empId, compempId} = req.params
+
+    console.log(empId)
+    console.log(compempId)
+    
+    try {
+
+        // Remove on employee collection
+        const employee = await Employee.findByIdAndRemove(empId) 
+
+        // Remove on company collection
+        const company = Company.updateOne({'departments.employees._id': compempId },
+        { $pull: {'departments.$.employees':  {'_id': compempId}}  },
+        {multi: true},
+        (err, success) => {
+            if(err){
+                console.log("Unsuccessful", err)
+            } else {
+                console.log("Successful", success)
+            }
+        })
+
+        const newcompany = await Company.findOne({ 'departments.employees._id': compempId })    
+
+        if(newcompany){
+            res.status(201).json({
+                _id: company._id,
+                name: company.name,
+                description: company.description,
+                logo: company.logo,
+                departments: company.departments,
+            })
+        } else {
+            res.status(401)
+            throw new Error('No data found')
+        }
+
+    } catch (error) {
+        console.log(error)
+    }
+
+})
+
+const editEmployee = asyncHandler(async (req, res) => {
+
+    const {empId} = req.params
+
+    const {department_id, department_name, employeeNumber, firstName, lastName, email, role, jobTitle, password} = req.body
+
+    // updating company collection nested document
+    let empData = []
+    if(role == 'manager'){
+        empData = {
+            employee_id: empId,
+            employeeNumber,
+            firstName,
+            lastName,
+            email,
+            jobTitle,
+            isManager: true
+        }
+    } else if(role == 'admin'){
+        empData = {
+            employee_id: empId,
+            employeeNumber,
+            firstName,
+            lastName,
+            email,
+            jobTitle,
+            isAdmin: true
+        }
+    } else {
+        empData = {
+            employee_id: empId,
+            employeeNumber,
+            firstName,
+            lastName,
+            email,
+            jobTitle,
+        }
+    }
+
+    const company = Company.findOne({"departments._id": department_id}).then(doc => {
+        item = doc.departments.id(department_id);
+
+        // console.log(item.employees)
+        const employeeDoc = item.employees.filter((employees) => employees.email !== email)
+        const empInsert = [...employeeDoc, empData]
+
+        // console.log(empInsert)
+        item["employees"] = empInsert;
+
+        doc.save();
+    //sent respnse to client
+    }).catch(err => {
+    console.log('Oh! Dark', err)
+    });
+
+    let employeeData 
+    if(password){
+
+        // Password encyptions
+        const salt = await bcrypt.genSalt(10)
+        const hashedPassword = await bcrypt.hash(password, salt)
+
+        employeeData = {
+            employeeNumber,
+            firstName,
+            lastName,
+            email,
+            role: role.toLowerCase(),
+            jobTitle,
+            password: hashedPassword,
+            department_id,
+            department_name,
+        }
+    } else {
+        employeeData = {
+            employeeNumber,
+            firstName,
+            lastName,
+            email,
+            role: role.toLowerCase(),
+            jobTitle,
+            department_id,
+            department_name,
+        }
+    }
+
+    const employee = Employee.findByIdAndUpdate(empId, employeeData,
+    (err, success) => {
+        if(err){
+            // console.log("Unsuccessful", err)
+        } else {
+            // console.log("Successful", success)
+        }
+    })
+
+    if(employee && company) {
+        res.status(201).json({
+            message: "Success"
+        })
+    } else {
+        res.status(400)
+        throw new Error('Invalid user data')
+    }
+})
+
 
 module.exports = {
     addCompany,
@@ -167,4 +393,7 @@ module.exports = {
     getCompany,
     editCompany,
     deleteCompany,
+    employeeByCompany,
+    deleteEmployee,
+    editEmployee,
 }

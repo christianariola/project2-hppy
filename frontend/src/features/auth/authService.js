@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 // Local API_URL for dev
-// const API_URL = '/api/employees'
-const API_URL = 'https://pluto-hppy.herokuapp.com/api/employees'
+const API_URL = '/api/employees'
+// const API_URL = 'https://pluto-hppy.herokuapp.com/api/employees'
 
 const addEmployee = async (userData) => {
     const response = await axios.post(API_URL, userData)
@@ -27,10 +27,16 @@ const login = async (userData) => {
 // Logout employee
 const logout = () => localStorage.removeItem('employee')
 
+const changePassword = async (userData) => {
+    const response = await axios.post(API_URL + '/changePassword', userData)
+    return response.data
+}
+
 const authService = {
     addEmployee,
     login,
-    logout
+    logout,
+    changePassword
 }
 
 export default authService
