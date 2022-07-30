@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import padSequences from "../components/helper/paddedSeq";
 import CompletedLogo from "./helper/Completedlogo";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import { useNavigate } from "react-router-dom"
 
 // import { addDailySurvey } from "../features/dailysurvey/surveySlice";
@@ -26,12 +26,11 @@ const DailySurvey = () => {
 
   ///Survey Date
   const dateHandler = () => {
-    const date=new Date();
+    const date = new Date();
     const currentYear = new Date().getFullYear();
     const currentMonth = String(date.getMonth() + 1).padStart(2, "0");
     const currentDay = String(date.getDate()).padStart(2, "0");
     const together = [currentYear, currentMonth, currentDay].join("-");
-    console.log(together);
     setDailySurveyDate(together);
     setSurveyName("DailySurvey" + together);
   };
@@ -180,7 +179,8 @@ const DailySurvey = () => {
       })
       .catch((err) => {
         if (err.response.data.message === "Survey Already Exists") {
-          toast.error("Survey already submitted for user");
+          toast.error("Daily Survey has already been submitted");
+          setdoneSurvey(true);
           // alert(`Daily Survey already submitted by User: ${employee.email}`);
         } else {
           console.log(err);
