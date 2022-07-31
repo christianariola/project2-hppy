@@ -229,7 +229,11 @@ radio-animation {
 
 
 /*survey report list*/
-
+.newSurvey {
+  color: red;
+  text-transform: uppercase;
+  font-size: 10px;
+}
 .report-page {
   padding: 0 5%;
 }
@@ -304,37 +308,47 @@ radio-animation {
   content: '';
 }
 
+.squareIcon div {
+  text-align: center;
+  margin-left: 10px;
+  margin-right: 10px;
+}
 
 
 .survey-question .squareIcon span:before {
   border: 0px solid #CCCCCC;
   min-width: 98%;
-  height: 30px;
+  height: 40px;
   margin-right: 0px;
   display: inline-block;
   vertical-align: top;
 }
-.survey-question .squareIconType2 span:before {
+/* .survey-question .squareIconType2 span:before {
   border: 2px solid #CCCCCC;
   min-width: 20px;
   height: 20px;
   margin-right: 0px;
   display: inline-block;
   vertical-align: top;
-}
+} */
 
 .survey-question .squareIcon span:after {
-  border: 3px solid #CCCCCC;
+  border: 3px solid #00CF92;
+  border-radius: 5px;
   min-width: 100%;
-  height: 32px;
+  height: 600%;
   position: absolute;
   top: -6px;
   left: 0%;
   transition: 300ms;
   opacity: 0;
 }
+
+.survey-question .squareIcon span:after .squareIcon {
+      border: 3px solid red;
+}
 .survey-question .squareIconType2 span:after {
-  border: 3px solid #CCCCCC;
+  border: 3px solid #00CF92;
   background: #0098FF;
   min-width: 20px;
   height: 20px;

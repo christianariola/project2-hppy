@@ -251,9 +251,9 @@ const getEmployeeEmail = function () {
         surveyid: emp.email+202205,
         employeeEmail: emp.email,
         surveyName: `Survey${202205}`,
-        surveyType: "monthlySurvey",
+        surveyType: "Monthly Survey",
         createdDate: "202205",
-        surveyStatus: "incompleated",
+        surveyStatus: "incomplete",
         surveyOpened: false,
         monthlySurvey: {
           answers: {

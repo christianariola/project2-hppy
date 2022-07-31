@@ -17,14 +17,14 @@ const MonthlySurveySchema = new Schema({
   },
   surveyType: {
     type: String,
-    enum: ["monthlySurvey", "dailySurvey"],
+    enum: ["Monthly Survey", "dailySurvey"],
   },
   createdDate: {
     type: String
   },
   surveyStatus: {
     type: String,
-    enum: ["compleated", "incompleated", "expired"],
+    enum: ["completed", "incompleted", "expired"],
   },
   surveyOpened: {
     type: Boolean,
