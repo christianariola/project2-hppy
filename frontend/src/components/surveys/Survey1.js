@@ -173,7 +173,10 @@ const Survey1 = ({ choosenSurvey,  setOpenSurvey, openSurvey, setChoosenSurvey }
   
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    // setSurveyType("monthlySurvey");
+    if (answer1 === '' || answer2 === '' || answer3 === '' || answer4 === '' || answer5 === '' || answer6 === '' || answer7 === '' || answer7a === '') {
+      alert("Please, answer all questions of the form")
+    } else {
+          // setSurveyType("monthlySurvey");
     setSurveyOpened(true);
     setOpenSurvey(false);
     console.log(openSurvey);
@@ -223,11 +226,17 @@ const Survey1 = ({ choosenSurvey,  setOpenSurvey, openSurvey, setChoosenSurvey }
         }
       });
 
+    }
+
+
+
   };
+
+
 
     return (
       <div className="survey">
-        <form
+        <form id="monthForm"
           // action="/monthlySurveys"
           onSubmit={handleFormSubmit}
         // onChange={dateHandler}
@@ -241,6 +250,7 @@ const Survey1 = ({ choosenSurvey,  setOpenSurvey, openSurvey, setChoosenSurvey }
                   <input className="squareRadio" type="radio"
                     name="answer1"
                     value="1"
+                    required
                     onChange={(e) => setAnswer1(e.target.value)} />
                   <span className="ED"></span>
                   <div>Extremely dissatisfied</div>
@@ -652,7 +662,7 @@ const Survey1 = ({ choosenSurvey,  setOpenSurvey, openSurvey, setChoosenSurvey }
               />
             </div>
           </div>
-        
+          <div id="message"></div>
           <button className="submit_btn">Submit</button>
         </form>
       </div>

@@ -431,4 +431,9 @@ radio-animation {
   color: #767676;
 ;
 }
-
+.surveys-container .links {
+  color: black;
+}
+.surveys-container a.links:visited {
+  color: black;
+}

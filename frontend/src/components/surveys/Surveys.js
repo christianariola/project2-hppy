@@ -69,7 +69,7 @@ const Surveys = () => {
             setOpenSurvey(!openSurvey);
             console.log(openSurvey)
               setChoosenSurvey('');
-            }} > My Survey  &gt;  {choosenSurvey.surveyName}
+            }} ><a href="#" className="links"> My Survey</a>  &gt;  {choosenSurvey.surveyName}
             </h2>
             } 
         {
@@ -96,9 +96,9 @@ const Surveys = () => {
 
                               }
                               }>
-                            <td>{item.surveyName}{ item.surveyOpened ? <sup className="newSurvey"> new</sup> : ''}</td>
-                        <td>{item.surveyStatus}</td>
-                        <td>{item.createdDate }</td>
+                            <td><a href="#" className="links">{item.surveyName}</a>{ item.surveyOpened ? <sup className="newSurvey"> new</sup> : ''}</td>
+                        <td><a href="#" className="links">{item.surveyStatus}</a></td>
+                        <td><a href="#" className="links">{item.createdDate }</a></td>
                   </tr>
                 )
                   } else {
