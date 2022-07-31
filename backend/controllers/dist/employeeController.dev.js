@@ -228,7 +228,7 @@ var loginEmployee = asyncHandler(function _callee2(req, res) {
 
         case 13:
           res.status(401);
-          throw new Error('Invalid credentials');
+          throw new Error('Invalid username and password. Please try again.');
 
         case 15:
         case "end":
