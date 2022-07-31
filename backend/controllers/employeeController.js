@@ -167,7 +167,7 @@ const loginEmployee = asyncHandler(async (req, res) => {
         })
     } else {
         res.status(401)
-        throw new Error('Invalid credentials')
+        throw new Error('Invalid username and password. Please try again.')
     }
 
 })

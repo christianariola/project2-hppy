@@ -1,6 +1,27 @@
 /* Google Font */
 @import url("https://fonts.googleapis.com/css2?family=Titillium+Web:wght@400;600;700&display=swap");
 
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+/* Responsive Images ============ */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
 body {
   margin: 0;
   font-family: "Titillium Web", Arial, Tahoma, Helvetica, sans-serif;
@@ -63,11 +84,57 @@ main {
   height: auto;
 }
 
+/* Main Footer ==================== */
 footer {
   background: linear-gradient(180deg, #0098ff, #003d66);
   color: #fff;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 5fr 200px;
+  gap: 2rem;
+  align-content: center;
+  align-items: center;
+  width: 100%;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  font-size: 0.9rem;
+  height: 15vh;
+}
+
+footer a {
+  color: #ffffff;
+  padding: 0.5rem;
+}
+
+footer ul li {
+  list-style: none;
+  display: inline;
+}
+
+.copyright p, .footer-nav, .footer-sns p {
+  padding: 0;
+  margin: 0;
+}
+
+.footer-nav {
+  text-align: center;
+}
+
+.footer-nav a:hover {
+  text-decoration: underline;
+}
+
+.footer-sns {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.footer-sns a:first-child {
+  padding-left: 0;  
+  padding-right: 0.5rem;
+}
+
+.mobile-copy {
+  display: none;
 }
 
 /* DAILY SURVEY */
@@ -460,4 +527,40 @@ radio-animation {
 
 p{
   font-family: 'Titillium Web', sans-serif;
+}
+
+@media screen and (max-width: 800px) {
+
+  /* Footer */
+
+  footer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    padding: 2rem 1rem;
+    height: auto;
+  }
+
+  .footer-nav ul {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .footer-sns {
+    text-align: left;
+  }
+
+  .copyright p:nth-child(2) {
+    display: none;
+  }
+
+  .mobile-copy {
+    display: block;
+    grid-column: span 3;
+  }
+
 }
