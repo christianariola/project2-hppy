@@ -18,13 +18,13 @@ img {
 }
 
 ul {
-    list-style-type: none;
-    padding: 0;
+  list-style-type: none;
+  padding: 0;
 }
 
 body {
   margin: 0;
-  font-family: "Titillium Web", Arial, Tahoma, Helvetica, sans-serif;
+  font-family: "Titillium Web", Arial, Tahoma, Helvetica, sans-serif !important;
 }
 
 h1 {
@@ -110,7 +110,9 @@ footer ul li {
   display: inline;
 }
 
-.copyright p, .footer-nav, .footer-sns p {
+.copyright p,
+.footer-nav,
+.footer-sns p {
   padding: 0;
   margin: 0;
 }
@@ -129,7 +131,7 @@ footer ul li {
 }
 
 .footer-sns a:first-child {
-  padding-left: 0;  
+  padding-left: 0;
   padding-right: 0.5rem;
 }
 
@@ -310,13 +312,13 @@ radio-animation {
 /*survey report list*/
 .report-pageA table {
   font-family: "Titillium Web", Arial, Tahoma, Helvetica, sans-serif;
-  text-align:center;
-  width:90%;
-  margin:0 auto;
+  text-align: center;
+  width: 90%;
+  margin: 0 auto;
 }
 
 .report-pageA tbody {
-  width:100%;
+  width: 100%;
 }
 
 .report-list th {
@@ -349,9 +351,9 @@ radio-animation {
 }
 
 .view-btn {
-  background-color:#003D66;
-  color:white;
-  border:0;
+  background-color: #003d66;
+  color: white;
+  border: 0;
 }
 .report-title {
   text-align: center;
@@ -531,9 +533,40 @@ td {
 p {
   font-family: "Titillium Web", sans-serif;
 }
+/* ////////////////Media Queries///////////////////////////////   */
+@media screen and (max-width: 750px) {
+  /* Hero*/
+  .hero .hero-text {
+    padding: 0.5rem;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .hero-text p {
+    display: none;
+  }
+  .hero-text a {
+    text-align: center;
+    max-width: fit-content;
+    align-self: center;
+    justify-self: center;
+  }
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .hero-image {
+    width: 100%;
+    height: auto;
+    align-self: center;
+    justify-self: end;
+  }
+  .feature {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
 
 @media screen and (max-width: 800px) {
-
   /* Footer */
 
   footer {
@@ -565,5 +598,4 @@ p {
     display: block;
     grid-column: span 3;
   }
-
 }
