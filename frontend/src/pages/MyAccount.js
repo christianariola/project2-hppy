@@ -17,7 +17,7 @@ const MyAccount = () => {
     <>
       <h2>My Account</h2>
       <p className="account-text">
-        My Account informtaion is view-only. You cannot edit this informtaion.
+        My Account information is view-only. You cannot edit this information.
       </p>
       <form>
         <div className="employee-info">

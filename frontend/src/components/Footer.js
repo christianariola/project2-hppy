@@ -8,7 +8,7 @@ library.add(faFacebook, faTwitter, faYoutube, faInstagram )
 
 const Footer = () => {
     return <>
-        <footer>
+        <footer className='footer-home'>
             <div className="copyright">
                 <p><img src="images/footer-logo.svg" alt="Hppy" /></p>
                 <p>&copy; 2022 Hppy | Team Pluto</p>
