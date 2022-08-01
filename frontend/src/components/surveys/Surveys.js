@@ -49,7 +49,7 @@ const Surveys = () => {
   const handleChooseSurvey = (item) => {
     setChoosenSurvey(item);
     setOpenSurvey(!openSurvey)
-    console.log(openSurvey)
+    // console.log(openSurvey)
     // console.log(item)
   }
 
@@ -67,7 +67,7 @@ const Surveys = () => {
           :
             <h2 onClick={() => {
             setOpenSurvey(!openSurvey);
-            console.log(openSurvey)
+            // console.log(openSurvey)
               setChoosenSurvey('');
             }} ><a href="#" className="links"> My Survey</a>  &gt;  {choosenSurvey.surveyName}
             </h2>
@@ -87,7 +87,7 @@ const Surveys = () => {
                 
                   {
                     filteredList.map((item, index) => {
-                      console.log(item)
+                      // console.log(item)
                   if (item.surveyStatus === "incompleted") {
                         return (
                           <tr key={index}
