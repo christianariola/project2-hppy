@@ -200,8 +200,8 @@ const ReportMainMonthly = props => {
         <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
         <InputLabel id="demo-simple-select-label">Type</InputLabel>
           <Select>
-            <MenuItem><Link component={RouterLink} to={`/app/report`} >Daily</Link></MenuItem>
-            <MenuItem><Link component={RouterLink} to={`/app/report/monthly`} >Monthly</Link></MenuItem>
+            <MenuItem><Link component={RouterLink} to={`/app/report`}  underline="none" color="inherit" >Daily</Link></MenuItem>
+            <MenuItem><Link component={RouterLink} to={`/app/report/monthly`}  underline="none" color="inherit" >Monthly</Link></MenuItem>
           </Select>
         </FormControl>
       <table>
@@ -255,8 +255,8 @@ const ReportMainMonthly = props => {
         <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
         <InputLabel id="demo-simple-select-label">Type</InputLabel>
           <Select>
-            <MenuItem><Link component={RouterLink} to={`/app/report`} >Daily</Link></MenuItem>
-            <MenuItem><Link component={RouterLink} to={`/app/report/monthly`} >Monthly</Link></MenuItem>
+            <MenuItem><Link component={RouterLink} to={`/app/report`}  underline="none" color="inherit" >Daily</Link></MenuItem>
+            <MenuItem><Link component={RouterLink} to={`/app/report/monthly`}  underline="none" color="inherit" >Monthly</Link></MenuItem>
           </Select>
         </FormControl>   
       <table>

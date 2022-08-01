@@ -44,13 +44,13 @@ const ReportMain = props => {
     // console.log(employeeData)
 
      //monthly survey fetching
-     useEffect(function loadMonthly(){
-      axios.get('/monthlySurveys')
-     .then((res)=>{
-      setMonthlyItems(res.data)
-      })
-      .catch(error=>console.log(error))
-  },[]) 
+  //    useEffect(function loadMonthly(){
+  //     axios.get('/monthlySurveys')
+  //    .then((res)=>{
+  //     setMonthlyItems(res.data)
+  //     })
+  //     .catch(error=>console.log(error))
+  // },[]) 
   // console.log(monthlyItem)
 
 
@@ -200,8 +200,8 @@ const ReportMain = props => {
         <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
         <InputLabel id="demo-simple-select-label">Type</InputLabel>
           <Select>
-            <MenuItem><Link component={RouterLink} to={`/app/report`} >Daily</Link></MenuItem>
-            <MenuItem><Link component={RouterLink} to={`/app/report/monthly`} >Monthly</Link></MenuItem>
+            <MenuItem><Link component={RouterLink} to={`/app/report`}  underline="none" color="inherit" >Daily</Link></MenuItem>
+            <MenuItem><Link component={RouterLink} to={`/app/report/monthly`}  underline="none" color="inherit" >Monthly</Link></MenuItem>
           </Select>
         </FormControl>
       <table>
