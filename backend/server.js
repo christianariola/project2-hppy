@@ -241,7 +241,10 @@ const dateHandler = () => {
 // “At 00:00 on day-of-month 1 in January, February, March, April, May, June, July, August, September, October, November, and December.”
 // 00 00 1 1,2,3,4,5,6,7,8,9,10,11,12 *
 
-const job = cron.schedule("43 2 * * *", ()  => {
+// specific time cron
+// 43 2 * * *
+
+const job = cron.schedule("00 00 1 1,2,3,4,5,6,7,8,9,10,11,12", ()  => {
   // Do whatever you want in here. Send email, Make  database backup or download data.
   date = dateHandler();
   

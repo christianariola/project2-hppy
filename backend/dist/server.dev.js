@@ -244,9 +244,11 @@ var dateHandler = function dateHandler() {
   return "".concat(year).concat(month < 10 ? "0".concat(month) : "".concat(month));
 }; // “At 00:00 on day-of-month 1 in January, February, March, April, May, June, July, August, September, October, November, and December.”
 // 00 00 1 1,2,3,4,5,6,7,8,9,10,11,12 *
+// specific time cron
+// 43 2 * * *
 
 
-var job = cron.schedule("43 2 * * *", function () {
+var job = cron.schedule("00 00 1 1,2,3,4,5,6,7,8,9,10,11,12", function () {
   // Do whatever you want in here. Send email, Make  database backup or download data.
   date = dateHandler();
   Employee.find({}).exec(function (error, result) {
