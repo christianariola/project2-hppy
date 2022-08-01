@@ -1,3 +1,15 @@
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Input from "@mui/material/Input"; 
+import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
+import { CardContent } from "@mui/material";
+import Card from "@mui/material/Card";
+import Typography from '@mui/material/Typography';
+import Box from "@mui/material/Box";
+// import {linkdeinLogo} from '../../
+import {Link} from 'react-router-dom'
 const Features = () => {
   return (
     <>
@@ -93,6 +105,96 @@ const Features = () => {
             blanditiis ducimus cum nam excepturi, repellendus totam suscipit
             veritatis! Sunt vero odio quidem.
           </p>
+          <div className="picture-section">
+            <div className="picture-wrap">
+              <div className="picture1"></div>
+              <h3>KaranPal Singh</h3>
+              <p>Project Manager/</p> <p>Full-Stack Developer</p>
+              <Link to="">lnk</Link>
+            </div>
+            <div className="picture-wrap">
+              <div className="picture2"></div>
+              <h3>Christian Pierre Ariola</h3>
+              <p>Full-Stack Developer</p>
+              <Link to="">lnk</Link>
+            </div>
+            <div className="picture-wrap">
+              <div className="picture3"></div>
+              <h3>Hyewon Kang</h3>
+              <p>Full-Stack Developer</p>
+
+              <Link to="">lnk</Link>
+            </div>
+            <div className="picture-wrap">
+              <div className="picture4"></div>
+              <h3>Taras Ivanov</h3>
+              <p>Full-Stack Developer</p>
+              <Link to="">lnk</Link>
+              </div>
+            <div className="picture-wrap">
+              <div className="picture5"></div>
+              <h3>Shijie You</h3>
+              <p>UI/UX Designer</p>
+              <Link to="">lnk</Link>
+            </div>
+            <div className="picture-wrap">
+              <div className="picture6"></div>
+              <h3>Tia O'Gilvie</h3>
+              <p>UI/UX Designer</p>
+              <Link to="">lnk</Link>
+            </div>
+            <div className="picture-wrap">
+              <div className="picture7"></div>
+              <h3>Connie Lu</h3>
+              <p>UI/UX Designer</p>
+              <Link to="">lnk</Link>
+            </div>
+          </div>
+          <div className="feature-5-text">
+            <h3>Agile.Professional</h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, illo
+              eligendi! Fuga praesentium corporis facere quisquam officiis,
+              blanditiis ducimus cum nam excepturi, repellendus totam suscipit
+              veritatis! Sunt vero odio quidem.
+            </p>
+          </div>
+        </div>
+        <div className="contact-us">
+          {/* <div className="contact-text">
+            <h2>Contact Us</h2>
+            <p>We'd love to hear anything from you! </p>
+          </div> */}
+          
+          <Card >
+          <CardContent>
+            <Box sx={{display:'flex'}}>
+              <Box style={{width:"50%"}}>
+                <Typography variant="h4" style={{textAlign:'left', fontWeight:'bold'}}>Contact Us</Typography>
+                <Typography variant="h6" style={{textAlign:'left'}}>We'd love to hear anything from you!</Typography>
+             </Box>
+          <form style={{width:"50%"}}>
+            <Grid container spacing={1}>
+              <Grid xs={12} sm={6} item>
+                <TextField label="First Name" variant="outlined" fullWidth required />
+              </Grid>
+              <Grid  xs={12} sm={6} item>
+                <TextField label="Last Name" variant="outlined" fullWidth required/>
+              </Grid>
+              <Grid xs={12} item>
+                <TextField label="Email" variant="outlined" fullWidth required/>
+              </Grid>
+              <Grid xs={12} item>
+                <TextField label="Message" multiline row={4} variant="outlined" fullWidth required/>
+              </Grid>
+              <Grid xs={12} item>
+                <Button type="submit" variant="contained" fullWidth>Submit</Button>
+              </Grid>
+            </Grid>
+          </form>
+          </Box>
+          </CardContent>
+          </Card>
         </div>
       </div>
     </>
