@@ -173,7 +173,8 @@ a.MuiTypography-root.MuiTypography-inherit.MuiLink-root.MuiLink-underlineNone.cs
 .picture-section {
   display: grid;
   /* grid-template-columns: repeat(4, 1fr); */
-  grid-template-columns: repeat(auto-fit, minmax(300px, 4fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 4fr));
+  gap: 1rem;
 }
 .picture-wrap {
   position: relative;
