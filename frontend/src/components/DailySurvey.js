@@ -174,12 +174,28 @@ const DailySurvey = () => {
       })
 
       .then((res) => {
-        toast.success("Survey Submitted Successfully");
+        toast.success("Daily Survey submitted successfully", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
         setdoneSurvey(true);
       })
       .catch((err) => {
         if (err.response.data.message === "Survey Already Exists") {
-          toast.error("Daily Survey has already been submitted");
+          toast.error("Daily Survey has already been submitted", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
           setdoneSurvey(true);
           // alert(`Daily Survey already submitted by User: ${employee.email}`);
         } else {
