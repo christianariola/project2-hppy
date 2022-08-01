@@ -154,9 +154,11 @@ footer ul li {
   grid-template-columns: repeat(4, 1fr);
 }
 .picture-wrap {
+  position: relative;
   text-align:center;
   margin:0 auto;
 }
+
 .picture-section .picture-wrap p {
   padding:0;
   margin:0;
@@ -166,6 +168,8 @@ footer ul li {
   padding:0;
   margin:0;
 }
+
+
 .picture1 {
   background: no-repeat url("source/Karan.png") ;
   background-size:cover;
@@ -228,6 +232,17 @@ footer ul li {
 .feature-5-text p {
   padding:0;
   text-align: right;
+}
+
+.linkdein {
+  background:no-repeat url("source/256px-LinkedIn_logo_initials.png");
+  background-size:cover;
+  width:30px;
+  height:30px;
+  position:absolute;
+  top:5%;
+  right:5%;
+
 }
 /* DAILY SURVEY */
 /* animate emoji on hover */

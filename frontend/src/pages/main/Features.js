@@ -11,6 +11,14 @@ import Box from "@mui/material/Box";
 // import {linkdeinLogo} from '../../
 import {Link} from 'react-router-dom'
 const Features = () => {
+   let hyewonUrl = "https://www.linkedin.com/in/hyewon-kang"
+   let karanUrl = "https://www.linkedin.com/in/karan-p-singh"
+   let chrisUrl = "https://www.linkedin.com/in/christian-pierre-ariola"
+   let tarasUrl = "https://www.linkedin.com/in/taras-ivanov"
+   let jieUrl = "https://www.linkedin.com/in/shijie-you"
+   let connieUrl = "https://www.linkedin.com/in/tzuying-connie-lu"
+   let tiaUrl = "https://www.linkedin.com/in/tiagayogilvie"
+
   return (
     <>
       <div className="wrapper">
@@ -110,44 +118,43 @@ const Features = () => {
               <div className="picture1"></div>
               <h3>KaranPal Singh</h3>
               <p>Project Manager/</p> <p>Full-Stack Developer</p>
-              <Link to="">lnk</Link>
+               <a href={karanUrl}><p className="linkdein"></p></a>
             </div>
             <div className="picture-wrap">
               <div className="picture2"></div>
               <h3>Christian Pierre Ariola</h3>
               <p>Full-Stack Developer</p>
-              <Link to="">lnk</Link>
+              <a href={chrisUrl}><p className="linkdein"></p></a>
             </div>
             <div className="picture-wrap">
               <div className="picture3"></div>
               <h3>Hyewon Kang</h3>
               <p>Full-Stack Developer</p>
-
-              <Link to="">lnk</Link>
+              <a href={hyewonUrl}><p className="linkdein"></p></a>
             </div>
             <div className="picture-wrap">
               <div className="picture4"></div>
               <h3>Taras Ivanov</h3>
               <p>Full-Stack Developer</p>
-              <Link to="">lnk</Link>
+              <a href={tarasUrl}><p className="linkdein"></p></a>
               </div>
             <div className="picture-wrap">
               <div className="picture5"></div>
               <h3>Shijie You</h3>
               <p>UI/UX Designer</p>
-              <Link to="">lnk</Link>
+              <a href={jieUrl}><p className="linkdein"></p></a>
             </div>
             <div className="picture-wrap">
               <div className="picture6"></div>
               <h3>Tia O'Gilvie</h3>
               <p>UI/UX Designer</p>
-              <Link to="">lnk</Link>
+              <a href={tiaUrl}><p className="linkdein"></p></a>
             </div>
             <div className="picture-wrap">
               <div className="picture7"></div>
               <h3>Connie Lu</h3>
               <p>UI/UX Designer</p>
-              <Link to="">lnk</Link>
+              <a href={connieUrl}><p className="linkdein"></p></a>
             </div>
           </div>
           <div className="feature-5-text">
