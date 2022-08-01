@@ -261,7 +261,7 @@ const job = cron.schedule("00 00 1 1,2,3,4,5,6,7,8,9,10,11,12", ()  => {
         employeeEmail: emp.email,
         surveyName: `Survey${date}`,
         surveyType: "Monthly Survey",
-        createdDate: "202205",
+        createdDate: "2022-05",
         surveyStatus: "incomplete",
         surveyOpened: false,
         monthlySurvey: {
