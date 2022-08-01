@@ -8,6 +8,7 @@ const cloudinary = require("./cloudinary/cloudinary")
 const { json } = require("express");
 const morgan = require("morgan");
 const schedule = require("node-schedule");
+const cron = require("node-cron")
 
 const PORT = process.env.PORT || 3001;
 
@@ -226,32 +227,36 @@ app.use(errorHandler);
   
 // });
 
-
 // create a dateHandler for date variable
 const dateHandler = () => {
-    let newDate = new Date();
-    let month = newDate.getMonth() + 1;
-    let year = newDate.getFullYear();
-    // console.log(`${year}${month<10?`0${month}`:`${month}`}${date}`)
-    return (
-      `${year}${month < 10 ? `0${month}` : `${month}`}`
-    );
-  };
-    // take all employee emails 
-const getEmployeeEmail = function () {
+  let newDate = new Date();
+  let month = newDate.getMonth() + 1;
+  let year = newDate.getFullYear();
+  // console.log(`${year}${month<10?`0${month}`:`${month}`}${date}`)
+  return (
+    `${year}${month < 10 ? `0${month}` : `${month}`}`
+  );
+};
+
+// “At 00:00 on day-of-month 1 in January, February, March, April, May, June, July, August, September, October, November, and December.”
+// 00 00 1 1,2,3,4,5,6,7,8,9,10,11,12 *
+
+const job = cron.schedule("43 2 * * *", ()  => {
+  // Do whatever you want in here. Send email, Make  database backup or download data.
   date = dateHandler();
-              Employee.find({})
+  
+    Employee.find({})
     .exec((error, result)=>{
       if(error){
           console.log(error)
       } else {
         result.forEach((emp) => {
           // let test = 'tester.Rod@twitter.com'
-          // console.log(emp.email)
+          //  console.log(emp.email)
            let updateValue = {
-        surveyid: emp.email+202205,
+        surveyid: emp.email+date,
         employeeEmail: emp.email,
-        surveyName: `Survey${202205}`,
+        surveyName: `Survey${date}`,
         surveyType: "Monthly Survey",
         createdDate: "202205",
         surveyStatus: "incomplete",
@@ -274,7 +279,7 @@ const getEmployeeEmail = function () {
            }
           
           
-          MonthlySurvey.updateMany({ 'employeeEmail': emp.email },
+          MonthlySurvey.create({ 'employeeEmail': emp.email },
          
          
           // MonthlySurvey.save({ 'employeeEmail': emp.email },
@@ -289,6 +294,18 @@ const getEmployeeEmail = function () {
         })
       }
   })
+
+  console.log("Data", new Date().toLocaleString());
+});
+
+const showData = () => {
+  console.log("running cron")
+}
+
+
+    // take all employee emails 
+const getEmployeeEmail = function () {
+
   }
 
 

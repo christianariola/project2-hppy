@@ -36,8 +36,10 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.6",
     "morgan": "^1.10.0",
+    "node-cron": "^3.0.1",
     "node-schedule": "^2.1.0",
-    "sentiment": "^5.0.2"
+    "sentiment": "^5.0.2",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.16"
