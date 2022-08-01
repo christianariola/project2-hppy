@@ -248,7 +248,7 @@ var dateHandler = function dateHandler() {
 // 43 2 * * *
 
 
-var job = cron.schedule("00 00 1 1,2,3,4,5,6,7,8,9,10,11,12", function () {
+var job = cron.schedule("0 0 1 * *", function () {
   // Do whatever you want in here. Send email, Make  database backup or download data.
   date = dateHandler();
   Employee.find({}).exec(function (error, result) {

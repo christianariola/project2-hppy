@@ -244,7 +244,7 @@ const dateHandler = () => {
 // specific time cron
 // 43 2 * * *
 
-const job = cron.schedule("00 00 1 1,2,3,4,5,6,7,8,9,10,11,12", ()  => {
+const job = cron.schedule("0 0 1 * *", ()  => {
   // Do whatever you want in here. Send email, Make  database backup or download data.
   date = dateHandler();
   
