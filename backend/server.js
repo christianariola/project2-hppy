@@ -4,11 +4,11 @@ const dotenv = require("dotenv").config();
 const { errorHandler } = require("./middleware/errorMiddleware");
 const connectDB = require("./config/db");
 const cors = require("cors");
-const cloudinary = require("./cloudinary/cloudinary")
+const cloudinary = require("./cloudinary/cloudinary");
 const { json } = require("express");
 const morgan = require("morgan");
 const schedule = require("node-schedule");
-const cron = require("node-cron")
+const cron = require("node-cron");
 
 const PORT = process.env.PORT || 3001;
 
@@ -21,8 +21,8 @@ const app = express();
 app.use(cors());
 //Cors Configuration - End
 
-app.use(express.json({limit: '50mb'}));
-app.use(express.urlencoded({ extended: false, limit: '50mb' }));
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ extended: false, limit: "50mb" }));
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 
@@ -31,7 +31,6 @@ app.use(morgan("dev"));
 
 app.get("/", (req, res) => {
   res.send("Welcome to Hppy");
-
 });
 
 //report(view) schema
@@ -68,7 +67,6 @@ app.get("/", (req, res) => {
 //       }
 //   })
 // })
-
 
 //Daily Survey Schema
 const { DailySurvey } = require("./models/dailySurveyModel");
@@ -136,33 +134,29 @@ app.post("/monthlySurveys", (req, res) => {
 });
 app.patch("/monthlySurveys", async (req, res, error) => {
   try {
-    let query = { surveyid: req.body.surveyid }
-    const updatedDoc = await MonthlySurvey.findOne(query)
-    await updatedDoc.updateOne(req.body)
-    const result = await MonthlySurvey.findOne(query)
-    console.log(result)
-  }
-  catch (error) {
+    let query = { surveyid: req.body.surveyid };
+    const updatedDoc = await MonthlySurvey.findOne(query);
+    await updatedDoc.updateOne(req.body);
+    const result = await MonthlySurvey.findOne(query);
+    console.log(result);
+  } catch (error) {
     console.error(error);
   }
-  
-  // console.log(req.body)
 
+  // console.log(req.body)
 });
 
-app.get('/monthlySurveys', (req, res) => {
-  MonthlySurvey.find({})
-    .exec((error, result) => {
-      if (error) {
-        res.send(500).json(error)
-      } else {
-        res.json(result)
-        // console.log(result)
-      }
-  })
+app.get("/monthlySurveys", (req, res) => {
+  MonthlySurvey.find({}).exec((error, result) => {
+    if (error) {
+      res.send(500).json(error);
+    } else {
+      res.json(result);
+      // console.log(result)
+    }
+  });
   // getEmployeeEmail()
-
-})
+});
 
 //employee Survey Schema
 const Employee = require("./models/employeeModel");
@@ -171,7 +165,7 @@ const { update } = require("./models/employeeModel");
 //post employee
 app.post("/getEmployeeAll", (req, res) => {
   let employee = new Employee(req.body);
- 
+
   employee.save((err) => {
     if (err) {
       console.log(err.code);
@@ -182,30 +176,29 @@ app.post("/getEmployeeAll", (req, res) => {
         : res.status(400).send(err);
     } else {
       res.status(201).json({
-        message: "New employee Saved"
+        message: "New employee Saved",
       });
     }
   });
 });
 
 //get employee
-app.get("/getEmployeeAll",(req, res) => {
-  console.log("here!!!!!!")
-  Employee.find({})
-  .exec((error, result)=>{
-      if(error){
-          res.send(500).json(error)
-      } else {
-          res.json(result)
-      }
-  })
-})
+app.get("/getEmployeeAll", (req, res) => {
+  console.log("here!!!!!!");
+  Employee.find({}).exec((error, result) => {
+    if (error) {
+      res.send(500).json(error);
+    } else {
+      res.json(result);
+    }
+  });
+});
 // Routes
 app.use("/api/employees", require("./routes/employeeRoutes"));
 app.use("/api/getEmployeeAll", require("./routes/employeeRoutes"));
-app.use("/api/survey", require("./routes/surveyRoutes"))
-app.use("/api/companies", require("./routes/companyRoutes"))
-app.use("/api/reports", require("./routes/reportRoutes"))
+app.use("/api/survey", require("./routes/surveyRoutes"));
+app.use("/api/companies", require("./routes/companyRoutes"));
+app.use("/api/reports", require("./routes/reportRoutes"));
 
 app.use("/api/dailySurvey", require("./routes/surveyRoutes"));
 app.use("/api/Surveys", require("./routes/surveyRoutes"));
@@ -213,29 +206,27 @@ app.use("/api/monthlySurvey", require("./routes/surveyRoutes"));
 
 app.use(errorHandler);
 
-
-// ===== Node-schedular ======= 
-// cron tab for every month format: 
+// ===== Node-schedular =======
+// cron tab for every month format:
 // const scheduleDate = new Date('0 0 1 * *');
 
 //  in order to do not compomise data just before presentation, this function commented out
 // const scheduleDate = new Date('* * * * *');
 
 // const job = schedule.scheduleJob(scheduleDate, function () {
-  //   getEmployeeEmail()
-  // console.log("A new survey has to bee send to mongoDB at:", new Date().toString());
-  
+//   getEmployeeEmail()
+// console.log("A new survey has to bee send to mongoDB at:", new Date().toString());
+
 // });
 
 // create a dateHandler for date variable
 const dateHandler = () => {
-  let newDate = new Date();
-  let month = newDate.getMonth() + 1;
-  let year = newDate.getFullYear();
-  // console.log(`${year}${month<10?`0${month}`:`${month}`}${date}`)
-  return (
-    `${year}${month < 10 ? `0${month}` : `${month}`}`
-  );
+  const date = new Date();
+  const currentYear = new Date().getFullYear();
+  const currentMonth = String(date.getMonth() + 1).padStart(2, "0");
+  const currentDay = String(date.getDate()).padStart(2, "0");
+  const together = [currentYear, currentMonth, currentDay].join("-");
+  return together;
 };
 
 // “At 00:00 on day-of-month 1 in January, February, March, April, May, June, July, August, September, October, November, and December.”
@@ -244,74 +235,66 @@ const dateHandler = () => {
 // specific time cron
 // 43 2 * * *
 
-const job = cron.schedule("0 0 1 * *", ()  => {
+const job = cron.schedule("0 1 1 * *", () => {
   // Do whatever you want in here. Send email, Make  database backup or download data.
   date = dateHandler();
-  
-    Employee.find({})
-    .exec((error, result)=>{
-      if(error){
-          console.log(error)
-      } else {
-        result.forEach((emp) => {
-          // let test = 'tester.Rod@twitter.com'
-          //  console.log(emp.email)
-           let updateValue = {
-        surveyid: emp.email+date,
-        employeeEmail: emp.email,
-        surveyName: `Survey${date}`,
-        surveyType: "Monthly Survey",
-        createdDate: "202205",
-        surveyStatus: "incomplete",
-        surveyOpened: false,
-        monthlySurvey: {
-          answers: {
-            answer1: "",
-            answer2: "",
-            answer3: "",
-            answer4: "",
-            answer5: "",
-            answer6: "",
-            answer7: "",
-            answer7a: "",
-          }
-        },
-        monthlyFeeling: "",
-        monthlySentiment: "",
-        monthlyTotalRating: ""
-           }
-          
-          
-          MonthlySurvey.create({ 'employeeEmail': emp.email },
-         
-         
+
+  Employee.find({}).exec((error, result) => {
+    if (error) {
+      console.log(error);
+    } else {
+      result.forEach((emp) => {
+        // let test = 'tester.Rod@twitter.com'
+        //  console.log(emp.email)
+        let updateValue = {
+          surveyid: emp.email + date,
+          employeeEmail: emp.email,
+          surveyName: `MonthlySurvey${date}`,
+          surveyType: "Monthly Survey",
+          createdDate: date,
+          surveyStatus: "incomplete",
+          surveyOpened: false,
+          monthlySurvey: {
+            answers: {
+              answer1: "",
+              answer2: "",
+              answer3: "",
+              answer4: "",
+              answer5: "",
+              answer6: "",
+              answer7: "",
+              answer7a: "",
+            },
+          },
+          monthlyFeeling: "",
+          monthlySentiment: "",
+          monthlyTotalRating: "",
+        };
+
+        MonthlySurvey.create(
+          { employeeEmail: emp.email },
+
           // MonthlySurvey.save({ 'employeeEmail': emp.email },
-            
-            updateValue, function (error, docs) {
+
+          updateValue,
+          function (error, docs) {
             if (error) {
-              console.log(error)
+              console.log(error);
             } else {
-              console.log(docs)
+              console.log(docs);
             }
-          })
-        })
-      }
-  })
+          }
+        );
+      });
+    }
+  });
 
   console.log("Data", new Date().toLocaleString());
 });
 
 const showData = () => {
-  console.log("running cron")
-}
+  console.log("running cron");
+};
 
-
-    // take all employee emails 
-const getEmployeeEmail = function () {
-
-  }
-
-
-  
-  
-
+// take all employee emails
+const getEmployeeEmail = function () {};
