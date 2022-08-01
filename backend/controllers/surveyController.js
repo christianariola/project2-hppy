@@ -5,9 +5,9 @@ const asyncHandler = require("express-async-handler");
 const dailySurveyChecker = asyncHandler(async (req, res) => {
 
   const { DailySurvey } = require("../models/dailySurveyModel");
-  
-  let dailySurvey = new DailySurvey(req.body);
 
+  let dailySurvey = new DailySurvey(req.body);
+  console.log(req.body)
   const dailychecker = await DailySurvey.findOne({ surveyid:dailySurvey.surveyid })
 
   let employeeDone;
@@ -17,6 +17,8 @@ const dailySurveyChecker = asyncHandler(async (req, res) => {
   } else {
     employeeDone = false
   }
+
+
 
   res.status(200).json({ checker: employeeDone })
 })
