@@ -6,13 +6,13 @@ import Survey1 from './Survey1';
 // import SurveyList from './SurveyList'
 
 
+
 const Surveys = () => {
   const { employee } = useSelector((state) => state.auth);
   const [openSurvey, setOpenSurvey] = useState(false);
   const [monthlySurvey, setMonthSurvey] = useState([]);
   const [choosenSurvey, setChoosenSurvey] = useState('');
   const [filteredList, setFilteredList] = useState([]);
-
     
     // fetching data from database
     useEffect(function loadData(){
@@ -21,9 +21,12 @@ const Surveys = () => {
             setMonthSurvey(res.data)  
          })   
          .catch(error=>console.log(error))
-     },[choosenSurvey]) 
- 
+    }, [openSurvey] ) 
+  
+  // console.log(employee.email)
+  
   // function for filtering surveys by email 
+ 
   const ListOfSurveys = () => {
       let surveyList = [];
     for (let i = 0; i < monthlySurvey.length; i++){
@@ -38,28 +41,22 @@ const Surveys = () => {
   useEffect(() => {
     ListOfSurveys()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[monthlySurvey ,employee.email] )
-
-  // console.log(filteredList)
-
-    // }
+  },[ openSurvey,
+    monthlySurvey,
+    employee.email,
+  ])
 
   const handleChooseSurvey = (item) => {
     setChoosenSurvey(item);
+    setOpenSurvey(!openSurvey)
+    console.log(openSurvey)
     // console.log(item)
   }
 
 
 
 
-  console.log(monthlySurvey);
-
-    // const returnToSurveys = () => {
-    //     setOpenSurvey(!openSurvey);
-    //     setSurveyName('');
-    // }
-     
-
+  // console.log(monthlySurvey);
 
     return (
         <div className='surveys-container'>
@@ -69,38 +66,39 @@ const Surveys = () => {
             <h2>My Survey</h2>
           :
             <h2 onClick={() => {
-              setOpenSurvey(!openSurvey);
+            setOpenSurvey(!openSurvey);
+            console.log(openSurvey)
               setChoosenSurvey('');
-            }} > My Survey  &gt;  {choosenSurvey.surveyName}
+            }} ><a href="#" className="links"> My Survey</a>  &gt;  {choosenSurvey.surveyName}
             </h2>
             } 
         {
-          
-          openSurvey ? <Survey1 choosenSurvey={choosenSurvey} setOpenSurvey={setOpenSurvey} /> : 
+          openSurvey ? <Survey1 choosenSurvey={choosenSurvey} setOpenSurvey={setOpenSurvey} openSurvey={ openSurvey } ListOfSurveys={ListOfSurveys} setChoosenSurvey={setChoosenSurvey} /> : 
               <div className="all-surveys">
                 <table>
                     <thead>
                         <tr>
                             <th>Name</th>
                             <th>Status</th>
-                            <th>Expired Date</th>
+                            <th>Date</th>
                         </tr>
                     </thead>
               <tbody>
                 
-                {filteredList.map((item, index) => {
-                console.log(item)
-                  if (item.surveyStatus === "incompleated") {
+                  {
+                    filteredList.map((item, index) => {
+                      console.log(item)
+                  if (item.surveyStatus === "incompleted") {
                         return (
                           <tr key={index}
                               onClick={ () => {
-                                 handleChooseSurvey(item)
-                                  setOpenSurvey(!openSurvey)
+                                handleChooseSurvey(item)
+
                               }
                               }>
-                        <td>{item.surveyName}</td>
-                        <td>{item.surveyStatus}</td>
-                        <td>{item.createdDate }</td>
+                            <td><a href="#" className="links">{item.surveyName}</a>{ item.surveyOpened ? <sup className="newSurvey"> new</sup> : ''}</td>
+                        <td><a href="#" className="links">{item.surveyStatus}</a></td>
+                        <td><a href="#" className="links">{item.createdDate }</a></td>
                   </tr>
                 )
                   } else {
@@ -113,11 +111,9 @@ const Surveys = () => {
                         <td>{item.surveyStatus}</td>
                         <td>{item.createdDate }</td>
                     </tr>
-                  )
-                }
-           
-               
-                  })}    
+                        )
+                    }})
+                  }    
                   
                 </tbody>
                     

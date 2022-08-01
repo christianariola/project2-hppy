@@ -315,6 +315,15 @@ radio-animation {
 }
 
 /*survey report list*/
+.newSurvey {
+  color: red;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+.report-page {
+  padding: 0 5%;
+}
+
 .report-pageA table {
   font-family: "Titillium Web", Arial, Tahoma, Helvetica, sans-serif;
   text-align: center;
@@ -394,33 +403,38 @@ radio-animation {
 .survey-question .squareIcon span:before {
   border: 0px solid #cccccc;
   min-width: 98%;
-  height: 30px;
+  height: 40px;
   margin-right: 0px;
   display: inline-block;
   vertical-align: top;
 }
-.survey-question .squareIconType2 span:before {
-  border: 2px solid #cccccc;
+/* .survey-question .squareIconType2 span:before {
+  border: 2px solid #CCCCCC;
   min-width: 20px;
   height: 20px;
   margin-right: 0px;
   display: inline-block;
   vertical-align: top;
-}
+} */
 
 .survey-question .squareIcon span:after {
-  border: 3px solid #cccccc;
+  border: 3px solid #00CF92;
+  border-radius: 5px;
   min-width: 100%;
-  height: 32px;
+  height: 600%;
   position: absolute;
   top: -6px;
   left: 0%;
   transition: 300ms;
   opacity: 0;
 }
-.survey-question .squareIconType2 span:after {
-  border: 3px solid #cccccc;
-  background: #0098ff;
+
+.survey-question .squareIcon span:after .squareIcon {
+      border: 3px solid red;
+}
+/* .survey-question .squareIconType2 span:after {
+  border: 3px solid #00CF92;
+  background: #0098FF;
   min-width: 20px;
   height: 20px;
   position: absolute;
@@ -428,9 +442,10 @@ radio-animation {
   left: 0%;
   transition: 300ms;
   opacity: 0;
-}
-.survey-question .squareIcon input:checked + span:after,
-.survey-question .squareIconType2 input:checked + span:after {
+} */
+.survey-question .squareIcon input:checked+span:after,
+.survey-question .squareIconType2 input:checked+span:after
+{
   opacity: 1;
 }
 
@@ -500,6 +515,53 @@ td {
 .survey_inactive {
   color: #767676;
 }
+.surveys-container .links {
+  color: black;
+}
+.surveys-container a.links:visited {
+  color: black;
+}
+
+/* Survey table  */
+.all-surveys {
+  min-width: 400px;
+}
+
+/* mobile layout */
+@media screen and (max-width: 800px) {
+    .squareIcon {
+       /* min-width: 650px; */
+       margin-left: auto;
+       margin-right: auto;
+    }
+    .squareIcon div {
+      display: none;
+    }
+    .squareIcon {
+      min-width: 10%;
+    }
+    .survey {
+      min-width: 650px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .survey-question .squareIcon span:after {
+        height: 240%;
+}
+  .survey-question{
+    min-width: 650px;
+  }
+  .answer {
+    justify-content: center;
+  }
+  .survey-question lable p {
+    display: flex;
+    min-width: 650px;
+    
+  }
+}
+
+
 
 /*My account page*/
 .account-text {
