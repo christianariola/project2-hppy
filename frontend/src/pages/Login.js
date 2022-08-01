@@ -226,7 +226,7 @@ const Login = () => {
                 sx={{ mt: 3, mb: 2 }}
                 size="large"
               >
-                Sign In
+                { isLoading ? 'Loading...' : 'Sign In'}
               </ColorButton>
               <Grid container>
                 <Grid item xs>

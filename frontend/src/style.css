@@ -68,7 +68,7 @@ a {
   margin-left: auto;
 }
 
-main {
+.home {
   margin-top: 5rem;
 }
 
@@ -85,7 +85,7 @@ main {
 }
 
 /* Main Footer ==================== */
-footer {
+.footer-home {
   background: linear-gradient(180deg, #0098ff, #003d66);
   color: #fff;
   display: grid;
@@ -100,12 +100,12 @@ footer {
   height: 15vh;
 }
 
-footer a {
+.footer-home a {
   color: #ffffff;
   padding: 0.5rem;
 }
 
-footer ul li {
+.footer-home ul li {
   list-style: none;
   display: inline;
 }
@@ -189,7 +189,7 @@ radio-animation {
   height: 100%;
   padding: 5rem;
   border-radius: 1rem;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.75);
   gap: 2rem;
   margin: 0 auto;
   max-width: 1400px;
@@ -536,7 +536,7 @@ p {
 
   /* Footer */
 
-  footer {
+  .footer-home {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;

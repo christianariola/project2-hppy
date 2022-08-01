@@ -77,13 +77,13 @@ const App = () => {
 
   return (
     <>
-      <ToastContainer closeButton={false} position="top-right" />
+      <ToastContainer closeButton={true} position="top-right" />
       <Routes>
         {/** public routes */}
+
         <Route path="/" element={<MainLayout />} exact>
           <Route path="/" element={<Main />} />
           <Route path="about" element={<About />} />
-
           {/** catch everything */}
           <Route path="*" element={<Error404 />} />
           <Route path="unauthorized" element={<Unauthorized />} />
