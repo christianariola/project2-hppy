@@ -243,7 +243,7 @@ const Survey1 = ({ choosenSurvey,  setOpenSurvey, openSurvey, setChoosenSurvey }
         >
           <h3>Survey questions</h3>
           <div className="survey-question">
-            <label htmlFor="answer1">{q1}
+            <label htmlFor="answer1"><p>{q1}</p>
               <div className="answer">
                             
                 <label className='squareIcon'>

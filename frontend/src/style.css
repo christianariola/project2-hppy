@@ -347,7 +347,7 @@ radio-animation {
 .survey-question .squareIcon span:after .squareIcon {
       border: 3px solid red;
 }
-.survey-question .squareIconType2 span:after {
+/* .survey-question .squareIconType2 span:after {
   border: 3px solid #00CF92;
   background: #0098FF;
   min-width: 20px;
@@ -357,7 +357,7 @@ radio-animation {
   left: 0%;
   transition: 300ms;
   opacity: 0;
-}
+} */
 .survey-question .squareIcon input:checked+span:after,
 .survey-question .squareIconType2 input:checked+span:after
 {
@@ -436,4 +436,46 @@ radio-animation {
 }
 .surveys-container a.links:visited {
   color: black;
+}
+
+/* Survey table  */
+.all-surveys {
+  min-width: 400px;
+}
+
+/* mobile layout */
+
+@media screen and (max-width: 800px) {
+
+    .squareIcon {
+       /* min-width: 650px; */
+       margin-left: auto;
+       margin-right: auto;
+    }
+    .squareIcon div {
+      display: none;
+    }
+    .squareIcon {
+      min-width: 10%;
+    }
+    .survey {
+      min-width: 650px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .survey-question .squareIcon span:after {
+        height: 240%;
+
+}
+      .survey-question{
+        min-width: 650px;
+      }
+      .answer {
+        justify-content: center;
+      }
+      .survey-question lable p {
+        display: flex;
+        min-width: 650px;
+        
+      }
 }
