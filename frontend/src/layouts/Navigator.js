@@ -7,26 +7,18 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import HomeIcon from '@mui/icons-material/Home';
-import PeopleIcon from '@mui/icons-material/People';
-import DnsRoundedIcon from '@mui/icons-material/DnsRounded';
-import PermMediaOutlinedIcon from '@mui/icons-material/PhotoSizeSelectActual';
-import PublicIcon from '@mui/icons-material/Public';
-import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
-import SettingsInputComponentIcon from '@mui/icons-material/SettingsInputComponent';
-import TimerIcon from '@mui/icons-material/Timer';
-import SettingsIcon from '@mui/icons-material/Settings';
-import PhonelinkSetupIcon from '@mui/icons-material/PhonelinkSetup';
+import BusinessIcon from '@mui/icons-material/Business';
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 import { getCompany } from "../features/company/companySlice"
 import Logo from "../components/company/Logo"
+import HubIcon from '@mui/icons-material/Hub';
 
-const categories = [
+const superadminlist = [
     {
         id: 'Hppy',
-        superadmin: [
+        categories: [
             {
                 id: 'Home',
                 icon: <img src="/images/dashboard/icons/icon-home.svg" alt="Home" />,
@@ -34,21 +26,43 @@ const categories = [
                 route: '/app/dashboard'
             },
             { id: 'My Account', icon: <img src="/images/dashboard/icons/icon-account.svg" alt="My Account" />, route: '/app/account' },
-            { id: 'Companies', icon: <PermMediaOutlinedIcon />, route: '/app/companies' },
+            { id: 'Companies', icon: <BusinessIcon style={{ fontSize: 30 }} />, route: '/app/companies' },
             { id: 'Reports', icon: <img src="/images/dashboard/icons/icon-reports.svg" alt="Reports" />, route: '/app/report' },
-        ],
-        admin: [
+        ]
+    },
+];
+
+const adminlist = [
+    {
+        id: 'Hppy',
+        categories: [
             {
                 id: 'Home',
-                icon: <PeopleIcon />,
+                icon: <img src="/images/dashboard/icons/icon-home.svg" alt="Home" />,
                 active: true,
                 route: '/app/dashboard'
             },
-            { id: 'My Account', icon: <DnsRoundedIcon />, route: '/app/account' },
-            { id: 'Reports', icon: <PublicIcon />, route: '/app/report' },
-            { id: 'Company Settings', icon: <PermMediaOutlinedIcon />, route: '/app/company/settings' },
-            { id: 'Departments', icon: <PermMediaOutlinedIcon />, route: '/app/company/departments' },
-        ],
+            { id: 'My Account', icon: <img src="/images/dashboard/icons/icon-account.svg" alt="My Account" />, route: '/app/account' },
+            { id: 'Reports', icon: <img src="/images/dashboard/icons/icon-reports.svg" alt="Reports" />, route: '/app/report' },
+            { id: 'Settings', icon: <img src="/images/dashboard/icons/icon-settings.svg" alt="Reports" />, route: '/app/company/settings' },
+            { id: 'Departments', icon: <HubIcon />, route: '/app/company/departments' },
+        ]
+    },
+];
+
+const employeelist = [
+    {
+        id: 'Hppy',
+        categories: [
+            {
+                id: 'Home',
+                icon: <img src="/images/dashboard/icons/icon-home.svg" alt="Home" />,
+                active: true,
+                route: '/app/dashboard'
+            },
+            { id: 'My Surveys', icon: <img src="/images/dashboard/icons/icon-survey.svg" alt="My Survey" />, route: '/app/monthlySurveys' },
+            { id: 'My Account', icon: <img src="/images/dashboard/icons/icon-account.svg" alt="My Account" />, route: '/app/account' },
+        ]
     },
 ];
 
@@ -70,11 +84,31 @@ const itemCategory = {
 
 export default function Navigator(props) {
     const { ...other } = props;
-
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const { employee } = useSelector(state => state.auth)
+    let menuList
+
+    switch(employee.role.toLowerCase()) {
+        case "superadmin":
+            menuList = superadminlist;
+            break;
+        case "employee":
+            menuList = employeelist;
+            break;
+        case "manager":
+            menuList = employeelist;
+            break;
+        case "admin":
+            menuList = adminlist;
+            break;
+        default:
+            menuList = employeelist;
+            break;
+    }
+
+    console.log("LIST", menuList)
 
     const { company } = useSelector(state => state.company)
     useEffect(() => {
@@ -84,7 +118,6 @@ export default function Navigator(props) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [employee.company_id])
 
-
     return (
     <Drawer variant="permanent" {...other}>
         <List disablePadding>
@@ -92,9 +125,9 @@ export default function Navigator(props) {
             {employee.company_id ? <Logo logo={company.logo} /> : <img src="/images/hppy-logo.svg" alt="Hppy" /> }
             {/* Hppy  */}
         </ListItem>
-        {categories.map(({ id, superadmin }) => (
+        {menuList.map(({ id, categories }) => (
             <Box key={id} sx={{ bgcolor: '#003D66' }}>
-            {superadmin.map(({ id: childId, icon, active, route }) => (
+            {categories.map(({ id: childId, icon, active, route }) => (
                 <ListItem disablePadding key={childId} sx={{ py: 1, px: 2 }}>
                 <ListItemButton selected={active} sx={item} onClick={()=>navigate(route)}>
                     <ListItemIcon>{icon}</ListItemIcon>
