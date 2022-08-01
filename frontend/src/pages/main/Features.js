@@ -1,23 +1,23 @@
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
-import Input from "@mui/material/Input"; 
+import Input from "@mui/material/Input";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import { CardContent } from "@mui/material";
 import Card from "@mui/material/Card";
-import Typography from '@mui/material/Typography';
+import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 // import {linkdeinLogo} from '../../
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
 const Features = () => {
-   let hyewonUrl = "https://www.linkedin.com/in/hyewon-kang"
-   let karanUrl = "https://www.linkedin.com/in/karan-p-singh"
-   let chrisUrl = "https://www.linkedin.com/in/christian-pierre-ariola"
-   let tarasUrl = "https://www.linkedin.com/in/taras-ivanov"
-   let jieUrl = "https://www.linkedin.com/in/shijie-you"
-   let connieUrl = "https://www.linkedin.com/in/tzuying-connie-lu"
-   let tiaUrl = "https://www.linkedin.com/in/tiagayogilvie"
+  let hyewonUrl = "https://www.linkedin.com/in/hyewon-kang";
+  let karanUrl = "https://www.linkedin.com/in/karan-p-singh";
+  let chrisUrl = "https://www.linkedin.com/in/christian-pierre-ariola";
+  let tarasUrl = "https://www.linkedin.com/in/taras-ivanov";
+  let jieUrl = "https://www.linkedin.com/in/shijie-you";
+  let connieUrl = "https://www.linkedin.com/in/tzuying-connie-lu";
+  let tiaUrl = "https://www.linkedin.com/in/tiagayogilvie";
 
   return (
     <>
@@ -36,18 +36,17 @@ const Features = () => {
               people-first culture and happy working environment.
             </p>
           </div>
-          <div>
-            <div className="hero-image">
-              <img src="/images/get-insights.png" alt="Hppy" />
-            </div>
+          <div className="hero-image hero-image-1">
+            <img src="/images/get-insights.png" alt="Hppy" />
           </div>
         </section>
 
-        <section className="feature">
-          <div>
-            <div className="hero-image">
-              <img src="/images/generate-reports.png" alt="Hppy" />
-            </div>
+        <section className="feature section-3">
+          <div className="hero-image hero-image-2">
+            <img src="/images/generate-reports.png" alt="Hppy" />
+          </div>
+          <div className="vector-2">
+            <img src="/images/vector.png" alt="Hppy" />
           </div>
           <div className="feature-2">
             <h3>Generate Reports</h3>
@@ -59,7 +58,7 @@ const Features = () => {
           </div>
         </section>
 
-        <section className="feature">
+        <section className="feature section-3">
           <div className="feature-3">
             <h3>Anonymous survey responses</h3>
             <p>
@@ -68,16 +67,17 @@ const Features = () => {
               bias.
             </p>
           </div>
-          <div>
-            <div className="hero-image">
-              <img src="/images/anonymous.png" alt="Hppy" />
-            </div>
+          <div className="vector-2">
+            <img src="/images/vector.png" alt="Hppy" />
+          </div>
+          <div className="hero-image hero-image-3">
+            <img src="/images/anonymous.png" alt="Hppy" />
           </div>
         </section>
 
         <section className="feature">
           <div>
-            <div className="hero-image">
+            <div className="hero-image hero-image-4">
               <img src="/images/sentiment-analysis.png" alt="Hppy" />
             </div>
           </div>
@@ -96,7 +96,7 @@ const Features = () => {
             <h2>Improved employee engagement begins here.</h2>
             <a href="#!">Contact Us</a>
           </div>
-          <div className="hero-image">
+          <div className="hero-image hero-image-5">
             <img src="/images/middle.png" alt="Hppy" />
           </div>
         </div>

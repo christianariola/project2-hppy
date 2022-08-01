@@ -85,7 +85,14 @@ a {
   align-items: center;
   gap: 3rem;
 }
-
+.section-3 {
+  grid-template-columns: 1fr 0.3fr 1fr;
+  gap:1rem;
+}
+.vector-2 {
+  align-self: end;
+  margin-top: 10rem;
+}
 .powerWord {
   color: #0098ff;
 }
@@ -710,6 +717,9 @@ p {
   .hero .hero-text h2 {
     font-size: 2.1rem;
   }
+  .vector-2{
+    display: none;
+  }
 }
 
 @media screen and (max-width: 750px) {
@@ -743,6 +753,13 @@ p {
   .feature {
     grid-template-columns: 1fr;
     gap: 0.5rem;
+  }
+  .feature-1,
+  .feature-3 {
+    order: 1;
+  }
+   .vector-2{
+    display: none;
   }
   .wrapper {
     text-align: center;
