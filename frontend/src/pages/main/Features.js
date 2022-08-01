@@ -27,7 +27,7 @@ const Features = () => {
           working environment with employees feedback and build a culture where
           people <span className="powerWord">flourish</span>.
         </h2>
-        <section className="feature">
+        <section className="feature" id="features">
           <div className="feature-1">
             <h3>Get Insights From Employees</h3>
             <p>
@@ -91,7 +91,7 @@ const Features = () => {
             </p>
           </div>
         </section>
-        <div className="hero">
+        <div className="hero hero-wrapper">
           <div className="hero-text">
             <h2>Improved employee engagement begins here.</h2>
             <a href="#!">Contact Us</a>
@@ -101,15 +101,17 @@ const Features = () => {
           </div>
         </div>
         <div className="feature-5">
-          <h3>
-            <span className="powerWord">Hppy</span> at a glance
-          </h3>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, illo
-            eligendi! Fuga praesentium corporis facere quisquam officiis,
-            blanditiis ducimus cum nam excepturi, repellendus totam suscipit
-            veritatis! Sunt vero odio quidem.
-          </p>
+          <div className="feature-5-toptext">
+            <h3>
+              <span className="powerWord">Hppy</span> at a glance
+            </h3>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi,
+              illo eligendi! Fuga praesentium corporis facere quisquam officiis,
+              blanditiis ducimus cum nam excepturi, repellendus totam suscipit
+              veritatis! Sunt vero odio quidem.
+            </p>
+          </div>
           <div className="picture-section">
             <div className="picture-wrap">
               <div className="picture1"></div>

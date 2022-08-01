@@ -70,7 +70,12 @@ a {
 }
 
 .wrapper {
-  max-width: 1300px;
+  max-width: 1228px;
+  margin-right: auto;
+  margin-left: auto;
+}
+.hero-wrapper {
+  max-width: 1440px;
   margin-right: auto;
   margin-left: auto;
 }
@@ -87,7 +92,7 @@ a {
 }
 .section-3 {
   grid-template-columns: 1fr 0.3fr 1fr;
-  gap:1rem;
+  gap: 1rem;
 }
 .vector-2 {
   align-self: end;
@@ -96,8 +101,14 @@ a {
 .powerWord {
   color: #0098ff;
 }
-section {
+.section {
   margin-bottom: 3rem;
+}
+a.MuiTypography-root.MuiTypography-inherit.MuiLink-root.MuiLink-underlineNone.css-1cmksfb-MuiTypography-root-MuiLink-root {
+  margin-right: 6rem;
+}
+.MuiToolbar-root.MuiToolbar-regular.css-r6ewbb-MuiToolbar-root {
+  gap: 2rem;
 }
 
 /* Main Footer ==================== */
@@ -234,7 +245,11 @@ section {
 .feature-5 {
   align-self: start;
 }
-
+.feature-5-toptext {
+  padding-bottom: 10%;
+  padding-right: 50%;
+  text-align: left;
+}
 .feature-5-text {
   padding-bottom: 10%;
   padding-left: 50%;
@@ -314,7 +329,7 @@ radio-animation {
   box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.75);
   gap: 2rem;
   margin: 0 auto;
-  max-width: 1400px;
+  max-width: 1228px;
 }
 
 .survey-comment {
@@ -717,7 +732,7 @@ p {
   .hero .hero-text h2 {
     font-size: 2.1rem;
   }
-  .vector-2{
+  .vector-2 {
     display: none;
   }
 }
@@ -758,7 +773,7 @@ p {
   .feature-3 {
     order: 1;
   }
-   .vector-2{
+  .vector-2 {
     display: none;
   }
   .wrapper {
@@ -785,7 +800,15 @@ p {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
   }
-
+  .feature-5-toptext,
+  .feature-5-text,
+  .feature-5-text h3,
+  .feature-5-text p {
+    padding-bottom: unset;
+    padding-right: unset;
+    padding-left: unset;
+    text-align: center;
+  }
   .footer-sns {
     text-align: left;
   }

@@ -24,7 +24,8 @@ import ListItem from "@mui/material/ListItem";
 const navigationLinks = [
   {
     name: "Features",
-    href: "#",
+    href: "#features",
+    
   },
   {
     name: "Pricing",
@@ -55,7 +56,10 @@ const Header = () => {
   return (
     <>
       <GlobalStyles
-        styles={{ ul: { margin: 0, padding: 0, listStyle: "none" }, fontFamily: "Titillium Web, Arial, Tahoma, Helvetica, sans-serif" }}
+        styles={{
+          ul: { margin: 0, padding: 0, listStyle: "none" },
+          fontFamily: "Titillium Web, Arial, Tahoma, Helvetica, sans-serif",
+        }}
       />
       <CssBaseline />
       <AppBar
@@ -71,7 +75,11 @@ const Header = () => {
           </Link>
 
           {navigationLinks.map((link) => (
-            <Link
+            <Link style={
+              {
+                fontfamily: "Titillium Web, Arial, Tahoma, Helvetica, sans-serif",
+              }
+            }
               className={`${link.name}`}
               key={link.name}
               component={RouterLink}
