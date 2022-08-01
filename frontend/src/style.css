@@ -83,14 +83,14 @@ a {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   align-items: center;
-  gap: 1rem;
+  gap: 3rem;
 }
 
 .powerWord {
   color: #0098ff;
 }
 section {
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 
 /* Main Footer ==================== */
@@ -149,104 +149,108 @@ section {
 }
 /*Lading page features*/
 
-
 .feature-5 p {
-  padding:0.5rem 0 4rem 2rem;
+  padding: 0.5rem 0 4rem 2rem;
 }
 .picture-section {
-  display:grid; 
-  grid-template-columns: repeat(4, 1fr);
+  display: grid;
+  /* grid-template-columns: repeat(4, 1fr); */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 4fr));
 }
 .picture-wrap {
   position: relative;
-  text-align:center;
-  margin:0 auto;
+  text-align: center;
+  margin: 0 auto;
 }
 
 .picture-section .picture-wrap p {
-  padding:0;
-  margin:0;
+  padding: 0;
+  margin: 0;
 }
 
 .picture-section .picture-wrap h3 {
-  padding:0;
-  margin:0;
+  padding: 0;
+  margin: 0;
 }
-
 
 .picture1 {
-  background: no-repeat url("source/Karan.png") ;
-  background-size:cover;
-  width:200px;
-  height:250px;
-
+  background: no-repeat url("source/Karan.png");
+  background-size: cover;
+  width: 200px;
+  height: 250px;
 }
 .picture2 {
-  background:no-repeat url("source/Christian.jpg") ;
-  background-size:cover;
-  width:200px;
-  height:250px;
+  background: no-repeat url("source/Christian.jpg");
+  background-size: cover;
+  width: 200px;
+  height: 250px;
 }
 
 .picture3 {
-  background:  no-repeat url("source/heywon.png") ;
-  background-size:cover;
-  width:200px;
-  height:250px;
+  background: no-repeat url("source/heywon.png");
+  background-size: cover;
+  width: 200px;
+  height: 250px;
 }
 
 .picture4 {
-  background: no-repeat url("source/Taras.jpg") ;
-  background-size:cover;
-  width:200px;
-  height:250px;
+  background: no-repeat url("source/Taras.jpg");
+  background-size: cover;
+  width: 200px;
+  height: 250px;
 }
 
 .picture5 {
-  background: no-repeat url("source/Jie.jpg") ;
-  background-size:cover;
-  width:200px;
-  height:250px;
+  background: no-repeat url("source/Jie.jpg");
+  background-size: cover;
+  width: 200px;
+  height: 250px;
 }
 
 .picture6 {
-  background: no-repeat url("source/Tia.png") ;
-  background-size:cover;
-  width:200px;
-  height:250px;
+  background: no-repeat url("source/Tia.png");
+  background-size: cover;
+  width: 200px;
+  height: 250px;
 }
 
 .picture7 {
-  background: no-repeat url("source/Connie.png") ;
-  background-size:cover;
-  width:200px;
-  height:250px;
+  background: no-repeat url("source/Connie.png");
+  background-size: cover;
+  width: 200px;
+  height: 250px;
+}
+.feature-1,
+.feature-2,
+.feature-3,
+.feature-4,
+.feature-5 {
+  align-self: start;
 }
 
 .feature-5-text {
-  padding-bottom:10%;
-  padding-left:50%;
-  text-align:right;
+  padding-bottom: 10%;
+  padding-left: 50%;
+  text-align: right;
 }
 
 .feature-5-text h3 {
-  text-align:right;
+  text-align: right;
 }
 
 .feature-5-text p {
-  padding:0;
+  padding: 0;
   text-align: right;
 }
 
 .linkdein {
-  background:no-repeat url("source/256px-LinkedIn_logo_initials.png");
-  background-size:cover;
-  width:30px;
-  height:30px;
-  position:absolute;
-  top:5%;
-  right:5%;
-
+  background: no-repeat url("source/256px-LinkedIn_logo_initials.png");
+  background-size: cover;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 5%;
+  right: 5%;
 }
 /* DAILY SURVEY */
 /* animate emoji on hover */

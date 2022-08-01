@@ -28,19 +28,18 @@ const Features = () => {
           people <span className="powerWord">flourish</span>.
         </h2>
         <section className="feature">
+          <div className="feature-1">
+            <h3>Get Insights From Employees</h3>
+            <p>
+              Collect feedback from employees in the organization, find insights
+              with connected analytics, and plan for effective action to build a
+              people-first culture and happy working environment.
+            </p>
+          </div>
           <div>
             <div className="hero-image">
               <img src="/images/get-insights.png" alt="Hppy" />
             </div>
-          </div>
-          <div className="feature-1">
-            <h3>Get Insights From Employees</h3>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi,
-              illo eligendi! Fuga praesentium corporis facere quisquam officiis,
-              blanditiis ducimus cum nam excepturi, repellendus totam suscipit
-              veritatis! Sunt vero odio quidem.
-            </p>
           </div>
         </section>
 
@@ -53,28 +52,26 @@ const Features = () => {
           <div className="feature-2">
             <h3>Generate Reports</h3>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi,
-              illo eligendi! Fuga praesentium corporis facere quisquam officiis,
-              blanditiis ducimus cum nam excepturi, repellendus totam suscipit
-              veritatis! Sunt vero odio quidem.
+              An application integrates employee performance metrics with
+              employee engagement data. By contextualizing performance with
+              engagement results, feedback, and driver analysis,
             </p>
           </div>
         </section>
 
         <section className="feature">
+          <div className="feature-3">
+            <h3>Anonymous survey responses</h3>
+            <p>
+              Companies can receive honest responses and feedback. Employees are
+              more comfortable telling the truth without any social desirability
+              bias.
+            </p>
+          </div>
           <div>
             <div className="hero-image">
               <img src="/images/anonymous.png" alt="Hppy" />
             </div>
-          </div>
-          <div className="feature-3">
-            <h3>Anonymous survey responses</h3>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi,
-              illo eligendi! Fuga praesentium corporis facere quisquam officiis,
-              blanditiis ducimus cum nam excepturi, repellendus totam suscipit
-              veritatis! Sunt vero odio quidem.
-            </p>
           </div>
         </section>
 
@@ -87,10 +84,10 @@ const Features = () => {
           <div className="feature-4">
             <h3>Text sentiment analysis base on AI</h3>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi,
-              illo eligendi! Fuga praesentium corporis facere quisquam officiis,
-              blanditiis ducimus cum nam excepturi, repellendus totam suscipit
-              veritatis! Sunt vero odio quidem.
+              Access massive language models that can understand text/feedback
+              from surveys and take appropriate action. Growth accurant data in
+              dashboards that provide an understanding of your employee and
+              culture.
             </p>
           </div>
         </section>
@@ -118,50 +115,64 @@ const Features = () => {
               <div className="picture1"></div>
               <h3>KaranPal Singh</h3>
               <p>Project Manager/</p> <p>Full-Stack Developer</p>
-               <a href={karanUrl}><p className="linkdein"></p></a>
+              <a href={karanUrl}>
+                <p className="linkdein"></p>
+              </a>
             </div>
             <div className="picture-wrap">
               <div className="picture2"></div>
               <h3>Christian Pierre Ariola</h3>
               <p>Full-Stack Developer</p>
-              <a href={chrisUrl}><p className="linkdein"></p></a>
+              <a href={chrisUrl}>
+                <p className="linkdein"></p>
+              </a>
             </div>
             <div className="picture-wrap">
               <div className="picture3"></div>
               <h3>Hyewon Kang</h3>
               <p>Full-Stack Developer</p>
-              <a href={hyewonUrl}><p className="linkdein"></p></a>
+              <a href={hyewonUrl}>
+                <p className="linkdein"></p>
+              </a>
             </div>
             <div className="picture-wrap">
               <div className="picture4"></div>
               <h3>Taras Ivanov</h3>
               <p>Full-Stack Developer</p>
-              <a href={tarasUrl}><p className="linkdein"></p></a>
-              </div>
+              <a href={tarasUrl}>
+                <p className="linkdein"></p>
+              </a>
+            </div>
             <div className="picture-wrap">
               <div className="picture5"></div>
               <h3>Shijie You</h3>
               <p>UI/UX Designer</p>
-              <a href={jieUrl}><p className="linkdein"></p></a>
+              <a href={jieUrl}>
+                <p className="linkdein"></p>
+              </a>
             </div>
             <div className="picture-wrap">
               <div className="picture6"></div>
               <h3>Tia O'Gilvie</h3>
               <p>UI/UX Designer</p>
-              <a href={tiaUrl}><p className="linkdein"></p></a>
+              <a href={tiaUrl}>
+                <p className="linkdein"></p>
+              </a>
             </div>
             <div className="picture-wrap">
               <div className="picture7"></div>
               <h3>Connie Lu</h3>
               <p>UI/UX Designer</p>
-              <a href={connieUrl}><p className="linkdein"></p></a>
+              <a href={connieUrl}>
+                <p className="linkdein"></p>
+              </a>
             </div>
           </div>
           <div className="feature-5-text">
             <h3>Agile.Professional</h3>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, illo
-              eligendi! Fuga praesentium corporis facere quisquam officiis,
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi,
+              illo eligendi! Fuga praesentium corporis facere quisquam officiis,
               blanditiis ducimus cum nam excepturi, repellendus totam suscipit
               veritatis! Sunt vero odio quidem.
             </p>
@@ -172,35 +183,66 @@ const Features = () => {
             <h2>Contact Us</h2>
             <p>We'd love to hear anything from you! </p>
           </div> */}
-          
-          <Card >
-          <CardContent>
-            <Box sx={{display:'flex'}}>
-              <Box style={{width:"50%"}}>
-                <Typography variant="h4" style={{textAlign:'left', fontWeight:'bold'}}>Contact Us</Typography>
-                <Typography variant="h6" style={{textAlign:'left'}}>We'd love to hear anything from you!</Typography>
-             </Box>
-          <form style={{width:"50%"}}>
-            <Grid container spacing={1}>
-              <Grid xs={12} sm={6} item>
-                <TextField label="First Name" variant="outlined" fullWidth required />
-              </Grid>
-              <Grid  xs={12} sm={6} item>
-                <TextField label="Last Name" variant="outlined" fullWidth required/>
-              </Grid>
-              <Grid xs={12} item>
-                <TextField label="Email" variant="outlined" fullWidth required/>
-              </Grid>
-              <Grid xs={12} item>
-                <TextField label="Message" multiline row={4} variant="outlined" fullWidth required/>
-              </Grid>
-              <Grid xs={12} item>
-                <Button type="submit" variant="contained" fullWidth>Submit</Button>
-              </Grid>
-            </Grid>
-          </form>
-          </Box>
-          </CardContent>
+
+          <Card>
+            <CardContent>
+              <Box sx={{ display: "flex" }}>
+                <Box style={{ width: "50%" }}>
+                  <Typography
+                    variant="h4"
+                    style={{ textAlign: "left", fontWeight: "bold" }}
+                  >
+                    Contact Us
+                  </Typography>
+                  <Typography variant="h6" style={{ textAlign: "left" }}>
+                    We'd love to hear anything from you!
+                  </Typography>
+                </Box>
+                <form style={{ width: "50%" }}>
+                  <Grid container spacing={1}>
+                    <Grid xs={12} sm={6} item>
+                      <TextField
+                        label="First Name"
+                        variant="outlined"
+                        fullWidth
+                        required
+                      />
+                    </Grid>
+                    <Grid xs={12} sm={6} item>
+                      <TextField
+                        label="Last Name"
+                        variant="outlined"
+                        fullWidth
+                        required
+                      />
+                    </Grid>
+                    <Grid xs={12} item>
+                      <TextField
+                        label="Email"
+                        variant="outlined"
+                        fullWidth
+                        required
+                      />
+                    </Grid>
+                    <Grid xs={12} item>
+                      <TextField
+                        label="Message"
+                        multiline
+                        row={4}
+                        variant="outlined"
+                        fullWidth
+                        required
+                      />
+                    </Grid>
+                    <Grid xs={12} item>
+                      <Button type="submit" variant="contained" fullWidth>
+                        Submit
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </form>
+              </Box>
+            </CardContent>
           </Card>
         </div>
       </div>
