@@ -129,7 +129,7 @@ const App = () => {
             {/* Admin Only */}
             <Route element={<RequireAuth allowedRoles={["admin"]} />}>
               <Route path="company/settings" element={<CompanySettings />}></Route>
-              <Route path="company/departments" element={<DepartmentAdmin />}></Route>
+              <Route path="company/employees" element={<DepartmentAdmin />}></Route>
             </Route>
 
             {/* Super Admin Only */}

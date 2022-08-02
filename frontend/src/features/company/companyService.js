@@ -52,6 +52,12 @@ const updateEmployee = async (updatedEmployeeData, empId) => {
     return response.data
 }
 
+const getEmployeeByCompany = async (companyId) => {
+    const response = await axios.get(API_URL + `/employeelist/${companyId}`)
+    // console.log(response.data)
+    return response.data
+}
+
 const companyService = {
     addCompany,
     getCompanyList,
@@ -61,6 +67,7 @@ const companyService = {
     getEmployee,
     deleteEmployee,
     updateEmployee,
+    getEmployeeByCompany,
 }
 
 export default companyService
