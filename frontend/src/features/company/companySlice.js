@@ -6,6 +6,7 @@ const initialState = {
     company: {},
     employee: '',
     companyList: [],
+    employeeList: [],
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -165,6 +166,26 @@ export const updateEmployee = createAsyncThunk(
     }
 );
 
+// Fetch employee by company
+export const getEmployeeByCompany = createAsyncThunk(
+    "company/getEmployeeByCompany",
+    async (companyId, thunkAPI) => {
+        try {
+        const response = await companyService.getEmployeeByCompany(companyId);
+        return response.data
+        } catch (error) {
+        const message =
+            (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
+
 export const companySlice = createSlice({
     name: 'company',
     initialState,
@@ -200,7 +221,21 @@ export const companySlice = createSlice({
         })
         .addCase(getCompanyList.rejected, (state, action) => {
             state.isLoading = false
-            state.compay = null
+            state.company = null
+            state.isError = true
+            state.message = action.payload
+        })
+        .addCase(getEmployeeByCompany.pending, (state) => {
+            state.isLoading = true
+        })
+        .addCase(getEmployeeByCompany.fulfilled, (state, action) => {
+            state.isLoading = false
+            state.employeeList = action.payload
+            // console.log(action.payload)
+        })
+        .addCase(getEmployeeByCompany.rejected, (state, action) => {
+            state.isLoading = false
+            // state.company = null
             state.isError = true
             state.message = action.payload
         })
@@ -256,7 +291,12 @@ export const companySlice = createSlice({
         })
         .addCase(deleteEmployee.fulfilled, (state, action) => {
 
-            state.company = action.payload
+            // state.company = action.payload
+            const { arg } = action.meta
+            console.log(arg)
+            if( arg ){
+                state.employeeList = state.employeeList.filter((item) => item._id !== arg)
+            }
             // const { arg } = action.meta
             // console.log(state.company)
             // if( arg ){

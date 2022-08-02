@@ -198,7 +198,7 @@ const AddEditCompany = () => {
 
     return <>
         <section>
-            <h1>{ companyId ? "Edit Company" : "Add Company"}</h1>
+            <h2>{ companyId ? "Edit Company" : "Add Company"}</h2>
         </section>
 
         <section>
