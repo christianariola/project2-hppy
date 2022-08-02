@@ -174,7 +174,8 @@ const Survey1 = ({
   useEffect(() => {
     setSurveyStatus("completed");
     setSurveyOpened(true);
-  }, [answer1]);
+    ;
+  }, [answer1, openSurvey]);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -240,6 +241,8 @@ const Survey1 = ({
 
         .then((res) => {
           // console.log(res);
+          setOpenSurvey(false);
+
         })
         .catch((err) => {
           if (err.response.data.message === "Monthly survey already Exists") {
@@ -279,7 +282,7 @@ const Survey1 = ({
                   type="radio"
                   name="answer1"
                   value="1"
-                  required
+                  // required
                   onChange={(e) => setAnswer1(e.target.value)}
                 />
                 <span className="ED"></span>
