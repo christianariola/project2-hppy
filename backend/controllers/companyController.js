@@ -386,6 +386,35 @@ const editEmployee = asyncHandler(async (req, res) => {
     }
 })
 
+const getEmployeeByCompany = asyncHandler(async (req, res) => {
+
+    console.log(req.params.companyId);
+
+    // const employee = Employee.find({ company_id: req.params.companyId }, (err, success) => {
+    //     if(err){
+    //         console.log("Unsuccessful", err)
+    //     } else {
+    //         console.log("Successful", success)
+    //     }
+    // })   
+
+
+
+    const employee = await Employee.find({company_id: req.params.companyId})
+    // res.status(201).json({
+    //     data: employee,
+    // })
+
+    if(employee){
+        res.status(201).json({
+            data: employee,
+        })
+    } else {
+        res.status(401)
+        throw new Error('No data found')
+    }
+})
+
 
 module.exports = {
     addCompany,
@@ -396,4 +425,5 @@ module.exports = {
     employeeByCompany,
     deleteEmployee,
     editEmployee,
+    getEmployeeByCompany,
 }

@@ -180,6 +180,27 @@ var updateEmployee = function updateEmployee(updatedEmployeeData, empId) {
   });
 };
 
+var getEmployeeByCompany = function getEmployeeByCompany(companyId) {
+  var response;
+  return regeneratorRuntime.async(function getEmployeeByCompany$(_context9) {
+    while (1) {
+      switch (_context9.prev = _context9.next) {
+        case 0:
+          _context9.next = 2;
+          return regeneratorRuntime.awrap(_axios["default"].get(API_URL + "/employeelist/".concat(companyId)));
+
+        case 2:
+          response = _context9.sent;
+          return _context9.abrupt("return", response.data);
+
+        case 4:
+        case "end":
+          return _context9.stop();
+      }
+    }
+  });
+};
+
 var companyService = {
   addCompany: addCompany,
   getCompanyList: getCompanyList,
@@ -188,7 +209,8 @@ var companyService = {
   deleteCompany: deleteCompany,
   getEmployee: getEmployee,
   deleteEmployee: deleteEmployee,
-  updateEmployee: updateEmployee
+  updateEmployee: updateEmployee,
+  getEmployeeByCompany: getEmployeeByCompany
 };
 var _default = companyService;
 exports["default"] = _default;

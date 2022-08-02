@@ -22,7 +22,7 @@ const superadminlist = [
             {
                 id: 'Home',
                 icon: <img src="/images/dashboard/icons/icon-home.svg" alt="Home" />,
-                active: true,
+                active: false,
                 route: '/app/dashboard'
             },
             { id: 'My Account', icon: <img src="/images/dashboard/icons/icon-account.svg" alt="My Account" />, route: '/app/account' },
@@ -39,13 +39,13 @@ const adminlist = [
             {
                 id: 'Home',
                 icon: <img src="/images/dashboard/icons/icon-home.svg" alt="Home" />,
-                active: true,
+                active: false,
                 route: '/app/dashboard'
             },
             { id: 'My Account', icon: <img src="/images/dashboard/icons/icon-account.svg" alt="My Account" />, route: '/app/account' },
             { id: 'Reports', icon: <img src="/images/dashboard/icons/icon-reports.svg" alt="Reports" />, route: '/app/report' },
             { id: 'Settings', icon: <img src="/images/dashboard/icons/icon-settings.svg" alt="Reports" />, route: '/app/company/settings' },
-            { id: 'Departments', icon: <HubIcon />, route: '/app/company/departments' },
+            { id: 'Employees', icon: <HubIcon />, route: '/app/company/employees' },
         ]
     },
 ];
@@ -57,7 +57,7 @@ const employeelist = [
             {
                 id: 'Home',
                 icon: <img src="/images/dashboard/icons/icon-home.svg" alt="Home" />,
-                active: true,
+                active: false,
                 route: '/app/dashboard'
             },
             { id: 'My Surveys', icon: <img src="/images/dashboard/icons/icon-survey.svg" alt="My Survey" />, route: '/app/monthlySurveys' },

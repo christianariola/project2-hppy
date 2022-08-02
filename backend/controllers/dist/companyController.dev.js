@@ -607,6 +607,50 @@ var editEmployee = asyncHandler(function _callee8(req, res) {
     }
   });
 });
+var getEmployeeByCompany = asyncHandler(function _callee9(req, res) {
+  var employee;
+  return regeneratorRuntime.async(function _callee9$(_context9) {
+    while (1) {
+      switch (_context9.prev = _context9.next) {
+        case 0:
+          console.log(req.params.companyId); // const employee = Employee.find({ company_id: req.params.companyId }, (err, success) => {
+          //     if(err){
+          //         console.log("Unsuccessful", err)
+          //     } else {
+          //         console.log("Successful", success)
+          //     }
+          // })   
+
+          _context9.next = 3;
+          return regeneratorRuntime.awrap(Employee.find({
+            company_id: req.params.companyId
+          }));
+
+        case 3:
+          employee = _context9.sent;
+
+          if (!employee) {
+            _context9.next = 8;
+            break;
+          }
+
+          res.status(201).json({
+            data: employee
+          });
+          _context9.next = 10;
+          break;
+
+        case 8:
+          res.status(401);
+          throw new Error('No data found');
+
+        case 10:
+        case "end":
+          return _context9.stop();
+      }
+    }
+  });
+});
 module.exports = {
   addCompany: addCompany,
   getCompanyList: getCompanyList,
@@ -615,5 +659,6 @@ module.exports = {
   deleteCompany: deleteCompany,
   employeeByCompany: employeeByCompany,
   deleteEmployee: deleteEmployee,
-  editEmployee: editEmployee
+  editEmployee: editEmployee,
+  getEmployeeByCompany: getEmployeeByCompany
 };

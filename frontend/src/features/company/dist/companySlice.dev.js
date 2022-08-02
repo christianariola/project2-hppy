@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = exports.reset = exports.companySlice = exports.updateEmployee = exports.deleteEmployee = exports.getEmployee = exports.deleteCompany = exports.editCompany = exports.getCompany = exports.getCompanyList = exports.addCompany = void 0;
+exports["default"] = exports.reset = exports.companySlice = exports.getEmployeeByCompany = exports.updateEmployee = exports.deleteEmployee = exports.getEmployee = exports.deleteCompany = exports.editCompany = exports.getCompany = exports.getCompanyList = exports.addCompany = void 0;
 
 var _toolkit = require("@reduxjs/toolkit");
 
@@ -15,6 +15,7 @@ var initialState = {
   company: {},
   employee: '',
   companyList: [],
+  employeeList: [],
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -243,8 +244,37 @@ var updateEmployee = (0, _toolkit.createAsyncThunk)("company/updateEmployee", fu
       }
     }
   }, null, null, [[1, 7]]);
-});
+}); // Fetch employee by company
+
 exports.updateEmployee = updateEmployee;
+var getEmployeeByCompany = (0, _toolkit.createAsyncThunk)("company/getEmployeeByCompany", function _callee9(companyId, thunkAPI) {
+  var response, message;
+  return regeneratorRuntime.async(function _callee9$(_context9) {
+    while (1) {
+      switch (_context9.prev = _context9.next) {
+        case 0:
+          _context9.prev = 0;
+          _context9.next = 3;
+          return regeneratorRuntime.awrap(_companyService["default"].getEmployeeByCompany(companyId));
+
+        case 3:
+          response = _context9.sent;
+          return _context9.abrupt("return", response.data);
+
+        case 7:
+          _context9.prev = 7;
+          _context9.t0 = _context9["catch"](0);
+          message = _context9.t0.response && _context9.t0.response.data && _context9.t0.response.data.message || _context9.t0.message || _context9.t0.toString();
+          return _context9.abrupt("return", thunkAPI.rejectWithValue(message));
+
+        case 11:
+        case "end":
+          return _context9.stop();
+      }
+    }
+  }, null, null, [[0, 7]]);
+});
+exports.getEmployeeByCompany = getEmployeeByCompany;
 var companySlice = (0, _toolkit.createSlice)({
   name: 'company',
   initialState: initialState,
@@ -274,7 +304,17 @@ var companySlice = (0, _toolkit.createSlice)({
       state.companyList = action.payload;
     }).addCase(getCompanyList.rejected, function (state, action) {
       state.isLoading = false;
-      state.compay = null;
+      state.company = null;
+      state.isError = true;
+      state.message = action.payload;
+    }).addCase(getEmployeeByCompany.pending, function (state) {
+      state.isLoading = true;
+    }).addCase(getEmployeeByCompany.fulfilled, function (state, action) {
+      state.isLoading = false;
+      state.employeeList = action.payload; // console.log(action.payload)
+    }).addCase(getEmployeeByCompany.rejected, function (state, action) {
+      state.isLoading = false; // state.company = null
+
       state.isError = true;
       state.message = action.payload;
     }).addCase(getCompany.fulfilled, function (state, action) {
@@ -322,11 +362,20 @@ var companySlice = (0, _toolkit.createSlice)({
       state.isError = true;
       state.message = action.payload;
     }).addCase(deleteEmployee.fulfilled, function (state, action) {
-      state.company = action.payload; // const { arg } = action.meta
+      // state.company = action.payload
+      var arg = action.meta.arg;
+      console.log(arg);
+
+      if (arg) {
+        state.employeeList = state.employeeList.filter(function (item) {
+          return item._id !== arg;
+        });
+      } // const { arg } = action.meta
       // console.log(state.company)
       // if( arg ){
       //     state.companyList = state.companyList.filter((item) => item._id !== arg)
       // }
+
     }).addCase(deleteEmployee.rejected, function (state, action) {
       state.isLoading = false;
       state.company = null;
