@@ -16,12 +16,12 @@ const Surveys = () => {
     
     // fetching data from database
     useEffect(function loadData(){
-      axios.get('http://localhost:3001/monthlysurveys')
+      axios.get('/monthlysurveys')
         .then((res)=>{
             setMonthSurvey(res.data)  
          })   
          .catch(error=>console.log(error))
-    }, [openSurvey] ) 
+    }, [choosenSurvey] ) 
   
   // console.log(employee.email)
   
@@ -40,11 +40,13 @@ const Surveys = () => {
 
   useEffect(() => {
     ListOfSurveys()
+    // isOpenedSurvey()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[ openSurvey,
     monthlySurvey,
     employee.email,
   ])
+
 
   const handleChooseSurvey = (item) => {
     setChoosenSurvey(item);
@@ -52,7 +54,9 @@ const Surveys = () => {
     // console.log(openSurvey)
     // console.log(item)
   }
-
+  const isOpenedSurvey = ()=> {
+    setOpenSurvey(!openSurvey);
+ }
 
 
 
@@ -69,7 +73,8 @@ const Surveys = () => {
             setOpenSurvey(!openSurvey);
             // console.log(openSurvey)
               setChoosenSurvey('');
-            }} ><a href="#" className="links"> My Survey</a>  &gt;  {choosenSurvey.surveyName}
+            }} ><a href="#" className="links"> My Survey</a>  &gt;  {` ${choosenSurvey.surveyType} ${choosenSurvey.createdDate}` 
+}
             </h2>
             } 
         {
@@ -77,8 +82,8 @@ const Surveys = () => {
               <div className="all-surveys">
                 <table>
                     <thead>
-                        <tr>
-                            <th>Name</th>
+                  <tr>
+                            <th>Type</th>
                             <th>Status</th>
                             <th>Date</th>
                         </tr>
@@ -88,7 +93,7 @@ const Surveys = () => {
                   {
                     filteredList.map((item, index) => {
                       // console.log(item)
-                  if (item.surveyStatus === "incompleted") {
+                  if (item.surveyStatus === "incomplete") {
                         return (
                           <tr key={index}
                               onClick={ () => {
@@ -96,7 +101,7 @@ const Surveys = () => {
 
                               }
                               }>
-                            <td><a href="#" className="links">{item.surveyName}</a>{ item.surveyOpened ? <sup className="newSurvey"> new</sup> : ''}</td>
+                            <td><a href="#" className="links">{item.surveyType}</a>{ item.surveyOpened ? <sup className="newSurvey"> new</sup> : ''}</td>
                         <td><a href="#" className="links">{item.surveyStatus}</a></td>
                         <td><a href="#" className="links">{item.createdDate }</a></td>
                   </tr>
@@ -107,7 +112,7 @@ const Surveys = () => {
                       
                       className="survey_inactive"
                     >
-                        <td>{item.surveyName}</td>
+                        <td>{item.surveyType}</td>
                         <td>{item.surveyStatus}</td>
                         <td>{item.createdDate }</td>
                     </tr>

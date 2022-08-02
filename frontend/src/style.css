@@ -604,6 +604,7 @@ radio-animation {
   background: #99b1c2;
   content: "3";
   color: white;
+  text-align: center;
 }
 .survey-question .squareIcon .MD:before {
   background: #adbbc5;
@@ -657,17 +658,22 @@ td {
 .all-surveys {
   min-width: 400px;
 }
-
+.squareIcon div {
+  text-align: center;
+}
 /* mobile layout */
 @media screen and (max-width: 800px) {
   .squareIcon {
     /* min-width: 650px; */
     margin-left: auto;
     margin-right: auto;
+    text-align: center;
   }
   .squareIcon div {
     display: none;
+
   }
+
   .squareIcon {
     min-width: 10%;
   }
