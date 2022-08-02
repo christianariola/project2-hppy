@@ -176,10 +176,10 @@ const DailySurvey = () => {
       .then((res) => {
         toast.success("Daily Survey submitted successfully", {
           position: "top-center",
-          autoClose: 5000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
-          pauseOnHover: true,
+          pauseOnHover: false,
           draggable: true,
           progress: undefined,
         });
@@ -189,10 +189,10 @@ const DailySurvey = () => {
         if (err.response.data.message === "Survey Already Exists") {
           toast.error("Daily Survey has already been submitted", {
             position: "top-center",
-            autoClose: 5000,
+            autoClose: 3000,
             hideProgressBar: false,
             closeOnClick: true,
-            pauseOnHover: true,
+            pauseOnHover: false,
             draggable: true,
             progress: undefined,
           });

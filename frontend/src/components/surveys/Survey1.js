@@ -4,6 +4,7 @@ import axios from "axios";
 import padSequences from "../../components/helper/paddedSeq.js";
 import * as tf from "@tensorflow/tfjs";
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import { get } from "http";
 // import { getTimeMeasureUtils } from "@reduxjs/toolkit/dist/utils";
 
@@ -161,12 +162,10 @@ const Survey1 = ({
   };
 
   const justReload = () => {
-    setInterval(() => { 
+    setInterval(() => {
       window.location.reload();
-    },
-    500)
-    
-}
+    }, 500);
+  };
 
   useEffect(() => {
     tf.ready().then(() => {
@@ -183,7 +182,6 @@ const Survey1 = ({
   useEffect(() => {
     setSurveyStatus("completed");
     setSurveyOpened(true);
-
   }, [answer1, openSurvey]);
 
   const handleFormSubmit = (e) => {
@@ -253,7 +251,6 @@ const Survey1 = ({
           // console.log(res);
           setOpenSurvey(false);
           justReload(true);
-
         })
         .catch((err) => {
           if (err.response.data.message === "Monthly survey already Exists") {
