@@ -18,6 +18,7 @@ const SuperAdminChart = (props) => {
       .get("/dailySurvey")
       .then((res) => {
         setReport(res.data);
+        console.log(res.data);
       })
 
       .catch((error) => console.log(error));
