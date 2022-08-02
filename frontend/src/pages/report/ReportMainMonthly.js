@@ -30,7 +30,7 @@ const ReportMainMonthly = (props) => {
   //fetch  employees data
   useEffect(function loadEmployee() {
     axios
-      .get("/getEmployeeAll")
+      .get("https://pluto-hppy.herokuapp.com/getEmployeeAll")
       .then((res) => {
         setEmployeeData(res.data);
         // console.log(res)
@@ -43,7 +43,7 @@ const ReportMainMonthly = (props) => {
   //monthly survey fetching
   useEffect(function loadMonthly() {
     axios
-      .get("/monthlySurveys")
+      .get("https://pluto-hppy.herokuapp.com/monthlySurveys")
       .then((res) => {
         setMonthlyItems(res.data);
       })

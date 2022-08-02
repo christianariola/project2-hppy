@@ -15,7 +15,7 @@ const Department =  props => {
 
     //daily survey fetching
     useEffect(function loadData(){
-        axios.get('/dailySurvey') 
+        axios.get('https://pluto-hppy.herokuapp.com/dailySurvey') 
          .then((res)=>{
             setReport(res.data)
          })
@@ -28,7 +28,7 @@ const Department =  props => {
 
      //fetch  employees data
         useEffect(function loadEmployee(){
-        axios.get('/getEmployeeAll') 
+        axios.get('https://pluto-hppy.herokuapp.com/getEmployeeAll') 
          .then((res)=>{
             setEmployeeData(res.data)
             console.log(res)

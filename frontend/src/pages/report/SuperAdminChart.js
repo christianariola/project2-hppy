@@ -15,7 +15,7 @@ const SuperAdminChart = (props) => {
   //daily survey fetching
   useEffect(function loadData() {
     axios
-      .get("/dailySurvey")
+      .get("https://pluto-hppy.herokuapp.com/dailySurvey")
       .then((res) => {
         setReport(res.data);
         console.log(res.data);
@@ -29,7 +29,7 @@ const SuperAdminChart = (props) => {
   //fetch  employees data
   useEffect(function loadEmployee() {
     axios
-      .get("/getEmployeeAll")
+      .get("https://pluto-hppy.herokuapp.com/getEmployeeAll")
       .then((res) => {
         setEmployeeData(res.data);
         // console.log(res)

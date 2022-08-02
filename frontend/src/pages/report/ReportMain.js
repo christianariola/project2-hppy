@@ -31,7 +31,7 @@ const ReportMain = (props) => {
   //fetch  employees data
   useEffect(function loadEmployee() {
     axios
-      .get("/getEmployeeAll")
+      .get("https://pluto-hppy.herokuapp.com/getEmployeeAll")
       .then((res) => {
         setEmployeeData(res.data);
         // console.log(res)
