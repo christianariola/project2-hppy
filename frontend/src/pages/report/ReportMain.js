@@ -278,7 +278,7 @@ const ReportMain = props => {
                   <td>{sortDailySurvey.surveyTitle} </td>
                   
                   <td>
-                    <button className="view-btn" value={sortDailySurvey.surveyDate} onClick={e => props.handleSelectChartDate(e.target.value)}>
+                    <button className="view-btn" value={sortDailySurvey.surveyDate}>
                     <Link component={RouterLink} to={`/app/reportchart/${sortDailySurvey.surveyTitle}/${sortDailySurvey.surveyDate}`} variant="button" sx={{ my: 1, mx: 1.5 }} underline="none" color="inherit" >View</Link>
                     </button>
                   </td>

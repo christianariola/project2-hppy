@@ -233,8 +233,8 @@ const ReportMainMonthly = props => {
                 )} */}
                 
                {sortMonthlySurveyByCompany?.map((sortMonthlySurveyByCompany)=>
-                <tr className="report-content">
-                    <td key={monthlyItem.surveyid}>{sortMonthlySurveyByCompany.surveyDate}</td>
+                <tr className="report-content" key={monthlyItem.surveyid}>
+                    <td>{sortMonthlySurveyByCompany.surveyDate}</td>
                     <td>{sortMonthlySurveyByCompany.surveyTitle}</td>
                     <td>{sortMonthlySurveyByCompany.companyName}</td>
                     <td>
@@ -286,8 +286,8 @@ const ReportMainMonthly = props => {
                 )} */}
                 
                {sortMonthlySurvey?.map((sortMonthlySurvey)=>
-                <tr className="report-content">
-                    <td key={monthlyItem.surveyid}>{sortMonthlySurvey.monthlysurveyDate}</td>
+                <tr className="report-content" key={monthlyItem.surveyid}>
+                    <td>{sortMonthlySurvey.monthlysurveyDate}</td>
                     <td>{sortMonthlySurvey.monthlysurveyTitle}</td>
                     <td>
                       <button className="view-btn" value={sortDailySurvey.surveyDate} data-value1="monthly" onClick={e => props.handleSelectChartDate(e.target.value)}>

@@ -49,7 +49,7 @@ const SuperAdminChart = props => {
      const chartDate = dateUrl[dateUrl.length-2] 
      const selectedCompany = dateUrl[dateUrl.length-1] 
      const decodedCompany = decodeURI(selectedCompany)
-    //  console.log(decodedCompany)
+     console.log(decodedCompany)
     // // console.log(monthlyReport)
     
     //  const { loginEmployee } = useSelector(state => state.auth) // ->작동되면 .role = 'superadmin' no filter, role 'admin' filetre by compaby
@@ -89,7 +89,7 @@ const SuperAdminChart = props => {
         }
         
      }
-    //  console.log(filteredDailySurvey)
+     console.log(filteredDailySurvey)
      
      //selected department
     //  const handleChange = departmentType =>{
@@ -210,8 +210,8 @@ const SuperAdminChart = props => {
         }]
     }
      
-
-
+    console.log(showEmailArry) //company employees
+    console.log(filteredDailySurvey)
     //daily survey submission data by date
     let getSurveySubmit = function(){
         let surveySubmit = [];
@@ -219,12 +219,21 @@ const SuperAdminChart = props => {
         // const dateUrl = nameUrl.split('/');
         const chartDate = dateUrl[dateUrl.length-2] 
         // console.log(chartDate)
-        for(let i=0; i<filteredDailySurvey.length; i++){
-            if(showEmailArry.includes(filteredDailySurvey[i].dailySurvey.employeeEmail) && filteredDailySurvey[i].dailySurvey.dailySurveyDate == chartDate) {
+        
+
+        // const filterd = filteredDailySurvey.filter(function(emp){
+        //     return emp.dailySurvey.employeeEmail == showEmailArry
+        // })
+
+        // console.log(filterd)
+        for(let i=0; i<showEmailArry.length; i++){
+            
+            if(showEmailArry.includes(filteredDailySurvey[i].dailySurvey.employeeEmail) && filteredDailySurvey[i].dailySurvey.dailySurveyDate == chartDate ) {
                 
 
-                // console.log(filteredDailySurvey[i].dailySurvey)
                 let surveyState = {};
+                // console.log(filteredDailySurvey[i].dailySurvey)
+               
 
                 surveyState['email'] = filteredDailySurvey[i].dailySurvey.employeeEmail;
                 surveyState['surveyStatement'] = "submitted";
@@ -233,15 +242,17 @@ const SuperAdminChart = props => {
                 
                 
         }
-        else {
-
+             else if(showEmailArry ) {
+                
                 let surveyState = {};
                
-                surveyState['email'] = filteredDailySurvey[i].dailySurvey.employeeEmail;
+                surveyState['email'] = showEmailArry
                 surveyState['surveyStatement'] = "unsubmitted";
-
                 surveySubmit.push(surveyState)
+                
             }
+            
+            
         }
         return surveySubmit;
         
@@ -255,7 +266,7 @@ const SuperAdminChart = props => {
     
 
     getSurveySubmit();
-    // console.log(getSurveySubmit());
+    console.log(getSurveySubmit());
 
     //global letiable
     // let nameUrl = window.location.href

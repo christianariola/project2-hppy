@@ -58,7 +58,7 @@ const BarChart = props => {
     //  console.log(employeeData.length);
     //  console.log(depart)
      for(let i=0; i<employeeData.length; i++){
-        if(employeeData[i].company_name !== undefined && employeeData[i].company_name === company ){
+        if(employeeData[i].company_name !== undefined && employeeData[i].company_name == company ){
             
                 if(employeeData[i].department == "Meta") {
                     showEmailArry.push(employeeData[i].email)
@@ -69,7 +69,7 @@ const BarChart = props => {
         }
      }
      
-    //  console.log(showEmailArry) //filted empployee email list by company
+     console.log(showEmailArry) //filted empployee email list by company
 
     
     //  let depart = 'all'
@@ -87,7 +87,7 @@ const BarChart = props => {
         }
         
      }
-    //  console.log(filteredDailySurvey)
+     console.log(filteredDailySurvey)
      
      //selected department
     //  const handleChange = departmentType =>{
@@ -217,7 +217,7 @@ const BarChart = props => {
         // const dateUrl = nameUrl.split('/');
         const chartDate = dateUrl[dateUrl.length-1] 
         // console.log(chartDate)
-        for(let i=0; i<filteredDailySurvey.length; i++){
+        for(let i=0; i<showEmailArry.length; i++){
             if(showEmailArry.includes(filteredDailySurvey[i].dailySurvey.employeeEmail) && filteredDailySurvey[i].dailySurvey.dailySurveyDate === chartDate) {
                 
 
@@ -278,7 +278,7 @@ const BarChart = props => {
             submissionTotal.push(getSurveySubmit()[i].surveyStatement)          
             }
         
-            // console.log(submissionTotal);
+            console.log(submissionTotal);
             return submissionTotal;
     }
 
@@ -333,7 +333,7 @@ const BarChart = props => {
                         
                     }}
                 />
-                <h2 class="report-title">Total Rating</h2>
+                <h2 className="report-title">Total Rating</h2>
                     <div>
                         <Bar data={data} 
                              options={{

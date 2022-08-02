@@ -112,7 +112,7 @@ const SuperAdminMonthly = props => {
             // const dateUrl = nameUrl.split('/');
             // const chartDate = dateUrl[dateUrl.length-2] 
             // console.log(chartDate)f
-            for(let i=0; i<filteredMonthlySurvey.length; i++){
+            for(let i=0; i<showEmailArry.length; i++){
                 if(showEmailArry.includes(filteredMonthlySurvey[i].employeeEmail) && filteredMonthlySurvey[i].createdDate == chartDate && filteredMonthlySurvey[i].monthlyTotalRating != null ) {
                     
     
