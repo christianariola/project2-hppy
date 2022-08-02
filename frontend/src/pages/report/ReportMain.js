@@ -40,7 +40,7 @@ const ReportMain = props => {
          
         .catch(error=>console.log(error))
      },[]) 
-    // console.log(employeeData)
+    
 
      //monthly survey fetching
   //    useEffect(function loadMonthly(){
@@ -56,7 +56,7 @@ const ReportMain = props => {
     //@desc report main for superadmin
     //sorting employees' email and company name
     let showEmailArry =[]
-    for(let i=0; i<employeeData.length; i++){
+    for(let i=0; i<employeeData.length; i++){     
       if(employeeData[i].company_name !== undefined ){
         let showEmailObj= {
           email: employeeData[i].email,
@@ -64,6 +64,7 @@ const ReportMain = props => {
         }
 
         showEmailArry.push(showEmailObj)
+        
       }
       }
 
@@ -84,7 +85,7 @@ const ReportMain = props => {
          }
         }
       }
-      // console.log(dailyArry)
+      
       
       const sortDailySurveyByCompany = [...new Set(dailyArry.map(JSON.stringify))].map(JSON.parse)
       // console.log(sortDailySurveyByCompany)
@@ -175,18 +176,17 @@ const ReportMain = props => {
 
    
 
-
     
 
-  //chosen date handler
-  // const handleChangeDate = (date)=>{
-  //   // event.preventDefault()
-  //   // props.handleSelectChartDate(date)
-  //   props.setGetDate(date) //from App.js
-  //   console.error(date);
-  //   // props.setChosenDate(event.target.value)
+  //chosen company handler
+  const handleSelectCompany = (date)=>{
+    // event.preventDefault()
+    // props.handleSelectChartDate(date)
+    props.setGetDate(date) //from App.js
+    console.error(date);
+    // props.setChosenDate(event.target.value)
 
-  // }
+  }
   // console.log(employee.role)
   
   return (
@@ -216,15 +216,16 @@ const ReportMain = props => {
           
             {sortDailySurveyByCompany?.map((sortDailySurveyByCompany)=>
             
-              <tr className="report-content">
+              <tr className="report-content" key={surveyItem._id}>
                 
-                  <td key={surveyItem.surveyId}>{sortDailySurveyByCompany.surveyDate}</td>
+                  <td>{sortDailySurveyByCompany.surveyDate}</td>
               
                   <td>{sortDailySurveyByCompany.surveyTitle}</td>
-                  <td>{sortDailySurveyByCompany.companyName}</td>
+                  <td value={sortDailySurveyByCompany.companyName}>{sortDailySurveyByCompany.companyName}</td>
                   
-                  <td>
-                    <button className="view-btn" value={sortDailySurveyByCompany.surveyDate} onClick={e => props.handleSelectChartDate(e.target.value)}>
+                  <td> 
+
+                    <button className="view-btn" value={sortDailySurveyByCompany.surveyDate} onClick={e => handleSelectCompany(e.target.value)}>
                     <Link component={RouterLink} to={`/app/reportchart/${sortDailySurveyByCompany.surveyTitle}/${sortDailySurveyByCompany.surveyDate}/${sortDailySurveyByCompany.companyName}`} variant="button" sx={{ my: 1, mx: 1.5 }} underline="none" color="inherit" >View</Link>
                     </button>
                   </td>
@@ -270,9 +271,9 @@ const ReportMain = props => {
           
             {sortDailySurvey?.map((sortDailySurvey)=>
             
-              <tr className="report-content">
+              <tr className="report-content" key={surveyItem.surveyId}>
                 
-                  <td key={surveyItem.surveyId}>{sortDailySurvey.surveyDate}</td>
+                  <td>{sortDailySurvey.surveyDate}</td>
               
                   <td>{sortDailySurvey.surveyTitle} </td>
                   

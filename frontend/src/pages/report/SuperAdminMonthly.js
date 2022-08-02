@@ -39,14 +39,14 @@ const SuperAdminMonthly = props => {
      const dateUrl = nameUrl.split('/');
      const chartDate = dateUrl[dateUrl.length-2] 
      const selectedCompany = dateUrl[dateUrl.length-1] 
-
+     const decodedCompany = decodeURI(selectedCompany)
     //  console.log(selectedCompany)
 
 
     
     let showEmailArry = [];
     for(let i=0; i<employeeData.length; i++){
-       if(employeeData[i].company_name !== undefined && employeeData[i].company_name === selectedCompany ){
+       if(employeeData[i].company_name !== undefined && employeeData[i].company_name === decodedCompany ){
            showEmailArry.push(employeeData[i].email)
        }
     }
@@ -181,7 +181,7 @@ const SuperAdminMonthly = props => {
         }
     return(
          <div>
-            <h1>{selectedCompany}'s Monthly Report - {chartDate}</h1>
+            <h1>{decodedCompany}'s Monthly Report - {chartDate}</h1>
             <h2 className="report-title">Submission Rate</h2>
                 <Pie data={monthlySubmitData} 
                     width="20%"

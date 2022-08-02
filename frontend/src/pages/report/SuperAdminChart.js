@@ -26,7 +26,7 @@ const SuperAdminChart = props => {
      },[]) 
     
      
-    console.log(report)
+    // console.log(report)
 
      //fetch  employees data
         useEffect(function loadEmployee(){
@@ -48,6 +48,8 @@ const SuperAdminChart = props => {
      const dateUrl = nameUrl.split('/');
      const chartDate = dateUrl[dateUrl.length-2] 
      const selectedCompany = dateUrl[dateUrl.length-1] 
+     const decodedCompany = decodeURI(selectedCompany)
+    //  console.log(decodedCompany)
     // // console.log(monthlyReport)
     
     //  const { loginEmployee } = useSelector(state => state.auth) // ->작동되면 .role = 'superadmin' no filter, role 'admin' filetre by compaby
@@ -60,9 +62,9 @@ const SuperAdminChart = props => {
     //  console.log(employeeData.length);
     //  console.log(depart)
      for(let i=0; i<employeeData.length; i++){
-        if(employeeData[i].company_name !== undefined && employeeData[i].company_name === selectedCompany ){
+        if(employeeData[i].company_name !== undefined && employeeData[i].company_name === decodedCompany ){
             
-                if(employeeData[i].department == selectedCompany) {
+                if(employeeData[i].department == decodedCompany) {
                     showEmailArry.push(employeeData[i].email)
                  } 
               else {
@@ -95,73 +97,73 @@ const SuperAdminChart = props => {
     // }
     
      //filter daily survey result by department and date
-     let filteredDailySurveyByDepart = []; 
-    function filterByDepart(depart) { 
+    //  let filteredDailySurveyByDepart = []; 
+    // function filterByDepart(depart) { 
         
-        let showDepartArry = [];
-        filteredDailySurveyByDepart.length = 0;
-        for(let i=0; i<employeeData.length; i++){
-           if(employeeData[i].department != undefined && employeeData[i].department == "Meta" ){
-               showDepartArry.push(employeeData[i].email)
-           }
-        }
-        //filtered employee email by department
-        // console.log(showDepartArry) 
+    //     let showDepartArry = [];
+    //     filteredDailySurveyByDepart.length = 0;
+    //     for(let i=0; i<employeeData.length; i++){
+    //        if(employeeData[i].department != undefined && employeeData[i].department == "Meta" ){
+    //            showDepartArry.push(employeeData[i].email)
+    //        }
+    //     }
+    //     //filtered employee email by department
+    //     // console.log(showDepartArry) 
    
-        // let filteredDailySurveyByDepart = []; 
-        for(let i=0; i<report.length; i++){
-           if(showDepartArry.includes(report[i].dailySurvey.employeeEmail)){
-            filteredDailySurveyByDepart.push(report[i])
-           }
+    //     // let filteredDailySurveyByDepart = []; 
+    //     for(let i=0; i<report.length; i++){
+    //        if(showDepartArry.includes(report[i].dailySurvey.employeeEmail)){
+    //         filteredDailySurveyByDepart.push(report[i])
+    //        }
            
-        }
-        // console.log(filteredDailySurveyByDepart)
+    //     }
+    //     // console.log(filteredDailySurveyByDepart)
         
-        return filterByDepart
+    //     return filterByDepart
    
-       }
+    //    }
 
-       filterByDepart()
-       //total rating by departmnet
-       function sortRateByDepart(){
-        let totalRatingByDepart = [];
-        const chartDate = dateUrl[dateUrl.length-2] 
+    //    filterByDepart()
+    //    //total rating by departmnet
+    //    function sortRateByDepart(){
+    //     let totalRatingByDepart = [];
+    //     const chartDate = dateUrl[dateUrl.length-2] 
         
-        // console.log(chartDate)
-        // let filteredDailySurvey=filterByCompany()  
-        // date = {props.location.state.chartDate} 
-        // if(depart == null) {
-        //     let filteredDailySurvey=filterByCompany() 
-        // } else {
-        //     let filteredDailySurvey=filterByDepart(depart)  
-        // }
-        for(let i=0; i<filteredDailySurveyByDepart.length; i++){
-            if(filteredDailySurveyByDepart[i].dailySurvey.dailySurveyDate === chartDate){ {/* depends on button value */}
-            totalRatingByDepart.push(filteredDailySurveyByDepart[i].dailySurvey.dailyTotalRating)
-            }
-        }
+    //     // console.log(chartDate)
+    //     // let filteredDailySurvey=filterByCompany()  
+    //     // date = {props.location.state.chartDate} 
+    //     // if(depart == null) {
+    //     //     let filteredDailySurvey=filterByCompany() 
+    //     // } else {
+    //     //     let filteredDailySurvey=filterByDepart(depart)  
+    //     // }
+    //     for(let i=0; i<filteredDailySurveyByDepart.length; i++){
+    //         if(filteredDailySurveyByDepart[i].dailySurvey.dailySurveyDate === chartDate){ {/* depends on button value */}
+    //         totalRatingByDepart.push(filteredDailySurveyByDepart[i].dailySurvey.dailyTotalRating)
+    //         }
+    //     }
         
-        // console.log(totalRatingByDepart)
-        return totalRatingByDepart
+    //     // console.log(totalRatingByDepart)
+    //     return totalRatingByDepart
        
-       }
+    //    }
 
-       sortRateByDepart()
+    //    sortRateByDepart()
 
-       const rateResultByDepart = {};
-       sortRateByDepart().forEach((x)=>{
-        rateResultByDepart[x] = (rateResultByDepart[x] || 0)+1;
-       })
+    //    const rateResultByDepart = {};
+    //    sortRateByDepart().forEach((x)=>{
+    //     rateResultByDepart[x] = (rateResultByDepart[x] || 0)+1;
+    //    })
    
-    //    console.log(rateResultByDepart);
-       const dataByDepart = {
-           labels: ["Very unsatisfactory", "Unsatisfactory", "Neutral", "Satisfactory", "Very Satisfactory"],
-           datasets : [{
-               label: "Employee Daily Total Rate",
-               data:[rateResultByDepart[1], rateResultByDepart[2], rateResultByDepart[3],rateResultByDepart[4], rateResultByDepart[5]],
-               backgroundColor:["#0098FF", "#00CF92","#F72564","#F8D919","#E07116"]
-           }]
-       }
+    // //    console.log(rateResultByDepart);
+    //    const dataByDepart = {
+    //        labels: ["Very unsatisfactory", "Unsatisfactory", "Neutral", "Satisfactory", "Very Satisfactory"],
+    //        datasets : [{
+    //            label: "Employee Daily Total Rate",
+    //            data:[rateResultByDepart[1], rateResultByDepart[2], rateResultByDepart[3],rateResultByDepart[4], rateResultByDepart[5]],
+    //            backgroundColor:["#0098FF", "#00CF92","#F72564","#F8D919","#E07116"]
+    //        }]
+    //    }
     
     
      //sort daily feeling object by date 
@@ -229,6 +231,7 @@ const SuperAdminChart = props => {
 
                 surveySubmit.push(surveyState) // something went wrong 
                 
+                
         }
         else {
 
@@ -258,6 +261,7 @@ const SuperAdminChart = props => {
     // let nameUrl = window.location.href
     // const dateUrl = nameUrl.split('/');
     const surveyType = dateUrl[dateUrl.length-3] 
+    // const decodedType = decodeURI(surveyType)
     // console.log(surveyType)
 
   
@@ -315,7 +319,7 @@ const SuperAdminChart = props => {
         <div>
             { surveyType == "Daily" ?
              <div> 
-                <h1>{selectedCompany}'s Daily Report - {chartDate} </h1>
+                <h1>{decodedCompany}'s Daily Report - {chartDate} </h1>
                 {/* <form>
                     <select onChange={e => filterByDepart(e.target.value)}>
                         <option>All</option>

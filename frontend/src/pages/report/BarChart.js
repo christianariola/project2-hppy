@@ -53,6 +53,7 @@ const BarChart = props => {
      //store employees' email of the matched company
     //  console.log(employee.company_name)
      let company = employee.company_name
+     console.log(company)
      let showEmailArry = [];
     //  console.log(employeeData.length);
     //  console.log(depart)
@@ -94,73 +95,73 @@ const BarChart = props => {
     // }
     
      //filter daily survey result by department and date
-     let filteredDailySurveyByDepart = []; 
-    function filterByDepart(depart) { 
+    //  let filteredDailySurveyByDepart = []; 
+    // function filterByDepart(depart) { 
         
-        let showDepartArry = [];
-        filteredDailySurveyByDepart.length = 0;
-        for(let i=0; i<employeeData.length; i++){
-           if(employeeData[i].department != undefined && employeeData[i].department == "Meta" ){
-               showDepartArry.push(employeeData[i].email)
-           }
-        }
-        //filtered employee email by department
-        // console.log(showDepartArry) 
+    //     let showDepartArry = [];
+    //     filteredDailySurveyByDepart.length = 0;
+    //     for(let i=0; i<employeeData.length; i++){
+    //        if(employeeData[i].department != undefined && employeeData[i].department == "Meta" ){
+    //            showDepartArry.push(employeeData[i].email)
+    //        }
+    //     }
+    //     //filtered employee email by department
+    //     // console.log(showDepartArry) 
    
-        // let filteredDailySurveyByDepart = []; 
-        for(let i=0; i<report.length; i++){
-           if(showDepartArry.includes(report[i].dailySurvey.employeeEmail)){
-            filteredDailySurveyByDepart.push(report[i])
-           }
+    //     // let filteredDailySurveyByDepart = []; 
+    //     for(let i=0; i<report.length; i++){
+    //        if(showDepartArry.includes(report[i].dailySurvey.employeeEmail)){
+    //         filteredDailySurveyByDepart.push(report[i])
+    //        }
            
-        }
-        // console.log(filteredDailySurveyByDepart)
+    //     }
+    //     // console.log(filteredDailySurveyByDepart)
         
-        return filterByDepart
+    //     return filterByDepart
    
-       }
+    //    }
 
-       filterByDepart()
-       //total rating by departmnet
-       function sortRateByDepart(){
-        let totalRatingByDepart = [];
-        const chartDate = dateUrl[dateUrl.length-1] 
+    //    filterByDepart()
+    //    //total rating by departmnet
+    //    function sortRateByDepart(){
+    //     let totalRatingByDepart = [];
+    //     const chartDate = dateUrl[dateUrl.length-1] 
         
-        // console.log(chartDate)
-        // let filteredDailySurvey=filterByCompany()  
-        // date = {props.location.state.chartDate} 
-        // if(depart == null) {
-        //     let filteredDailySurvey=filterByCompany() 
-        // } else {
-        //     let filteredDailySurvey=filterByDepart(depart)  
-        // }
-        for(let i=0; i<filteredDailySurveyByDepart.length; i++){
-            if(filteredDailySurveyByDepart[i].dailySurvey.dailySurveyDate === chartDate){
-            totalRatingByDepart.push(filteredDailySurveyByDepart[i].dailySurvey.dailyTotalRating)
-            }
-        }
+    //     // console.log(chartDate)
+    //     // let filteredDailySurvey=filterByCompany()  
+    //     // date = {props.location.state.chartDate} 
+    //     // if(depart == null) {
+    //     //     let filteredDailySurvey=filterByCompany() 
+    //     // } else {
+    //     //     let filteredDailySurvey=filterByDepart(depart)  
+    //     // }
+    //     for(let i=0; i<filteredDailySurveyByDepart.length; i++){
+    //         if(filteredDailySurveyByDepart[i].dailySurvey.dailySurveyDate === chartDate){
+    //         totalRatingByDepart.push(filteredDailySurveyByDepart[i].dailySurvey.dailyTotalRating)
+    //         }
+    //     }
         
-        // console.log(totalRatingByDepart)
-        return totalRatingByDepart
+    //     // console.log(totalRatingByDepart)
+    //     return totalRatingByDepart
        
-       }
+    //    }
 
-       sortRateByDepart()
+    //    sortRateByDepart()
 
-       const rateResultByDepart = {};
-       sortRateByDepart().forEach((x)=>{
-        rateResultByDepart[x] = (rateResultByDepart[x] || 0)+1;
-       })
+    //    const rateResultByDepart = {};
+    //    sortRateByDepart().forEach((x)=>{
+    //     rateResultByDepart[x] = (rateResultByDepart[x] || 0)+1;
+    //    })
    
-    //    console.log(rateResultByDepart);
-       const dataByDepart = {
-           labels: ["Very unsatisfactory", "Unsatisfactory", "Neutral", "Satisfactory", "Very Satisfactory"],
-           datasets : [{
-               label: "Employee Daily Total Rate",
-               data:[rateResultByDepart[1], rateResultByDepart[2], rateResultByDepart[3],rateResultByDepart[4], rateResultByDepart[5]],
-               backgroundColor:["#0098FF", "#00CF92","#F72564","#F8D919","#E07116"]
-           }]
-       }
+    // //    console.log(rateResultByDepart);
+    //    const dataByDepart = {
+    //        labels: ["Very unsatisfactory", "Unsatisfactory", "Neutral", "Satisfactory", "Very Satisfactory"],
+    //        datasets : [{
+    //            label: "Employee Daily Total Rate",
+    //            data:[rateResultByDepart[1], rateResultByDepart[2], rateResultByDepart[3],rateResultByDepart[4], rateResultByDepart[5]],
+    //            backgroundColor:["#0098FF", "#00CF92","#F72564","#F8D919","#E07116"]
+    //        }]
+    //    }
     
     
      //sort daily feeling object by date 
