@@ -48,15 +48,15 @@ const BarChart = props => {
     // // console.log(monthlyReport)
     
     //  const { loginEmployee } = useSelector(state => state.auth) // ->작동되면 .role = 'superadmin' no filter, role 'admin' filetre by compaby
-    //  var company = loginEmployee.company_name
+    //  let company = loginEmployee.company_name
       
      //store employees' email of the matched company
     //  console.log(employee.company_name)
-     var company = employee.company_name
-     var showEmailArry = [];
+     let company = employee.company_name
+     let showEmailArry = [];
     //  console.log(employeeData.length);
     //  console.log(depart)
-     for(var i=0; i<employeeData.length; i++){
+     for(let i=0; i<employeeData.length; i++){
         if(employeeData[i].company_name !== undefined && employeeData[i].company_name === company ){
             
                 if(employeeData[i].department == "Meta") {
@@ -71,16 +71,16 @@ const BarChart = props => {
     //  console.log(showEmailArry) //filted empployee email list by company
 
     
-    //  var depart = 'all'
+    //  let depart = 'all'
     
      const nameUrl = window.location.href
      const dateUrl = nameUrl.split('/');
      const chartDate = dateUrl[dateUrl.length-1] 
-     const paramCheck = chartDate.split('?');
+    //  const paramCheck = chartDate.split('?');
      
      //find matched employees' email from daily survey table
-     var filteredDailySurvey = []; //store the daily survey data from filetered employees by company
-     for(var j=0; j<report.length; j++){
+     let filteredDailySurvey = []; //store the daily survey data from filetered employees by company
+     for(let j=0; j<report.length; j++){
         if(showEmailArry.includes(report[j].dailySurvey.employeeEmail)){
             filteredDailySurvey.push(report[j])
         }
@@ -94,12 +94,12 @@ const BarChart = props => {
     // }
     
      //filter daily survey result by department and date
-     var filteredDailySurveyByDepart = []; 
+     let filteredDailySurveyByDepart = []; 
     function filterByDepart(depart) { 
         
-        var showDepartArry = [];
+        let showDepartArry = [];
         filteredDailySurveyByDepart.length = 0;
-        for(var i=0; i<employeeData.length; i++){
+        for(let i=0; i<employeeData.length; i++){
            if(employeeData[i].department != undefined && employeeData[i].department == "Meta" ){
                showDepartArry.push(employeeData[i].email)
            }
@@ -107,8 +107,8 @@ const BarChart = props => {
         //filtered employee email by department
         // console.log(showDepartArry) 
    
-        // var filteredDailySurveyByDepart = []; 
-        for( i=0; i<report.length; i++){
+        // let filteredDailySurveyByDepart = []; 
+        for(let i=0; i<report.length; i++){
            if(showDepartArry.includes(report[i].dailySurvey.employeeEmail)){
             filteredDailySurveyByDepart.push(report[i])
            }
@@ -123,18 +123,18 @@ const BarChart = props => {
        filterByDepart()
        //total rating by departmnet
        function sortRateByDepart(){
-        var totalRatingByDepart = [];
+        let totalRatingByDepart = [];
         const chartDate = dateUrl[dateUrl.length-1] 
         
         // console.log(chartDate)
-        // var filteredDailySurvey=filterByCompany()  
+        // let filteredDailySurvey=filterByCompany()  
         // date = {props.location.state.chartDate} 
         // if(depart == null) {
-        //     var filteredDailySurvey=filterByCompany() 
+        //     let filteredDailySurvey=filterByCompany() 
         // } else {
-        //     var filteredDailySurvey=filterByDepart(depart)  
+        //     let filteredDailySurvey=filterByDepart(depart)  
         // }
-        for(var i=0; i<filteredDailySurveyByDepart.length; i++){
+        for(let i=0; i<filteredDailySurveyByDepart.length; i++){
             if(filteredDailySurveyByDepart[i].dailySurvey.dailySurveyDate === chartDate){
             totalRatingByDepart.push(filteredDailySurveyByDepart[i].dailySurvey.dailyTotalRating)
             }
@@ -164,22 +164,22 @@ const BarChart = props => {
     
     
      //sort daily feeling object by date 
-    var totalDailyRate = function(){
-        var rating = [];
+    let totalDailyRate = function(){
+        let rating = [];
     
         // console.log(chartDate)
         // if(paramCheck.length > 1){
-        //    var params =  paramCheck[1].split('=');
+        //    let params =  paramCheck[1].split('=');
         //    depart = params[1]
         // }
-        // var filteredDailySurvey=filterByCompany()  
+        // let filteredDailySurvey=filterByCompany()  
         // date = {props.location.state.chartDate} 
         // if(depart == null) {
-        //     var filteredDailySurvey=filterByCompany() 
+        //     let filteredDailySurvey=filterByCompany() 
         // } else {
-        //     var filteredDailySurvey=filterByDepart(depart)  
+        //     let filteredDailySurvey=filterByDepart(depart)  
         // }
-        for(var i=0; i<filteredDailySurvey.length; i++){
+        for(let i=0; i<filteredDailySurvey.length; i++){
             if(filteredDailySurvey[i].dailySurvey.dailySurveyDate === chartDate){
             rating.push(filteredDailySurvey[i].dailySurvey.dailyTotalRating)
             }
@@ -210,18 +210,18 @@ const BarChart = props => {
 
 
     //daily survey submission data by date
-    var getSurveySubmit = function(){
-        var surveySubmit = [];
+    let getSurveySubmit = function(){
+        let surveySubmit = [];
         // const nameUrl = window.location.href
         // const dateUrl = nameUrl.split('/');
         const chartDate = dateUrl[dateUrl.length-1] 
         // console.log(chartDate)
-        for(var i=0; i<filteredDailySurvey.length; i++){
+        for(let i=0; i<filteredDailySurvey.length; i++){
             if(showEmailArry.includes(filteredDailySurvey[i].dailySurvey.employeeEmail) && filteredDailySurvey[i].dailySurvey.dailySurveyDate === chartDate) {
                 
 
                 // console.log(filteredDailySurvey[i].dailySurvey)
-                var surveyState = {};
+                let surveyState = {};
 
                 surveyState['email'] = filteredDailySurvey[i].dailySurvey.employeeEmail;
                 surveyState['surveyStatement'] = "submitted";
@@ -231,7 +231,7 @@ const BarChart = props => {
         }
         else {
 
-                var surveyState = {};
+                let surveyState = {};
                
                 surveyState['email'] = filteredDailySurvey[i].dailySurvey.employeeEmail;
                 surveyState['surveyStatement'] = "unsubmitted";
@@ -241,7 +241,7 @@ const BarChart = props => {
         }
         return surveySubmit;
         
-        // for(var i=0; i<filteredDailySurvey.length; i++){
+        // for(let i=0; i<filteredDailySurvey.length; i++){
         //     if(filteredDailySurvey[i].dailySurvey.dailySurveyDate === chartDate){
         //     surveySubmit.push(filteredDailySurvey[i].dailySurvey.dailySurveyState);
         //     } 
@@ -253,27 +253,27 @@ const BarChart = props => {
     getSurveySubmit();
     // console.log(getSurveySubmit());
 
-    //global variable
-    // var nameUrl = window.location.href
+    //global letiable
+    // let nameUrl = window.location.href
     // const dateUrl = nameUrl.split('/');
     const surveyType = dateUrl[dateUrl.length-2] 
     // console.log(surveyType)
 
   
   
-    // for(var i=0; i<getSurveySubmit().length; i++){
-    //    var totalStatement = []
+    // for(let i=0; i<getSurveySubmit().length; i++){
+    //    let totalStatement = []
     //    totalStatement.push(getSurveySubmit()[i].surveyStatement)
     // }
 
     // console.log(totalStatement);
 
     //total rate of daily survey submission
-    var totalStatement = function(){
+    let totalStatement = function(){
       
-        var submissionTotal = [];
+        let submissionTotal = [];
       
-        for(var i=0; i<getSurveySubmit().length; i++){
+        for(let i=0; i<getSurveySubmit().length; i++){
             submissionTotal.push(getSurveySubmit()[i].surveyStatement)          
             }
         

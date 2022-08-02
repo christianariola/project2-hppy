@@ -16,7 +16,6 @@ const ReportMain = props => {
   const [ monthlyItem, setMonthlyItems ] = useState([])
   const { employee } = useSelector((state) => state.auth);
   const [ employeeData, setEmployeeData ] = useState([])
-  const [ type, setType ] = useState('false');
 
   //daily survey fetching
     useEffect(function loadData(){
@@ -56,10 +55,10 @@ const ReportMain = props => {
 
     //@desc report main for superadmin
     //sorting employees' email and company name
-    var showEmailArry =[]
-    for(var i=0; i<employeeData.length; i++){
+    let showEmailArry =[]
+    for(let i=0; i<employeeData.length; i++){
       if(employeeData[i].company_name !== undefined ){
-        var showEmailObj= {
+        let showEmailObj= {
           email: employeeData[i].email,
           company : employeeData[i].company_name
         }
@@ -71,11 +70,11 @@ const ReportMain = props => {
     // console.log(showEmailArry) //store every employees' email and company name that are in company
     
       //sorting dailysurvey 
-      var dailyArry = [];
-      for(var i=0; i<surveyItem.length; i++){
-        for(var k=0; k<showEmailArry.length; k++){
+      let dailyArry = [];
+      for(let i=0; i<surveyItem.length; i++){
+        for(let k=0; k<showEmailArry.length; k++){
           if(surveyItem[i].dailySurvey.employeeEmail != undefined && surveyItem[i].dailySurvey.employeeEmail == showEmailArry[k].email){
-          var emailObj = {
+          let emailObj = {
             surveyDate : surveyItem[i].dailySurvey.dailySurveyDate,
             surveyTitle: surveyItem[i].surveyType,
             // emails : surveyItem[i].dailySurvey.employeeEmail,
@@ -91,11 +90,11 @@ const ReportMain = props => {
       // console.log(sortDailySurveyByCompany)
     
     
-      var monthlyArry = [];
-      for(var i=0; i<monthlyItem.length; i++){
-        for(var k=0; k<showEmailArry.length; k++){
+      let monthlyArry = [];
+      for(let i=0; i<monthlyItem.length; i++){
+        for(let k=0; k<showEmailArry.length; k++){
           if(monthlyItem[i].employeeEmail != undefined && monthlyItem[i].employeeEmail == showEmailArry[k].email){
-          var monthlyEmailObj = {
+          let monthlyEmailObj = {
             surveyDate : monthlyItem[i].createdDate,
             surveyTitle: monthlyItem[i].surveyType,
             // emails : surveyItem[i].dailySurvey.employeeEmail,
@@ -115,12 +114,12 @@ const ReportMain = props => {
 
     //@desc report main for admin
     // store daily  survey date and name to array
-     var dailySingle = function(){
+     let dailySingle = function(){
       
-      var singleList = [];
+      let singleList = [];
     
-      for(var i=0; i<surveyItem.length; i++){
-        var obj = {
+      for(let i=0; i<surveyItem.length; i++){
+        let obj = {
           surveyDate : surveyItem[i].dailySurvey.dailySurveyDate,
           // surveyTitle : surveyItem[i].dailySurvey.surveyName
           surveyTitle: surveyItem[i].surveyType
@@ -136,7 +135,7 @@ const ReportMain = props => {
       return singleList;
   }
       dailySingle();
-      console.log(dailySingle())
+      // console.log(dailySingle())
 
     
     
@@ -145,12 +144,12 @@ const ReportMain = props => {
      const sortDailySurvey = [...new Set(dailySingle().map(JSON.stringify))].map(JSON.parse)
 
     // store monthly survey date and name to array
-    var monthlySingle = function(){
+    let monthlySingle = function(){
       
-      var monthlySingleList = [];
+      let monthlySingleList = [];
     
-      for(var i=0; i<monthlyItem.length; i++){
-        var obj = {
+      for(let i=0; i<monthlyItem.length; i++){
+        let obj = {
           monthlysurveyDate : monthlyItem[i].createdDate,
           monthlysurveyTitle: monthlyItem[i].surveyType
         }
@@ -162,7 +161,7 @@ const ReportMain = props => {
       return monthlySingleList;
     }
       monthlySingle();
-      console.log(monthlySingle())
+      // console.log(monthlySingle())
 
     
     
@@ -170,7 +169,7 @@ const ReportMain = props => {
 
      const sortMonthlySurvey = [...new Set(monthlySingle().map(JSON.stringify))].map(JSON.parse)
 
-    console.log(sortMonthlySurvey)
+    // console.log(sortMonthlySurvey)
 
     // const [getDate, setGetDate] = useState([]);
 

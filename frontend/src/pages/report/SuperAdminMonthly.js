@@ -44,8 +44,8 @@ const SuperAdminMonthly = props => {
 
 
     
-    var showEmailArry = [];
-    for(var i=0; i<employeeData.length; i++){
+    let showEmailArry = [];
+    for(let i=0; i<employeeData.length; i++){
        if(employeeData[i].company_name !== undefined && employeeData[i].company_name === selectedCompany ){
            showEmailArry.push(employeeData[i].email)
        }
@@ -53,8 +53,8 @@ const SuperAdminMonthly = props => {
     
     // console.log(showEmailArry)
     //find matched employees' email from monthly survey table
-    var filteredMonthlySurvey = []; //store the monthly survey data from filetered employees by company
-    for(var k=0; k<monthlyReport.length; k++){
+    let filteredMonthlySurvey = []; //store the monthly survey data from filetered employees by company
+    for(let k=0; k<monthlyReport.length; k++){
        if(showEmailArry.includes(monthlyReport[k].employeeEmail)){
            filteredMonthlySurvey.push(monthlyReport[k])
        }
@@ -64,20 +64,20 @@ const SuperAdminMonthly = props => {
 
     // monthly survey
     //sort monthly total feeling object by date 
-    var totalMonthlyRate = function(){
-        var monthlyRating = [];
+    let totalMonthlyRate = function(){
+        let monthlyRating = [];
         // const nameUrl = window.location.href
         // const dateUrl = nameUrl.split('/');
         // const chartDate = dateUrl[dateUrl.length-2] 
         // console.log(chartDate)
-        // var filteredDailySurvey=filterByCompany()  
+        // let filteredDailySurvey=filterByCompany()  
         // date = {props.location.state.chartDate} 
         // if(depart == null) {
-        //     var filteredDailySurvey=filterByCompany() 
+        //     let filteredDailySurvey=filterByCompany() 
         // } else {
-        //     var filteredDailySurvey=filterByDepart(depart)  
+        //     let filteredDailySurvey=filterByDepart(depart)  
         // }
-        for(var j=0; j<filteredMonthlySurvey.length; j++){
+        for(let j=0; j<filteredMonthlySurvey.length; j++){
             if(filteredMonthlySurvey[j].createdDate === chartDate){
             monthlyRating.push(filteredMonthlySurvey[j].monthlyTotalRating)
             }
@@ -105,20 +105,20 @@ const SuperAdminMonthly = props => {
         }
     
           //monthly survey submission data by date
-          var getMonthlySurveySubmit = function(){
-            var monthlysurveySubmit = [];
-            // var monthlySurveyState = {};
+          let getMonthlySurveySubmit = function(){
+            let monthlysurveySubmit = [];
+            // let monthlySurveyState = {};
             // const nameUrl = window.location.href
             // const dateUrl = nameUrl.split('/');
             // const chartDate = dateUrl[dateUrl.length-2] 
             // console.log(chartDate)f
-            for(var i=0; i<filteredMonthlySurvey.length; i++){
+            for(let i=0; i<filteredMonthlySurvey.length; i++){
                 if(showEmailArry.includes(filteredMonthlySurvey[i].employeeEmail) && filteredMonthlySurvey[i].createdDate == chartDate && filteredMonthlySurvey[i].monthlyTotalRating != null ) {
                     
     
                     // console.log(filteredMonthlySurvey[i].dailySurvey)
                     
-                    var monthlySurveyState = {};
+                    let monthlySurveyState = {};
                     monthlySurveyState['email'] = filteredMonthlySurvey[i].employeeEmail;
                     monthlySurveyState['surveyStatement'] = "submitted";
     
@@ -127,7 +127,7 @@ const SuperAdminMonthly = props => {
                     
             }
             else {
-                    var monthlySurveyState = {};
+                    let monthlySurveyState = {};
                     monthlySurveyState['email'] = filteredMonthlySurvey[i].employeeEmail;
                     monthlySurveyState['surveyStatement'] = "unsubmitted";
     
@@ -137,7 +137,7 @@ const SuperAdminMonthly = props => {
             }
             return monthlysurveySubmit;
             
-            // for(var i=0; i<filteredDailySurvey.length; i++){
+            // for(let i=0; i<filteredDailySurvey.length; i++){
             //     if(filteredDailySurvey[i].dailySurvey.dailySurveyDate === chartDate){
             //     surveySubmit.push(filteredDailySurvey[i].dailySurvey.dailySurveyState);
             //     } 
@@ -149,11 +149,11 @@ const SuperAdminMonthly = props => {
         getMonthlySurveySubmit();
         // console.log(getMonthlySurveySubmit());
     
-        var monthlyTotalStatement = function(){
+        let monthlyTotalStatement = function(){
           
-            var monthlySubmissionTotal = [];
+            let monthlySubmissionTotal = [];
           
-            for(var i=0; i< getMonthlySurveySubmit().length; i++){
+            for(let i=0; i< getMonthlySurveySubmit().length; i++){
                 monthlySubmissionTotal.push(getMonthlySurveySubmit()[i].surveyStatement)          
                 }
             
