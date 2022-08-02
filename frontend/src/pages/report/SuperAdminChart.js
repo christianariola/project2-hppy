@@ -231,7 +231,7 @@ const SuperAdminChart = (props) => {
     // })
 
     // console.log(filterd)
-    for (let i = 0; i < showEmailArry.length; i++) {
+    for (let i = 0; i < filteredDailySurvey.length; i++) {
       if (
         showEmailArry.includes(
           filteredDailySurvey[i].dailySurvey.employeeEmail

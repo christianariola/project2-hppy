@@ -3,6 +3,28 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from "react-router-dom"
 import { getEmployee, updateEmployee, getCompany } from "../../features/company/companySlice"
 
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@mui/material/Link';
+import Typography from '@mui/material/Typography';
+
+import TextField from '@mui/material/TextField'
+// import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+// import Button from '@mui/material/Button';
+// import AddIcon from '@mui/icons-material/Add';
+// import { Grid } from "@mui/material"
+import IconButton from '@mui/material/IconButton';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+// import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from '@mui/material/FormControl';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+// import MenuItem from '@mui/material/MenuItem';
+// import Select from '@mui/material/Select';
+
 const EditEmployee = () => {
 
     const initialState = {
@@ -54,6 +76,17 @@ const EditEmployee = () => {
             [e.target.name]: e.target.value,
         }))
     }
+
+    const handleClickShowPassword = () => {
+      setFormData({
+        ...formData,
+        showPassword: !formData.showPassword,
+      });
+    };
+    
+    const handleMouseDownPassword = (event) => {
+      event.preventDefault();
+    };
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -118,7 +151,21 @@ const EditEmployee = () => {
 
     return <>
         <section>
-            <h1>Edit Employee</h1>
+            <h2>Edit Employee</h2>
+        </section>
+
+        <section>
+        <Breadcrumbs aria-label="breadcrumb" sx={{ mb: '2rem'}}>
+            <Link underline="hover" component={RouterLink} to={`/app/companies`}>
+                Companies
+            </Link>
+            <Link underline="hover" component={RouterLink} to={`/app/company/${companyId}`}>
+                View Company
+            </Link>
+            <Typography>
+                Edit Employee
+            </Typography>
+        </Breadcrumbs>
         </section>
 
         <section>
@@ -140,12 +187,87 @@ const EditEmployee = () => {
                     <label htmlFor="employeeNumber">Employee #:</label>
                     <input type="text" className="form-control" id="employeeNumber" name="employeeNumber" value={employeeNumber} onChange={onChange} placeholder="Enter employee #" />
                 </div>
-                <div className="form-group">
+                {/* <div className="form-group">
                     <label htmlFor="firstName">First Name:</label>
                     <input type="text" className="form-control" id="firstName" name="firstName" value={firstName} onChange={onChange} placeholder="Enter employee first name" />
-                </div>
+                </div> */}
+                <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="firstName"
+                label="First Name"
+                name="firstName"
+                autoComplete="firstName"
+                autoFocus
+                value={firstName} 
+                onChange={onChange}
+                />
 
-                <div className="form-group">
+                <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="lastName"
+                label="Last Name"
+                name="lastName"
+                autoComplete="lastName"
+                autoFocus
+                value={lastName} 
+                onChange={onChange}
+                />
+
+                <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                value={email} 
+                onChange={onChange}
+                />
+
+                <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="jobTitle"
+                label="Job Title"
+                name="jobTitle"
+                autoComplete="jobTitle"
+                autoFocus
+                value={job_title} 
+                onChange={onChange}
+                />
+
+              <FormControl fullWidth variant="outlined" sx={{mb: 3, mt: 2}}>
+                <InputLabel htmlFor="outlined-adornment-password">New Password</InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-password"
+                  type={formData.showPassword ? 'text' : 'password'}
+                  // value={formData.password}
+                  onChange={onChange}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {formData.showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="Password"
+                  name="password"
+                  required
+                />
+              </FormControl>
+                {/* <div className="form-group">
                     <label htmlFor="lastName">Last Name:</label>
                     <input type="text" className="form-control" id="lastName" name="lastName" value={lastName} onChange={onChange} placeholder="Enter employee last name" />
                 </div>
@@ -153,17 +275,30 @@ const EditEmployee = () => {
                 <div className="form-group">
                     <label htmlFor="email">Email Address:</label>
                     <input type="text" className="form-control" id="email" name="email" value={email} onChange={onChange} placeholder="Enter employee email address" />
-                </div>
+                </div> */}
 
-                <div className="form-group">
+                {/* <div className="form-group">
                     <label htmlFor="job_title">Job Title:</label>
                     <input type="text" className="form-control" id="job_title" name="job_title" value={job_title} onChange={onChange} placeholder="Enter employee job title" />
-                </div>
+                </div> */}
 
-                <div className="form-group">
+                {/* <div className="form-group">
                     <label htmlFor="password">New Password:</label>
                     <input type="password" className="form-control" id="password" name="password" onChange={onChange} placeholder="Enter your password" />
-                </div>
+                </div> */}
+
+                <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="jobTitle"
+                label="Job Title"
+                name="jobTitle"
+                autoComplete="jobTitle"
+                autoFocus
+                value={job_title} 
+                onChange={onChange}
+                />
 
                 <div className="form-group">
                     <label htmlFor="confirmPassword">Confirm Password:</label>

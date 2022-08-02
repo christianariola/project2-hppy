@@ -129,7 +129,7 @@ const MonthylyBar = (props) => {
     const dateUrl = nameUrl.split("/");
     const chartDate = dateUrl[dateUrl.length - 1];
     // console.log(chartDate)
-    for (let i = 0; i < showEmailArry.length; i++) {
+    for (let i = 0; i < filteredMonthlySurvey.length; i++) {
       if (
         showEmailArry.includes(filteredMonthlySurvey[i].employeeEmail) &&
         filteredMonthlySurvey[i].createdDate === chartDate &&
