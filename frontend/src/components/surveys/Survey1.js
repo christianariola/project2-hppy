@@ -44,6 +44,7 @@ const Survey1 = ({
   const [answer6, setAnswer6] = useState("");
   const [answer7, setAnswer7] = useState("");
   const [answer7a, setAnswer7a] = useState("");
+  // const [isReload, setIsReload] = useState(false);
 
   //Sentiment Analysis Block
   const [monthlyFeeling] = useState(3); //This should be an average of the all survey questions
@@ -159,6 +160,14 @@ const Survey1 = ({
     return score;
   };
 
+  const justReload = () => {
+    setInterval(() => { 
+      window.location.reload();
+    },
+    500)
+    
+}
+
   useEffect(() => {
     tf.ready().then(() => {
       loadModel(url);
@@ -174,7 +183,7 @@ const Survey1 = ({
   useEffect(() => {
     setSurveyStatus("completed");
     setSurveyOpened(true);
-    ;
+
   }, [answer1, openSurvey]);
 
   const handleFormSubmit = (e) => {
@@ -206,6 +215,7 @@ const Survey1 = ({
       // console.log(openSurvey);
       setSurveyStatus("completed");
       setChoosenSurvey("");
+      justReload();
       const monthlySurvey = {
         answers: {
           answer1,
@@ -242,6 +252,7 @@ const Survey1 = ({
         .then((res) => {
           // console.log(res);
           setOpenSurvey(false);
+          justReload(true);
 
         })
         .catch((err) => {
