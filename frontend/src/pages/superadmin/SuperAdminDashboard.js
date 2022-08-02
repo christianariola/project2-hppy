@@ -12,7 +12,7 @@ const SuperAdminDashboard = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(function loadData(){
-    axios.get('/api/stats/dashboard')
+    axios.get('https://pluto-hppy.herokuapp.com/api/stats/dashboard')
     .then((res)=>{
         setDashboardStats(res.data)
         setLoading(false)
