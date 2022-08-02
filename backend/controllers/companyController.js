@@ -128,12 +128,12 @@ const editCompany = asyncHandler(async (req, res) => {
 
 
     if(logo){
-        const filename = name.trim().toLowerCase()
-        const randomName = generateString(8)
+        const filename = name.split(" ").join("").trim().toLowerCase()
+        const randomName = generateString(16)
         const result = await cloudinary.uploader.upload(logo,
         {
             upload_preset: 'unsigned_uploads',
-            public_id: `${filename}-${randomName}`,
+            public_id: `${randomName}`,
             allowed_formats: ['png', 'jpg', 'jpeg', 'svg', 'ico', 'jfif', 'webp'],
             width: 300,
             crop: "scale"
