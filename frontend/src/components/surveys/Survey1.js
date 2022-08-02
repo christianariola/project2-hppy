@@ -230,8 +230,8 @@ const Survey1 = ({
       //axios post to /monthlySurvey endpoint
       axios
         .patch(
-          // "https://pluto-hppy.herokuapp.com/monthlySurveys"
-          "/monthlySurveys",
+          "https://pluto-hppy.herokuapp.com/monthlySurveys",
+          // "/monthlySurveys",
           {
             monthlySurvey: monthlySurvey,
             surveyid: choosenSurvey.surveyid,
