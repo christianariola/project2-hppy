@@ -16,7 +16,7 @@ const Surveys = () => {
     
     // fetching data from database
     useEffect(function loadData(){
-      axios.get('/monthlysurveys')
+      axios.get('https://pluto-hppy.herokuapp.com/monthlysurveys')
         .then((res)=>{
             setMonthSurvey(res.data)  
          })   
