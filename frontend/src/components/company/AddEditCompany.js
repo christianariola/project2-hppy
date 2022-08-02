@@ -71,7 +71,7 @@ const AddEditCompany = () => {
         }
 
         dispatch(reset())
-    }, [isError, isSuccess, isLoading, message, navigate, dispatch])
+    }, [isError, name, isSuccess, isLoading, message, navigate, dispatch])
 
     const onChange = (e) => {
         setFormData((prevState) => ({

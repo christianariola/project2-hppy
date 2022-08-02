@@ -1,14 +1,14 @@
-import { useState, useEffect, useMemo } from "react"
+import { useEffect, useMemo } from "react"
 import { Link as RouterLink, useParams } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import { useSelector, useDispatch } from 'react-redux'
-import { getCompany, deleteEmployee, getEmployeeByCompany } from "../../features/company/companySlice"
+import { getCompany, getEmployeeByCompany } from "../../features/company/companySlice"
 import Logo from "./Logo"
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Typography from '@mui/material/Typography';
 import { Box, Grid } from "@mui/material";
 import { DataGrid } from '@mui/x-data-grid'
-import moment from 'moment'
+// import moment from 'moment'
 import UsersActions from "../employee/UsersActions";
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
@@ -19,7 +19,7 @@ const ViewCompany = () => {
 
     const dispatch = useDispatch()
     const { company } = useSelector(state => state.company)
-    const { employeeList, isLoading } = useSelector((state) => ({...state.company}))
+    const { employeeList, } = useSelector((state) => ({...state.company}))
 
     // const [reload, setReload] = useState(false)
     useEffect(() => {
@@ -31,19 +31,20 @@ const ViewCompany = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [companyId])
 
-    const handleDelete = (empId, compempId) => {
-        if(window.confirm("Are you sure you want to delete this employee?")){
-            dispatch(deleteEmployee({empId, compempId}))
-        }
+    // const handleDelete = (empId, compempId) => {
+    //     if(window.confirm("Are you sure you want to delete this employee?")){
+    //         dispatch(deleteEmployee({empId, compempId}))
+    //     }
 
-        // setReload(true)
-    }
+    //     // setReload(true)
+    // }
 
     const columns = useMemo(() => [
         {field: 'names', headerName: 'Name', type: 'names', width: 300, headerAlign: 'center', renderCell:params=><Link component={RouterLink} underline='none' to={`/app/company/${companyId}/employee/view/${params.row._id}`} variant="button" sx={{ my: 1, mx: 1.5 }}>{params.row.firstName} {params.row.lastName}</Link>},
         {field: 'department_name', headerName: 'Department', width: 200},
         {field: 'jobTitle', headerName: 'Job Title', width: 200},
         {field: 'actions', headerName: 'Actions', type: 'actions', width: 200, renderCell:params=><UsersActions {...params} />}
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     ], [])
 
     console.log(employeeList)

@@ -15,13 +15,13 @@ import TextField from '@mui/material/TextField'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Button from '@mui/material/Button';
-import AddIcon from '@mui/icons-material/Add';
+// import AddIcon from '@mui/icons-material/Add';
 import { Grid } from "@mui/material"
 import IconButton from '@mui/material/IconButton';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
-import FormHelperText from '@mui/material/FormHelperText';
+// import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -134,13 +134,13 @@ const Register = () => {
     };
 
     if(company){
-        let employeeDoc
+        // let employeeDoc
         for (var i = 0, l = company.departments.length; i < l; i++) {
             var departments = company.departments[i];
     
             for (var j = 0, h = departments.employees.length; j < h; j++) {
                 var isAdmin = departments.employees[j].isAdmin;
-                var isManager = departments.employees[j].isManager;
+                // var isManager = departments.employees[j].isManager;
     
             }
  

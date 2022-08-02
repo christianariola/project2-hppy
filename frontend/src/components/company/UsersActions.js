@@ -6,7 +6,7 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import { deleteCompany } from "../../features/company/companySlice"
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 const UsersActions = (params) => {
 
