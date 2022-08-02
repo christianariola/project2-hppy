@@ -106,10 +106,8 @@ const Features = () => {
               <span className="powerWord">Hppy</span> at a glance
             </h3>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi,
-              illo eligendi! Fuga praesentium corporis facere quisquam officiis,
-              blanditiis ducimus cum nam excepturi, repellendus totam suscipit
-              veritatis! Sunt vero odio quidem.
+              Members of Hppy are professionals that can adapt the agile method
+              and deliver excellent results while working under pressure.
             </p>
           </div>
           <div className="picture-section">
@@ -173,10 +171,9 @@ const Features = () => {
           <div className="feature-5-text">
             <h3>Agile.Professional</h3>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi,
-              illo eligendi! Fuga praesentium corporis facere quisquam officiis,
-              blanditiis ducimus cum nam excepturi, repellendus totam suscipit
-              veritatis! Sunt vero odio quidem.
+              The world is adapting to the New Normal. So is the workplace.
+              Distributed teams, hybrid workplaces, agile organizations. Can
+              Hppy keep up? We believe so.
             </p>
           </div>
         </div>

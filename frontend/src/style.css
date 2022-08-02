@@ -168,7 +168,11 @@ a.MuiTypography-root.MuiTypography-inherit.MuiLink-root.MuiLink-underlineNone.cs
 /*Lading page features*/
 
 .feature-5 p {
-  padding: 0.5rem 0 4rem 2rem;
+  padding: 0.5rem 0 0rem 3rem;
+}
+
+.feature-5 h3 {
+  padding: 0.5rem 0 0rem 3rem;
 }
 .picture-section {
   display: grid;

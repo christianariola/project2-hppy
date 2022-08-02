@@ -219,12 +219,12 @@ var editCompany = asyncHandler(function _callee4(req, res) {
             break;
           }
 
-          filename = name.trim().toLowerCase();
-          randomName = generateString(8);
+          filename = name.split(" ").join("").trim().toLowerCase();
+          randomName = generateString(16);
           _context4.next = 10;
           return regeneratorRuntime.awrap(cloudinary.uploader.upload(logo, {
             upload_preset: 'unsigned_uploads',
-            public_id: "".concat(filename, "-").concat(randomName),
+            public_id: "".concat(randomName),
             allowed_formats: ['png', 'jpg', 'jpeg', 'svg', 'ico', 'jfif', 'webp'],
             width: 300,
             crop: "scale"
