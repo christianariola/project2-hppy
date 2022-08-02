@@ -33,11 +33,26 @@ const Company = () => {
             <h2>No Companies Found</h2>
         )}
 
-        {companyList && companyList.map((item, index) => <div key={index}>
-            <h3><Link component={RouterLink} to={`/app/company/${item._id}`} variant="button" sx={{ my: 1, mx: 1.5 }}>{item.name}</Link></h3>
-            <Link component={RouterLink} to={`/app/company/edit/${item._id}`} variant="button" sx={{ my: 1, mx: 1.5 }}>Edit</Link>
-            <button onClick={() => handleDelete(item._id)}>Delete</button>
-        </div>)}
+
+        <table>
+            <thead>
+            <tr className="report-list">
+                <th>Name</th>
+                <th>Desc</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+                {companyList && companyList.map((item, index) => <tr className="report-content">
+                    <td><Link component={RouterLink} to={`/app/company/${item._id}`} variant="button" sx={{ my: 1, mx: 1.5 }}>{item.name}</Link></td>
+                    <td>{item.description}</td>
+                    <td>
+                    <Link component={RouterLink} to={`/app/company/edit/${item._id}`} variant="button" sx={{ my: 1, mx: 1.5 }}>Edit</Link>
+                    <Link onClick={() => handleDelete(item._id)} variant="button" sx={{ my: 1, mx: 1.5 }}>Delete</Link>
+                    </td>
+                </tr>)}
+            </tbody>
+        </table>
     </>
 }
 
