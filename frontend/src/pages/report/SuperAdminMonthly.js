@@ -4,12 +4,12 @@ import { Pie } from "react-chartjs-2";
 // import Chart from "chart.js/auto";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 const SuperAdminMonthly = (props) => {
   const [employeeData, setEmployeeData] = useState([]);
   const [monthlyReport, setMonthlyReport] = useState([]);
-  const { employee } = useSelector((state) => state.auth);
+  // const { employee } = useSelector((state) => state.auth);
 
   //monthly survey fetching
 

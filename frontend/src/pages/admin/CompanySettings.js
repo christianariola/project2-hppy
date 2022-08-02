@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 // useSelector to select from global states like company, etc
 // useDispatch to dispatch actions like addCompany, etc
 import { useSelector, useDispatch } from 'react-redux'
@@ -41,7 +41,7 @@ const CompanySettings = () => {
         // company?.departments?.map((item) =>
         // deptData.push(item.deptName)
     // )
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [deptData, isSuccess, dispatch])
 
     useEffect(() => {
@@ -58,6 +58,7 @@ const CompanySettings = () => {
         }
 
         dispatch(reset())
+         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isError, isSuccess, isLoading, message, navigate, dispatch, reset])
 
     const onChange = (e) => {

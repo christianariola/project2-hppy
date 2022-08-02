@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react"
-import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import { useSelector, useDispatch } from 'react-redux'
 import { getCompany, deleteEmployee } from "../../features/company/companySlice"
-import Logo from "../../components/company/Logo"
+// import Logo from "../../components/company/Logo"
 
 
 const Department = () => {

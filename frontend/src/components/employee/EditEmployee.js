@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { getEmployee, updateEmployee, getCompany } from "../../features/company/companySlice"
 
 const EditEmployee = () => {
@@ -20,10 +20,10 @@ const EditEmployee = () => {
     let { companyId, empId } = useParams(); 
 
     const [formData, setFormData] = useState(initialState)
-    const [companyData, setCompanyData ] = useState([])
+    const [, setCompanyData ] = useState([])
 
     const dispatch = useDispatch()
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
     useEffect(() => {
         if(empId){
@@ -34,7 +34,7 @@ const EditEmployee = () => {
     }, [empId, companyId])
 
     // bring in pieces of state
-    const { employee, company, isLoading, isError, isSuccess, message } = useSelector(state => state.company)
+    const { employee, company, isLoading } = useSelector(state => state.company)
 
     useEffect(() => {
 
@@ -43,10 +43,10 @@ const EditEmployee = () => {
         }
 
         setCompanyData(company)
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [companyId, employee])
 
-    const {role, department_name, employeeNumber, firstName, lastName, email, job_title, password, confirmPassword} = formData
+    const {role, department_name, employeeNumber, firstName, lastName, email, job_title, password} = formData
 
     const onChange = (e) => {
         setFormData((prevState) => ({
@@ -91,13 +91,13 @@ const EditEmployee = () => {
     }
 
     if(company){
-        let employeeDoc
+        // let employeeDoc
         for (var i = 0, l = company.departments.length; i < l; i++) {
             var departments = company.departments[i];
     
             for (var j = 0, h = departments.employees.length; j < h; j++) {
                 var isAdmin = departments.employees[j].isAdmin;
-                var isManager = departments.employees[j].isManager;
+                // var isManager = departments.employees[j].isManager;
     
             }
  

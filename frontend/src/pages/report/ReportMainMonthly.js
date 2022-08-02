@@ -87,9 +87,9 @@ const ReportMainMonthly = (props) => {
   }
   // console.log(dailyArry)
 
-  const sortDailySurveyByCompany = [
-    ...new Set(dailyArry.map(JSON.stringify)),
-  ].map(JSON.parse);
+  // const sortDailySurveyByCompany = [
+  //   ...new Set(dailyArry.map(JSON.stringify)),
+  // ].map(JSON.parse);
   // console.log(sortDailySurveyByCompany)
 
   let monthlyArry = [];

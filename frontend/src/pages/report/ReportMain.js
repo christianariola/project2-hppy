@@ -109,9 +109,9 @@ const ReportMain = (props) => {
   }
   // console.log(monthlyArry)
 
-  const sortMonthlySurveyByCompany = [
-    ...new Set(monthlyArry.map(JSON.stringify)),
-  ].map(JSON.parse);
+  // const sortMonthlySurveyByCompany = [
+  //   ...new Set(monthlyArry.map(JSON.stringify)),
+  // ].map(JSON.parse);
   // console.log(sortMonthlySurveyByCompany)
 
   //@desc report main for admin
@@ -161,9 +161,9 @@ const ReportMain = (props) => {
 
   //  console.log([...new Set(monthlySingle().map(JSON.stringify))].map(JSON.parse));
 
-  const sortMonthlySurvey = [
-    ...new Set(monthlySingle().map(JSON.stringify)),
-  ].map(JSON.parse);
+  // const sortMonthlySurvey = [
+  //   ...new Set(monthlySingle().map(JSON.stringify)),
+  // ].map(JSON.parse);
 
   // console.log(sortMonthlySurvey)
 
