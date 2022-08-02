@@ -25,7 +25,7 @@ const EmployeeData = (props) => {
             color="textPrimary"
             variant="h4"
             >
-            495
+            {props.datastat}
             </Typography>
         </Grid>
         <Grid item>

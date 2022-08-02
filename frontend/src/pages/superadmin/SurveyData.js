@@ -25,7 +25,7 @@ const CompanyData = (props) => {
             color="textPrimary"
             variant="h4"
             >
-            653
+            {props.datastat}
             </Typography>
         </Grid>
         <Grid item>

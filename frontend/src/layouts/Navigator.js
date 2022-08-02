@@ -108,7 +108,7 @@ export default function Navigator(props) {
             break;
     }
 
-    console.log("LIST", menuList)
+    // console.log("LIST", menuList)
 
     const { company } = useSelector(state => state.company)
     useEffect(() => {
