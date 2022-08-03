@@ -12,7 +12,7 @@ This project is a simple employee engagement app that uses sentiment analysis on
 Project is created with:
 * MERN Stack (MongoDB, ExpressJS, ReactJS and NodeJS)
 * Redux Toolkit
-* TensorflowJS
+* TensorflowJS (Used for sentiment analysis with a pre-trained model using Keras IMDB movie review dataset)
 
 ## Setup
 Run this on both frontend and backend folder
