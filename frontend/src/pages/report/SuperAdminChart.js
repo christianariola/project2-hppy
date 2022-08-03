@@ -1,5 +1,5 @@
 import { Bar } from "react-chartjs-2";
-import { Pie } from "react-chartjs-2";
+// import { Pie } from "react-chartjs-2";
 // import { ArcElement } from "chart.js";
 // import Chart from "chart.js/auto";
 import { useState, useEffect } from "react";
@@ -10,6 +10,7 @@ const SuperAdminChart = (props) => {
   //use this state letiable to store data fetched from the database
   const [report, setReport] = useState([]);
   const [employeeData, setEmployeeData] = useState([]);
+
   // const { employee } = useSelector((state) => state.auth);
 
   //daily survey fetching
@@ -42,8 +43,8 @@ const SuperAdminChart = (props) => {
   const dateUrl = nameUrl.split("/");
   const chartDate = dateUrl[dateUrl.length - 2];
   const selectedCompany = dateUrl[dateUrl.length - 1];
-  const decodedCompany = decodeURI(selectedCompany);
-  console.log(decodedCompany);
+  const decodedCompany = decodeURI(selectedCompany); //replace %20 with space
+  // console.log(decodedCompany);
   // // console.log(monthlyReport)
 
   //  const { loginEmployee } = useSelector(state => state.auth) // ->작동되면 .role = 'superadmin' no filter, role 'admin' filetre by compaby
@@ -60,11 +61,11 @@ const SuperAdminChart = (props) => {
       employeeData[i].company_name !== undefined &&
       employeeData[i].company_name === decodedCompany
     ) {
-      if (employeeData[i].department === decodedCompany) {
-        showEmailArry.push(employeeData[i].email);
-      } else {
-        showEmailArry.push(employeeData[i].email);
-      }
+      // if (employeeData[i].department === decodedCompany) {
+      //   showEmailArry.push(employeeData[i].email);
+      // } else {
+      showEmailArry.push(employeeData[i].email);
+      // }
     }
   }
 
@@ -81,7 +82,7 @@ const SuperAdminChart = (props) => {
       filteredDailySurvey.push(report[i]);
     }
   }
-  console.log(filteredDailySurvey);
+  // console.log(filteredDailySurvey);
 
   //selected department
   //  const handleChange = departmentType =>{
@@ -160,6 +161,8 @@ const SuperAdminChart = (props) => {
   //sort daily feeling object by date
   let totalDailyRate = function () {
     let rating = [];
+    let dailySentimentarr = [];
+    let dailyFeelingarr = [];
 
     // console.log(chartDate)
     // if(paramCheck.length > 1){
@@ -178,19 +181,106 @@ const SuperAdminChart = (props) => {
         // depends on button value
 
         rating.push(filteredDailySurvey[i].dailySurvey.dailyTotalRating);
+        dailySentimentarr.push(
+          filteredDailySurvey[i].dailySurvey.dailySentiment
+        );
+        dailyFeelingarr.push(
+          parseInt(filteredDailySurvey[i].dailySurvey.dailyFeeling)
+        );
       }
     }
-    // console.log(rating);
-    return rating;
+    return rating; //total rating by date
   };
-
-  totalDailyRate();
-  // console.log(rating);
 
   const result = {};
   totalDailyRate().forEach((x) => {
+    console.log(x);
     result[x] = (result[x] || 0) + 1;
+    console.log(result);
   });
+
+  let totalSentimentRate = function () {
+    let dailySentimentarr = [];
+    for (let i = 0; i < filteredDailySurvey.length; i++) {
+      if (filteredDailySurvey[i].dailySurvey.dailySurveyDate === chartDate) {
+        // depends on button value
+        dailySentimentarr.push(
+          filteredDailySurvey[i].dailySurvey.dailySentiment
+        );
+      }
+    }
+    return dailySentimentarr; //total rating by date
+  };
+
+  let totalFeelingRate = function () {
+    let dailyFeelingarr = [];
+    for (let i = 0; i < filteredDailySurvey.length; i++) {
+      if (filteredDailySurvey[i].dailySurvey.dailySurveyDate === chartDate) {
+        dailyFeelingarr.push(filteredDailySurvey[i].dailySurvey.dailyFeeling);
+      }
+    }
+    return dailyFeelingarr; //total rating by date
+  };
+  totalDailyRate();
+  totalSentimentRate();
+  totalFeelingRate();
+
+  ////////////////////Chart section for Sentiment//////////////////////////////
+  const sentimentResult = [];
+  totalSentimentRate().forEach((x) => {
+    sentimentResult[x] = (sentimentResult[x] || 0) + 1;
+    console.log(sentimentResult);
+  });
+  const feelingResult = [];
+  totalFeelingRate().forEach((x) => {
+    feelingResult[x] = (feelingResult[x] || 0) + 1;
+    console.log(feelingResult);
+  });
+
+  const sentimentData = {
+    labels: ["Negative", "Neutral", "Positive"],
+    datasets: [
+      {
+        label: "Daily Sentiment",
+        data: [
+          sentimentResult["negative"],
+          sentimentResult["neutral"],
+          sentimentResult["positive"],
+        ],
+
+        backgroundColor: [
+          "#0098FF",
+          "#00CF92",
+          "#F72564",
+          "#F8D919",
+          "#E07116",
+        ],
+      },
+    ],
+  };
+  const feelingData = {
+    labels: ["Very Sad", "Sad", "Neutral", "Happy", "Very Happy"],
+    datasets: [
+      {
+        label: "Count of Daily Feeling",
+        data: [
+          feelingResult[1],
+          feelingResult[2],
+          feelingResult[3],
+          feelingResult[4],
+          feelingResult[5],
+        ],
+
+        backgroundColor: [
+          "#0098FF",
+          "#00CF92",
+          "#F72564",
+          "#F8D919",
+          "#E07116",
+        ],
+      },
+    ],
+  };
 
   // console.log(result);
   const data = {
@@ -203,7 +293,7 @@ const SuperAdminChart = (props) => {
     ],
     datasets: [
       {
-        label: "Employee Daily Total Rate",
+        label: "Employee Daily Cumulative Rating",
         data: [result[1], result[2], result[3], result[4], result[5]],
         backgroundColor: [
           "#0098FF",
@@ -333,32 +423,87 @@ const SuperAdminChart = (props) => {
                         <option value="Marketplace">Marketplace</option>
                     </select>
                 </form> */}
-          <h2 className="report-title">Submission Rate</h2>
-          <Pie
-            data={submitData}
-            width="20%"
-            height="20%"
-            options={{
-              responsive: true,
-              maintainAspectRatio: true, // Don't maintain w/h ratio
-            }}
-          />
-          <h2 className="report-title">Total Rating</h2>
-          <div>
-            <Bar
-              data={data}
-              options={{
-                // maintainAspectRatio: false,
-                // responsive: true,
-                scales: {
-                  y: {
-                    min: 0,
-                    max: 5,
-                    ticks: { stepSize: 1 },
+          <div className="chartwrapper">
+            <div className="piechart">
+              <h2 className="report-title">Submission Rate</h2>
+              {/* <Pie
+                data={submitData}
+                width="10%"
+                height="10%"
+                options={{
+                  responsive: true,
+                  maintainAspectRatio: true, // Don't maintain w/h ratio
+                }}
+              /> */}
+              <Bar
+                data={submitData}
+                options={{
+                  maintainAspectRatio: true,
+                  responsive: true,
+                  scales: {
+                    y: {
+                      display: true,
+                      title: "Sentiment",
+                      beginAtZero: true,
+                      ticks: { stepSize: 1 },
+                    },
                   },
-                },
-              }}
-            />
+                }}
+              />
+            </div>
+
+            <div>
+              <h2 className="report-title">Daily Cumulative Rating</h2>
+              <Bar
+                data={data}
+                options={{
+                  // maintainAspectRatio: false,
+                  responsive: true,
+                  scales: {
+                    y: {
+                      min: 0,
+                      ticks: { stepSize: 1 },
+                    },
+                  },
+                }}
+              />
+            </div>
+
+            <div>
+              <h2 className="report-title">Daily Sentiment</h2>
+              <Bar
+                data={sentimentData}
+                options={{
+                  maintainAspectRatio: true,
+                  responsive: true,
+                  scales: {
+                    y: {
+                      display: true,
+                      title: "Sentiment",
+                      beginAtZero: true,
+                      ticks: { stepSize: 1 },
+                    },
+                  },
+                }}
+              />
+            </div>
+
+            <div>
+              <h2 className="report-title">Daily Feeling Rating</h2>
+              <Bar
+                data={feelingData}
+                options={{
+                  // maintainAspectRatio: false,
+                  responsive: true,
+                  scales: {
+                    y: {
+                      beginAtZero: true,
+                      ticks: { stepSize: 1 },
+                    },
+                  },
+                }}
+              />
+            </div>
           </div>
         </div>
       ) : (

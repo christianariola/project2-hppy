@@ -64,12 +64,12 @@ const SuperAdminChart = props => {
      for(let i=0; i<employeeData.length; i++){
         if(employeeData[i].company_name !== undefined && employeeData[i].company_name === decodedCompany ){
             
-                if(employeeData[i].department === decodedCompany) {
-                    showEmailArry.push(employeeData[i].email)
-                 } 
-              else {
+            //     if(employeeData[i].department === decodedCompany) {
+            //         showEmailArry.push(employeeData[i].email)
+            //      } 
+            //   else {
                 showEmailArry.push(employeeData[i].email)
-             }
+            //  }
         }
      }
      
