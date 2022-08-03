@@ -15,19 +15,25 @@ Project is created with:
 * TensorflowJS
 
 ## Setup
-Run this on both frontend and backend 
+Run this on both frontend and backend folder
+```
 $ npm install
+```
 
 Go inside the backend folder
+```
 $ cd backend
 $ npm run dev
+```
 
 Create a .env file inside the backend folder and add this application configuration
 
-$NODE_ENV = YOURENV
-$PORT = YOURPORT
-$ MONGO_URI = YOURMONGOURI
-$ JWT_SECRET = YOURSECRETKEY
-$ CLOUDINARY_NAME = YOURCLOUDINARYNAME
-$ CLOUDINARY_APIKEY = YOURCLOUDINARYKEY
-$ CLOUDINARY_APISECRET = YOURCLOUDINARYSECRET
+```
+NODE_ENV = YOURENV
+PORT = YOURPORT
+MONGO_URI = YOURMONGOURI
+JWT_SECRET = YOURSECRETKEY
+CLOUDINARY_NAME = YOURCLOUDINARYNAME
+CLOUDINARY_APIKEY = YOURCLOUDINARYKEY
+CLOUDINARY_APISECRET = YOURCLOUDINARYSECRET
+```
