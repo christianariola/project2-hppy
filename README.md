@@ -14,7 +14,7 @@ Project is created with:
 * Redux Toolkit
 * TensorflowJS
 
-## Seyup
+## Setup
 Run this on both frontend and backend 
 $ npm install
 
@@ -24,8 +24,8 @@ $ npm run dev
 
 Create a .env file inside the backend folder and add this application configuration
 
-$ NODE_ENV = YOURENV
-$ PORT = YOURPORT
+$NODE_ENV = YOURENV
+$PORT = YOURPORT
 $ MONGO_URI = YOURMONGOURI
 $ JWT_SECRET = YOURSECRETKEY
 $ CLOUDINARY_NAME = YOURCLOUDINARYNAME
