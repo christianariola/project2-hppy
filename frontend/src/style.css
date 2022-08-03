@@ -111,6 +111,13 @@ a.MuiTypography-root.MuiTypography-inherit.MuiLink-root.MuiLink-underlineNone.cs
   gap: 2rem;
 }
 
+.chartwrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  gap: 1rem;
+  align-items: end;
+}
+
 /* Main Footer ==================== */
 .footer-home {
   background: linear-gradient(180deg, #0098ff, #003d66);
